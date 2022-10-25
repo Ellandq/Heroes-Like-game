@@ -1,0 +1,115 @@
+worldObjectType: Enviroment
+----------------------------------------------------
+
+----------------------------------------------------
+worldObjectType: City
+----------------------------------------------------
+0. String (City)
+
+1. string player ownership
+
+2, 3 Grid position (2 int variables)
+
+4. Orientation (float but only multiplications of 90 are allowed)
+
+5. Town fraction (string)
+
+[Town buildings 0 - not built, 1 - built, 2 - Not available]
+(for each one we need an int (30 in total))
+
+6. Village hall (always 1)
+7. Town hall
+8. City hall
+9. Tavern
+10. Prison (always 1)
+
+11. Fort
+12. Citadel
+13. Castle
+14. Caravan
+15. Shipyard
+
+16. City bonus building one
+17. City bonus building two
+18. City equipement building
+19. City special building
+20. Graal building
+
+21. Magic hall 1
+22. Magic hall 2
+23. Magic hall 3
+24. Magic hall 4
+25. Magic hall 5
+26. Additional magic building 1
+27. Additional magic building 2
+
+28. T1 up
+29. T1 down
+30. T2 up
+31. T2 down
+32. T3 up
+33. T3 down
+34. T4 up
+35. T4 down
+
+Garrison
+
+14 x int (id and amount for each slot)
+
+---------------------------------------------------------------
+worldObjectType: NeutralBuilding
+---------------------------------------------------------------
+
+0. Strting (NeutralBuilding)
+
+1, 2 Grid position (2 int)
+
+3. Orientation (float but only multiplications of 90 are allowed)
+
+4. String (building name)
+
+----------------------------------------------------
+worldObjectType: Mine
+----------------------------------------------------
+
+0. String (Mine)
+
+1. String (player owner)
+
+2, 3. Grid position (2 int)
+
+4. float (Orientation)
+
+5. String (mine type)
+
+Garrison
+
+14 x int (id and amount for each slot)
+
+----------------------------------------------------
+worldObjectType: Dwelling
+----------------------------------------------------
+
+
+
+
+
+----------------------------------------------------------------
+worldObjectType: Army
+-----------------------------------------------------------------
+0. String (Army)
+
+1. String (Player owner)
+
+2, 3. Grid position (2 int)
+
+4. float (orientation multiplication of 45)
+
+5 - 18. int (unit id and amount for each slot)
+-------------------------------------------------------------------
+worldObjectType: Resource
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+worldObjectType: Artifacts
+------------------------------------------------------------------

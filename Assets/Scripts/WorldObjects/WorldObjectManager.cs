@@ -1,0 +1,368 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class WorldObjectManager : MonoBehaviour
+{
+    [SerializeField] PlayerManager playerManager;
+    Player chosenPlayer;
+
+    [Header("Object prefabs")]
+    [SerializeField] private GameObject cityPrefab;
+    [SerializeField] private GameObject armyPrefab;
+    [SerializeField] private GameObject minePrefab;
+    [SerializeField] private GameObject resourcePrefab;
+
+    [Header("Grid information")]
+    [SerializeField] GameGrid gameGrid;
+
+    [Header("Cities information")]
+    public GameObject[] cities;
+    public int numberOfCities = 0;
+
+    [Header("Armies information")]
+    public GameObject[] armies;
+    public int numberOfArmies = 0;
+
+    [Header("Mines information")]
+    public GameObject[] mines;
+    public int numberOfMines = 0;
+
+    [Header("Resources information")]
+    public GameObject[] resources;
+    public int numberOfResources = 0;
+
+
+    string [] worldObjectArray;
+    string currentReadLine;
+    string [] splitLine;
+    string myFilePath, fileName;
+    string mapName;
+
+    public UnityEvent OnGameLoad;
+    
+    void Start ()
+    {
+        gameGrid = FindObjectOfType<GameGrid>();
+
+        fileName = "WorldObjects.txt";
+        mapName = "TestMap";
+        myFilePath = Application.dataPath + "/Maps/" + mapName + "/" + fileName;
+
+        ReadfromFile();
+    }
+
+    private void ReadfromFile ()
+    {
+        if (File.Exists(myFilePath))
+        {
+            worldObjectArray = File.ReadAllLines (myFilePath);
+
+            for (int i = 0; i < worldObjectArray.Length; i++)
+            {
+                currentReadLine = worldObjectArray[i];
+                splitLine = currentReadLine.Split(' ');
+                if (splitLine[0] == "Enviroment")
+                {
+                    InitialEnviromentSetup(splitLine);
+                }
+                else if (splitLine[0] == "City")
+                {
+                    InitialCitySetup(splitLine);
+                }
+                else if (splitLine[0] == "NeutralBuilding")
+                {
+                    InitialNeutralBuildingSetup(splitLine);
+                }
+                else if (splitLine[0] == "Mine")
+                {
+                    InitialMineSetup(splitLine);
+                }
+                else if (splitLine[0] == "Dwelling")
+                {
+                    InitialDwellingSetup(splitLine);
+                }
+                else if (splitLine[0] == "Army")
+                {
+                    InitialArmySetup(splitLine);
+                }
+                else if (splitLine[0] == "Resource")
+                {
+                    InitialResourceSetup(splitLine);
+                }
+                else if (splitLine[0] == "Artifact")
+                {
+                    InitialArtifactSetup(splitLine);
+                }
+                else
+                {
+                    Debug.LogError("World object is not defined");
+                }
+            }
+            OnGameLoad.Invoke();
+        }
+    }
+    #region Enviroment
+    private void InitialEnviromentSetup (string [] _splitLine)
+    {
+        //for now it's gonna be empty
+    }
+    #endregion
+
+    #region City
+    private void InitialCitySetup (string [] _splitLine)
+    {
+        // First part is the playerOnwership
+        string ownedByPlayer = _splitLine[1];
+        
+        // Second part is the grid position and orientation
+        int gridPosX = Convert.ToInt32(_splitLine[2]);
+        int gridPosY = Convert.ToInt32(_splitLine[3]);
+        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+        
+        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+            Debug.Log("Objects overlapping");
+            return;
+        }
+
+        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        float cityOrientation = float.Parse(_splitLine[4]);
+
+        // Third part is the town fraction
+        string cityFraction = _splitLine[5];
+
+        // Fourth part, buildings
+        int [] cityBuildingStatus = new int [30];
+        for (int j = 0; j < 30; j++)
+        {
+            cityBuildingStatus[j] = Convert.ToInt32(_splitLine[j + 6]);
+        }
+        // Fifth part is the city garrison
+        int [] cityGarrison = new int [14];
+        for (int j = 0; j < cityGarrison.Length; j++)
+        {
+            cityGarrison[j] = Convert.ToInt32(_splitLine[j + 36]);
+        }
+
+        Array.Resize(ref cities, numberOfCities + 1);
+        cities[numberOfCities] = Instantiate(cityPrefab, objectPosition, Quaternion.identity);
+        cities[numberOfCities].GetComponent<City>().CityInitialization(
+            ownedByPlayer, cityFraction, gridPosition, cityOrientation, cityBuildingStatus, cityGarrison
+        );
+        cities[numberOfCities].transform.parent = transform;
+        cities[numberOfCities].gameObject.name = "City " + (numberOfCities + 1) + " : " + cityFraction;
+
+        // Adding the city to the approprieate player
+        
+        for (int i = 0; i < playerManager.players.Length; i++)
+        {
+            if (playerManager.players[i].name == ownedByPlayer + " Player")
+            {
+                chosenPlayer = playerManager.players[i].GetComponent<Player>();
+                chosenPlayer.NewCity(cities[numberOfCities]);
+                break;
+            }
+        }
+        if (ownedByPlayer  == "Neutral"){
+            chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
+            chosenPlayer.NewCity(cities[numberOfCities]);
+        }
+        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        numberOfCities++;   
+    }
+    // private bool CheckCitySpace(Vector2Int _gridPosition)
+    // {
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y - 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y - 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y - 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y - 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y - 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y - 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y - 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y - 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y - 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y - 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y)))    .isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y)))    .isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y)))    .isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y)))    .isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y)))    .isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y + 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y + 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y + 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y + 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y + 1))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y + 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y + 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y + 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y + 2))).isOccupied) return false;
+    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y + 2))).isOccupied) return false;
+    //     return true;
+    // }
+    #endregion
+
+    #region Building
+    private void InitialNeutralBuildingSetup (string [] _splitLine)
+    {
+
+    }
+    #endregion
+
+    #region Mine
+    private void InitialMineSetup (string [] _splitLine)
+    {
+        // First part is the playerOnwership
+        string ownedByPlayer = _splitLine[1];
+        
+        // Second part is the grid position and orientation
+        int gridPosX = Convert.ToInt32(_splitLine[2]);
+        int gridPosY = Convert.ToInt32(_splitLine[3]);
+        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+        
+        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+            Debug.Log("Objects overlapping");
+            return;
+        }
+
+        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        float mineOrientation = float.Parse(_splitLine[4]);
+
+        // Third part is the mine type
+        string mineType = _splitLine[5];
+
+        // Fifth part is the mine garrison (usually empty)
+        int [] mineGarrison = new int [14];
+        for (int j = 0; j < mineGarrison.Length; j++)
+        {
+            mineGarrison[j] = Convert.ToInt32(_splitLine[j + 6]);
+        }
+
+        Array.Resize(ref mines, numberOfMines + 1);
+        mines[numberOfMines] = Instantiate(minePrefab, objectPosition, Quaternion.identity);
+        mines[numberOfMines].GetComponent<Mine>().MineInitialization(
+            ownedByPlayer, mineType, gridPosition, mineOrientation, mineGarrison
+        );
+        mines[numberOfMines].transform.parent = transform;
+        mines[numberOfMines].gameObject.name = mineType + " Mine : " + (numberOfCities + 1);
+
+        // Adding the mine to the approprieate player
+        
+        for (int i = 0; i < playerManager.players.Length; i++)
+        {
+            if (playerManager.players[i].name == ownedByPlayer + " Player")
+            {
+                chosenPlayer = playerManager.players[i].GetComponent<Player>();
+                chosenPlayer.NewMine(mines[numberOfMines]);
+                break;
+            }
+        }
+        if (ownedByPlayer  == "Neutral"){
+            chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
+            chosenPlayer.NewMine(mines[numberOfMines]);
+        }
+
+        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        numberOfMines++;
+    }
+    #endregion
+
+    #region Dwelling
+    private void InitialDwellingSetup (string [] _splitLine)
+    {
+
+    }
+    #endregion
+
+    #region Army
+    private void InitialArmySetup (string [] _splitLine)
+    {
+        // First part is the playerOnwership
+        string ownedByPlayer = _splitLine[1];
+        
+        // Second part is the grid position and orientation
+        int gridPosX = Convert.ToInt32(_splitLine[2]);
+        int gridPosY = Convert.ToInt32(_splitLine[3]);
+        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+
+        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+            Debug.Log("Objects overlapping");
+            return;
+        }
+
+        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        float armyOrientation = float.Parse(_splitLine[4]);
+
+        // Third part are the army units
+        int [] armyUnits = new int [14];
+        for (int j = 0; j < armyUnits.Length; j++)
+        {
+            armyUnits[j] = Convert.ToInt32(_splitLine[j + 3]);
+        }
+
+        Array.Resize(ref armies, numberOfArmies + 1);
+        armies[numberOfArmies] = Instantiate(armyPrefab, objectPosition, Quaternion.identity);
+        armies[numberOfArmies].GetComponent<Army>().ArmyInitialization(
+            ownedByPlayer, gridPosition, armyOrientation, armyUnits
+        );
+        armies[numberOfArmies].transform.parent = transform;
+        armies[numberOfArmies].gameObject.name = ownedByPlayer + " Army " + (numberOfArmies + 1);
+
+        // Adding the army to the approprieate player
+        
+        for (int i = 0; i < playerManager.players.Length; i++)
+        {
+            if (playerManager.players[i].name == ownedByPlayer + " Player")
+            {
+                chosenPlayer = playerManager.players[i].GetComponent<Player>();
+                chosenPlayer.NewArmy(armies[numberOfArmies]);
+                break;
+            }
+        }
+        if (ownedByPlayer  == "Neutral"){
+            chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
+            chosenPlayer.NewArmy(armies[numberOfArmies]);
+        }
+
+        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        numberOfArmies++;   
+    }
+    #endregion
+
+    #region Resources
+    private void InitialResourceSetup (string [] _splitLine)
+    {
+        int gridPosX = Convert.ToInt32(_splitLine[1]);
+        int gridPosY = Convert.ToInt32(_splitLine[2]);
+        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+
+        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+            Debug.Log("Objects overlapping");
+            return;
+        }
+        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        string resourceType = _splitLine[3];
+        int resourceCount = Convert.ToInt32(_splitLine[4]);
+
+        Array.Resize(ref resources, numberOfResources + 1);
+        resources[numberOfResources] = Instantiate(resourcePrefab, objectPosition, Quaternion.identity);
+        resources[numberOfResources].GetComponent<ResourcesObj>().ResourceInitialization(resourceType, resourceCount, gridPosition);
+        resources[numberOfResources].transform.parent = transform;
+        resources[numberOfResources].gameObject.name = resourceType + ": " + (numberOfResources + 1);
+
+        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        numberOfResources++;  
+    }
+    #endregion
+
+    #region Artifacts
+    private void InitialArtifactSetup (string [] _splitLine)
+    {
+
+    }
+    #endregion
+
+    
+}

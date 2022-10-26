@@ -15,6 +15,7 @@ public class CameraZoom : MonoBehaviour
     public Transform cameraZoomObject;
 
     private float zoomObjectRotation;
+    private bool centerCalculated;
     
 
     [Header("Height Options")]
@@ -27,6 +28,7 @@ public class CameraZoom : MonoBehaviour
     [SerializeField]  float maxCameraAngle = 90f;
     [SerializeField]  float minCameraAngle = 30f;
     [SerializeField] float anglePercentage;
+    Vector3 centerOfRotation;
 
     [Header("Offset Options")]
     public float smoothSpeed = 0.125f;
@@ -44,19 +46,29 @@ public class CameraZoom : MonoBehaviour
     {
         if (cameraManager.cameraEnabled)
         {
-            if (mouseInput.mouseScrollStatus > 0f) // forward
+            if (cameraManager.cameraEnabled)
             {
-                ZoomCamera();
-                cameraManager.cameraMovement.cameraFollowingObject = false;
-            }
-            if (mouseInput.mouseScrollStatus < 0f) // backwards
-            {
-                UnZoomCamera();   
-                cameraManager.cameraMovement.cameraFollowingObject = false;  
-            }
+                if (mouseInput.mouseScrollStatus > 0f) // forward
+                {
+                    ZoomCamera();
+                    cameraManager.cameraMovement.cameraFollowingObject = false;
+                }
+                if (mouseInput.mouseScrollStatus < 0f) // backwards
+                {
+                    UnZoomCamera();   
+                    cameraManager.cameraMovement.cameraFollowingObject = false;  
+                }
+            }  
         }
         if (mouseInput.mouseButtonPressed_2){
-            
+            cameraManager.cameraEnabled = false;
+            if (Cursor.lockState == CursorLockMode.None) Cursor.lockState = CursorLockMode.Locked;
+            RotateCamera();
+
+        }else{
+            centerCalculated = false;
+            cameraManager.cameraEnabled = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
     void ZoomCamera()
@@ -96,6 +108,26 @@ public class CameraZoom : MonoBehaviour
 
             cameraZoomObject.transform.position = position;
         }
+    }
+    void RotateCamera ()
+    {
+        Vector3 rotation = cameraZoomObject.transform.localEulerAngles;
+        Vector3 position = cameraManager.cameraMovement.cameraFollowObject.position;
+        float currentMousePosition = Input.GetAxis("Mouse X");
+
+        if (!centerCalculated){
+            centerOfRotation = cameraManager.cameraMovement.CalculateCenterOfRotation();
+            centerCalculated = true;
+        }
+        
+        rotation.y += currentMousePosition;
+        cameraZoomObject.transform.localEulerAngles = rotation;
+        position = cameraManager.cameraMovement.CalculateCameraOffsetIndependent() + centerOfRotation;
+
+        position.x = Mathf.Clamp(position.x, 0, cameraManager.cameraMovement.cameraMoveLimit.x);
+        position.z = Mathf.Clamp(position.z, -20, cameraManager.cameraMovement.cameraMoveLimit.y);
+        cameraManager.cameraMovement.cameraFollowObject.position = Vector3.Lerp(cameraManager.cameraMovement.cameraFollowObject.position, position, zoomSpeed);
+        transform.position = cameraManager.cameraMovement.cameraFollowObject.position;
     }
 
     private float CameraUpdatedHeight()

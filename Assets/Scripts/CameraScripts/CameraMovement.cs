@@ -23,7 +23,7 @@ public class CameraMovement: MonoBehaviour
     [SerializeField] int maxSpeed = 10;
     [SerializeField] int distanceFromBoundary = 50;
     [SerializeField] int minDistanceFromBoundary = 5;
-    [SerializeField] Vector2 cameraMoveLimit;
+    [SerializeField] internal Vector2 cameraMoveLimit;
     internal bool cameraFollowingObject;
     [SerializeField] float rotation;
     [SerializeField] float moveSpeed;
@@ -52,8 +52,8 @@ public class CameraMovement: MonoBehaviour
     {
         if (cameraManager.cameraEnabled)
         {
-            EdgeScrollingMovement();
-            ManualCameraMovement();
+            // EdgeScrollingMovement();
+            // ManualCameraMovement();
         }
         if (cameraFollowingObject) CameraFollowWorldObject();
         
@@ -157,22 +157,27 @@ public class CameraMovement: MonoBehaviour
         }
     }
 
-    public Vector3 CalculateCameraOffset ()
+    internal Vector3 CalculateCameraOffset ()
     {
         double angle = transform.localEulerAngles.x;
-        float offsetDistance = Convert.ToSingle(transform.position.y / Math.Tan(angle * Math.PI / 180));
-        double y = -10000 / System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y));
-        double x = -10000 / System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y));
+        double offsetDistance = System.Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
+        double y = -System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = -System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y - objectToMoveTowards.transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 
-    public Vector3 CalculateCameraOffsetIndependent ()
+    internal Vector3 CalculateCameraOffsetIndependent ()
     {
         double angle = transform.localEulerAngles.x;
-        float offsetDistance = Convert.ToSingle(transform.position.y / Math.Tan(angle * Math.PI / 180));
-        double y = -10000 / System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y));
-        double x = -10000 / System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y));
+        double offsetDistance = System.Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
+        double y = -System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = -System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y, Convert.ToSingle(offsetDistance * y));
+    }
+
+    internal Vector3 CalculateCenterOfRotation()
+    {
+        return (transform.position - CalculateCameraOffsetIndependent());
     }
 }
 

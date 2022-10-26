@@ -70,7 +70,7 @@ public class CameraMovement: MonoBehaviour
     {
         position = transform.position;
         adjustedMovementVector = CalculateMovementAngle();
-        
+
         if (mouseInput.screenPosition.x > screenWidth - minDistanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
@@ -122,22 +122,22 @@ public class CameraMovement: MonoBehaviour
         position = transform.position;
 
         if(keyboardInput.isRightPressed){
-            cameraFollowObject.transform.Translate(Vector3.right * maxSpeed * Time.deltaTime); // move on +X axis
-            position.x = cameraFollowObject.transform.position.x;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
+            position = cameraFollowObject.transform.position;
         }
         if(keyboardInput.isLeftPressed){
-           cameraFollowObject.transform.Translate(Vector3.left * maxSpeed * Time.deltaTime); // move on -X axis 
-           position.x = cameraFollowObject.transform.position.x;
+           cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on -X axis 
+           position = cameraFollowObject.transform.position;
            cameraFollowingObject = false;
         }
         if(keyboardInput.isUpPressed){
-            cameraFollowObject.transform.Translate(Vector3.forward * maxSpeed * Time.deltaTime); // move on +Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on +Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         if(keyboardInput.isDownPressed){
-            cameraFollowObject.transform.Translate(Vector3.back * maxSpeed * Time.deltaTime); // move on -Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on -Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         transform.position = position;  

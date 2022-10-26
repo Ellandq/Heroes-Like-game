@@ -16,7 +16,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     private int currentPathIndex;
     private bool isReadyToMove;
     public bool isMoving;
-    public const float movementSpeed = 0.5f;
+    public const float movementSpeed = 0.1f;
 
     void Start ()
     {

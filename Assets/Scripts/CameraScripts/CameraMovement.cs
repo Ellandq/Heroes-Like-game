@@ -63,6 +63,8 @@ public class CameraMovement: MonoBehaviour
         transform.position = position;
         cameraFollowObject.transform.position = position;
         rotation = transform.localEulerAngles.y;
+
+        Debug.Log(CalculateMovementAngle());
     }
 
     private void EdgeScrollingMovement()
@@ -173,6 +175,13 @@ public class CameraMovement: MonoBehaviour
         double y = -System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         double x = -System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y, Convert.ToSingle(offsetDistance * y));
+    }
+
+    internal Vector3 CalculateMovementAngle ()
+    {
+        double y = System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        return new Vector3(Convert.ToSingle(x), 0, Convert.ToSingle(y));
     }
 
     internal Vector3 CalculateCenterOfRotation()

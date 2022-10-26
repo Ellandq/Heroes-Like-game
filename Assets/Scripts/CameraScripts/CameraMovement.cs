@@ -52,8 +52,8 @@ public class CameraMovement: MonoBehaviour
     {
         if (cameraManager.cameraEnabled)
         {
-            // EdgeScrollingMovement();
-            // ManualCameraMovement();
+            EdgeScrollingMovement();
+            ManualCameraMovement();
         }
         if (cameraFollowingObject) CameraFollowWorldObject();
         

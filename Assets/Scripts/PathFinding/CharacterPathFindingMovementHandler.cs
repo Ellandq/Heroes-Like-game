@@ -16,7 +16,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     private int currentPathIndex;
     private bool isReadyToMove;
     public bool isMoving;
-    public const float movementSpeed = 0.1f;
+    public const float movementSpeed = 30f;
 
     void Start ()
     {
@@ -120,7 +120,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         {
             yield return null;
             _targetPosition.y = transform.position.y;
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, movementSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, movementSpeed * Time.deltaTime);
         }
         onMoveFinish?.Invoke();
     }

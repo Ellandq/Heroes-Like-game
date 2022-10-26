@@ -7,7 +7,7 @@ public class CameraMovement: MonoBehaviour
 {
     [SerializeField]CameraManager cameraManager;
     [SerializeField] GameObject inputManager;
-    [SerializeField] Transform cameraFollowObject;
+    [SerializeField] internal Transform cameraFollowObject;
     [SerializeField] GameObject objectToMoveTowards;
     MouseOneInteraction mouseOneInteraction;
     MouseInput mouseInput;
@@ -161,10 +161,18 @@ public class CameraMovement: MonoBehaviour
     {
         double angle = transform.localEulerAngles.x;
         float offsetDistance = Convert.ToSingle(transform.position.y / Math.Tan(angle * Math.PI / 180));
-        float y = -Convert.ToSingle(Math.Cos(transform.localEulerAngles.y % 360));
-        float x = -Convert.ToSingle(Math.Sin(transform.localEulerAngles.y % 360));
-        
-        return new Vector3(offsetDistance * x, transform.position.y - objectToMoveTowards.transform.position.y, offsetDistance * y);
+        double y = -10000 / System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y));
+        double x = -10000 / System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y));
+        return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y - objectToMoveTowards.transform.position.y, Convert.ToSingle(offsetDistance * y));
+    }
+
+    public Vector3 CalculateCameraOffsetIndependent ()
+    {
+        double angle = transform.localEulerAngles.x;
+        float offsetDistance = Convert.ToSingle(transform.position.y / Math.Tan(angle * Math.PI / 180));
+        double y = -10000 / System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y));
+        double x = -10000 / System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y));
+        return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 }
 

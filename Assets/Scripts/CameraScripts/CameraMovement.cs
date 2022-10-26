@@ -27,8 +27,9 @@ public class CameraMovement: MonoBehaviour
     internal bool cameraFollowingObject;
     [SerializeField] float rotation;
     [SerializeField] float moveSpeed;
-    private Vector3 position;  
+    internal Vector3 position;  
     private Vector3 cameraOffset; 
+    private Vector3 adjustedMovementVector;
 
     // private Vector3 origin;
     // private Vector3 difference;
@@ -63,55 +64,54 @@ public class CameraMovement: MonoBehaviour
         transform.position = position;
         cameraFollowObject.transform.position = position;
         rotation = transform.localEulerAngles.y;
-
-        Debug.Log(CalculateMovementAngle());
     }
 
     private void EdgeScrollingMovement()
     {
         position = transform.position;
-
+        adjustedMovementVector = CalculateMovementAngle();
+        
         if (mouseInput.screenPosition.x > screenWidth - minDistanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.right * maxSpeed * Time.deltaTime); // move on +X axis
-            position.x = cameraFollowObject.transform.position.x;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.x > screenWidth - distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.right * speed * Time.deltaTime); // move on +X axis
-            position.x = cameraFollowObject.transform.position.x;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, adjustedMovementVector.z) * speed * Time.deltaTime); // move on +X axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
         if (mouseInput.screenPosition.x < 0 + minDistanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.left * maxSpeed * Time.deltaTime); // move on -X axis
-            position.x = cameraFollowObject.transform.position.x;
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on -X axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.x < 0 + distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.left * speed * Time.deltaTime); // move on -X axis
-            position.x = cameraFollowObject.transform.position.x;
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * speed * Time.deltaTime); // move on -X axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
         if (mouseInput.screenPosition.y > screenHeight - minDistanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.forward * maxSpeed * Time.deltaTime); // move on +Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on +Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.y > screenHeight - distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(Vector3.forward * speed * Time.deltaTime); // move on +Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * speed * Time.deltaTime); // move on +Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
         if (mouseInput.screenPosition.y < 0 + minDistanceFromBoundary) {
-            cameraFollowObject.transform.Translate(-Vector3.forward * maxSpeed * Time.deltaTime); // move on -Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on -Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.y < 0 + distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(-Vector3.forward * speed * Time.deltaTime); // move on -Z axis
-            position.z = cameraFollowObject.transform.position.z;
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * speed * Time.deltaTime); // move on -Z axis
+            position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
         transform.position = position;
@@ -181,7 +181,7 @@ public class CameraMovement: MonoBehaviour
     {
         double y = System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         double x = System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
-        return new Vector3(Convert.ToSingle(x), 0, Convert.ToSingle(y));
+        return new Vector3(Convert.ToSingle(y), 0, Convert.ToSingle(x));
     }
 
     internal Vector3 CalculateCenterOfRotation()

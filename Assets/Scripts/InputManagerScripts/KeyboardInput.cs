@@ -11,6 +11,7 @@ public class KeyboardInput : MonoBehaviour
     internal bool isDownPressed;
     internal bool isLeftPressed;
     internal bool isRightPressed;
+    internal bool resetCameraPressed;
     //internal bool isTabKeyPressed;
     //internal bool isSpaceKeyPressed
 
@@ -42,6 +43,13 @@ public class KeyboardInput : MonoBehaviour
         }
         else{
             isDownPressed = false;
+        }
+
+        if(Input.GetKey(KeyCode.R)){
+            resetCameraPressed = true;
+        }
+        else{
+            resetCameraPressed = false;
         }
     }
 }

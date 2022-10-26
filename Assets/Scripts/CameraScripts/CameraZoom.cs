@@ -16,7 +16,6 @@ public class CameraZoom : MonoBehaviour
 
     private float zoomObjectRotation;
     private bool centerCalculated;
-    
 
     [Header("Height Options")]
     [SerializeField]  float maxCameraHeight = 70f;
@@ -69,6 +68,9 @@ public class CameraZoom : MonoBehaviour
             centerCalculated = false;
             cameraManager.cameraEnabled = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+        if (keyboardInput.resetCameraPressed){
+            ResetCamera();
         }
     }
     void ZoomCamera()
@@ -128,12 +130,18 @@ public class CameraZoom : MonoBehaviour
         position.z = Mathf.Clamp(position.z, -20, cameraManager.cameraMovement.cameraMoveLimit.y);
         cameraManager.cameraMovement.cameraFollowObject.position = Vector3.Lerp(cameraManager.cameraMovement.cameraFollowObject.position, position, zoomSpeed);
         transform.position = cameraManager.cameraMovement.cameraFollowObject.position;
+        cameraManager.cameraMovement.position = transform.position;
     }
 
     private float CameraUpdatedHeight()
     {
         anglePercentage = (cameraZoomObject.transform.localEulerAngles.x - minCameraAngle) / (maxCameraAngle - minCameraAngle);
         return (((maxCameraHeight - minCameraHeight) * anglePercentage) + minCameraHeight);
+    }
+
+    private void ResetCamera()
+    {
+        cameraZoomObject.transform.localEulerAngles = new Vector3 (cameraZoomObject.transform.localEulerAngles.x, 0, 0);
     }
 
     void LateUpdate()

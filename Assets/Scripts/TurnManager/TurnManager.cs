@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class TurnManager : MonoBehaviour
 {
     [Header("Object Referances")]
-    [SerializeField] GameManager gameManager;
     [SerializeField] PlayerManager playerManager;
     [SerializeField] PlayerTurn playerTurn;
     [SerializeField] AiTurn aiTurn;

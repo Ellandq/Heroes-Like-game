@@ -14,9 +14,6 @@ public class InputManager : MonoBehaviour
     internal GridInteractionManager gridInteractionManager;
 
     [SerializeField]
-    internal MouseOneInteraction mouseOneInteraction;
-
-    [SerializeField]
     internal MouseInput mouseInput;
 
     [SerializeField]

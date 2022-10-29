@@ -9,7 +9,6 @@ public class CameraMovement: MonoBehaviour
     [SerializeField] GameObject inputManager;
     [SerializeField] internal Transform cameraFollowObject;
     [SerializeField] GameObject objectToMoveTowards;
-    MouseOneInteraction mouseOneInteraction;
     MouseInput mouseInput;
     KeyboardInput keyboardInput;
 
@@ -39,7 +38,6 @@ public class CameraMovement: MonoBehaviour
 
     void Awake()
     {
-        mouseOneInteraction = inputManager.GetComponent<MouseOneInteraction>();
         mouseInput = inputManager.GetComponent<MouseInput>();
         keyboardInput = inputManager.GetComponent<KeyboardInput>();
     }

@@ -8,7 +8,6 @@ public class CameraZoom : MonoBehaviour
     CameraManager cameraManager;
 
     [SerializeField] GameObject inputManager;
-    MouseOneInteraction mouseOneInteraction;
     MouseInput mouseInput;
     KeyboardInput keyboardInput;
     
@@ -34,7 +33,6 @@ public class CameraZoom : MonoBehaviour
 
     void Awake()
     {
-        mouseOneInteraction = inputManager.GetComponent<MouseOneInteraction>();
         mouseInput = inputManager.GetComponent<MouseInput>();
         keyboardInput = inputManager.GetComponent<KeyboardInput>();
 

@@ -6,6 +6,7 @@ using System.Linq;
 public class Army : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
+    [SerializeField] TurnManager turnManager;
     [SerializeField] GameGrid gameGrid;
 
     [Header("Army information")]
@@ -13,8 +14,8 @@ public class Army : MonoBehaviour
     public Vector2Int gridPosition;
     private Vector3 position;
     private Vector3 rotation;
-    [SerializeField] short maxMovementPoints;
-    public float movementPoints;
+    [SerializeField] int maxMovementPoints;
+    public int movementPoints;
     public bool canBeSelectedByCurrentPlayer;
 
     [Header("Unit slots references")]
@@ -29,10 +30,12 @@ public class Army : MonoBehaviour
     void Start ()
     {
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
-        maxMovementPoints = 220;
+        maxMovementPoints = 2200;
         movementPoints = maxMovementPoints;
         playerManager.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
+        turnManager.OnNewDay.AddListener(RestoreMovementPoints);
         ownedByPlayer.GetComponent<Player>().CheckPlayerStatus();
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);
     }
@@ -78,7 +81,18 @@ public class Army : MonoBehaviour
 
     private void RestoreMovementPoints ()
     {
-        
+        movementPoints = maxMovementPoints;
+    }
+
+    public void RemoveMovementPoints(int _pathCost)
+    {
+        movementPoints -= _pathCost;
+    }
+
+    public bool CanArmyMoveToPathNode (int _nextPathCost)
+    {
+        if (movementPoints >= _nextPathCost) return true;
+        else return false;
     }
 
     public void ArmyInteraction (GameObject interactingArmy)

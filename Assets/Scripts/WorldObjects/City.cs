@@ -179,7 +179,7 @@ public class City : MonoBehaviour
     {
         Debug.Log("Interacting army with city: " + interactingArmy.name);
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            //do sth with friendly city
+            SceneStateManager.EnterCity(this.gameObject, cityFraction);
         }else{
             //do sth with other player city
         }

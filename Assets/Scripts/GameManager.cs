@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameGrid gameGrid;
     [SerializeField] GameObject uiManager;
     [SerializeField] GameObject turnManager;
+    [SerializeField] GameObject gameHandler;
+
+    public GameState State;
 
     string mapFilePath, mapName;
     string [] mapInformationSplit;
@@ -19,6 +23,8 @@ public class GameManager : MonoBehaviour
     public string [] allPlayerColours;
     public string [] playerColours;
     private short gameComponentsReady = 0;
+
+    public static Action <GameState> OnGameStateChanged;
 
     void Awake()
     {
@@ -64,5 +70,51 @@ public class GameManager : MonoBehaviour
         }
         else gameComponentsReady++;
     }
+
+    public void UpdateGameState (GameState newState)
+    {
+        State = newState;
+
+        switch (newState){
+            case GameState.PlayerTurn:
+
+            break;
+
+            case GameState.FinishedTurn:
+
+            break;
+
+            case GameState.AiTurn:
+
+            break;
+
+            case GameState.CityEntered:
+
+            break;
+
+            case GameState.CityLeft:
+
+            break;
+        }
+
+        OnGameStateChanged?.Invoke(newState);
+    }
+
+    public void DisableWorldObjects ()
+    {
+        gameHandler.SetActive(false);
+    }
+
+    public void EnableWorldObjects ()
+    {
+        gameHandler.SetActive(true);
+    }
 }
 
+public enum GameState{
+    PlayerTurn,
+    FinishedTurn,
+    AiTurn,
+    CityEntered,
+    CityLeft
+}

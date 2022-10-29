@@ -11,7 +11,6 @@ public class PlayerManager : MonoBehaviour
     public string [] playablePlayerColours;
     private short playersReady = 0;
 
-    [SerializeField] GameManager gameManager;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] public GameObject neutralPlayer;
     public GameObject[] players;
@@ -24,9 +23,9 @@ public class PlayerManager : MonoBehaviour
 
     public void Awake ()
     {
-        playerColours = gameManager.allPlayerColours;
-        playablePlayerColours = gameManager.playerColours;
-        CreatePlayers(gameManager.numberOfPlayers);
+        playerColours = GameManager.Instance.allPlayerColours;
+        playablePlayerColours = GameManager.Instance.playerColours;
+        CreatePlayers(GameManager.Instance.numberOfPlayers);
         TurnManager.OnNewPlayerTurn += NextPlayerTurn;
         TurnManager.OnNewPlayerTurn += UpdateCurrentPlayer;
         

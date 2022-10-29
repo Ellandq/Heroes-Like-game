@@ -12,6 +12,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     [SerializeField] Army thisArmy;
     [SerializeField] GameObject objectToInteractWith;
     private List<Vector3> pathVectorList;
+    private List <int> pathCost;
     private Vector3 previousSelectedPosition;
     private int currentPathIndex;
     private bool isReadyToMove;
@@ -41,6 +42,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
                 previousSelectedPosition = _targetPosition;
                 SetTargetPosition(_targetPosition);
                 if (pathVectorList != null){
+                    pathCost = new List <int>();
                     visablePath.CreateVisablePath(pathVectorList, CalculatePathCost(), thisArmy);
                 }
             }
@@ -50,6 +52,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
             previousSelectedPosition = _targetPosition;
             SetTargetPosition(_targetPosition);
             if (pathVectorList != null){
+                pathCost = new List <int>();
                 visablePath.CreateVisablePath(pathVectorList, CalculatePathCost(), thisArmy);
             } 
         }
@@ -67,7 +70,13 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         if (moveToNextNode == null)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            moveToNextNode = StartCoroutine(MoveToNextNode(targetPosition));
+            if (thisArmy.CanArmyMoveToPathNode(pathCost[currentPathIndex]))
+            {
+                thisArmy.RemoveMovementPoints(pathCost[currentPathIndex]);
+                moveToNextNode = StartCoroutine(MoveToNextNode(targetPosition));
+            }else{
+                isMoving = false;
+            }
         }
     }
 
@@ -124,19 +133,17 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         }
         onMoveFinish?.Invoke();
     }
-
-    private int CalculatePathCost()
-    {
-        int pathCost = 0;
-
+    
+    private List <int> CalculatePathCost()
+    {      
         if (Vector3.Distance(pathVectorList[0], transform.position) > 5f){
-            pathCost += 14;
+            pathCost.Add(140);
         }else{
-            pathCost += 10;
+            pathCost.Add(100);
         }
         for(int i = 1; i < pathVectorList.Count; i++){
-            if (Vector3.Distance(pathVectorList[i - 1], pathVectorList[i]) > 5f) pathCost += 14;
-            else pathCost += 10;
+            if (Vector3.Distance(pathVectorList[i - 1], pathVectorList[i]) > 5f) pathCost.Add(140);
+            else pathCost.Add(100);
         }
         return pathCost;
     }

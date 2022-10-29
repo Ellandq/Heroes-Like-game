@@ -12,14 +12,17 @@ public class VisablePath : MonoBehaviour
 
     private List <GameObject> pathList = new List<GameObject>();
 
-    public void CreateVisablePath (List<Vector3> vectorPathList, int _pathCost, Army _selectedArmy)
+    public void CreateVisablePath (List<Vector3> vectorPathList, List <int> _pathCost, Army _selectedArmy)
     {
+        int simulatedMovementPoints = _selectedArmy.movementPoints;
         for (int i = 0; i < vectorPathList.Count; i++)
         {
             pathList.Add(Instantiate(movementPathDisplayPrefab, vectorPathList[i], Quaternion.identity, transform.parent));
             pathList[i].transform.parent = this.gameObject.transform;
             pathList[i].gameObject.name = "Path Tile: " + (i + 1);
-
+            if (simulatedMovementPoints > _pathCost[i]) pathList[i].GetComponent<MeshRenderer>().material =  walkableTile;
+            else pathList[i].GetComponent<MeshRenderer>().material =  blockedTile;
+            simulatedMovementPoints -= _pathCost[i];
         }
         pathList[pathList.Count - 1].transform.localScale += Vector3.one;
     }

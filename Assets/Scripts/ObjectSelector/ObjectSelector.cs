@@ -144,6 +144,9 @@ public class ObjectSelector : MonoBehaviour
     {
         lastObjectSelected = null;
         objectSelected = false;
+        if (armyHighlight.activeSelf){
+            armyHighlight.SetActive(false);
+        }
     }
 
     private void ArmySelectionLogic()

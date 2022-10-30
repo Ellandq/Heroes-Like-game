@@ -2,25 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ObjectSelector : MonoBehaviour
 {
+    public static ObjectSelector Instance;
     [SerializeField] GameObject armyHighlight;
+
+    [Header ("Camera referances: ")]
     [SerializeField] Camera playerCamera;
+    [SerializeField] Camera uiCamera;
+
+    [Header("Object referances: ")]
     [SerializeField] InputManager inputManager;
     [SerializeField] CameraManager cameraManager;
     [SerializeField] GameGrid gameGrid;
+
+    [Header("Raycast layers: ")]
     [SerializeField] LayerMask layersToHit;
+    [SerializeField] LayerMask uiLayers;
     
     [Header("Object selection information")]
-    [SerializeField] GameObject lastObjectSelected;
-    [SerializeField] bool objectSelected = false;
+    [SerializeField] public GameObject lastObjectSelected;
+    [SerializeField] public bool objectSelected = false;
     [SerializeField] public GameObject selectedObject;
     [SerializeField] public string selectedObjectTag;
 
     void Start ()
     {
+        Instance = this;
         TurnManager.OnNewPlayerTurn += ClearSelection;
         gameGrid = FindObjectOfType<GameGrid>();
         inputManager = FindObjectOfType<InputManager>();
@@ -28,7 +37,7 @@ public class ObjectSelector : MonoBehaviour
 
     void Update ()
     {
-
+        if (inputManager.mouseInput.IsMouseOverUI()) return;
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -107,32 +116,32 @@ public class ObjectSelector : MonoBehaviour
                     selectedObjectTag = null;
                 break;
             }
-        }
+        }  
     }
 
-    public void removeHighlight (Player _player)
-    {
-        selectedObject = null;
-        selectedObjectTag = null;
-        armyHighlight.SetActive(false);
-    }
-
-    public void addSelectedObject (GameObject _selectedObject)
+    public void AddSelectedObject (GameObject _selectedObject)
     {
         lastObjectSelected = _selectedObject;
         objectSelected = true;
         cameraManager.cameraMovement.CameraAddObjectToFollow(_selectedObject);
     }
 
-    public void removeSelectedObject ()
+    public void RemoveSelectedObject ()
     {
+        if (lastObjectSelected != null && lastObjectSelected.tag == "Army"){
+            try{
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().StopMoving();
+            }catch(NullReferenceException){} 
+        }
+        if (armyHighlight.activeSelf){
+            armyHighlight.SetActive(false);
+        }
         lastObjectSelected = null;
         objectSelected = false;
     }
 
     private void ClearSelection (Player _player)
     {
-        removeHighlight(_player);
         lastObjectSelected = null;
         objectSelected = false;
     }
@@ -141,13 +150,40 @@ public class ObjectSelector : MonoBehaviour
     {
         if (selectedObject.GetComponentInParent<Army>().canBeSelectedByCurrentPlayer)
         {
-            if (lastObjectSelected == null){
-                addSelectedObject(selectedObject);
+            if (lastObjectSelected == null || lastObjectSelected.tag != "Army"){
+                AddSelectedObject(selectedObject);
 
                 if (!armyHighlight.activeSelf){
                     armyHighlight.SetActive(true);
                 }
-            armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
+                armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
+            }else{
+                if (lastObjectSelected == selectedObject){
+                    Debug.Log("Do stuff with this army.");
+                    cameraManager.cameraMovement.CameraAddObjectToFollow(selectedObject);
+                }else {
+                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+                }
+            }     
+        }   
+        else if(lastObjectSelected != null && lastObjectSelected.tag == "Army")
+        {   
+            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+        }
+    }
+
+    public void ArmySelectionLogic(GameObject army)
+    {
+        selectedObject = army;
+        if (selectedObject.GetComponentInParent<Army>().canBeSelectedByCurrentPlayer)
+        {
+            if (lastObjectSelected == null){
+                AddSelectedObject(selectedObject);
+
+                if (!armyHighlight.activeSelf){
+                    armyHighlight.SetActive(true);
+                }
+                armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
             }else{
                 if (lastObjectSelected == selectedObject){
                     Debug.Log("Do stuff with this army.");
@@ -165,13 +201,15 @@ public class ObjectSelector : MonoBehaviour
 
     private void CitySelectionLogic()
     {
-        if (!selectedObject){
-            if (selectedObject.GetComponent<City>().canBeSelectedByCurrentPlayer){
-                addSelectedObject(selectedObject);
+        if (!objectSelected){
+            if (selectedObject.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
+                AddSelectedObject(selectedObject);
             }else{
                 armyHighlight.SetActive(false);
-                removeSelectedObject();
+                RemoveSelectedObject();
             }
+        }else if (lastObjectSelected == selectedObject && lastObjectSelected.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
+            lastObjectSelected.GetComponent<City>().CityInteraction();
         }
     }
 
@@ -183,9 +221,9 @@ public class ObjectSelector : MonoBehaviour
             }
         }else {
             if (selectedObject.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
-                addSelectedObject(selectedObject);
+                AddSelectedObject(selectedObject);
             }else{
-                removeSelectedObject();
+                RemoveSelectedObject();
             }
             armyHighlight.SetActive(false);
         }
@@ -254,7 +292,7 @@ public class ObjectSelector : MonoBehaviour
                 lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
             }
         }else {
-            removeSelectedObject();
+            RemoveSelectedObject();
             armyHighlight.SetActive(false);
         }
     }

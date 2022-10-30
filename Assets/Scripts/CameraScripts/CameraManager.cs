@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
     // Store a referance to all sub camera scripts
 
     [SerializeField]
@@ -17,6 +18,11 @@ public class CameraManager : MonoBehaviour
     internal CameraZoom cameraZoom;
 
     internal bool cameraEnabled = false;
+
+    void Start ()
+    {
+        Instance = this;
+    }
 
     public void EnableCamera ()
     {

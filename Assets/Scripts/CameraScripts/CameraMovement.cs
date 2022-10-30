@@ -30,12 +30,6 @@ public class CameraMovement: MonoBehaviour
     private Vector3 cameraOffset; 
     private Vector3 adjustedMovementVector;
 
-    // private Vector3 origin;
-    // private Vector3 difference;
-    // private Vector3 resetCamera;
-
-    //private bool drag = false;
-
     void Awake()
     {
         mouseInput = inputManager.GetComponent<MouseInput>();

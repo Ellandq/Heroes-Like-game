@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseInput : MonoBehaviour
 {
@@ -68,5 +69,10 @@ public class MouseInput : MonoBehaviour
             return gridCellCollider.gameObject;
         }
         return null;
+    }
+
+    public bool IsMouseOverUI ()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }

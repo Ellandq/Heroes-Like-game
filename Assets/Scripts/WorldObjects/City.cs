@@ -48,42 +48,42 @@ public class City : MonoBehaviour
     #region City buildings
 
     [Header("Buildings: Basic")]
-    public bool villageHall = true;
-    public bool townHall;
-    public bool cityHall;
-    public bool tavern;
-    public bool prison = true;
-    public bool fort;
-    public bool citadel;
-    public bool castle;
-    public bool caravan;
-    public bool shipyard;
+    public short villageHall = 1;
+    public short townHall;
+    public short cityHall;
+    public short tavern;
+    public short prison = 1;
+    public short fort;
+    public short citadel;
+    public short castle;
+    public short caravan;
+    public short shipyard;
 
     [Header("Buildings: Bonus")]
-    public bool bonusBuilding_1;
-    public bool bonusBuilding_2;
-    public bool equipementBuilding;
-    public bool racialBuilding;
-    public bool graalBuilding;
+    public short bonusBuilding_1;
+    public short bonusBuilding_2;
+    public short equipementBuilding;
+    public short racialBuilding;
+    public short graalBuilding;
 
     [Header("Buildings: Magic")]
-    public bool magicHall_1;
-    public bool magicHall_2;
-    public bool magicHall_3;
-    public bool magicHall_4;
-    public bool magicHall_5;
-    public bool addMagicBuilding_1;
-    public bool addMagicBuilding_2;
+    public short magicHall_1;
+    public short magicHall_2;
+    public short magicHall_3;
+    public short magicHall_4;
+    public short magicHall_5;
+    public short addMagicBuilding_1;
+    public short addMagicBuilding_2;
 
     [Header("Buildings: Unit buildings")]
-    public bool tier1Up;
-    public bool tier1Down;
-    public bool tier2Up;
-    public bool tier2Down;
-    public bool tier3Up;
-    public bool tier3Down;
-    public bool tier4Up;
-    public bool tier4Down;
+    public short tier1Up;
+    public short tier1Down;
+    public short tier2Up;
+    public short tier2Down;
+    public short tier3Up;
+    public short tier3Down;
+    public short tier4Up;
+    public short tier4Down;
 
     #endregion
 
@@ -99,39 +99,39 @@ public class City : MonoBehaviour
         #region City buildings
 
         //basic
-        villageHall =           Convert.ToBoolean(_cityBuildingStatus[0]);
-        townHall =              Convert.ToBoolean(_cityBuildingStatus[1]);
-        cityHall =              Convert.ToBoolean(_cityBuildingStatus[2]);
-        tavern =                Convert.ToBoolean(_cityBuildingStatus[3]);
-        prison =                Convert.ToBoolean(_cityBuildingStatus[4]);
-        fort =                  Convert.ToBoolean(_cityBuildingStatus[5]);
-        citadel =               Convert.ToBoolean(_cityBuildingStatus[6]);
-        castle =                Convert.ToBoolean(_cityBuildingStatus[7]);
-        caravan =               Convert.ToBoolean(_cityBuildingStatus[8]);
-        shipyard =              Convert.ToBoolean(_cityBuildingStatus[9]);
+        villageHall =           Convert.ToInt16(_cityBuildingStatus[0]);
+        townHall =              Convert.ToInt16(_cityBuildingStatus[1]);
+        cityHall =              Convert.ToInt16(_cityBuildingStatus[2]);
+        tavern =                Convert.ToInt16(_cityBuildingStatus[3]);
+        prison =                Convert.ToInt16(_cityBuildingStatus[4]);
+        fort =                  Convert.ToInt16(_cityBuildingStatus[5]);
+        citadel =               Convert.ToInt16(_cityBuildingStatus[6]);
+        castle =                Convert.ToInt16(_cityBuildingStatus[7]);
+        caravan =               Convert.ToInt16(_cityBuildingStatus[8]);
+        shipyard =              Convert.ToInt16(_cityBuildingStatus[9]);
         //bonus
-        bonusBuilding_1 =       Convert.ToBoolean(_cityBuildingStatus[10]);
-        bonusBuilding_2 =       Convert.ToBoolean(_cityBuildingStatus[11]);
-        equipementBuilding =    Convert.ToBoolean(_cityBuildingStatus[12]);
-        racialBuilding =        Convert.ToBoolean(_cityBuildingStatus[13]);
-        graalBuilding =         Convert.ToBoolean(_cityBuildingStatus[14]);
+        bonusBuilding_1 =       Convert.ToInt16(_cityBuildingStatus[10]);
+        bonusBuilding_2 =       Convert.ToInt16(_cityBuildingStatus[11]);
+        equipementBuilding =    Convert.ToInt16(_cityBuildingStatus[12]);
+        racialBuilding =        Convert.ToInt16(_cityBuildingStatus[13]);
+        graalBuilding =         Convert.ToInt16(_cityBuildingStatus[14]);
         //magic
-        magicHall_1 =           Convert.ToBoolean(_cityBuildingStatus[15]);
-        magicHall_2 =           Convert.ToBoolean(_cityBuildingStatus[16]);
-        magicHall_3 =           Convert.ToBoolean(_cityBuildingStatus[17]);
-        magicHall_4 =           Convert.ToBoolean(_cityBuildingStatus[18]);
-        magicHall_5 =           Convert.ToBoolean(_cityBuildingStatus[19]);
-        addMagicBuilding_1 =    Convert.ToBoolean(_cityBuildingStatus[20]);
-        addMagicBuilding_2 =    Convert.ToBoolean(_cityBuildingStatus[21]);
+        magicHall_1 =           Convert.ToInt16(_cityBuildingStatus[15]);
+        magicHall_2 =           Convert.ToInt16(_cityBuildingStatus[16]);
+        magicHall_3 =           Convert.ToInt16(_cityBuildingStatus[17]);
+        magicHall_4 =           Convert.ToInt16(_cityBuildingStatus[18]);
+        magicHall_5 =           Convert.ToInt16(_cityBuildingStatus[19]);
+        addMagicBuilding_1 =    Convert.ToInt16(_cityBuildingStatus[20]);
+        addMagicBuilding_2 =    Convert.ToInt16(_cityBuildingStatus[21]);
         //unit
-        tier1Up =               Convert.ToBoolean(_cityBuildingStatus[22]);
-        tier1Down =             Convert.ToBoolean(_cityBuildingStatus[23]);
-        tier2Up =               Convert.ToBoolean(_cityBuildingStatus[24]);
-        tier2Down =             Convert.ToBoolean(_cityBuildingStatus[25]);
-        tier3Up =               Convert.ToBoolean(_cityBuildingStatus[26]);
-        tier3Down =             Convert.ToBoolean(_cityBuildingStatus[27]);
-        tier4Up =               Convert.ToBoolean(_cityBuildingStatus[28]);
-        tier4Down =             Convert.ToBoolean(_cityBuildingStatus[29]);
+        tier1Up =               Convert.ToInt16(_cityBuildingStatus[22]);
+        tier1Down =             Convert.ToInt16(_cityBuildingStatus[23]);
+        tier2Up =               Convert.ToInt16(_cityBuildingStatus[24]);
+        tier2Down =             Convert.ToInt16(_cityBuildingStatus[25]);
+        tier3Up =               Convert.ToInt16(_cityBuildingStatus[26]);
+        tier3Down =             Convert.ToInt16(_cityBuildingStatus[27]);
+        tier4Up =               Convert.ToInt16(_cityBuildingStatus[28]);
+        tier4Down =             Convert.ToInt16(_cityBuildingStatus[29]);
         #endregion
 
         #region City Garrison
@@ -152,16 +152,16 @@ public class City : MonoBehaviour
 
     private void CityGoldProductionCheck()
     {
-        if (villageHall){
+        if (villageHall == 1){
             cityGoldProduction = 250;
-            if (townHall){
+            if (townHall == 1){
                 cityGoldProduction = 500;
-                if (cityHall){
+                if (cityHall == 1){
                     cityGoldProduction = 1000;
                 }
             }
         }else{
-            villageHall = true;
+            villageHall = 1;
             CityGoldProductionCheck();
         }
     }
@@ -183,6 +183,11 @@ public class City : MonoBehaviour
         }else{
             //do sth with other player city
         }
+    }
+
+    public void CityInteraction ()
+    {
+        SceneStateManager.EnterCity(this.gameObject, cityFraction);
     }
 
     public void GetEnteranceInformation (List <PathNode> _enteranceList)

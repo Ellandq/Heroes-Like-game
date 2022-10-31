@@ -11,11 +11,24 @@ public class PlayerManager : MonoBehaviour
     public string [] playablePlayerColours;
     private short playersReady = 0;
 
+    [Header("Player information")]
     [SerializeField] GameObject playerPrefab;
     [SerializeField] public GameObject neutralPlayer;
-    public GameObject[] players;
     [SerializeField] Player currentPlayer;
+    public GameObject[] players;
+    private Color currentPlayerColor;
 
+    [Header("Player colors")]
+    [SerializeField] private Color blue;
+    [SerializeField] private Color lightBlue;
+    [SerializeField] private Color purple;
+    [SerializeField] private Color red;
+    [SerializeField] private Color orange;
+    [SerializeField] private Color yellow;
+    [SerializeField] private Color lightGreen;
+    [SerializeField] private Color green;
+
+    [Header("Events")]
     public UnityEvent OnPlayerManagerReady;
     public UnityPlayerEvent OnNextPlayerTurn;
     public UnityEvent OnNewDayPlayerUpdate;
@@ -46,6 +59,7 @@ public class PlayerManager : MonoBehaviour
             players[i].GetComponent<Player>();
             players[i].transform.parent = transform;
             players[i].gameObject.name = playerColours[i] + " " + defaultPlayerName;
+            players[i].GetComponent<Player>().playerColor = AssignPlayerColour(playerColours[i]);
         }
     }
 
@@ -75,6 +89,44 @@ public class PlayerManager : MonoBehaviour
     public void UpdatePlayerUi (Player _player)
     {
         if (_player == currentPlayer) OnCurrentPlayerResourcesGained?.Invoke();
+    }
+
+    private Color AssignPlayerColour (string playerColour)
+    {
+        switch (playerColour){
+            case "Blue":
+                currentPlayerColor = blue;
+            break;
+
+            case "LightBlue":
+                currentPlayerColor = lightBlue;
+            break;
+
+            case "Purple":
+                currentPlayerColor = purple;
+            break;
+
+            case "Red":
+                currentPlayerColor = red;
+            break;
+
+            case "Orange":
+                currentPlayerColor = orange;
+            break;
+
+            case "Yellow":
+                currentPlayerColor = yellow;
+            break;
+
+            case "LightGreen":
+                currentPlayerColor = lightGreen;
+            break;
+
+            case "Green":
+                currentPlayerColor = green;
+            break;
+        }
+        return currentPlayerColor;
     }
 }
 

@@ -8,6 +8,7 @@ public class Army : MonoBehaviour
     [SerializeField] PlayerManager playerManager;
     [SerializeField] TurnManager turnManager;
     [SerializeField] GameGrid gameGrid;
+    [SerializeField] GameObject flag;
 
     [Header("Army information")]
     [SerializeField] public GameObject ownedByPlayer;
@@ -43,6 +44,16 @@ public class Army : MonoBehaviour
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
+        if (_ownedByPlayer.name != "Neutral Player"){
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+    }
+
+    public void RemoveOwningPlayer ()
+    {
+        ownedByPlayer = playerManager.neutralPlayer;
+        flag.SetActive(false);
     }
 
     public void ArmyInitialization (string _ownedByPLayer, Vector2Int _gridPosition, float _armyOrientation, int [] _armyUnits)
@@ -97,11 +108,11 @@ public class Army : MonoBehaviour
 
     public void ArmyInteraction (GameObject interactingArmy)
     {
-        Debug.Log("Interacting army: " + interactingArmy.name);
+        
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            //do sth with friendly army
+            Debug.Log("Interacting army: " + interactingArmy.name);
         }else{
-            //do sth with other playerarmy
+            Debug.Log("Do battle with: " + interactingArmy.name);
         }
     }
 

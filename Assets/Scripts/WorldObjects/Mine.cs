@@ -7,6 +7,7 @@ public class Mine : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
     [SerializeField] GameGrid gameGrid;
+    [SerializeField] GameObject flag;
 
     [Header("Mine information")]
     [SerializeField] GameObject ownedByPlayer;
@@ -39,6 +40,30 @@ public class Mine : MonoBehaviour
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
+        if (_ownedByPlayer.name != "Neutral Player"){
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+    }
+
+    private void ChangeOwningPlayer (GameObject _ownedByPlayer)
+    {
+        ownedByPlayer.GetComponent<Player>().ownedMines.Remove(this.gameObject);
+        if (ownedByPlayer.name == "Neutral Player"){
+            ownedByPlayer = _ownedByPlayer;
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }else{
+            ownedByPlayer = _ownedByPlayer;
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+        ownedByPlayer.GetComponent<Player>().ownedMines.Add(this.gameObject);
+    }
+
+    public void RemoveOwningPlayer ()
+    {
+        ownedByPlayer = playerManager.neutralPlayer;
+        flag.SetActive(false);
     }
 
     public void MineInitialization (string _ownedByPLayer, string _mineType, Vector2Int _gridPosition, float _mineOrientation, int [] _mineGarrisonUnits)
@@ -63,7 +88,12 @@ public class Mine : MonoBehaviour
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
             //do sth with friendly army
         }else{
-            //do sth with other playerarmy
+            if (IsMineEmpty()){
+                ChangeOwningPlayer(interactingArmy.GetComponent<Army>().ownedByPlayer);
+            }else{
+                Debug.Log("Do battle");
+            }
+            
         }
     }
 
@@ -75,5 +105,19 @@ public class Mine : MonoBehaviour
     public float GetMineRotation ()
     {
         return rotation.y;
+    }
+
+    private bool IsMineEmpty ()
+    {
+        // Something doesn't work here need to fix
+        // if (!mineGarrisonSlot1.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot2.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot3.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot4.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot5.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot6.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        // if (!mineGarrisonSlot7.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        return true;
+
     }
 }

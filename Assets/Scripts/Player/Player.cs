@@ -8,13 +8,15 @@ public class Player : MonoBehaviour
     [SerializeField] PlayerManager playerManager;
     internal short objectsToCreate = 0;
     internal short objectsCreated = 0;
+    private short daysToLoose = 4;
 
     [Header("Player basic information")]
     private City currentCity;
     private Army currentArmy;
     private Mine currentMine;
     public string playerName;
-    public string playerColour;
+    public string playerColourString;
+    public Color playerColor;
     public bool isPlayerAi = true;
     public bool turnDone = false;
 
@@ -47,11 +49,11 @@ public class Player : MonoBehaviour
         playerManager.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         playerManager.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         string[] str = this.name.Split(' ');
-        playerColour = str[0];
+        playerColourString = str[0];
         playerName = str[1];
         foreach (string colour in playerManager.playablePlayerColours)
         {
-            if (playerColour == colour)
+            if (playerColourString == colour)
             {
                 isPlayerAi = false;
             }
@@ -192,7 +194,26 @@ public class Player : MonoBehaviour
 
     private void PlayerDailyUpdate ()
     {
-        
+        CheckPlayerLooseCondition();
+    }
+
+    private void CheckPlayerLooseCondition ()
+    {
+        if (this.gameObject.name != "Neutral Player"){
+            if (ownedCities.Count == 0){
+                daysToLoose--;
+                if (ownedArmies.Count == 0){
+                    Debug.Log(this.gameObject.name + " has lost. ");
+                    Destroy(this.gameObject);
+                }else{
+                    if (daysToLoose == 0){
+                        Debug.Log(this.gameObject.name + " has lost. ");
+                        Destroy(this.gameObject);
+                    }
+                }
+                Debug.Log(this.gameObject.name + " has " + daysToLoose + " turns to regain a city.");
+            }
+        }
     }
 
     public void CheckPlayerStatus()
@@ -201,5 +222,11 @@ public class Player : MonoBehaviour
         if (objectsCreated == objectsToCreate){
             playerManager.PlayerManagerReady();
         }
+    }
+
+    void OnDestroy()
+    {
+        playerManager.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
+        playerManager.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
     }
 }

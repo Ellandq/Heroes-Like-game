@@ -8,6 +8,7 @@ public class City : MonoBehaviour
 {
     [SerializeField] PlayerManager playerManager;
     [SerializeField] GameGrid gameGrid;
+    [SerializeField] GameObject flag;
 
     [Header("Main city information")]
     [SerializeField] GameObject ownedByPlayer;
@@ -23,6 +24,7 @@ public class City : MonoBehaviour
     [SerializeField] List<PathNode> enteranceCells;
 
     [Header("Garrison refrences")]
+    bool cityEmpty;
     [SerializeField] GameObject garrisonSlot1;
     [SerializeField] GameObject garrisonSlot2;
     [SerializeField] GameObject garrisonSlot3;
@@ -43,6 +45,30 @@ public class City : MonoBehaviour
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
+        if (_ownedByPlayer.name != "Neutral Player"){
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+    }
+
+    private void ChangeOwningPlayer (GameObject _ownedByPlayer)
+    {
+        ownedByPlayer.GetComponent<Player>().ownedCities.Remove(this.gameObject);
+        if (ownedByPlayer.name == "Neutral Player"){
+            ownedByPlayer = _ownedByPlayer;
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }else{
+            ownedByPlayer = _ownedByPlayer;
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+        ownedByPlayer.GetComponent<Player>().ownedCities.Add(this.gameObject);
+    }
+
+    public void RemoveOwningPlayer ()
+    {
+        ownedByPlayer = playerManager.neutralPlayer;
+        flag.SetActive(false);
     }
 
     #region City buildings
@@ -181,7 +207,11 @@ public class City : MonoBehaviour
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
             SceneStateManager.EnterCity(this.gameObject, cityFraction);
         }else{
-            //do sth with other player city
+            if (IsCityEmpty()){
+                ChangeOwningPlayer(interactingArmy.GetComponent<Army>().ownedByPlayer);
+            }else{
+                Debug.Log("Do battle");
+            }
         }
     }
 
@@ -198,5 +228,17 @@ public class City : MonoBehaviour
     public float GetCityRotation ()
     {
         return rotation.y;
+    }
+
+    private bool IsCityEmpty ()
+    {
+        if (!garrisonSlot1.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot2.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot3.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot4.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot5.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot6.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlot7.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        return true;
     }
 }

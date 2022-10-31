@@ -50,6 +50,7 @@ public class Pathfinding
         PathNode endNode = gameGrid.GetPathNodeInformation(endGridPosition);
         openList = new List<PathNode> { startNode };
         closedList = new List<PathNode>();
+        targetEnterances = new List<PathNode>();
         isTargetPositionInteractable = false;
         isTargetObjectSmall = false;
         
@@ -104,6 +105,10 @@ public class Pathfinding
                 return CalculatePath(endNode);
             }else if (isTargetObjectSmall){
                 if (GetNeighbourList(currentNode).Contains(endNode)){
+                    return CalculatePath(currentNode);
+                }
+            }else if (targetEnterances.Count != 0){
+                if (targetEnterances.Contains(currentNode)){
                     return CalculatePath(currentNode);
                 }
             }

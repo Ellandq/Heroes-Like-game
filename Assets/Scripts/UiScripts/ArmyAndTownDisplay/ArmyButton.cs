@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArmyButton : MonoBehaviour
 {
     [SerializeField] GameObject armyHighlight;
     private GameObject connectedArmy;
+
+    void Start ()
+    {
+        try{
+            ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlighLogic);
+        }catch (NullReferenceException){}  
+    }
 
     internal void UpdateConnectedArmy(GameObject _army)
     {
@@ -14,14 +23,19 @@ public class ArmyButton : MonoBehaviour
 
     public void SelectArmy ()
     {
-        ObjectSelector.Instance.RemoveSelectedObject();
-        ObjectSelector.Instance.ArmySelectionLogic(connectedArmy);
+        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.transform.parent.gameObject == connectedArmy){
+            connectedArmy.GetComponentInParent<Army>().ArmyInteraction();
+        }else{
+            ObjectSelector.Instance.RemoveSelectedObject();
+            ObjectSelector.Instance.AddSelectedObject(connectedArmy);
+        }
     }
 
-    void FixedUpdate ()
+    private void HighlighLogic ()
     {
-        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedArmy){
-            armyHighlight.SetActive(true);
+        if (connectedArmy != null){
+            if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedArmy.name)) armyHighlight.SetActive(true);
+            else armyHighlight.SetActive(false);
         }else armyHighlight.SetActive(false);
     }
 }

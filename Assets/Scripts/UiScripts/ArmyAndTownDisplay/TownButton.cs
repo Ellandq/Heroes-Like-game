@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,13 @@ public class TownButton : MonoBehaviour
 {
     [SerializeField] GameObject townHighlight;
     private GameObject connectedCity;
+
+    void Start ()
+    {
+        try{
+            ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlighLogic);
+        }catch (NullReferenceException){}
+    }
 
     internal void UpdateConnectedCity(GameObject _city)
     {
@@ -22,10 +30,11 @@ public class TownButton : MonoBehaviour
         }
     }
 
-    void FixedUpdate ()
+    private void HighlighLogic ()
     {
-        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedCity){
-            townHighlight.SetActive(true);
+        if (connectedCity != null){
+            if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedCity) townHighlight.SetActive(true);
+            else townHighlight.SetActive(false);
         }else townHighlight.SetActive(false);
     }
 }

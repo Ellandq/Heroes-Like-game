@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ObjectSelector : MonoBehaviour
 {
     public static ObjectSelector Instance;
+    public UnityEvent onSelectedObjectChange;
     [SerializeField] GameObject armyHighlight;
 
     [Header ("Camera referances: ")]
@@ -124,6 +126,7 @@ public class ObjectSelector : MonoBehaviour
         lastObjectSelected = _selectedObject;
         objectSelected = true;
         cameraManager.cameraMovement.CameraAddObjectToFollow(_selectedObject);
+        onSelectedObjectChange.Invoke();
     }
 
     public void RemoveSelectedObject ()
@@ -138,6 +141,7 @@ public class ObjectSelector : MonoBehaviour
         }
         lastObjectSelected = null;
         objectSelected = false;
+        onSelectedObjectChange.Invoke();
     }
 
     private void ClearSelection (Player _player)
@@ -147,6 +151,7 @@ public class ObjectSelector : MonoBehaviour
         if (armyHighlight.activeSelf){
             armyHighlight.SetActive(false);
         }
+        onSelectedObjectChange.Invoke();
     }
 
     private void ArmySelectionLogic()

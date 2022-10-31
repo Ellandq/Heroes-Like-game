@@ -104,4 +104,10 @@ public class Army : MonoBehaviour
             //do sth with other playerarmy
         }
     }
+
+    public void ArmyInteraction ()
+    {
+        Debug.Log("Interacting with this army");
+        
+    }
 }

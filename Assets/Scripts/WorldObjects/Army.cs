@@ -121,4 +121,10 @@ public class Army : MonoBehaviour
         Debug.Log("Interacting with this army");
         
     }
+
+    void OnDestroy ()
+    {
+        playerManager.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
+        turnManager.OnNewDay.RemoveListener(RestoreMovementPoints);
+    }
 }

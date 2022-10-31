@@ -37,6 +37,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
                 isMoving = true;
                 MovementStatus();
             }else{
+                objectToInteractWith = null;
                 isReadyToMove = true;
                 visablePath.DestroyVisablePath();
                 previousSelectedPosition = _targetPosition;

@@ -68,9 +68,15 @@ public class Pathfinding
                         currentDistance = CalculateDistanceCost(startNode, targetEnterances[i]);
                         if (currentDistance < minDistance)
                         {
-                            minDistance = currentDistance;
-                            bestEnterance = targetEnterances[i];
+                            if (targetEnterances[i].isWalkable){
+                                minDistance = currentDistance;
+                                bestEnterance = targetEnterances[i];
+                            }
                         }
+                    }
+                    if (bestEnterance == null){
+                        startNode.isWalkable = false;
+                        return null;
                     }
                     endNode = bestEnterance;
                 } 

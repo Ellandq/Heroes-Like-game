@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ArmyButton : MonoBehaviour
 {
     [SerializeField] GameObject armyHighlight;
+    [SerializeField] GameObject movementSlider;
     private GameObject connectedArmy;
 
     void Start ()
@@ -18,7 +19,7 @@ public class ArmyButton : MonoBehaviour
 
     internal void UpdateConnectedArmy(GameObject _army)
     {
-        connectedArmy = _army;
+        connectedArmy = _army.transform.GetChild(0).gameObject;
     }
 
     public void SelectArmy ()

@@ -126,6 +126,10 @@ public class ObjectSelector : MonoBehaviour
         lastObjectSelected = _selectedObject;
         objectSelected = true;
         cameraManager.cameraMovement.CameraAddObjectToFollow(_selectedObject);
+        if (lastObjectSelected.tag == "Army"){
+            if (!armyHighlight.activeSelf) armyHighlight.SetActive(true);
+            armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(lastObjectSelected);
+        }
         onSelectedObjectChange.Invoke();
     }
 

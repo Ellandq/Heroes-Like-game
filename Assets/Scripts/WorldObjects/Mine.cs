@@ -109,14 +109,13 @@ public class Mine : MonoBehaviour
 
     private bool IsMineEmpty ()
     {
-        // Something doesn't work here need to fix
-        // if (!mineGarrisonSlot1.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot2.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot3.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot4.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot5.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot6.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        // if (!mineGarrisonSlot7.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot1.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot2.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot3.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot4.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot5.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot6.GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!mineGarrisonSlot7.GetComponent<UnitSlot>().slotEmpty) return false;
         return true;
 
     }

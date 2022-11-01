@@ -45,6 +45,8 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
                 if (pathVectorList != null){
                     pathCost = new List <int>();
                     visablePath.CreateVisablePath(pathVectorList, CalculatePathCost(), thisArmy);
+                }else{
+                    objectToInteractWith = null;
                 }
             }
             
@@ -55,7 +57,10 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
             if (pathVectorList != null){
                 pathCost = new List <int>();
                 visablePath.CreateVisablePath(pathVectorList, CalculatePathCost(), thisArmy);
-            } 
+            }else{
+                objectToInteractWith = null;
+            }
+            
         }
     }
 

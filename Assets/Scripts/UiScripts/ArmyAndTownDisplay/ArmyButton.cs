@@ -14,7 +14,9 @@ public class ArmyButton : MonoBehaviour
     {
         try{
             ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlighLogic);
-        }catch (NullReferenceException){}  
+        }catch (NullReferenceException){
+            Debug.Log(this.gameObject.name);
+        }  
     }
 
     internal void UpdateConnectedArmy(GameObject _army)

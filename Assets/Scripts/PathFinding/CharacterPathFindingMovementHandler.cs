@@ -35,6 +35,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
             if (Vector3.Distance(_targetPosition, pathVectorList[pathVectorList.Count - 1]) < 5f | Vector3.Distance(previousSelectedPosition, _targetPosition) < 5f)
             {
                 isMoving = true;
+                CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this.gameObject);
                 MovementStatus();
             }else{
                 objectToInteractWith = null;
@@ -142,13 +143,13 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     
     private List <int> CalculatePathCost()
     {      
-        if (Vector3.Distance(pathVectorList[0], transform.position) > 5f){
+        if (Vector3.Distance(pathVectorList[0], transform.position) > 6f){
             pathCost.Add(140);
         }else{
             pathCost.Add(100);
         }
         for(int i = 1; i < pathVectorList.Count; i++){
-            if (Vector3.Distance(pathVectorList[i - 1], pathVectorList[i]) > 5f) pathCost.Add(140);
+            if (Vector3.Distance(pathVectorList[i - 1], pathVectorList[i]) > 6f) pathCost.Add(140);
             else pathCost.Add(100);
         }
         return pathCost;

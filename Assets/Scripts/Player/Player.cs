@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    public UnityEvent onArmyAdded;
+    public UnityEvent onCityAdded;
     [SerializeField] PlayerManager playerManager;
     internal short objectsToCreate = 0;
     internal short objectsCreated = 0;
@@ -189,7 +191,7 @@ public class Player : MonoBehaviour
             break;
            
         }
-        playerManager.UpdatePlayerUi(this);
+        playerManager.UpdatePlayerUI(this);
     }
 
     private void PlayerDailyUpdate ()

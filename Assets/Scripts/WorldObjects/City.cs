@@ -33,44 +33,6 @@ public class City : MonoBehaviour
     [SerializeField] GameObject garrisonSlot6;
     [SerializeField] GameObject garrisonSlot7;
 
-    void Start ()
-    {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();   
-        playerManager.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
-        ownedByPlayer.GetComponent<Player>().CheckPlayerStatus();
-        gameGrid = FindObjectOfType<GameGrid>();
-        enteranceCells = new List<PathNode>();
-    }
-
-    public void AddOwningPlayer(GameObject _ownedByPlayer)
-    {
-        ownedByPlayer = _ownedByPlayer;
-        if (_ownedByPlayer.name != "Neutral Player"){
-            flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }
-    }
-
-    private void ChangeOwningPlayer (GameObject _ownedByPlayer)
-    {
-        ownedByPlayer.GetComponent<Player>().ownedCities.Remove(this.gameObject);
-        if (ownedByPlayer.name == "Neutral Player"){
-            ownedByPlayer = _ownedByPlayer;
-            flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }else{
-            ownedByPlayer = _ownedByPlayer;
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }
-        ownedByPlayer.GetComponent<Player>().ownedCities.Add(this.gameObject);
-    }
-
-    public void RemoveOwningPlayer ()
-    {
-        ownedByPlayer = playerManager.neutralPlayer;
-        flag.SetActive(false);
-    }
-
     #region City buildings
 
     [Header("Buildings: Basic")]
@@ -174,6 +136,45 @@ public class City : MonoBehaviour
         #endregion
 
         CityGoldProductionCheck();
+    }
+
+    void Start ()
+    {
+        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();   
+        playerManager.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
+        ownedByPlayer.GetComponent<Player>().CheckPlayerStatus();
+        gameGrid = FindObjectOfType<GameGrid>();
+        enteranceCells = new List<PathNode>();
+    }
+
+    public void AddOwningPlayer(GameObject _ownedByPlayer)
+    {
+        ownedByPlayer = _ownedByPlayer;
+        if (_ownedByPlayer.name != "Neutral Player"){
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+    }
+
+    private void ChangeOwningPlayer (GameObject _ownedByPlayer)
+    {
+        ownedByPlayer.GetComponent<Player>().ownedCities.Remove(this.gameObject);
+        if (ownedByPlayer.name == "Neutral Player"){
+            ownedByPlayer = _ownedByPlayer;
+            flag.SetActive(true);
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }else{
+            ownedByPlayer = _ownedByPlayer;
+            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+        }
+        ownedByPlayer.GetComponent<Player>().ownedCities.Add(this.gameObject);
+        ownedByPlayer.GetComponent<Player>().onCityAdded?.Invoke();
+    }
+
+    public void RemoveOwningPlayer ()
+    {
+        ownedByPlayer = playerManager.neutralPlayer;
+        flag.SetActive(false);
     }
 
     private void CityGoldProductionCheck()

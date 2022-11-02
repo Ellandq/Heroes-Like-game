@@ -86,7 +86,7 @@ public class PlayerManager : MonoBehaviour
         currentPlayer = _player;
     }
 
-    public void UpdatePlayerUi (Player _player)
+    public void UpdatePlayerUI (Player _player)
     {
         if (_player == currentPlayer) OnCurrentPlayerResourcesGained?.Invoke();
     }

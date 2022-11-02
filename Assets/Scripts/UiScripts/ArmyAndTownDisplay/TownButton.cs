@@ -12,7 +12,9 @@ public class TownButton : MonoBehaviour
     {
         try{
             ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlighLogic);
-        }catch (NullReferenceException){}
+        }catch (NullReferenceException){
+            Debug.Log("Object Selector Instance does not exist.");
+        }
     }
 
     internal void UpdateConnectedCity(GameObject _city)

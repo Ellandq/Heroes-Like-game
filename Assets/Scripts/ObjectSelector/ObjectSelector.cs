@@ -29,9 +29,13 @@ public class ObjectSelector : MonoBehaviour
     [SerializeField] public GameObject selectedObject;
     [SerializeField] public string selectedObjectTag;
 
-    void Start ()
+    private void Awake ()
     {
         Instance = this;
+    }
+
+    void Start ()
+    {
         TurnManager.OnNewPlayerTurn += ClearSelection;
         gameGrid = FindObjectOfType<GameGrid>();
         inputManager = FindObjectOfType<InputManager>();

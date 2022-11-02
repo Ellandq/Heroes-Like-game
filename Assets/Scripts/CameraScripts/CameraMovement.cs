@@ -145,7 +145,7 @@ public class CameraMovement: MonoBehaviour
     {
         if (cameraFollowingObject)
         {
-            cameraFollowObject.transform.position = Vector3.MoveTowards(cameraFollowObject.transform.position, (objectToMoveTowards.transform.position + CalculateCameraOffset()), moveSpeed);
+            cameraFollowObject.transform.position = Vector3.Lerp(cameraFollowObject.transform.position, (objectToMoveTowards.transform.position + CalculateCameraOffset()), moveSpeed/10 * Time.deltaTime);
             position = cameraFollowObject.transform.position;
             transform.position = cameraFollowObject.transform.position;
         }

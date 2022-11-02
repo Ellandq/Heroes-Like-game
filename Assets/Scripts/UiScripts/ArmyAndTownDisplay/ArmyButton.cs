@@ -8,14 +8,14 @@ public class ArmyButton : MonoBehaviour
 {
     [SerializeField] GameObject armyHighlight;
     [SerializeField] GameObject movementSlider;
-    private GameObject connectedArmy;
+    [SerializeField] private GameObject connectedArmy;
 
     void Start ()
     {
         try{
             ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlighLogic);
         }catch (NullReferenceException){
-            Debug.Log(this.gameObject.name);
+            Debug.Log("Object Selector Instance does not exist.");
         }  
     }
 

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class ArmyDisplay : MonoBehaviour
 {
-    [SerializeField] ObjectSelector objectSelector;
+    [SerializeField] GameObject armyDisplayPrefab;
+    [SerializeField] GameObject armyDisplayCanvas;
     [SerializeField] private List <GameObject> armyDisplay;
     
     [Header ("Display Images")]
@@ -15,12 +16,28 @@ public class ArmyDisplay : MonoBehaviour
     internal void UpdateArmyDisplay (Player player)
     {
         ResetArmyDisplay();
-        
+        if (player.ownedArmies.Count > 3){
+            for (int i = 3; i < player.ownedArmies.Count; i++){
+                armyDisplay.Add(Instantiate(armyDisplayPrefab, new Vector3(armyDisplayPrefab.transform.position.x, (-90 * (i - 1)), 0), Quaternion.identity));
+                armyDisplay[i].transform.SetParent(this.gameObject.transform, false);
+                armyDisplay[i].gameObject.name = "Army (" + i + ")"; 
+            }
+        }
         for (int i = 0; i < player.ownedArmies.Count; i++){
             armyDisplay[i].GetComponent<Image>().sprite = armyImage;
             armyDisplay[i].GetComponent<ArmyButton>().UpdateConnectedArmy(player.ownedArmies[i]);
             armyDisplay[i].GetComponent<Button>().interactable = true;
         }
+        this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - armyDisplay.Count) * 42, 0);
+    }
+
+    void Update ()
+    {
+        if (this.gameObject.GetComponent<RectTransform>().anchoredPosition.y < (3 - armyDisplay.Count) * 42 | this.gameObject.GetComponent<RectTransform>().anchoredPosition.y > (armyDisplay.Count - 3) * 42){
+            this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Clamp(this.gameObject.GetComponent<RectTransform>().anchoredPosition.y, (3 - armyDisplay.Count) * 42,(armyDisplay.Count - 3) * 42), 0);
+            armyDisplayCanvas.GetComponent<ScrollRect>().velocity = Vector2.zero;
+        }
+        
     }
 
     private void ResetArmyDisplay ()
@@ -30,6 +47,7 @@ public class ArmyDisplay : MonoBehaviour
                 if (displayedArmy == armyDisplay[0] | displayedArmy == armyDisplay[1] | displayedArmy == armyDisplay[2]) continue;
                 Destroy(displayedArmy);
             }
+            armyDisplay.RemoveRange(3, (armyDisplay.Count - 3));
         }else{
             armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
             armyDisplay[0].GetComponent<Button>().interactable = false;

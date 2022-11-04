@@ -25,7 +25,6 @@ public class TownAndArmySelection : MonoBehaviour
         currentPlayer = _player;
         currentPlayer.onArmyAdded.AddListener(UpdateCurrentArmyDisplay);
         currentPlayer.onCityAdded.AddListener(UpdateCurrentCityDisplay);
-
     }
 
     public void UpdateCurrentArmyDisplay ()

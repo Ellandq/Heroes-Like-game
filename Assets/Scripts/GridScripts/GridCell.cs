@@ -48,12 +48,17 @@ public class GridCell : MonoBehaviour
     void OnTriggerExit (Collider other)
     {
         if (other.gameObject.name == objectInThisGridSpace.name){
-            objectInThisGridSpace = null;
-            isOccupied = false;
-            isObjectInteractable = false;
-            pathNode.isWalkable = true;
-            pathNode.isOccupyingObjectInteratable = false;
-            pathNode.occupyingObject = null;
+            RemoveOccupyingObject();
         }
+    }
+
+    public void RemoveOccupyingObject()
+    {
+        objectInThisGridSpace = null;
+        isOccupied = false;
+        isObjectInteractable = false;
+        pathNode.isWalkable = true;
+        pathNode.isOccupyingObjectInteratable = false;
+        pathNode.occupyingObject = null;
     }
 }

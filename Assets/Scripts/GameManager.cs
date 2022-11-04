@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [SerializeField] GameGrid gameGrid;
+    [SerializeField] public GameGrid gameGrid;
     [SerializeField] GameObject uiManager;
     [SerializeField] GameObject turnManager;
     [SerializeField] GameObject gameHandler;

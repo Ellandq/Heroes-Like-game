@@ -45,7 +45,9 @@ public class CameraZoom : MonoBehaviour
         {
             if (cameraManager.cameraEnabled)
             {
-                if (mouseInput.mouseScrollStatus > 0f) // forward
+                if (!mouseInput.IsMouseOverUI())
+                {
+                    if (mouseInput.mouseScrollStatus > 0f) // forward
                 {
                     ZoomCamera();
                     cameraManager.cameraMovement.cameraFollowingObject = false;
@@ -54,6 +56,7 @@ public class CameraZoom : MonoBehaviour
                 {
                     UnZoomCamera();   
                     cameraManager.cameraMovement.cameraFollowingObject = false;  
+                }
                 }
             }  
         }

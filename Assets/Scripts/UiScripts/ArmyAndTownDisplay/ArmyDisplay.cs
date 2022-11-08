@@ -49,16 +49,16 @@ public class ArmyDisplay : MonoBehaviour
                 Destroy(displayedArmy);
             }
             armyDisplay.RemoveRange(3, (armyDisplay.Count - 3));
-        }else{
-            armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
-            armyDisplay[0].GetComponent<Button>().interactable = false;
-            armyDisplay[0].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
-            armyDisplay[1].GetComponent<Image>().sprite = emptyCell;
-            armyDisplay[1].GetComponent<Button>().interactable = false;
-            armyDisplay[1].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
-            armyDisplay[2].GetComponent<Image>().sprite = emptyCell;
-            armyDisplay[2].GetComponent<Button>().interactable = false;
-            armyDisplay[2].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
         }
+        armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
+        armyDisplay[0].GetComponent<Button>().interactable = false;
+        armyDisplay[0].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        armyDisplay[1].GetComponent<Image>().sprite = emptyCell;
+        armyDisplay[1].GetComponent<Button>().interactable = false;
+        armyDisplay[1].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        armyDisplay[2].GetComponent<Image>().sprite = emptyCell;
+        armyDisplay[2].GetComponent<Button>().interactable = false;
+        armyDisplay[2].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        
     }
 }

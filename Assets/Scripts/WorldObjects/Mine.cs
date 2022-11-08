@@ -73,13 +73,13 @@ public class Mine : MonoBehaviour
         rotation.y = _mineOrientation;
         transform.localEulerAngles = rotation;
         
-        mineGarrisonSlot1.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[0], _mineGarrisonUnits[1]);
-        mineGarrisonSlot2.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[2], _mineGarrisonUnits[3]);
-        mineGarrisonSlot3.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[4], _mineGarrisonUnits[5]);
-        mineGarrisonSlot4.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[6], _mineGarrisonUnits[7]);
-        mineGarrisonSlot5.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[8], _mineGarrisonUnits[9]);
-        mineGarrisonSlot6.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[10], _mineGarrisonUnits[11]);
-        mineGarrisonSlot7.GetComponent<UnitSlot>().ChangeSlotStatus(_mineGarrisonUnits[12], _mineGarrisonUnits[13]);  
+        mineGarrisonSlot1.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[0], _mineGarrisonUnits[1]);
+        mineGarrisonSlot2.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[2], _mineGarrisonUnits[3]);
+        mineGarrisonSlot3.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[4], _mineGarrisonUnits[5]);
+        mineGarrisonSlot4.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[6], _mineGarrisonUnits[7]);
+        mineGarrisonSlot5.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[8], _mineGarrisonUnits[9]);
+        mineGarrisonSlot6.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[10], _mineGarrisonUnits[11]);
+        mineGarrisonSlot7.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[12], _mineGarrisonUnits[13]);  
     }
 
     public void MineInteraction (GameObject interactingArmy)

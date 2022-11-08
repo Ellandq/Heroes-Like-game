@@ -27,6 +27,7 @@ public class ArmyDisplay : MonoBehaviour
             armyDisplay[i].GetComponent<Image>().sprite = armyImage;
             armyDisplay[i].GetComponent<ArmyButton>().UpdateConnectedArmy(player.ownedArmies[i]);
             armyDisplay[i].GetComponent<Button>().interactable = true;
+            armyDisplay[i].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(true);
         }
         this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - armyDisplay.Count) * 42, 0);
     }
@@ -51,10 +52,13 @@ public class ArmyDisplay : MonoBehaviour
         }else{
             armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
             armyDisplay[0].GetComponent<Button>().interactable = false;
+            armyDisplay[0].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
             armyDisplay[1].GetComponent<Image>().sprite = emptyCell;
             armyDisplay[1].GetComponent<Button>().interactable = false;
+            armyDisplay[1].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
             armyDisplay[2].GetComponent<Image>().sprite = emptyCell;
             armyDisplay[2].GetComponent<Button>().interactable = false;
+            armyDisplay[2].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
         }
     }
 }

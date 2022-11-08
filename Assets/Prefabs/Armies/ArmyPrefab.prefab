@@ -46,6 +46,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &2682776652649668650
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +93,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &2944581863151965067
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +140,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &3819773267028321811
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +187,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &4644565787811614284
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +250,14 @@ MonoBehaviour:
   maxMovementPoints: 0
   movementPoints: 0
   canBeSelectedByCurrentPlayer: 0
+  unitSlots:
+  - {fileID: 2398234423498502371}
+  - {fileID: 2944581863151965067}
+  - {fileID: 3819773267028321811}
+  - {fileID: 2682776652649668650}
+  - {fileID: 4790178493349705224}
+  - {fileID: 7496930890108587425}
+  - {fileID: 6762431109089847851}
   unitSlot1: {fileID: 2398234423498502371}
   unitSlot2: {fileID: 2944581863151965067}
   unitSlot3: {fileID: 3819773267028321811}
@@ -343,6 +355,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &6560312266923234945
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +497,7 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0
 --- !u!1 &6797657239303417881
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,3 +673,4 @@ MonoBehaviour:
   slotEmpty: 1
   unitName: Empty
   howManyUnits: 0
+  movementPoints: 0

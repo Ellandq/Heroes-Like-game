@@ -21,7 +21,6 @@ public class Pathfinding
     public Pathfinding (GameGrid _gameGrid)
     {
         Instance = this;
-        //gameGrid = GameObject.FindGameObjectsWithTag("GameGrid")[0].GetComponent<GameGrid>();
         gameGrid = _gameGrid;
     }
 

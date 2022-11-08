@@ -25,13 +25,7 @@ public class City : MonoBehaviour
 
     [Header("Garrison refrences")]
     bool cityEmpty;
-    [SerializeField] GameObject garrisonSlot1;
-    [SerializeField] GameObject garrisonSlot2;
-    [SerializeField] GameObject garrisonSlot3;
-    [SerializeField] GameObject garrisonSlot4;
-    [SerializeField] GameObject garrisonSlot5;
-    [SerializeField] GameObject garrisonSlot6;
-    [SerializeField] GameObject garrisonSlot7;
+    [SerializeField] public List <GameObject> garrisonSlots;
 
     #region City buildings
 
@@ -123,14 +117,13 @@ public class City : MonoBehaviour
         #endregion
 
         #region City Garrison
-       
-        garrisonSlot1.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[0], _cityGarrison[1]);
-        garrisonSlot2.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[2], _cityGarrison[3]);
-        garrisonSlot3.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[4], _cityGarrison[5]);
-        garrisonSlot4.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[6], _cityGarrison[7]);
-        garrisonSlot5.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[8], _cityGarrison[9]);
-        garrisonSlot6.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[10], _cityGarrison[11]);
-        garrisonSlot7.GetComponent<GarrisonSlot>().SetSlotStatus(_cityGarrison[12], _cityGarrison[13]);
+        garrisonSlots[0].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[0], _cityGarrison[1]);
+        garrisonSlots[1].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[2], _cityGarrison[3]);
+        garrisonSlots[2].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[4], _cityGarrison[5]);
+        garrisonSlots[3].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[6], _cityGarrison[7]);
+        garrisonSlots[4].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[8], _cityGarrison[9]);
+        garrisonSlots[5].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[10], _cityGarrison[11]);
+        garrisonSlots[6].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[12], _cityGarrison[13]);
 
         
         #endregion
@@ -233,13 +226,18 @@ public class City : MonoBehaviour
 
     private bool IsCityEmpty ()
     {
-        if (!garrisonSlot1.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot2.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot3.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot4.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot5.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot6.GetComponent<GarrisonSlot>().slotEmpty) return false;
-        if (!garrisonSlot7.GetComponent<GarrisonSlot>().slotEmpty) return false;
+        if (!garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) return false;
+        if (!garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) return false;
         return true;
+    }
+
+    public List<GameObject> GetCityGarrison ()
+    {
+        return garrisonSlots;
     }
 }

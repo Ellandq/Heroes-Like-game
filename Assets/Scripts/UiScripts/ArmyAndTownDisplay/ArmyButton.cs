@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ArmyButton : MonoBehaviour
 {
     [SerializeField] GameObject armyHighlight;
-    [SerializeField] GameObject movementSlider;
+    [SerializeField] internal Slider movementSlider;
     [SerializeField] private GameObject connectedArmy;
 
     void Start ()
@@ -21,7 +21,11 @@ public class ArmyButton : MonoBehaviour
 
     internal void UpdateConnectedArmy(GameObject _army)
     {
+        if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
         connectedArmy = _army.transform.GetChild(0).gameObject;
+        movementSlider.maxValue = connectedArmy.GetComponentInParent<Army>().maxMovementPoints;
+        movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
+        connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
     }
 
     public void SelectArmy ()
@@ -40,5 +44,10 @@ public class ArmyButton : MonoBehaviour
             if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedArmy.name)) armyHighlight.SetActive(true);
             else armyHighlight.SetActive(false);
         }else armyHighlight.SetActive(false);
+    }
+
+    private void ChangeMovementPointSliderStatus()
+    {
+        movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
     }
 }

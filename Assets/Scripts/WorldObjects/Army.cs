@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 
 public class Army : MonoBehaviour
 {
+    public UnityEvent onMovementPointsChanged;
     [SerializeField] PlayerManager playerManager;
     [SerializeField] TurnManager turnManager;
     [SerializeField] GameGrid gameGrid;
@@ -15,18 +17,12 @@ public class Army : MonoBehaviour
     public Vector2Int gridPosition;
     private Vector3 position;
     private Vector3 rotation;
-    [SerializeField] int maxMovementPoints;
+    public int maxMovementPoints;
     public int movementPoints;
     public bool canBeSelectedByCurrentPlayer;
 
     [Header("Unit slots references")]
-    [SerializeField] GameObject unitSlot1;
-    [SerializeField] GameObject unitSlot2;
-    [SerializeField] GameObject unitSlot3;
-    [SerializeField] GameObject unitSlot4;
-    [SerializeField] GameObject unitSlot5;
-    [SerializeField] GameObject unitSlot6;
-    [SerializeField] GameObject unitSlot7;
+    [SerializeField] public List <GameObject> unitSlots;
 
     void Start ()
     {
@@ -62,13 +58,13 @@ public class Army : MonoBehaviour
         rotation.y = _armyOrientation;
         transform.localEulerAngles = rotation;
 
-        unitSlot1.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[0], _armyUnits[1]);
-        unitSlot2.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[2], _armyUnits[3]);
-        unitSlot3.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[4], _armyUnits[5]);
-        unitSlot4.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[6], _armyUnits[7]);
-        unitSlot5.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[8], _armyUnits[9]);
-        unitSlot6.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[10], _armyUnits[11]);
-        unitSlot7.GetComponent<UnitSlot>().ChangeSlotStatus(_armyUnits[12], _armyUnits[13]);
+        unitSlots[0].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[0], _armyUnits[1]);
+        unitSlots[1].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[2], _armyUnits[3]);
+        unitSlots[2].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[4], _armyUnits[5]);
+        unitSlots[3].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[6], _armyUnits[7]);
+        unitSlots[4].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[8], _armyUnits[9]);
+        unitSlots[5].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[10], _armyUnits[11]);
+        unitSlots[6].GetComponent<UnitSlot>().SetSlotStatus(_armyUnits[12], _armyUnits[13]);
     }
 
     private void UpdateArmySelectionAvailability(Player _player)
@@ -93,11 +89,21 @@ public class Army : MonoBehaviour
     private void RestoreMovementPoints ()
     {
         movementPoints = maxMovementPoints;
+        onMovementPointsChanged?.Invoke();
     }
+
+    public void AddMovementPoints(int pointsToAdd)
+    {
+        movementPoints += pointsToAdd;
+        if (movementPoints > maxMovementPoints) movementPoints = maxMovementPoints;
+        onMovementPointsChanged?.Invoke();
+    }
+
 
     public void RemoveMovementPoints(int _pathCost)
     {
         movementPoints -= _pathCost;
+        onMovementPointsChanged?.Invoke();
     }
 
     public bool CanArmyMoveToPathNode (int _nextPathCost)
@@ -126,5 +132,10 @@ public class Army : MonoBehaviour
     {
         playerManager.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
         turnManager.OnNewDay.RemoveListener(RestoreMovementPoints);
+    }
+
+    public List<GameObject> GetArmyUnits ()
+    {
+        return unitSlots;
     }
 }

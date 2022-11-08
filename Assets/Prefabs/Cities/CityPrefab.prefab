@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7648980934381891059}
-  - component: {fileID: 3061485993853361366}
+  - component: {fileID: 2447926818138442964}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 6'
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3061485993853361366
+--- !u!114 &2447926818138442964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +40,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 252166735983418791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &267576068781087459
@@ -450,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9190740090453154505}
-  - component: {fileID: 6113795242119340335}
+  - component: {fileID: 8683381809637550394}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 2'
   m_TagString: Untagged
@@ -472,7 +473,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6113795242119340335
+--- !u!114 &8683381809637550394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -481,11 +482,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1696032949476376270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &2763146837062339831
@@ -497,7 +499,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6759018380703730198}
-  - component: {fileID: 1850113959365359810}
+  - component: {fileID: 8499553949948947712}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 7'
   m_TagString: Untagged
@@ -519,7 +521,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1850113959365359810
+--- !u!114 &8499553949948947712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -528,11 +530,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2763146837062339831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &2767771019013949530
@@ -544,7 +547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1307134737498010236}
-  - component: {fileID: 833230595169280623}
+  - component: {fileID: 6673140921278308167}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 5'
   m_TagString: Untagged
@@ -566,7 +569,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &833230595169280623
+--- !u!114 &6673140921278308167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -575,11 +578,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2767771019013949530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &3463128868085294678
@@ -591,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2425153366101253883}
-  - component: {fileID: 2421054953119832459}
+  - component: {fileID: 1083156671019766711}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 3'
   m_TagString: Untagged
@@ -613,7 +617,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2421054953119832459
+--- !u!114 &1083156671019766711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -622,11 +626,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3463128868085294678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &4626924050586917891
@@ -1273,7 +1278,7 @@ GameObject:
   - component: {fileID: 7799780420752473731}
   m_Layer: 0
   m_Name: CityPrefab
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1319,13 +1324,14 @@ MonoBehaviour:
   canBeSelectedByCurrentPlayer: 0
   cityEnterance: {fileID: 267576068781087459}
   enteranceCells: []
-  garrisonSlot1: {fileID: 8850495592477780268}
-  garrisonSlot2: {fileID: 1696032949476376270}
-  garrisonSlot3: {fileID: 3463128868085294678}
-  garrisonSlot4: {fileID: 9164415858131203009}
-  garrisonSlot5: {fileID: 2767771019013949530}
-  garrisonSlot6: {fileID: 252166735983418791}
-  garrisonSlot7: {fileID: 2763146837062339831}
+  garrisonSlots:
+  - {fileID: 8850495592477780268}
+  - {fileID: 1696032949476376270}
+  - {fileID: 3463128868085294678}
+  - {fileID: 9164415858131203009}
+  - {fileID: 2767771019013949530}
+  - {fileID: 252166735983418791}
+  - {fileID: 2763146837062339831}
   villageHall: 1
   townHall: 0
   cityHall: 0
@@ -1460,7 +1466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3112186668451516610}
-  - component: {fileID: 6081523717923729065}
+  - component: {fileID: 8401541265664051511}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 1'
   m_TagString: Untagged
@@ -1482,7 +1488,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6081523717923729065
+--- !u!114 &8401541265664051511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1491,11 +1497,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8850495592477780268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &9164415858131203009
@@ -1507,7 +1514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8585474075992700147}
-  - component: {fileID: 1396805163787284257}
+  - component: {fileID: 2262351141426014445}
   m_Layer: 0
   m_Name: 'GarrisonSlot: 4'
   m_TagString: Untagged
@@ -1529,7 +1536,7 @@ Transform:
   m_Father: {fileID: 7907601348334207889}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1396805163787284257
+--- !u!114 &2262351141426014445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1538,10 +1545,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 9164415858131203009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ce3eb605fe18c408d8c1c696e2dcc0, type: 3}
+  m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: 
+  unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0

@@ -20,7 +20,7 @@ public class VisablePath : MonoBehaviour
             pathList.Add(Instantiate(movementPathDisplayPrefab, vectorPathList[i], Quaternion.identity, transform.parent));
             pathList[i].transform.parent = this.gameObject.transform;
             pathList[i].gameObject.name = "Path Tile: " + (i + 1);
-            if (simulatedMovementPoints > _pathCost[i]) pathList[i].GetComponent<MeshRenderer>().material =  walkableTile;
+            if (simulatedMovementPoints >= _pathCost[i]) pathList[i].GetComponent<MeshRenderer>().material =  walkableTile;
             else pathList[i].GetComponent<MeshRenderer>().material =  blockedTile;
             simulatedMovementPoints -= _pathCost[i];
         }

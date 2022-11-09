@@ -12,6 +12,7 @@ public class KeyboardInput : MonoBehaviour
     internal bool isLeftPressed;
     internal bool isRightPressed;
     internal bool resetCameraPressed;
+    internal bool isLeftShiftPressed;
     //internal bool isTabKeyPressed;
     //internal bool isSpaceKeyPressed
 
@@ -50,6 +51,12 @@ public class KeyboardInput : MonoBehaviour
         }
         else{
             resetCameraPressed = false;
+        }
+
+        if(Input.GetKey(KeyCode.LeftShift)){
+            isLeftShiftPressed = true;
+        }else{
+            isLeftShiftPressed = false;
         }
     }
 }

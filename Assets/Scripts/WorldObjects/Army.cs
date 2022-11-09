@@ -138,4 +138,31 @@ public class Army : MonoBehaviour
     {
         return unitSlots;
     }
+
+    public void SwapUnitsPosition (short a, short b)
+    {
+        int id01 = unitSlots[a].GetComponent<UnitSlot>().unitID;
+        int id02 = unitSlots[b].GetComponent<UnitSlot>().unitID;
+        int unitCount01 = unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        int unitCount02 = unitSlots[b].GetComponent<UnitSlot>().howManyUnits;
+        float mPoints01 = unitSlots[a].GetComponent<UnitSlot>().movementPoints;
+        float mPoints02 = unitSlots[b].GetComponent<UnitSlot>().movementPoints;
+        unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+        unitSlots[b].GetComponent<UnitSlot>().RemoveUnits();
+
+        unitSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
+        unitSlots[b].GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
+    }
+
+    public void AddUnits (short a, short b)
+    {
+        unitSlots[b].GetComponent<UnitSlot>().howManyUnits += unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+    }
+
+    public bool AreUnitSlotsSameType (short a, short b)
+    {
+        if (unitSlots[a].GetComponent<UnitSlot>().unitID == unitSlots[b].GetComponent<UnitSlot>().unitID) return true;
+        else return false;
+    }
 }

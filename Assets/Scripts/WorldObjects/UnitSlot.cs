@@ -17,13 +17,21 @@ public class UnitSlot : MonoBehaviour
     private string [] unitSplitName;
     private string currentReadUnit;
 
-    public void ChangeSlotStatus(int _unitId, int _howManyUnits, float _movementPoints)
-    {
+    private void Awake ()
+    {   
         unitFileName = "UnitInformation.txt";
         unitInformationFilePath = Application.dataPath + "/" + "GameInformation/" + unitFileName;
-        
-        if (_howManyUnits == 0)
+    }
+
+    public void ChangeSlotStatus(int _unitId, int _howManyUnits, float _movementPoints)
+    { 
+        if (_howManyUnits == 0 | _unitId == 0)
         {
+            slotEmpty = true;
+            unitName = "Empty";
+            unitID = 0;
+            howManyUnits = 0;
+            movementPoints = 0f;
             return;
         }
         if (File.Exists(unitInformationFilePath))
@@ -41,6 +49,7 @@ public class UnitSlot : MonoBehaviour
             {
                 unitName = splitUnitInfo[0];
             }            
+            unitID = _unitId; 
         }
         else{
             Debug.Log("File does not exist");
@@ -51,10 +60,7 @@ public class UnitSlot : MonoBehaviour
     }
 
     public void SetSlotStatus(int _unitId, int _howManyUnits)
-    {
-        unitFileName = "UnitInformation.txt";
-        unitInformationFilePath = Application.dataPath + "/" + "GameInformation/" + unitFileName;
-        
+    {       
         if (_howManyUnits == 0)
         {
             return;
@@ -82,5 +88,14 @@ public class UnitSlot : MonoBehaviour
         }
         howManyUnits = _howManyUnits;
         slotEmpty = false;
+    }
+
+    public void RemoveUnits()
+    {
+        slotEmpty = true;
+        unitName = "Empty";
+        unitID = 0;
+        howManyUnits = 0;
+        movementPoints = 0f;
     }
 }

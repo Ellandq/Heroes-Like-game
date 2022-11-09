@@ -240,4 +240,31 @@ public class City : MonoBehaviour
     {
         return garrisonSlots;
     }
+
+    public void SwapUnitsPosition (short a, short b)
+    {
+        int id01 = garrisonSlots[a].GetComponent<UnitSlot>().unitID;
+        int id02 = garrisonSlots[b].GetComponent<UnitSlot>().unitID;
+        int unitCount01 = garrisonSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        int unitCount02 = garrisonSlots[b].GetComponent<UnitSlot>().howManyUnits;
+        float mPoints01 = garrisonSlots[a].GetComponent<UnitSlot>().movementPoints;
+        float mPoints02 = garrisonSlots[b].GetComponent<UnitSlot>().movementPoints;
+        garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+        garrisonSlots[b].GetComponent<UnitSlot>().RemoveUnits();
+
+        garrisonSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
+        garrisonSlots[b].GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
+    }
+
+    public void AddUnits (short a, short b)
+    {
+        garrisonSlots[b].GetComponent<UnitSlot>().howManyUnits += garrisonSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+    }
+
+    public bool AreGarrisonSlotsSameType (short a, short b)
+    {
+        if (garrisonSlots[a].GetComponent<UnitSlot>().unitID == garrisonSlots[b].GetComponent<UnitSlot>().unitID) return true;
+        else return false;
+    }
 }

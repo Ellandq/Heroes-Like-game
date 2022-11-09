@@ -426,7 +426,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 88016627}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1464026425}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &88016627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,6 +847,8 @@ GameObject:
   - component: {fileID: 178736209}
   - component: {fileID: 178736211}
   - component: {fileID: 178736210}
+  - component: {fileID: 178736212}
+  - component: {fileID: 178736213}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -858,7 +872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100.00052, y: -50.00049}
+  m_AnchoredPosition: {x: 100, y: -50}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &178736210
@@ -899,6 +913,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178736208}
   m_CullTransparentMesh: 1
+--- !u!114 &178736212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178736208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 375719026}
+  canvas: {fileID: 986812902}
+--- !u!225 &178736213
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178736208}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &243544476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375719025}
+  - component: {fileID: 375719026}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -1630,6 +1671,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &375719026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375719024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 1243509269}
+  slotID: 0
+  isSlotEmpty: 0
 --- !u!1 &381926978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,7 +2406,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 468348222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1250533950}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &468348222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2987,7 +3057,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 593328097}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 904327734}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &593328097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3691,6 +3773,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   defaultBackground: {fileID: 21300000, guid: 0c932dc43a5bb2c45b5a2efa6111ab59, type: 3}
+  selectedUnit: {fileID: 0}
   unitInfoSlot:
   - {fileID: 178736208}
   - {fileID: 1467706210}
@@ -3715,6 +3798,9 @@ MonoBehaviour:
   - {fileID: 1588174630}
   - {fileID: 1078969197}
   - {fileID: 1394147250}
+  onUnitDisplayReload:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &701517599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3724,6 +3810,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 701517600}
+  - component: {fileID: 701517601}
   m_Layer: 0
   m_Name: Unit (5)
   m_TagString: Untagged
@@ -3748,6 +3835,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &701517601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701517599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 748931579}
+  slotID: 5
+  isSlotEmpty: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3963,6 +4067,8 @@ GameObject:
   - component: {fileID: 735290148}
   - component: {fileID: 735290150}
   - component: {fileID: 735290149}
+  - component: {fileID: 735290151}
+  - component: {fileID: 735290152}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -4027,6 +4133,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735290147}
   m_CullTransparentMesh: 1
+--- !u!114 &735290151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735290147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 904327734}
+  canvas: {fileID: 986812902}
+--- !u!225 &735290152
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735290147}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &743587849
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,7 +4315,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 748931580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 701517601}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &748931580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4233,6 +4377,8 @@ GameObject:
   - component: {fileID: 779648521}
   - component: {fileID: 779648523}
   - component: {fileID: 779648522}
+  - component: {fileID: 779648524}
+  - component: {fileID: 779648525}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -4297,6 +4443,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779648520}
   m_CullTransparentMesh: 1
+--- !u!114 &779648524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779648520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 1596463347}
+  canvas: {fileID: 986812902}
+--- !u!225 &779648525
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779648520}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &801845022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4693,6 +4865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 904327733}
+  - component: {fileID: 904327734}
   m_Layer: 0
   m_Name: Unit (6)
   m_TagString: Untagged
@@ -4717,6 +4890,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &904327734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904327732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 593328096}
+  slotID: 6
+  isSlotEmpty: 0
 --- !u!1 &920851525
 GameObject:
   m_ObjectHideFlags: 0
@@ -5558,6 +5748,8 @@ GameObject:
   - component: {fileID: 1174858001}
   - component: {fileID: 1174858003}
   - component: {fileID: 1174858002}
+  - component: {fileID: 1174858004}
+  - component: {fileID: 1174858005}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -5622,6 +5814,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174858000}
   m_CullTransparentMesh: 1
+--- !u!114 &1174858004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174858000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 1974990052}
+  canvas: {fileID: 986812902}
+--- !u!225 &1174858005
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174858000}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1178740844
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,7 +6323,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1243509270}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 375719026}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1243509270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,6 +6383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1250533949}
+  - component: {fileID: 1250533950}
   m_Layer: 0
   m_Name: Unit (1)
   m_TagString: Untagged
@@ -6177,6 +6408,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250533950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250533948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 468348221}
+  slotID: 1
+  isSlotEmpty: 0
 --- !u!1 &1264792661
 GameObject:
   m_ObjectHideFlags: 0
@@ -6336,7 +6584,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1303806695}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1974990052}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1303806695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7255,6 +7515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1464026424}
+  - component: {fileID: 1464026425}
   m_Layer: 0
   m_Name: Unit (4)
   m_TagString: Untagged
@@ -7279,6 +7540,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1464026425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464026423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 88016626}
+  slotID: 4
+  isSlotEmpty: 0
 --- !u!1 &1467706210
 GameObject:
   m_ObjectHideFlags: 0
@@ -7290,6 +7568,8 @@ GameObject:
   - component: {fileID: 1467706211}
   - component: {fileID: 1467706213}
   - component: {fileID: 1467706212}
+  - component: {fileID: 1467706214}
+  - component: {fileID: 1467706215}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -7354,6 +7634,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467706210}
   m_CullTransparentMesh: 1
+--- !u!114 &1467706214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467706210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 1250533950}
+  canvas: {fileID: 986812902}
+--- !u!225 &1467706215
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467706210}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1506038979
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,6 +8031,8 @@ GameObject:
   - component: {fileID: 1577726670}
   - component: {fileID: 1577726672}
   - component: {fileID: 1577726671}
+  - component: {fileID: 1577726673}
+  - component: {fileID: 1577726674}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -7789,6 +8097,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577726669}
   m_CullTransparentMesh: 1
+--- !u!114 &1577726673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577726669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 701517601}
+  canvas: {fileID: 986812902}
+--- !u!225 &1577726674
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577726669}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1578373110
 GameObject:
   m_ObjectHideFlags: 0
@@ -8004,7 +8338,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1583443713}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1596463347}
+        m_TargetAssemblyTypeName: UnitButton, Assembly-CSharp
+        m_MethodName: ActivateHighlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1583443713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8128,6 +8474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596463346}
+  - component: {fileID: 1596463347}
   m_Layer: 0
   m_Name: Unit (2)
   m_TagString: Untagged
@@ -8152,6 +8499,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596463347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596463345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 1583443712}
+  slotID: 2
+  isSlotEmpty: 0
 --- !u!1 &1598043835
 GameObject:
   m_ObjectHideFlags: 0
@@ -9144,8 +9508,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -153.219, y: 0}
-  m_SizeDelta: {x: 153.219, y: 143.53}
+  m_AnchoredPosition: {x: -146, y: 0}
+  m_SizeDelta: {x: 146, y: 146}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1950490785
 MonoBehaviour:
@@ -9340,6 +9704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1974990051}
+  - component: {fileID: 1974990052}
   m_Layer: 0
   m_Name: Unit (3)
   m_TagString: Untagged
@@ -9364,6 +9729,23 @@ Transform:
   m_Father: {fileID: 986812899}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1974990052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974990050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitButtonDefault: {fileID: 21300000, guid: 09fbd7b949fee44438e945038f58285d, type: 3}
+  unitButtonHighlight: {fileID: 21300000, guid: 6cefecd833ac48e42b55947b194af7cd, type: 3}
+  thisButton: {fileID: 1303806694}
+  slotID: 3
+  isSlotEmpty: 0
 --- !u!1 &1986047084
 GameObject:
   m_ObjectHideFlags: 0
@@ -9740,6 +10122,8 @@ GameObject:
   - component: {fileID: 2090696847}
   - component: {fileID: 2090696849}
   - component: {fileID: 2090696848}
+  - component: {fileID: 2090696850}
+  - component: {fileID: 2090696851}
   m_Layer: 5
   m_Name: UnitIcon
   m_TagString: Untagged
@@ -9804,6 +10188,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090696846}
   m_CullTransparentMesh: 1
+--- !u!114 &2090696850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090696846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6a323ace6920d418f612c244205dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedUnitButton: {fileID: 1464026425}
+  canvas: {fileID: 986812902}
+--- !u!225 &2090696851
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090696846}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2112501772
 GameObject:
   m_ObjectHideFlags: 0

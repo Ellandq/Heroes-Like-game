@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance;
     // Store a referance to all sub input scripts
 
     [SerializeField]
@@ -18,5 +19,10 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     internal KeyboardInput keyboardInput;
+
+    void Awake ()
+    {
+        Instance = this;
+    }
 
 }

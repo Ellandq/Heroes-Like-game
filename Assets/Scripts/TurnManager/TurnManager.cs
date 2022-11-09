@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class TurnManager : MonoBehaviour
 {
+    public static TurnManager Instance;
+
     [Header("Object Referances")]
     [SerializeField] PlayerManager playerManager;
     [SerializeField] PlayerTurn playerTurn;
@@ -14,9 +16,9 @@ public class TurnManager : MonoBehaviour
     Player player;
 
     [Header("Turn Information")]
-    [SerializeField] short dayCounter;
-    [SerializeField] short weekCounter;
-    [SerializeField] short monthCounter;
+    [SerializeField] internal short dayCounter;
+    [SerializeField] internal short weekCounter;
+    [SerializeField] internal short monthCounter;
 
     [Header("Game Information")]
     [SerializeField] short currentPlayerTurn;
@@ -28,6 +30,7 @@ public class TurnManager : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         dayCounter = 1;
         weekCounter = 1;
         monthCounter = 1;
@@ -66,7 +69,10 @@ public class TurnManager : MonoBehaviour
             dayCounter = 1;
             if (weekCounter != 4){
                 weekCounter++;
-            }else monthCounter++;
+            }else {
+                monthCounter++;
+                weekCounter = 1;
+            }
         }
         currentPlayerTurn++;
     }

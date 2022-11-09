@@ -39,13 +39,13 @@ public class UnitButton : MonoBehaviour, IDropHandler
 
     public void OnDrop (PointerEventData eventData)
     {
-        if (eventData.pointerDrag != null){
+        if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "UnitIcons"){
             if (eventData.pointerDrag != this.gameObject)
             {
                 buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitButton>();
                 if (isSlotEmpty){
                     if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                        Debug.Log("Split units");
+                        ArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
                     }else{
                         ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
                     }
@@ -53,7 +53,7 @@ public class UnitButton : MonoBehaviour, IDropHandler
                 {
                     if (ArmyInformation.Instance.AreUnitsSameType(buttonToSwap.slotID, slotID)){
                         if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                            Debug.Log("Split units");
+                            ArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
                         }else{
                             ArmyInformation.Instance.AddUnits(buttonToSwap.slotID, slotID);
                         }

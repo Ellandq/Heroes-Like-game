@@ -262,6 +262,11 @@ public class City : MonoBehaviour
         garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
     }
 
+    public void SplitUnits (short a, short b)
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(garrisonSlots[a].GetComponent<UnitSlot>(), garrisonSlots[b].GetComponent<UnitSlot>(), this, a, b);
+    }
+
     public bool AreGarrisonSlotsSameType (short a, short b)
     {
         if (garrisonSlots[a].GetComponent<UnitSlot>().unitID == garrisonSlots[b].GetComponent<UnitSlot>().unitID) return true;

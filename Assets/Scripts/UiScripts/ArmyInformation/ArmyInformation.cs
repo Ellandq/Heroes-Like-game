@@ -138,9 +138,17 @@ public class ArmyInformation : MonoBehaviour
         }else{
             selectedArmy.GetComponentInParent<City>().AddUnits(a, b);
         }
-        
         RemoveButtonHighlights();
         UpdateUnitDisplay();
+    }
+
+    public void SplitUnits (short a, short b)
+    {
+        if (selectedArmy.tag == "Army"){
+            selectedArmy.GetComponentInParent<Army>().SplitUnits(a, b);
+        }else{
+            selectedArmy.GetComponentInParent<City>().SplitUnits(a, b);
+        }
     }
 
     public bool AreUnitsSameType (short a, short b)
@@ -152,6 +160,11 @@ public class ArmyInformation : MonoBehaviour
             if (selectedArmy.GetComponentInParent<City>().AreGarrisonSlotsSameType(a, b))return true;
             else return false;
         }
-        
+    }
+
+    public void RefreshElement ()
+    {
+        RemoveButtonHighlights();
+        UpdateUnitDisplay();
     }
 }

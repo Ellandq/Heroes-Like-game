@@ -16,6 +16,7 @@ TagManager:
   - MineEnterance
   - BuildingEnterance
   - Resource
+  - UnitIcons
   layers:
   - Default
   - TransparentFX

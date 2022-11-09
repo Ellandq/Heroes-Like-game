@@ -160,6 +160,11 @@ public class Army : MonoBehaviour
         unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
     }
 
+    public void SplitUnits (short a, short b)
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), this, a, b);
+    }
+
     public bool AreUnitSlotsSameType (short a, short b)
     {
         if (unitSlots[a].GetComponent<UnitSlot>().unitID == unitSlots[b].GetComponent<UnitSlot>().unitID) return true;

@@ -48,6 +48,10 @@ public class UnitSplitWindow : MonoBehaviour
         slider.minValue = 1;
         slider.value = unit01.howManyUnits;
 
+        if (slider.value == totalUnitCount){
+            slider.value -= 1;
+        }
+
         // Update displayed unit count
         unitCount01.text = Convert.ToString(slider.value);
         unitCount02.text = Convert.ToString(totalUnitCount - slider.value);
@@ -69,6 +73,10 @@ public class UnitSplitWindow : MonoBehaviour
         slider.maxValue = totalUnitCount;
         slider.minValue = 1;
         slider.value = unit01.howManyUnits;
+        
+        if (slider.value == totalUnitCount){
+            slider.value -= 1;
+        }
 
         // Update displayed unit count
         unitCount01.text = Convert.ToString(slider.value);
@@ -91,7 +99,6 @@ public class UnitSplitWindow : MonoBehaviour
                 }else{
                     selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().howManyUnits = Convert.ToInt32(totalUnitCount - slider.value);
                 }
-                
             }else{
                 selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().RemoveUnits();
             }

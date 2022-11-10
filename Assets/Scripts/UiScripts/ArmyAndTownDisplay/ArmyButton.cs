@@ -30,7 +30,7 @@ public class ArmyButton : MonoBehaviour
 
     public void SelectArmy ()
     {
-        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.transform.parent.gameObject == connectedArmy){
+        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedArmy){
             connectedArmy.GetComponentInParent<Army>().ArmyInteraction();
         }else{
             ObjectSelector.Instance.RemoveSelectedObject();

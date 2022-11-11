@@ -28,7 +28,7 @@ public class TurnManager : MonoBehaviour
     public UnityEvent OnNewDay;
     public UnityEvent OnTurnManagerReady;
 
-    void Start()
+    void Awake()
     {
         Instance = this;
         dayCounter = 1;

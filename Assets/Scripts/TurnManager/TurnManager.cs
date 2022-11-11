@@ -44,6 +44,7 @@ public class TurnManager : MonoBehaviour
     public void StartGame ()
     {
         OnNewPlayerTurn?.Invoke(player);
+        player.NewTurnUpdate();  
     }
 
     public void nextTurn ()

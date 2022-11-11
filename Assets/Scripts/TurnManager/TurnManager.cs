@@ -48,17 +48,17 @@ public class TurnManager : MonoBehaviour
 
     public void nextTurn ()
     {
+        player.GetSelectedObject();
         if (currentPlayerTurn < playerCount - 1)
         {
             currentPlayerTurn++;
-            player = playerManager.players[currentPlayerTurn].GetComponent<Player>();
-            OnNewPlayerTurn.Invoke(player);
         }else{
             OnNewDay.Invoke();
             currentPlayerTurn = 0;
-            player = playerManager.players[currentPlayerTurn].GetComponent<Player>();
-            OnNewPlayerTurn.Invoke(player);
-        }   
+        } 
+        player = playerManager.players[currentPlayerTurn].GetComponent<Player>();
+        OnNewPlayerTurn.Invoke(player);
+        player.NewTurnUpdate();  
     }
 
     public void TurnCounter()

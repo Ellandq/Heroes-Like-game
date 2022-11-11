@@ -12,6 +12,6 @@ public class UIManager : MonoBehaviour
     }
     private void ChangeCurrentPlayer (Player _currentPlayer)
     {
-        playerDisplay.ChangeDisplay(_currentPlayer.playerColourString + " " + _currentPlayer.playerName);
+        playerDisplay.ChangeDisplay(_currentPlayer.playerColorString + " " + _currentPlayer.playerName);
     }
 }

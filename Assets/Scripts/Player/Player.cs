@@ -11,13 +11,14 @@ public class Player : MonoBehaviour
     internal short objectsToCreate = 0;
     internal short objectsCreated = 0;
     private short daysToLoose = 4;
+    private GameObject lastObjectSelectedByPlayer;
 
     [Header("Player basic information")]
     private City currentCity;
     private Army currentArmy;
     private Mine currentMine;
     public string playerName;
-    public string playerColourString;
+    public string playerColorString;
     public Color playerColor;
     public bool isPlayerAi = true;
     public bool turnDone = false;
@@ -51,11 +52,11 @@ public class Player : MonoBehaviour
         playerManager.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         playerManager.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         string[] str = this.name.Split(' ');
-        playerColourString = str[0];
+        playerColorString = str[0];
         playerName = str[1];
         foreach (string colour in playerManager.playablePlayerColours)
         {
-            if (playerColourString == colour)
+            if (playerColorString == colour)
             {
                 isPlayerAi = false;
             }
@@ -199,6 +200,21 @@ public class Player : MonoBehaviour
         CheckPlayerLooseCondition();
     }
 
+    public void NewTurnUpdate ()
+    {
+        if (lastObjectSelectedByPlayer != null){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(lastObjectSelectedByPlayer);
+            ObjectSelector.Instance.AddSelectedObject(lastObjectSelectedByPlayer);
+        }else{
+            AddFirstObjectToFollow();
+        }
+    }
+
+    public void GetSelectedObject ()
+    {
+        lastObjectSelectedByPlayer =  ObjectSelector.Instance.lastObjectSelected;
+    }
+
     private void CheckPlayerLooseCondition ()
     {
         if (this.gameObject.name != "Neutral Player"){
@@ -226,7 +242,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    private void AddFirstObjectToFollow ()
+    {
+        if (ownedArmies.Count > 0){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedArmies[0].transform.GetChild(0).gameObject);
+            ObjectSelector.Instance.AddSelectedObject(ownedArmies[0].transform.GetChild(0).gameObject);
+        }else if (ownedCities.Count > 0){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0].transform.GetChild(0).gameObject);
+            ObjectSelector.Instance.AddSelectedObject(ownedCities[0].transform.GetChild(0).gameObject);
+        }
+    }
+
+    private void OnDestroy()
     {
         playerManager.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
         playerManager.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);

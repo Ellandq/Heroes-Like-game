@@ -9,11 +9,11 @@ public class TurnManager : MonoBehaviour
     public static TurnManager Instance;
 
     [Header("Object Referances")]
-    [SerializeField] PlayerManager playerManager;
-    [SerializeField] PlayerTurn playerTurn;
-    [SerializeField] AiTurn aiTurn;
-    [SerializeField] GameObject uiManager;
-    Player player;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private PlayerTurn playerTurn;
+    [SerializeField] private AiTurn aiTurn;
+    [SerializeField] private GameObject uiManager;
+    private Player player;
 
     [Header("Turn Information")]
     [SerializeField] internal short dayCounter;
@@ -41,13 +41,15 @@ public class TurnManager : MonoBehaviour
         OnTurnManagerReady.Invoke();
     }
 
+    // Starts the game
     public void StartGame ()
     {
         OnNewPlayerTurn?.Invoke(player);
         player.NewTurnUpdate();  
     }
 
-    public void nextTurn ()
+    // Starts a new turn
+    public void NextTurn ()
     {
         player.GetSelectedObject();
         if (currentPlayerTurn < playerCount - 1)
@@ -62,6 +64,7 @@ public class TurnManager : MonoBehaviour
         player.NewTurnUpdate();  
     }
 
+    // Updates the turn counter
     public void TurnCounter()
     {
         if (dayCounter != 7){

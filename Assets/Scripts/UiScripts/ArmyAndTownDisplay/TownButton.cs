@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TownButton : MonoBehaviour
 {
-    [SerializeField] GameObject townHighlight;
+    [SerializeField] private GameObject townHighlight;
     private GameObject connectedCity;
 
     void Start ()
@@ -17,11 +17,13 @@ public class TownButton : MonoBehaviour
         }
     }
 
+    // Updates the connected city
     internal void UpdateConnectedCity(GameObject _city)
     {
         connectedCity = _city;
     }
 
+    // Selects a City if the button is pressed
     public void SelectCity ()
     {
         if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedCity){
@@ -32,6 +34,7 @@ public class TownButton : MonoBehaviour
         }
     }
 
+    // Checks if the highlight should be activated
     private void HighlighLogic ()
     {
         if (connectedCity != null){

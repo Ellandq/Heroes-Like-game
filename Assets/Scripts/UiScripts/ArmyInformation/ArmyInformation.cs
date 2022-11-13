@@ -10,22 +10,22 @@ using TMPro;
 public class ArmyInformation : MonoBehaviour
 {
     public static ArmyInformation Instance;
-    [SerializeField] List <GameObject> units;
-    [SerializeField] Sprite defaultBackground;
+    [SerializeField] private List <GameObject> units;
+    [SerializeField] private Sprite defaultBackground;
 
     public UnitSlot selectedUnit;
 
     [Header("UI Referances")]
-    [SerializeField] List <GameObject> unitInfoSlot;
-    [SerializeField] List <Button> unitInfoButtons;
-    [SerializeField] List <GameObject> unitCountDisplay;
+    [SerializeField] private List <GameObject> unitInfoSlot;
+    [SerializeField] private List <Button> unitInfoButtons;
+    [SerializeField] private List <GameObject> unitCountDisplay;
 
     internal GameObject selectedArmy;
     private string unitIconsFilePath;
 
     public UnityEvent onUnitDisplayReload;
 
-    void Start ()
+    private void Start ()
     {
         Instance = this;
         ObjectSelector.Instance.onSelectedObjectChange.AddListener(ChangeSelectedArmy);
@@ -34,6 +34,7 @@ public class ArmyInformation : MonoBehaviour
 
     }
 
+    // Changes the selected army
     private void ChangeSelectedArmy ()
     {
         if (ObjectSelector.Instance.lastObjectSelected != null ){
@@ -50,6 +51,7 @@ public class ArmyInformation : MonoBehaviour
         }
     }
 
+    // Takes the unit list from an army GameObject
     private void GetArmyUnits(GameObject armyObject)
     {
         selectedArmy = armyObject;
@@ -57,6 +59,7 @@ public class ArmyInformation : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Takes the unit list from a city GameObject
     private void GetCityGarrison(GameObject cityObject)
     {
         selectedArmy = cityObject;
@@ -64,6 +67,7 @@ public class ArmyInformation : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Clears the current displayed units
     private void ClearSelection()
     {
         RemoveButtonHighlights();
@@ -77,6 +81,7 @@ public class ArmyInformation : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Updates the unit display
     private void UpdateUnitDisplay ()
     {
         for (int i = 0; i < units.Count; i++){
@@ -103,23 +108,27 @@ public class ArmyInformation : MonoBehaviour
         }  
     }
 
+    // Removes all button highlighs
     public void RemoveButtonHighlights ()
     {
         onUnitDisplayReload?.Invoke();
         selectedUnit = null;
     }
 
+    // Removes all button highlights on a new turn
     public void RemoveButtonHighlights (Player player)
     {
         onUnitDisplayReload?.Invoke();
         selectedUnit = null;
     }
 
+    // Changes the selected unit
     public void ChangeSelectedUnit (short slotID)
     {
         selectedUnit = units[slotID].GetComponent<UnitSlot>();
     }
 
+    // Swaps units with given id's
     public void SwapUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
@@ -131,6 +140,7 @@ public class ArmyInformation : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Adds one unit to another
     public void AddUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
@@ -142,6 +152,7 @@ public class ArmyInformation : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Splits two given units and or a unit with an empty cell
     public void SplitUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
@@ -151,6 +162,7 @@ public class ArmyInformation : MonoBehaviour
         }
     }
 
+    // Checks if the given units are of the same type
     public bool AreUnitsSameType (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
@@ -162,6 +174,7 @@ public class ArmyInformation : MonoBehaviour
         }
     }
 
+    // Refreshes the UI element
     public void RefreshElement ()
     {
         RemoveButtonHighlights();

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ArmyButton : MonoBehaviour
 {
-    [SerializeField] GameObject armyHighlight;
+    [SerializeField] private GameObject armyHighlight;
     [SerializeField] internal Slider movementSlider;
     [SerializeField] private GameObject connectedArmy;
 
@@ -19,6 +19,7 @@ public class ArmyButton : MonoBehaviour
         }  
     }
 
+    // Updates the connected army
     internal void UpdateConnectedArmy(GameObject _army)
     {
         if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
@@ -28,6 +29,7 @@ public class ArmyButton : MonoBehaviour
         connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
     }
 
+    // Selects an army if the button is pressed
     public void SelectArmy ()
     {
         if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedArmy){
@@ -38,6 +40,7 @@ public class ArmyButton : MonoBehaviour
         }
     }
 
+    // Checks if the highlight should be activated
     private void HighlighLogic ()
     {
         if (connectedArmy != null){
@@ -46,8 +49,18 @@ public class ArmyButton : MonoBehaviour
         }else armyHighlight.SetActive(false);
     }
 
+    // Changes the movement point slider value
     private void ChangeMovementPointSliderStatus()
     {
         movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
+    }
+
+    // Resets the button status
+    public void ResetArmyButton ()
+    {
+        if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
+        movementSlider.gameObject.SetActive(false);
+        connectedArmy = null;
+        HighlighLogic();
     }
 }

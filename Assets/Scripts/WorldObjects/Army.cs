@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,6 @@ using System.Linq;
 public class Army : MonoBehaviour
 {
     public UnityEvent onMovementPointsChanged;
-    [SerializeField] PlayerManager playerManager;
     [SerializeField] TurnManager turnManager;
     [SerializeField] GameGrid gameGrid;
     [SerializeField] GameObject flag;
@@ -26,15 +26,18 @@ public class Army : MonoBehaviour
 
     void Start ()
     {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         maxMovementPoints = 2200;
         movementPoints = maxMovementPoints;
-        playerManager.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
+        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
         turnManager.OnNewDay.AddListener(RestoreMovementPoints);
         ownedByPlayer.GetComponent<Player>().CheckPlayerStatus();
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);
+         
+        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>()){
+            TownAndArmySelection.Instance.UpdateCurrentArmyDisplay(); 
+        }
     }
 
     public void AddOwningPlayer(GameObject _ownedByPlayer)
@@ -48,7 +51,7 @@ public class Army : MonoBehaviour
 
     public void RemoveOwningPlayer ()
     {
-        ownedByPlayer = playerManager.neutralPlayer;
+        ownedByPlayer = PlayerManager.Instance.neutralPlayer;
         flag.SetActive(false);
     }
 
@@ -99,7 +102,6 @@ public class Army : MonoBehaviour
         onMovementPointsChanged?.Invoke();
     }
 
-
     public void RemoveMovementPoints(int _pathCost)
     {
         movementPoints -= _pathCost;
@@ -114,9 +116,8 @@ public class Army : MonoBehaviour
 
     public void ArmyInteraction (GameObject interactingArmy)
     {
-        
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            Debug.Log("Interacting army: " + interactingArmy.name);
+            ArmyInterfaceArmyInformation.Instance.GetArmyUnits(interactingArmy, this.gameObject);
         }else{
             Debug.Log("Do battle with: " + interactingArmy.name);
         }
@@ -124,14 +125,29 @@ public class Army : MonoBehaviour
 
     public void ArmyInteraction ()
     {
-        Debug.Log("Interacting with this army");
-        
+        ArmyInterfaceArmyInformation.Instance.GetArmyUnits(this.gameObject);
     }
 
-    void OnDestroy ()
+    public bool IsArmyEmpty ()
     {
-        playerManager.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
+        foreach (GameObject unit in unitSlots){
+            if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
+            else continue;
+        }
+        return true;
+    }
+
+    private void OnDestroy ()
+    {
+        PlayerManager.Instance.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
         turnManager.OnNewDay.RemoveListener(RestoreMovementPoints);
+        onMovementPointsChanged.RemoveAllListeners();
+        GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
+        
+        try{
+            if (CameraManager.Instance.cameraMovement.cameraFollowingObject) CameraManager.Instance.cameraMovement.CameraRemoveObjectToFollow();
+        }catch (NullReferenceException){}
+        
     }
 
     public List<GameObject> GetArmyUnits ()
@@ -154,20 +170,57 @@ public class Army : MonoBehaviour
         unitSlots[b].GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
     }
 
+    public void SwapUnitsPosition (short a, GameObject otherArmyUnit)
+    {
+        int id01 = unitSlots[a].GetComponent<UnitSlot>().unitID;
+        int id02 = otherArmyUnit.GetComponent<UnitSlot>().unitID;
+        int unitCount01 = unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        int unitCount02 = otherArmyUnit.GetComponent<UnitSlot>().howManyUnits;
+        float mPoints01 = unitSlots[a].GetComponent<UnitSlot>().movementPoints;
+        float mPoints02 = otherArmyUnit.GetComponent<UnitSlot>().movementPoints;
+        unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+        otherArmyUnit.GetComponent<UnitSlot>().RemoveUnits();
+
+        unitSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
+        otherArmyUnit.GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
+    }
+
     public void AddUnits (short a, short b)
     {
         unitSlots[b].GetComponent<UnitSlot>().howManyUnits += unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
         unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
     }
 
-    public void SplitUnits (short a, short b)
+    public void AddUnits (short a, GameObject otherArmyUnit)
+    {
+        otherArmyUnit.GetComponent<UnitSlot>().howManyUnits += unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+    }
+
+    public void SplitUnits (short a, short b) // Spliting with itself
     {
         UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), this, a, b);
+    }
+
+    public void SplitUnits (short a, short b, Army otherArmy, GameObject otherArmyUnit) // Spliting with another army
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
+    }
+
+    public void SplitUnits (short a, short b, PlaceHolderArmy otherArmy, GameObject otherArmyUnit) // Spliting with a placeholder army
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
     }
 
     public bool AreUnitSlotsSameType (short a, short b)
     {
         if (unitSlots[a].GetComponent<UnitSlot>().unitID == unitSlots[b].GetComponent<UnitSlot>().unitID) return true;
+        else return false;
+    }
+
+    public bool AreUnitSlotsSameType (short a, GameObject otherArmyUnit)
+    {
+        if (unitSlots[a].GetComponent<UnitSlot>().unitID == otherArmyUnit.GetComponent<UnitSlot>().unitID) return true;
         else return false;
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    private Coroutine waitForObjectToBeDestroyed;
     public UnityEvent onArmyAdded;
     public UnityEvent onCityAdded;
-    [SerializeField] PlayerManager playerManager;
     internal short objectsToCreate = 0;
     internal short objectsCreated = 0;
     private short daysToLoose = 4;
@@ -38,23 +38,22 @@ public class Player : MonoBehaviour
     public int crystals;
 
     [Header("Player daily production")]
-    [SerializeField] int goldProduction;
-    [SerializeField] int woodProduction;
-    [SerializeField] int oreProduction;
-    [SerializeField] int gemProduction;
-    [SerializeField] int mercuryProduction;
-    [SerializeField] int sulfurProduction;
-    [SerializeField] int crystalProduction;
+    [SerializeField] private int goldProduction;
+    [SerializeField] private int woodProduction;
+    [SerializeField] private int oreProduction;
+    [SerializeField] private int gemProduction;
+    [SerializeField] private int mercuryProduction;
+    [SerializeField] private int sulfurProduction;
+    [SerializeField] private int crystalProduction;
 
-    void Start ()
+    private void Start ()
     {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-        playerManager.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
-        playerManager.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         string[] str = this.name.Split(' ');
         playerColorString = str[0];
         playerName = str[1];
-        foreach (string colour in playerManager.playablePlayerColours)
+        foreach (string colour in PlayerManager.Instance.playablePlayerColours)
         {
             if (playerColorString == colour)
             {
@@ -70,6 +69,7 @@ public class Player : MonoBehaviour
         crystals = 5;
     }
 
+    // Adds a new army for the player
     public void NewArmy(GameObject newArmy)
     {
         ownedArmies.Add(newArmy);
@@ -78,6 +78,22 @@ public class Player : MonoBehaviour
         objectsToCreate++;
     }
 
+    // Removes a given army from the player
+    public void RemoveArmy (GameObject armyToRemove)
+    {  
+        for (int i = 0; i < ownedArmies.Count; i++){
+            if (ownedArmies[i].name == armyToRemove.name){
+                ownedArmies.RemoveAt(i);
+                Destroy(armyToRemove);
+            }
+        }
+        if (waitForObjectToBeDestroyed == null)
+        {
+            waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
+        }
+    }
+
+    // Adds a new City for the player
     public void NewCity(GameObject newCity)
     {
         ownedCities.Add(newCity);
@@ -87,6 +103,7 @@ public class Player : MonoBehaviour
         objectsToCreate++;
     }
 
+    // Adds a new mine for the player
     public void NewMine(GameObject newMine)
     {
         ownedMines.Add(newMine);
@@ -96,6 +113,7 @@ public class Player : MonoBehaviour
         objectsToCreate++;
     }
     
+    // Resets and checks the player resource gain
     public void UpdateResourceGain()
     {
         goldProduction = 0;
@@ -147,6 +165,7 @@ public class Player : MonoBehaviour
         }  
     }
 
+    // Gives an approprieate amount of resources to the player on a new day
     private void DailyResourceGain()
     {
         UpdateResourceGain();
@@ -159,6 +178,7 @@ public class Player : MonoBehaviour
         crystals += crystalProduction;
     }
 
+    // Adds a given resource to the player
     public void AddResources (string _resourceType, int _resourceCount)
     {
         switch (_resourceType)
@@ -192,14 +212,16 @@ public class Player : MonoBehaviour
             break;
            
         }
-        playerManager.UpdatePlayerUI(this);
+        PlayerManager.Instance.UpdatePlayerUI(this);
     }
 
+    // A daily player update
     private void PlayerDailyUpdate ()
     {
         CheckPlayerLooseCondition();
     }
 
+    // A player update on a new turn
     public void NewTurnUpdate ()
     {
         if (lastObjectSelectedByPlayer != null){
@@ -210,11 +232,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Checks what object is currently selected
     public void GetSelectedObject ()
     {
         lastObjectSelectedByPlayer =  ObjectSelector.Instance.lastObjectSelected;
     }
 
+    // Checks if any loose conditions are met
     private void CheckPlayerLooseCondition ()
     {
         if (this.gameObject.name != "Neutral Player"){
@@ -234,14 +258,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Checks if the player is ready for the game to start
     public void CheckPlayerStatus()
     {
         objectsCreated++;
         if (objectsCreated == objectsToCreate){
-            playerManager.PlayerManagerReady();
+            PlayerManager.Instance.PlayerManagerReady();
         }
     }
 
+    // Ads an object to follow on the start of the turn
     private void AddFirstObjectToFollow ()
     {
         if (ownedArmies.Count > 0){
@@ -253,9 +279,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    // What to do when the player GameObject is destroyed
     private void OnDestroy()
     {
-        playerManager.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
-        playerManager.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
+    }
+
+    // Enumerator to wait for the selected object to be destroyed so correct updates can be run
+    private IEnumerator WaitForObjectToBeDestroyed (GameObject objectToDestroy){
+        while (objectToDestroy != null){
+            yield return null;
+        }
+        ObjectSelector.Instance.RemoveSelectedObject();
+        if (PlayerManager.Instance.currentPlayer == this) TownAndArmySelection.Instance.UpdatePlayerDisplay(this); 
+
+        waitForObjectToBeDestroyed = null;
     }
 }

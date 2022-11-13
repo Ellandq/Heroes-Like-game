@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class ArmyDisplay : MonoBehaviour
 {
-    [SerializeField] GameObject armyDisplayPrefab;
-    [SerializeField] GameObject armyDisplayCanvas;
+    [SerializeField] private GameObject armyDisplayPrefab;
+    [SerializeField] private GameObject armyDisplayCanvas;
     [SerializeField] private List <GameObject> armyDisplay;
     
     [Header ("Display Images")]
-    [SerializeField] Sprite armyImage;
-    [SerializeField] Sprite emptyCell;
+    [SerializeField] private Sprite armyImage;
+    [SerializeField] private Sprite emptyCell;
 
+    // Updates the army display
     internal void UpdateArmyDisplay (Player player)
     {
         ResetArmyDisplay();
@@ -32,7 +33,8 @@ public class ArmyDisplay : MonoBehaviour
         this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - armyDisplay.Count) * 42, 0);
     }
 
-    void Update ()
+    // Checks if the armies are correctly placed on the content scroller
+    private void Update ()
     {
         if (this.gameObject.GetComponent<RectTransform>().anchoredPosition.y < (3 - armyDisplay.Count) * 42 | this.gameObject.GetComponent<RectTransform>().anchoredPosition.y > (armyDisplay.Count - 3) * 42){
             this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Clamp(this.gameObject.GetComponent<RectTransform>().anchoredPosition.y, (3 - armyDisplay.Count) * 42,(armyDisplay.Count - 3) * 42), 0);
@@ -41,6 +43,7 @@ public class ArmyDisplay : MonoBehaviour
         
     }
 
+    // Resets the army display
     private void ResetArmyDisplay ()
     {
         if (armyDisplay.Count > 3){
@@ -52,13 +55,13 @@ public class ArmyDisplay : MonoBehaviour
         }
         armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
         armyDisplay[0].GetComponent<Button>().interactable = false;
-        armyDisplay[0].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        armyDisplay[0].GetComponent<ArmyButton>().ResetArmyButton();
         armyDisplay[1].GetComponent<Image>().sprite = emptyCell;
         armyDisplay[1].GetComponent<Button>().interactable = false;
-        armyDisplay[1].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        armyDisplay[1].GetComponent<ArmyButton>().ResetArmyButton();
         armyDisplay[2].GetComponent<Image>().sprite = emptyCell;
         armyDisplay[2].GetComponent<Button>().interactable = false;
-        armyDisplay[2].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(false);
+        armyDisplay[2].GetComponent<ArmyButton>().ResetArmyButton();
         
     }
 }

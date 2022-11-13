@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Pathfinding
 {
-    private GameGrid gameGrid;
     private PathNode[,] nodeGrid;
     private List<PathNode> openList;
     private List<PathNode> closedList;
@@ -18,16 +17,17 @@ public class Pathfinding
 
     public static Pathfinding Instance { get; private set; }
 
-    public Pathfinding (GameGrid _gameGrid)
+    // Creates a static PathFinding Instance from the GameGrid class
+    public Pathfinding ()
     {
         Instance = this;
-        gameGrid = _gameGrid;
     }
 
+    // Returns a Vector3 List that acts as a cooridinate path for an object to follow
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition){
         
-        Vector2Int startGridPosition = gameGrid.GetGridPosFromWorld(startWorldPosition);
-        Vector2Int endGridPosition = gameGrid.GetGridPosFromWorld(endWorldPosition);
+        Vector2Int startGridPosition = GameGrid.Instance.GetGridPosFromWorld(startWorldPosition);
+        Vector2Int endGridPosition = GameGrid.Instance.GetGridPosFromWorld(endWorldPosition);
 
         List<PathNode> path = FindPath(startGridPosition, endGridPosition);
         if (path == null){
@@ -35,18 +35,19 @@ public class Pathfinding
         }else{
             List<Vector3> vectorPath = new List<Vector3>();
             foreach (PathNode pathNode in path){
-                vectorPath.Add(new Vector3(pathNode.gridPosX, .5f, pathNode.gridPosZ) * gameGrid.gridSpaceSize);
+                vectorPath.Add(new Vector3(pathNode.gridPosX, .5f, pathNode.gridPosZ) * GameGrid.Instance.gridSpaceSize);
             }
             return vectorPath;
         }
     }
 
+    // Returns a PathNode List that acts as a cooridinate path for an object to follow
     public List<PathNode> FindPath(Vector2Int startGridPosition, Vector2Int endGridPosition)
     {
-        nodeGrid = new PathNode[gameGrid.gridLength, gameGrid.gridWidth];
-        nodeGrid = gameGrid.pathNodeArray;
-        PathNode startNode = gameGrid.GetPathNodeInformation(startGridPosition);
-        PathNode endNode = gameGrid.GetPathNodeInformation(endGridPosition);
+        nodeGrid = new PathNode[GameGrid.Instance.gridLength, GameGrid.Instance.gridWidth];
+        nodeGrid = GameGrid.Instance.pathNodeArray;
+        PathNode startNode = GameGrid.Instance.GetPathNodeInformation(startGridPosition);
+        PathNode endNode = GameGrid.Instance.GetPathNodeInformation(endGridPosition);
         openList = new List<PathNode> { startNode };
         closedList = new List<PathNode>();
         targetEnterances = new List<PathNode>();
@@ -83,11 +84,11 @@ public class Pathfinding
             }
         }
 
-        for (int x = 0; x < gameGrid.GetGridWidth(); x++)
+        for (int x = 0; x < GameGrid.Instance.GetGridWidth(); x++)
         {
-            for (int z = 0; z < gameGrid.GetGridLength(); z++)
+            for (int z = 0; z < GameGrid.Instance.GetGridLength(); z++)
             {
-                PathNode pathNode = gameGrid.GetPathNodeInformation(new Vector2Int(x, z));
+                PathNode pathNode = GameGrid.Instance.GetPathNodeInformation(new Vector2Int(x, z));
                 pathNode.gCost = 99999;
                 pathNode.CalculateFCost();
                 pathNode.cameFromCell = null;
@@ -142,6 +143,7 @@ public class Pathfinding
         return null;
     }
 
+    // Returns a PathNode List of all available neighbour nodes
     private List <PathNode> GetNeighbourList(PathNode currentNode)
     {
         List<PathNode> neighbourList = new List<PathNode>();
@@ -152,26 +154,27 @@ public class Pathfinding
             // Left Down
             if (currentNode.gridPosZ - 1 >= 0) neighbourList.Add(nodeGrid[currentNode.gridPosX - 1, currentNode.gridPosZ - 1]);
             // Left Up
-            if (currentNode.gridPosZ + 1 < gameGrid.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX - 1, currentNode.gridPosZ + 1]);
+            if (currentNode.gridPosZ + 1 < GameGrid.Instance.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX - 1, currentNode.gridPosZ + 1]);
         }
-        if (currentNode.gridPosX + 1 < gameGrid.GetGridWidth()){
+        if (currentNode.gridPosX + 1 < GameGrid.Instance.GetGridWidth()){
             // Right
             neighbourList.Add(nodeGrid[currentNode.gridPosX + 1, currentNode.gridPosZ]);
             // Right Down
             if (currentNode.gridPosZ - 1 >= 0) neighbourList.Add(nodeGrid[currentNode.gridPosX + 1, currentNode.gridPosZ - 1]);
             // Right Up
-            if (currentNode.gridPosZ + 1 < gameGrid.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX + 1, currentNode.gridPosZ + 1]);
+            if (currentNode.gridPosZ + 1 < GameGrid.Instance.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX + 1, currentNode.gridPosZ + 1]);
         }
         if (currentNode.gridPosX - 1 >= 0){
             // Down
             if (currentNode.gridPosZ - 1 >= 0) neighbourList.Add(nodeGrid[currentNode.gridPosX, currentNode.gridPosZ - 1]);
             // Up
-            if (currentNode.gridPosZ + 1 < gameGrid.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX, currentNode.gridPosZ + 1]);
+            if (currentNode.gridPosZ + 1 < GameGrid.Instance.GetGridLength()) neighbourList.Add(nodeGrid[currentNode.gridPosX, currentNode.gridPosZ + 1]);
         }
 
         return neighbourList;
     }
 
+    // Calculates the most efficient path from the starting position to the end position based on the A* algorithm
     private List<PathNode> CalculatePath(PathNode endNode)
     {
         List<PathNode> path = new List<PathNode>();
@@ -185,6 +188,7 @@ public class Pathfinding
         return path;
     }
 
+    // Calculates a rough estimate of the distance from the staring node to the end position without taking obstacles into account 
     private int CalculateDistanceCost(PathNode a, PathNode b)
     {
         int xDistance = Mathf.Abs(a.gridPosX - b.gridPosX);
@@ -193,6 +197,7 @@ public class Pathfinding
         return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
     }
 
+    // Returns the closest estimated PathNode to the end position from a given list
     private PathNode GetLowestFCostNode (List<PathNode> pathNodeList)
     {
         PathNode lowestFCostNode = pathNodeList[0];

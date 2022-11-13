@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ArmyHighlight : MonoBehaviour
 {
-    [SerializeField] GameObject selectedObject;
+    [SerializeField] private GameObject selectedObject;
     private Vector3 highlightAdjustedPosition;
 
 
-    void Update ()
+    private void Update ()
     {
         if (selectedObject != null) MoveHighlight();
     }

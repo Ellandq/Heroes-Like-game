@@ -6,15 +6,16 @@ using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance;
     private string defaultPlayerName = "Player";
     private string [] playerColours;
     public string [] playablePlayerColours;
     private short playersReady = 0;
 
     [Header("Player information")]
-    [SerializeField] GameObject playerPrefab;
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] public GameObject neutralPlayer;
-    [SerializeField] Player currentPlayer;
+    [SerializeField] public Player currentPlayer;
     public GameObject[] players;
     private Color currentPlayerColor;
 
@@ -36,6 +37,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Awake ()
     {
+        Instance = this;
         playerColours = GameManager.Instance.allPlayerColours;
         playablePlayerColours = GameManager.Instance.playerColours;
         CreatePlayers(GameManager.Instance.numberOfPlayers);
@@ -44,6 +46,7 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    // Creates a new player
     private void CreatePlayers (int howManyPlayers)
     {
         players = new GameObject[howManyPlayers];
@@ -63,16 +66,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // An update to run on each new day
     public void NewDayUpdate ()
     {
         OnNewDayPlayerUpdate?.Invoke();
     }
 
+    // An update to run on each new turn
     public void NextPlayerTurn (Player _player)
     {
         OnNextPlayerTurn?.Invoke(_player);
     }
 
+    // Checks if the player manager is ready to start the game
     public void PlayerManagerReady ()
     {
         playersReady++;
@@ -81,16 +87,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // Updates the current player 
     private void UpdateCurrentPlayer (Player _player)
     {
         currentPlayer = _player;
     }
 
+    // Updates the player UI
     public void UpdatePlayerUI (Player _player)
     {
         if (_player == currentPlayer) OnCurrentPlayerResourcesGained?.Invoke();
     }
 
+    // Sets the player color 
     private Color AssignPlayerColour (string playerColour)
     {
         switch (playerColour){

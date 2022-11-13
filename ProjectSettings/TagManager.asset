@@ -17,6 +17,7 @@ TagManager:
   - BuildingEnterance
   - Resource
   - UnitIcons
+  - ArmyInterfaceUnitIcons
   layers:
   - Default
   - TransparentFX

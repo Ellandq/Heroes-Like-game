@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class ArmyInterfaceUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-    [SerializeField] private UnitButton connectedUnitButton;
+    [SerializeField] private ArmyInterfaceUnitButton connectedUnitButton;
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject selectedObjectUnit;
 
@@ -20,7 +20,6 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         rectTransform = selectedObjectUnit.GetComponent<RectTransform>();
     }
 
-    // When object is being dragged sets the selection object image to the same as this one
     public void OnBeginDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
@@ -32,7 +31,6 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    // When the object is being dragged sets the selection object position to the mouse corrected position
     public void OnDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
@@ -40,7 +38,6 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    // When the objects is no longer dragged disables the selection object
     public void OnEndDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
@@ -50,7 +47,6 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    // When the objects is dropped disables the selection object
     public void OnDrop (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){

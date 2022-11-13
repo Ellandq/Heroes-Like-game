@@ -13,14 +13,13 @@ public class PathNode : MonoBehaviour
     public int gridPosZ;
 
     [Header("Movement information")]
-    public int gCost;
-    public int hCost;
-    public int fCost;
+    public int gCost;   // Walking cost from start node
+    public int hCost;   // Heurisitc cost to reach end node
+    public int fCost;   // G cost + H cost
     public bool isWalkable;
     public bool isOccupyingObjectInteratable = false;
 
     public PathNode cameFromCell;
-
 
     public void CalculateFCost()
     {

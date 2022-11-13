@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class TownDisplay : MonoBehaviour
 {
-    [SerializeField] GameObject townDisplayPrefab;
-    [SerializeField] GameObject townDisplayCanvas;
+    [SerializeField] private GameObject townDisplayPrefab;
+    [SerializeField] private GameObject townDisplayCanvas;
     [SerializeField] private List <GameObject> townDisplay;
 
     [Header ("Display Images")]
-    [SerializeField] Sprite townImage;
-    [SerializeField] Sprite emptyCell;
+    [SerializeField] private Sprite townImage;
+    [SerializeField] private Sprite emptyCell;
 
+    // Updates the City display
     internal void UpdateTownDisplay (Player player)
     {
         ResetTownDisplay();
@@ -31,7 +32,8 @@ public class TownDisplay : MonoBehaviour
         this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - townDisplay.Count) * 42, 0);
     }
 
-    void Update ()
+    // Checks if the cities are correctly placed on the content scroller
+    private void Update ()
     {
         if (this.gameObject.GetComponent<RectTransform>().anchoredPosition.y < (3 - townDisplay.Count) * 42 | this.gameObject.GetComponent<RectTransform>().anchoredPosition.y > (townDisplay.Count - 3) * 42){
             this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Clamp(this.gameObject.GetComponent<RectTransform>().anchoredPosition.y, (3 - townDisplay.Count) * 42,(townDisplay.Count - 3) * 42), 0);
@@ -40,6 +42,7 @@ public class TownDisplay : MonoBehaviour
         
     }
 
+    // Resets the city display
     private void ResetTownDisplay ()
     {
         if (townDisplay.Count > 3){

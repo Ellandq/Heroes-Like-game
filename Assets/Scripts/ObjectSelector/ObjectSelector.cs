@@ -8,16 +8,11 @@ public class ObjectSelector : MonoBehaviour
 {
     public static ObjectSelector Instance;
     public UnityEvent onSelectedObjectChange;
-    [SerializeField] GameObject armyHighlight;
+    [SerializeField] private GameObject armyHighlight;
 
     [Header ("Camera referances: ")]
-    [SerializeField] Camera playerCamera;
-    [SerializeField] Camera uiCamera;
-
-    [Header("Object referances: ")]
-    [SerializeField] InputManager inputManager;
-    [SerializeField] CameraManager cameraManager;
-    [SerializeField] GameGrid gameGrid;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Camera uiCamera;
 
     [Header("Raycast layers: ")]
     [SerializeField] LayerMask layersToHit;
@@ -34,19 +29,20 @@ public class ObjectSelector : MonoBehaviour
         Instance = this;
     }
 
-    void Start ()
+    private void Start ()
     {
         TurnManager.OnNewPlayerTurn += ClearSelection;
-        gameGrid = FindObjectOfType<GameGrid>();
-        inputManager = FindObjectOfType<InputManager>();
     }
 
-    void Update ()
+    // Checks each frame if the mouse is over an interactible object
+    private void Update ()
     {
-        if (inputManager.mouseInput.IsMouseOverUI()) return;
+        // Checks if the mouse is over UI
+        if (InputManager.Instance.mouseInput.IsMouseOverUI()) return;
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+        // Checks if the mouse is over an object
         if (Physics.Raycast(ray, out hit, 200, layersToHit)){
             selectedObject = hit.transform.gameObject;
             selectedObjectTag = selectedObject.tag;
@@ -55,10 +51,11 @@ public class ObjectSelector : MonoBehaviour
             selectedObjectTag = null;
         }
 
-        if (inputManager.mouseInput.mouseButtonPressed_0)
+        // Checks if the mouse button 0 is pressed
+        if (InputManager.Instance.mouseInput.mouseButtonPressed_0)
         {
             if (objectSelected){
-                if(lastObjectSelected.tag == "Army")
+                if(lastObjectSelected.tag == "Army")    // If the last object selected is an army moves towards the selected point or object
                 {
                     if (lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().isMoving){
                     lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().StopMoving();
@@ -66,6 +63,8 @@ public class ObjectSelector : MonoBehaviour
                     }
                 }
             }
+
+            // Uses different logic depending on the selected object 
             switch (selectedObjectTag)
             {
                 case "Army":
@@ -125,11 +124,12 @@ public class ObjectSelector : MonoBehaviour
         }  
     }
 
+    // Adds the selected object
     public void AddSelectedObject (GameObject _selectedObject)
     {
         lastObjectSelected = _selectedObject;
         objectSelected = true;
-        cameraManager.cameraMovement.CameraAddObjectToFollow(_selectedObject);
+        CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(_selectedObject);
         if (lastObjectSelected.tag == "Army"){
             if (!armyHighlight.activeSelf) armyHighlight.SetActive(true);
             armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(lastObjectSelected);
@@ -137,6 +137,7 @@ public class ObjectSelector : MonoBehaviour
         onSelectedObjectChange.Invoke();
     }
 
+    // Removes the selected object
     public void RemoveSelectedObject ()
     {
         if (lastObjectSelected != null && lastObjectSelected.tag == "Army"){
@@ -152,6 +153,7 @@ public class ObjectSelector : MonoBehaviour
         onSelectedObjectChange.Invoke();
     }
 
+    // Clears the selection and refreshes UI components on every new turn
     private void ClearSelection (Player _player)
     {
         lastObjectSelected = null;
@@ -175,8 +177,8 @@ public class ObjectSelector : MonoBehaviour
                 armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
             }else{
                 if (lastObjectSelected == selectedObject){
-                    Debug.Log("Do stuff with this army.");
-                    cameraManager.cameraMovement.CameraAddObjectToFollow(selectedObject);
+                    lastObjectSelected.GetComponentInParent<Army>().ArmyInteraction();
+                    CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
                 }else {
                     lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
                 }
@@ -203,7 +205,7 @@ public class ObjectSelector : MonoBehaviour
             }else{
                 if (lastObjectSelected == selectedObject){
                     Debug.Log("Do stuff with this army.");
-                    cameraManager.cameraMovement.CameraAddObjectToFollow(selectedObject);
+                    CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
                 }else {
                     lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
                 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
+    public static GameGrid Instance;
     public Pathfinding pathfinding;
     public int gridLength;
     public int gridWidth;
@@ -12,6 +13,11 @@ public class GameGrid : MonoBehaviour
     [SerializeField] private GameObject gridCellPrefab;
     public GameObject[,] gameGrid;
     public PathNode [,] pathNodeArray;
+
+    void Start ()
+    {
+        Instance = this;
+    }
 
     // Creates the grid when the game starts
     public void CreateGrid(int _gridLength, int _gridWidth)
@@ -39,7 +45,7 @@ public class GameGrid : MonoBehaviour
                 pathNodeArray[x, z] = (gameGrid[x, z].GetComponent<PathNode>());
             }
         }
-        pathfinding = new Pathfinding(this);
+        pathfinding = new Pathfinding();
     }
 
     // Gets the grid position from world position
@@ -53,7 +59,7 @@ public class GameGrid : MonoBehaviour
 
         return new Vector2Int(x, z);
     }
-
+    
     // Gets the world position of a grid position
     public Vector3 GetWorldPosFromGridPos(Vector2Int gridPos)
     {
@@ -62,24 +68,89 @@ public class GameGrid : MonoBehaviour
 
         return new Vector3(x, 0, z);
     }
-
+    
+    // Returns a selected GridCell
     public GridCell GetGridCellInformation (Vector2Int _gridPos)
     {
-        return transform.Find("Grid Space ( X: " + _gridPos.x + " , Z: " + _gridPos.y + ")").gameObject.GetComponent<GridCell>();    //Grid Space ( X: 0 , Z: 0)
+        return gameGrid[_gridPos.x, _gridPos.y].gameObject.GetComponent<GridCell>();    //Grid Space ( X: 0 , Z: 0)
     }
-
+    
+    // Returns a selected PathNode
     public PathNode GetPathNodeInformation (Vector2Int _gridPos)
     {
-        return transform.Find("Grid Space ( X: " + _gridPos.x + " , Z: " + _gridPos.y + ")").gameObject.GetComponent<PathNode>();    //Grid Space ( X: 0 , Z: 0)
+        return gameGrid[_gridPos.x, _gridPos.y].gameObject.GetComponent<PathNode>();    //Grid Space ( X: 0 , Z: 0)
     }
-
+    
+    // Returns the length of the grid
     public int GetGridLength ()
     {
         return gridLength;
     }
-
+    
+    // Returns the width of the grid
     public int GetGridWidth ()
     {
         return gridWidth;
+    }
+    
+    // Returns the nearest empty GridCell
+    public List<GridCell> GetEmptyNeighbourCell (Vector2Int gridPosition)
+    {
+        List<GridCell> neighbourList = new List<GridCell>();
+
+        if (gridPosition.x - 1 >= 0){
+            // Left
+            if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)).isOccupied){
+                neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
+            }
+            // Left Down
+            if (gridPosition.y - 1 >= 0) {
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)).isOccupied){
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
+                }
+            }
+            // Left Up
+            if (gridPosition.y + 1 < GetGridLength()) {
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
+                }
+            }
+        }
+        if (gridPosition.x + 1 < GetGridWidth()){
+            // Right
+            if (gridPosition.y - 1 >= 0) {
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)).isOccupied){ 
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
+                }
+            }
+            // Right Down
+            if (gridPosition.y - 1 >= 0){ 
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)).isOccupied){ 
+                neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
+                }
+            }
+            // Right Up
+                if (gridPosition.y + 1 < GetGridLength()) {
+                    if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
+                }
+            }
+        }
+        if (gridPosition.x - 1 >= 0){
+            // Down
+            if (gridPosition.y - 1 >= 0){
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)).isOccupied){
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
+                }
+            }
+            
+            // Up
+            if (gridPosition.y + 1 < GetGridLength()) {
+                if (!GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
+                }
+            }
+        }
+        return neighbourList;
     }
 }

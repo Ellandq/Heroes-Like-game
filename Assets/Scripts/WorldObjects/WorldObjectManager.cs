@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class WorldObjectManager : MonoBehaviour
 {
+    public static WorldObjectManager Instance;
     [SerializeField] PlayerManager playerManager;
     Player chosenPlayer;
 
@@ -20,19 +21,19 @@ public class WorldObjectManager : MonoBehaviour
     [SerializeField] GameGrid gameGrid;
 
     [Header("Cities information")]
-    public GameObject[] cities;
+    public List<GameObject> cities;
     public int numberOfCities = 0;
 
     [Header("Armies information")]
-    public GameObject[] armies;
+    public List<GameObject> armies;
     public int numberOfArmies = 0;
 
     [Header("Mines information")]
-    public GameObject[] mines;
+    public List<GameObject> mines;
     public int numberOfMines = 0;
 
     [Header("Resources information")]
-    public GameObject[] resources;
+    public List<GameObject> resources;
     public int numberOfResources = 0;
 
 
@@ -46,6 +47,7 @@ public class WorldObjectManager : MonoBehaviour
     
     void Start ()
     {
+        Instance = this;
         gameGrid = FindObjectOfType<GameGrid>();
 
         fileName = "WorldObjects.txt";
@@ -147,8 +149,7 @@ public class WorldObjectManager : MonoBehaviour
             cityGarrison[j] = Convert.ToInt32(_splitLine[j + 36]);
         }
 
-        Array.Resize(ref cities, numberOfCities + 1);
-        cities[numberOfCities] = Instantiate(cityPrefab, objectPosition, Quaternion.identity);
+        cities.Add(Instantiate(cityPrefab, objectPosition, Quaternion.identity));
         cities[numberOfCities].GetComponent<City>().CityInitialization(
             ownedByPlayer, cityFraction, gridPosition, cityOrientation, cityBuildingStatus, cityGarrison
         );
@@ -240,8 +241,7 @@ public class WorldObjectManager : MonoBehaviour
             mineGarrison[j] = Convert.ToInt32(_splitLine[j + 6]);
         }
 
-        Array.Resize(ref mines, numberOfMines + 1);
-        mines[numberOfMines] = Instantiate(minePrefab, objectPosition, Quaternion.identity);
+        mines.Add(Instantiate(minePrefab, objectPosition, Quaternion.identity));
         mines[numberOfMines].GetComponent<Mine>().MineInitialization(
             ownedByPlayer, mineType, gridPosition, mineOrientation, mineGarrison
         );
@@ -302,8 +302,7 @@ public class WorldObjectManager : MonoBehaviour
             armyUnits[j] = Convert.ToInt32(_splitLine[j + 3]);
         }
 
-        Array.Resize(ref armies, numberOfArmies + 1);
-        armies[numberOfArmies] = Instantiate(armyPrefab, objectPosition, Quaternion.identity);
+        armies.Add(Instantiate(armyPrefab, objectPosition, Quaternion.identity));
         armies[numberOfArmies].GetComponent<Army>().ArmyInitialization(
             ownedByPlayer, gridPosition, armyOrientation, armyUnits
         );
@@ -329,6 +328,69 @@ public class WorldObjectManager : MonoBehaviour
         gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfArmies++;   
     }
+
+    public void CreateNewArmy (string _playerColor, Vector2Int _gridPosition, int[] _unitType, int[] _unitCount)
+    {
+        // First part is the playerOnwership
+        string ownedByPlayer = _playerColor;
+        
+        // Second part is the grid position and orientation
+        Vector2Int gridPosition = _gridPosition;
+
+        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+            Debug.Log("Objects overlapping");
+            return;
+        }
+
+        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        float armyOrientation = 0f;
+
+        // Third part are the army units
+        int [] armyUnits = new int [14];
+        for (int j = 0; j < 7; j++)
+        {
+            armyUnits[2 * j] = _unitType[j];
+            armyUnits[2 * j + 1] = _unitCount[j];
+        }
+
+        armies.Add(Instantiate(armyPrefab, objectPosition, Quaternion.identity));
+        armies[numberOfArmies].GetComponent<Army>().ArmyInitialization(
+            ownedByPlayer, gridPosition, armyOrientation, armyUnits
+        );
+        armies[numberOfArmies].transform.parent = transform;
+        armies[numberOfArmies].gameObject.name = ownedByPlayer + " Army " + (numberOfArmies + 1);
+
+        // Adding the army to the approprieate player
+        
+        for (int i = 0; i < playerManager.players.Length; i++)
+        {
+            if (playerManager.players[i].name == ownedByPlayer + " Player")
+            {
+                chosenPlayer = playerManager.players[i].GetComponent<Player>();
+                chosenPlayer.NewArmy(armies[numberOfArmies]);
+                break;
+            }
+        }
+        if (ownedByPlayer  == "Neutral"){
+            chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
+            chosenPlayer.NewArmy(armies[numberOfArmies]);
+        }
+
+        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        numberOfArmies++;  
+    }
+
+    public void RemoveArmy (GameObject selectedArmy)
+    {
+        chosenPlayer = selectedArmy.GetComponent<Army>().ownedByPlayer.GetComponent<Player>();
+        chosenPlayer.RemoveArmy(selectedArmy);
+        for (int i = 0; i < armies.Count; i++){
+            if (armies[i].name == selectedArmy.name){
+                armies.RemoveAt(i);
+            }
+        }
+        
+    }
     #endregion
 
     #region Resources
@@ -346,8 +408,7 @@ public class WorldObjectManager : MonoBehaviour
         string resourceType = _splitLine[3];
         int resourceCount = Convert.ToInt32(_splitLine[4]);
 
-        Array.Resize(ref resources, numberOfResources + 1);
-        resources[numberOfResources] = Instantiate(resourcePrefab, objectPosition, Quaternion.identity);
+        resources.Add(Instantiate(resourcePrefab, objectPosition, Quaternion.identity));
         resources[numberOfResources].GetComponent<ResourcesObj>().ResourceInitialization(resourceType, resourceCount, gridPosition);
         resources[numberOfResources].transform.parent = transform;
         resources[numberOfResources].gameObject.name = resourceType + ": " + (numberOfResources + 1);

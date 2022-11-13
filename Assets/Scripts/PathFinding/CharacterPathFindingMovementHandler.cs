@@ -5,12 +5,11 @@ using UnityEngine.Events;
 
 public class CharacterPathFindingMovementHandler : MonoBehaviour
 {
-    Coroutine moveToNextNode;
+    private Coroutine moveToNextNode;
     [SerializeField] UnityEvent onMoveFinish;
-    [SerializeField] VisablePath visablePath;
-    [SerializeField] GameGrid gameGrid;
-    [SerializeField] Army thisArmy;
-    [SerializeField] GameObject objectToInteractWith;
+    [SerializeField] private VisablePath visablePath;
+    [SerializeField] private Army thisArmy;
+    [SerializeField] private GameObject objectToInteractWith;
     private List<Vector3> pathVectorList;
     private List <int> pathCost;
     private Vector3 previousSelectedPosition;
@@ -21,23 +20,23 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
 
     void Start ()
     {
-        gameGrid = FindObjectOfType<GameGrid>();
         visablePath = FindObjectOfType<VisablePath>();
         isMoving = false;
         thisArmy = this.gameObject.GetComponentInParent<Army>();
         TurnManager.OnNewPlayerTurn += StopMoving;
     }
 
+    // Sets the target position and if the given position is close to the already set position starts moving
     public void HandleMovement(Vector3 _targetPosition) {
         
         if (pathVectorList != null) {
             
-            if (Vector3.Distance(_targetPosition, pathVectorList[pathVectorList.Count - 1]) < 5f | Vector3.Distance(previousSelectedPosition, _targetPosition) < 5f)
+            if (Vector3.Distance(_targetPosition, pathVectorList[pathVectorList.Count - 1]) < 5f | Vector3.Distance(previousSelectedPosition, _targetPosition) < 5f) // Checks if the position is close to the previous one
             {
                 isMoving = true;
                 CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this.gameObject);
                 MovementStatus();
-            }else{
+            }else{  // Sets a new target position
                 objectToInteractWith = null;
                 isReadyToMove = true;
                 visablePath.DestroyVisablePath();
@@ -51,7 +50,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
                 }
             }
             
-        } else{
+        } else{     // Sets a target position
             isReadyToMove = true;
             previousSelectedPosition = _targetPosition;
             SetTargetPosition(_targetPosition);
@@ -65,9 +64,11 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         }
     }
 
+    // Checks the movement status
     private void MovementStatus ()
     {
-        if (currentPathIndex >= pathVectorList.Count) {
+        // Checks if the movement is done and stops moving if it is
+        if (currentPathIndex >= pathVectorList.Count) { 
             if (objectToInteractWith != null) objectToInteractWith.GetComponent<ObjectInteraction>().ObjectInteractionEvent(this.gameObject);
             StopMoving();
             isReadyToMove = false;
@@ -87,6 +88,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         }
     }
 
+    // Stops moving and resets the element
     public void StopMoving() {
         pathVectorList = null;
         objectToInteractWith = null;
@@ -94,31 +96,35 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         visablePath.DestroyVisablePath();
     }
 
+    // Stops moving on new turn 
     public void StopMoving(Player player) {
         pathVectorList = null;
         isMoving = false;
         visablePath.DestroyVisablePath();
     }
 
+    // Returns the current world position of selected army
     public Vector3 GetPosition()
     {
         return transform.position;
     }
 
+    // Sets the object position to a given position
     public void SetTargetPosition(Vector3 targetPosition)
     {
         currentPathIndex = 0;
-        pathVectorList = gameGrid.pathfinding.FindPath(GetPosition(), targetPosition);
+        pathVectorList = GameGrid.Instance.pathfinding.FindPath(GetPosition(), targetPosition);
 
         if (pathVectorList != null && pathVectorList.Count > 1){
             pathVectorList.RemoveAt(0);
         }
 
-        if (gameGrid.GetGridCellInformation(gameGrid.GetGridPosFromWorld(targetPosition)).isObjectInteractable){
-            objectToInteractWith = gameGrid.GetGridCellInformation(gameGrid.GetGridPosFromWorld(targetPosition)).objectInThisGridSpace;
+        if (GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).isObjectInteractable){
+            objectToInteractWith = GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).objectInThisGridSpace;
         }
     }
 
+    // Prepares to move to the next PathNode
     public void PrepareNextMove ()
     {
         currentPathIndex++;
@@ -129,6 +135,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         }
     }
 
+    // Enumerator to slowly move from one PathNode to another
     private IEnumerator MoveToNextNode (Vector3 _targetPosition)
     {
         Vector3 _startingPosition = transform.position;
@@ -141,6 +148,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
         onMoveFinish?.Invoke();
     }
     
+    // Calculates the path cost of the current path and returns it as a intiger list
     private List <int> CalculatePathCost()
     {      
         if (Vector3.Distance(pathVectorList[0], transform.position) > 6f){

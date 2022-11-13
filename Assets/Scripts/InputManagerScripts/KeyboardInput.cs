@@ -16,7 +16,7 @@ public class KeyboardInput : MonoBehaviour
     //internal bool isTabKeyPressed;
     //internal bool isSpaceKeyPressed
 
-    void Update ()
+    private void Update ()
     {
         if(Input.GetKey(KeyCode.A)){
             isLeftPressed = true;

@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class GridInteractionManager : MonoBehaviour
 {
-    [SerializeField] InputManager inputManager;
-    [SerializeField] Vector2Int currentGridPosition;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private Vector2Int currentGridPosition;
     [SerializeField] private LayerMask whatIsAGridLayer;
     [SerializeField] internal bool isCurrentGridOccupied;
-    MouseInput mouseInput;
-    
-    GameGrid gameGrid;
+    private MouseInput mouseInput;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameGrid = FindObjectOfType<GameGrid>();
         mouseInput = inputManager.GetComponent<MouseInput>();
     }
 
@@ -25,11 +22,10 @@ public class GridInteractionManager : MonoBehaviour
         GridCell cellMouseIsOver = IsMouseOverAGridSpace();
         if (cellMouseIsOver != null)
         {
-            currentGridPosition = gameGrid.GetGridPosFromWorld(mouseInput.MouseWorldPosition(whatIsAGridLayer));
+            currentGridPosition = GameGrid.Instance.GetGridPosFromWorld(mouseInput.MouseWorldPosition(whatIsAGridLayer));
             isCurrentGridOccupied = cellMouseIsOver.isOccupied;
         }
     }
-
 
     // Returns the grid cell if mouse is over a grid cell and returns null if it is not
     private GridCell IsMouseOverAGridSpace()

@@ -5,43 +5,43 @@ using UnityEngine;
 
 public class CameraMovement: MonoBehaviour 
 {
-    [SerializeField]CameraManager cameraManager;
-    [SerializeField] GameObject inputManager;
+    [SerializeField] internal CameraManager cameraManager;
+    [SerializeField] private GameObject inputManager;
     [SerializeField] internal Transform cameraFollowObject;
-    [SerializeField] GameObject objectToMoveTowards;
-    MouseInput mouseInput;
-    KeyboardInput keyboardInput;
+    [SerializeField] private GameObject objectToMoveTowards;
+    private MouseInput mouseInput;
+    private KeyboardInput keyboardInput;
 
-    Coroutine cameraMoveToObject;
-    
     private int screenWidth;
     private int screenHeight;
 
     [Header("Camera Options")]
-    [SerializeField] int speed = 5;
-    [SerializeField] int maxSpeed = 10;
-    [SerializeField] int distanceFromBoundary = 50;
-    [SerializeField] int minDistanceFromBoundary = 5;
+    [SerializeField] private int speed = 5;
+    [SerializeField] private int maxSpeed = 10;
+    [SerializeField] private int distanceFromBoundary = 50;
+    [SerializeField] private int minDistanceFromBoundary = 5;
     [SerializeField] internal Vector2 cameraMoveLimit;
     internal bool cameraFollowingObject;
-    [SerializeField] float rotation;
-    [SerializeField] float moveSpeed;
+    [SerializeField] private float rotation;
+    [SerializeField] private float moveSpeed;
     internal Vector3 position;  
     private Vector3 cameraOffset; 
     private Vector3 adjustedMovementVector;
 
-    void Awake()
+    private void Awake()
     {
         mouseInput = inputManager.GetComponent<MouseInput>();
         keyboardInput = inputManager.GetComponent<KeyboardInput>();
     }
-	void Start () 
+
+	private void Start () 
     {
         screenWidth = Screen.width;
         screenHeight = Screen.height;
 	}
 	
-	void Update () 
+    // Check what type of movement if any is supposed to run every frame
+	private void Update () 
     {
         if (cameraManager.cameraEnabled)
         {
@@ -58,6 +58,7 @@ public class CameraMovement: MonoBehaviour
         rotation = transform.localEulerAngles.y;
     }
 
+    // Movement based on edge scrolling
     private void EdgeScrollingMovement()
     {
         position = transform.position;
@@ -109,6 +110,7 @@ public class CameraMovement: MonoBehaviour
         transform.position = position;
     }
 
+    // Movement based on keyboard input
     private void ManualCameraMovement()
     {
         position = transform.position;
@@ -135,12 +137,21 @@ public class CameraMovement: MonoBehaviour
         transform.position = position;  
     }
 
+    // Adds an object for the camera to follow
     public void CameraAddObjectToFollow (GameObject _objectToMoveTowards)
     {
         objectToMoveTowards = _objectToMoveTowards;
         cameraFollowingObject = true;
     }
 
+    // Removes the object 
+    public void CameraRemoveObjectToFollow ()
+    {
+        objectToMoveTowards = null;
+        cameraFollowingObject = false;
+    }
+
+    // Moves the camera towards the selected object
     public void CameraFollowWorldObject ()
     {
         if (cameraFollowingObject)
@@ -151,6 +162,7 @@ public class CameraMovement: MonoBehaviour
         }
     }
 
+    // Calculates the position based on the camera rotation, angle and the selected object position
     internal Vector3 CalculateCameraOffset ()
     {
         double angle = transform.localEulerAngles.x;
@@ -160,6 +172,7 @@ public class CameraMovement: MonoBehaviour
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y - objectToMoveTowards.transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 
+    // Calculates the Camera offset independent of any object 
     internal Vector3 CalculateCameraOffsetIndependent ()
     {
         double angle = transform.localEulerAngles.x;
@@ -169,6 +182,7 @@ public class CameraMovement: MonoBehaviour
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 
+    // Calculates the Vector at which the camera is supposed to move to move forwards
     internal Vector3 CalculateMovementAngle ()
     {
         double y = System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
@@ -176,6 +190,7 @@ public class CameraMovement: MonoBehaviour
         return new Vector3(Convert.ToSingle(y), 0, Convert.ToSingle(x));
     }
 
+    // Returns the position around which the camera is supposed to rotate
     internal Vector3 CalculateCenterOfRotation()
     {
         return (transform.position - CalculateCameraOffsetIndependent());

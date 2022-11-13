@@ -7,15 +7,15 @@ using UnityEngine.EventSystems;
 
 public class UnitButton : MonoBehaviour, IDropHandler
 {
-    [SerializeField] Sprite unitButtonDefault; 
-    [SerializeField] Sprite unitButtonHighlight;  
-    [SerializeField] Button thisButton;  
-    [SerializeField] short slotID;
+    [SerializeField] private Sprite unitButtonDefault; 
+    [SerializeField] private Sprite unitButtonHighlight;  
+    [SerializeField] private Button thisButton;  
+    [SerializeField] private short slotID;
     public bool isSlotEmpty;
 
     [SerializeField] private UnitButton buttonToSwap;
 
-    void Start ()
+    private void Start ()
     {
         try{
             ArmyInformation.Instance.onUnitDisplayReload.AddListener(DeactivateHighlight);
@@ -25,6 +25,7 @@ public class UnitButton : MonoBehaviour, IDropHandler
         
     }
 
+    // Activates a unit highlight
     public void ActivateHighlight ()
     {
         ArmyInformation.Instance.onUnitDisplayReload?.Invoke();
@@ -32,11 +33,13 @@ public class UnitButton : MonoBehaviour, IDropHandler
         ArmyInformation.Instance.ChangeSelectedUnit(slotID);
     }
 
+    // Deactivates the highlight
     private void DeactivateHighlight ()
     {
         thisButton.gameObject.GetComponent<Image>().sprite = unitButtonDefault;
     }
 
+    // When a dragged object is dropped on this one, it runs a few checks to determine what it should do
     public void OnDrop (PointerEventData eventData)
     {
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "UnitIcons"){

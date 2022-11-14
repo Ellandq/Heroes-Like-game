@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ObjectInteraction : MonoBehaviour
 {
-    [SerializeField] City relatedCity;
-    [SerializeField] Mine relatedMine;
-    [SerializeField] Army relatedArmy;
-    [SerializeField] ResourcesObj relatedResource;
+    [SerializeField] private City relatedCity;
+    [SerializeField] private Mine relatedMine;
+    [SerializeField] public Army relatedArmy;
+    [SerializeField] private ResourcesObj relatedResource;
     //[SerializeField] Building relatedBuilding;
 
     internal string objectTag;

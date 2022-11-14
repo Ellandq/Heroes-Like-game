@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SceneStateManager
 {
     public static GameObject displayedCity;
+    public static Army interactingArmy;
     public static string displayedCityFraction;
 
 
@@ -24,11 +25,7 @@ public class SceneStateManager
 
     public static void ExitCity ()
     {
-        GameManager.Instance.EnableWorldObjects();
-    }
-
-    private IEnumerator WaitForEndOfFrame()
-    {
-        yield return new WaitForEndOfFrame();
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(SceneStateManager.displayedCityFraction));
+        GameManager.Instance.ExitCity();
     }
 }

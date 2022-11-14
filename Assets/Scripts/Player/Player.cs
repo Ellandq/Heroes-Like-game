@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     internal short objectsCreated = 0;
     private short daysToLoose = 4;
     private GameObject lastObjectSelectedByPlayer;
+    private bool playerLost;
+
+    private GameObject objectToDestroy;
 
     [Header("Player basic information")]
     private City currentCity;
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour
 
     private void Start ()
     {
+        playerLost = false;
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         string[] str = this.name.Split(' ');
@@ -81,15 +85,21 @@ public class Player : MonoBehaviour
     // Removes a given army from the player
     public void RemoveArmy (GameObject armyToRemove)
     {  
-        for (int i = 0; i < ownedArmies.Count; i++){
-            if (ownedArmies[i].name == armyToRemove.name){
-                ownedArmies.RemoveAt(i);
-                Destroy(armyToRemove);
+        if (GameManager.Instance.gameHandler.activeSelf){
+            
+            for (int i = 0; i < ownedArmies.Count; i++){
+                if (ownedArmies[i].name == armyToRemove.name){
+                    ownedArmies.RemoveAt(i);
+                    Destroy(armyToRemove);
+                }
             }
-        }
-        if (waitForObjectToBeDestroyed == null)
-        {
-            waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
+            if (waitForObjectToBeDestroyed == null)
+            {
+                    waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
+
+            }
+        }else{
+            objectToDestroy = armyToRemove;
         }
     }
 
@@ -241,19 +251,45 @@ public class Player : MonoBehaviour
     // Checks if any loose conditions are met
     private void CheckPlayerLooseCondition ()
     {
-        if (this.gameObject.name != "Neutral Player"){
+        if (this.gameObject.name != "Neutral Player" && !playerLost){
             if (ownedCities.Count == 0){
                 daysToLoose--;
                 if (ownedArmies.Count == 0){
                     Debug.Log(this.gameObject.name + " has lost. ");
-                    Destroy(this.gameObject);
+                    int objectCount = ownedArmies.Count - 1;
+                    for (int i = objectCount; i >= 0; i--){
+                        WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
+                    }
+                    objectCount = ownedCities.Count - 1;
+                    for (int i = objectCount; i >= 0; i--){
+                        ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
+                    }
+                    objectCount = ownedMines.Count - 1;
+                    for (int i = objectCount; i >= 0; i--){
+                        ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
+                    }
+                    playerLost = true;
                 }else{
                     if (daysToLoose == 0){
                         Debug.Log(this.gameObject.name + " has lost. ");
-                        Destroy(this.gameObject);
+                        int objectCount = ownedArmies.Count - 1;
+                        for (int i = objectCount; i >= 0; i--){
+                            WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
+                        }
+                        objectCount = ownedCities.Count - 1;
+                        for (int i = objectCount; i >= 0; i--){
+                            ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
+                        }
+                        objectCount = ownedMines.Count - 1;
+                        for (int i = objectCount; i >= 0; i--){
+                            ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
+                        }
+                        playerLost = true;
                     }
                 }
-                Debug.Log(this.gameObject.name + " has " + daysToLoose + " turns to regain a city.");
+                if (!playerLost){
+                    Debug.Log(this.gameObject.name + " has " + daysToLoose + " turns to regain a city.");
+                }
             }
         }
     }
@@ -295,5 +331,13 @@ public class Player : MonoBehaviour
         if (PlayerManager.Instance.currentPlayer == this) TownAndArmySelection.Instance.UpdatePlayerDisplay(this); 
 
         waitForObjectToBeDestroyed = null;
+    }
+
+    private void OnEnable()
+    {
+        if (objectToDestroy != null){
+            RemoveArmy(objectToDestroy);
+            objectToDestroy = null;
+        }
     }
 }

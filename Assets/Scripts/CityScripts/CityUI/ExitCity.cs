@@ -10,9 +10,6 @@ public class ExitCity : MonoBehaviour
 
     public void ExitCityScene ()
     {
-        city = SceneStateManager.displayedCity.GetComponent<City>();
-        
-        deloadCity = SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(SceneStateManager.displayedCityFraction));
         SceneStateManager.ExitCity();
     }
 }

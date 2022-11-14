@@ -389,7 +389,7 @@ public class WorldObjectManager : MonoBehaviour
                 armies.RemoveAt(i);
             }
         }
-        
+        numberOfArmies--;  
     }
     #endregion
 

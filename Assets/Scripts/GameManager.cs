@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] public GameGrid gameGrid;
-    [SerializeField] GameObject uiManager;
-    [SerializeField] GameObject turnManager;
-    [SerializeField] GameObject gameHandler;
+    [SerializeField] private GameObject uiManager;
+    [SerializeField] private GameObject turnManager;
+    [SerializeField] public GameObject gameHandler;
+
+    private Coroutine waitForSceneToDeload;
 
     public GameState State;
 
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public static Action <GameState> OnGameStateChanged;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
         mapName = "TestMap";
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
         uiManager.SetActive(true);
     }
 
-    void Start ()
+    private void Start ()
     {
         Mathf.Clamp(numberOfPlayers, 1, 6);
         
@@ -108,6 +110,41 @@ public class GameManager : MonoBehaviour
     public void EnableWorldObjects ()
     {
         gameHandler.SetActive(true);
+    }
+
+    public void EnterCity (GameObject cityToEnter, string _cityFraction)
+    {
+        UpdateGameState(GameState.CityEntered);
+        SceneStateManager.EnterCity(cityToEnter, _cityFraction);
+    }
+
+    public void EnterCity (GameObject cityToEnter, string _cityFraction, Army _interactingArmy)
+    {
+        UpdateGameState(GameState.CityEntered);
+        SceneStateManager.interactingArmy = _interactingArmy;
+        SceneStateManager.EnterCity(cityToEnter, _cityFraction);
+    }
+
+    public void ExitCity ()
+    {
+        waitForSceneToDeload = StartCoroutine(WaitForSceneToDeload());
+    }
+
+    public bool IsCityOpened ()
+    {
+        if (SceneManager.sceneCount > 1) return true;
+        else return false;
+    }
+
+    public IEnumerator WaitForSceneToDeload (){
+        while (IsCityOpened()){
+            yield return null;
+        }
+        GameManager.Instance.EnableWorldObjects();
+        waitForSceneToDeload = null;
+        SceneStateManager.interactingArmy = null;
+        ArmyInformation.Instance.RefreshElement();
+        UpdateGameState(GameState.CityLeft);
     }
 }
 

@@ -11,11 +11,15 @@ public class PlayerDisplay : MonoBehaviour
 
     void Start()
     {
-        displayedPlayer = playerDisplay.GetComponent<Text>();
+        if (playerDisplay != null){
+            displayedPlayer = playerDisplay.GetComponent<Text>();
+        }
     }
     
     public void ChangeDisplay (string playerName)
     {
-        displayedPlayer.text = playerName;
+        if (playerDisplay != null){
+            displayedPlayer.text = playerName;
+        }
     }
 }

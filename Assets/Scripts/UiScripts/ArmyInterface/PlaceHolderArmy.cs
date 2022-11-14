@@ -66,6 +66,11 @@ public class PlaceHolderArmy : MonoBehaviour
         UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
     }
 
+    public void SplitUnits (short a, short b, City otherCity, GameObject otherCityUnit) // Split units with another army
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherCity.garrisonSlots[b].GetComponent<UnitSlot>(), this, otherCity, a, b);
+    }
+
     public bool AreUnitSlotsSameType (short a, short b)
     {
         if (unitSlots[a].GetComponent<UnitSlot>().unitID == unitSlots[b].GetComponent<UnitSlot>().unitID) return true;

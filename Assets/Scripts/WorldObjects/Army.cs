@@ -207,6 +207,11 @@ public class Army : MonoBehaviour
         UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
     }
 
+    public void SplitUnits (short a, short b, City otherCity, GameObject otherCityUnit) // Spliting with another City
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherCity.garrisonSlots[b].GetComponent<UnitSlot>(), this, otherCity, a, b);
+    }
+
     public void SplitUnits (short a, short b, PlaceHolderArmy otherArmy, GameObject otherArmyUnit) // Spliting with a placeholder army
     {
         UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);

@@ -28,7 +28,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
     private List <GridCell> neighbourCells;
     public UnityEvent onArmyInterfaceReload;
 
-    void Start ()
+    private void Awake ()
     {
         Instance = this;
         selectedUnit = null;
@@ -36,6 +36,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
 
     public void GetArmyUnits(GameObject armyObject)
     {
+        CameraManager.Instance.cameraEnabled = false;
         interactingWithPlaceholder = true;
         army01 = armyObject;
         army02 = placeHolderArmy;
@@ -48,6 +49,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
 
     public void GetArmyUnits(GameObject armyObject, GameObject interactedArmy)
     {
+        CameraManager.Instance.cameraEnabled = false;
         interactingWithPlaceholder = false;
         army01 = armyObject;
         army02 = interactedArmy;
@@ -296,6 +298,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             }
         }
         ClearSelection();
+        CameraManager.Instance.cameraEnabled = true;
     }
 
     private bool IsArmyEmpty(GameObject army)
@@ -329,6 +332,8 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             }
             WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().playerColorString, 
             neighbourCells[0].GetPosition(), _unitType, _unitCount);
+        }else{
+            Debug.Log("No available spaces");
         }
     }
 

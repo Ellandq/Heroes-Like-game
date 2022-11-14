@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathNode : MonoBehaviour
 {
-    [SerializeField] GridCell gridCell;
+    [SerializeField] public GridCell gridCell;
     public GameObject occupyingObject;
 
     private int posX;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ResourceDisplay : MonoBehaviour
+public class CityResourceDisplay : MonoBehaviour
 {
     Player currentPlayer;
     [SerializeField] GameObject goldCounter;
@@ -24,10 +24,11 @@ public class ResourceDisplay : MonoBehaviour
     private TextMeshProUGUI displayedSulfur;
     private TextMeshProUGUI displayedCrystals;
 
-    private void Start()
+    private bool isResourceDisplayReady = false;
+
+    public void SetupResourceDisplay ()
     {
-        TurnManager.OnNewPlayerTurn += UpdateDisplay;
-        PlayerManager.OnCurrentPlayerResourcesGained += UpdateDisplay;
+        currentPlayer = CityManager.Instance.owningPlayer;
         displayedGold = goldCounter.GetComponent<TextMeshProUGUI>();
         displayedWood = woodCounter.GetComponent<TextMeshProUGUI>();
         displayedOre = oreCounter.GetComponent<TextMeshProUGUI>();
@@ -35,28 +36,18 @@ public class ResourceDisplay : MonoBehaviour
         displayedMercury = mercuryCounter.GetComponent<TextMeshProUGUI>();
         displayedSulfur = sulfurCounter.GetComponent<TextMeshProUGUI>();
         displayedCrystals = crystalCounter.GetComponent<TextMeshProUGUI>();
+        isResourceDisplayReady = true;
     }
 
-    private void UpdateDisplay (Player _currentPlayer)
+    public void UpdateDisplay ()
     {
-        currentPlayer = _currentPlayer;
+        if (!isResourceDisplayReady) SetupResourceDisplay();
         displayedGold.text = Convert.ToString(currentPlayer.gold);
         displayedWood.text = Convert.ToString(currentPlayer.wood);
         displayedOre.text = Convert.ToString(currentPlayer.ore);
         displayedGems.text = Convert.ToString(currentPlayer.gems);
         displayedMercury.text = Convert.ToString(currentPlayer.mercury);
         displayedSulfur.text = Convert.ToString(currentPlayer.sulfur);
-        displayedCrystals.text = Convert.ToString(currentPlayer.crystals);
-    }
-
-    private void UpdateDisplay ()
-    {
-        displayedGold.text = Convert.ToString(currentPlayer.gold);
-        displayedWood.text = Convert.ToString(currentPlayer.wood);
-        displayedOre.text = Convert.ToString(currentPlayer.ore);
-        displayedGems.text = Convert.ToString(currentPlayer.gems);
-        displayedMercury.text = Convert.ToString(currentPlayer.mercury);
-        displayedSulfur.text = Convert.ToString(currentPlayer.sulfur);
-        displayedCrystals.text = Convert.ToString(currentPlayer.crystals);
+        displayedCrystals.text = Convert.ToString(currentPlayer.crystals);    
     }
 }

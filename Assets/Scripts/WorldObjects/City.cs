@@ -11,7 +11,7 @@ public class City : MonoBehaviour
     [SerializeField] GameObject flag;
 
     [Header("Main city information")]
-    [SerializeField] GameObject ownedByPlayer;
+    [SerializeField] public GameObject ownedByPlayer;
     public string cityFraction;
     public Vector2Int gridPosition;
     private Vector3 position;
@@ -20,8 +20,8 @@ public class City : MonoBehaviour
     public bool canBeSelectedByCurrentPlayer;
 
     [Header("City Enterance Information")]
-    [SerializeField] GameObject cityEnterance;
-    [SerializeField] List<PathNode> enteranceCells;
+    [SerializeField] private GameObject cityEnterance;
+    [SerializeField] public List<PathNode> enteranceCells;
 
     [Header("Garrison refrences")]
     bool cityEmpty;
@@ -199,7 +199,7 @@ public class City : MonoBehaviour
     {
         Debug.Log("Interacting army with city: " + interactingArmy.name);
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            SceneStateManager.EnterCity(this.gameObject, cityFraction);
+            GameManager.Instance.EnterCity(this.gameObject, cityFraction, interactingArmy.GetComponentInParent<Army>());
         }else{
             if (IsCityEmpty()){
                 ChangeOwningPlayer(interactingArmy.GetComponent<Army>().ownedByPlayer);
@@ -211,7 +211,7 @@ public class City : MonoBehaviour
 
     public void CityInteraction ()
     {
-        SceneStateManager.EnterCity(this.gameObject, cityFraction);
+        GameManager.Instance.EnterCity(this.gameObject, cityFraction);
     }
 
     public void GetEnteranceInformation (List <PathNode> _enteranceList)
@@ -256,9 +256,30 @@ public class City : MonoBehaviour
         garrisonSlots[b].GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
     }
 
+    public void SwapUnitsPosition (short a, GameObject otherArmyUnit)
+    {
+        int id01 = garrisonSlots[a].GetComponent<UnitSlot>().unitID;
+        int id02 = otherArmyUnit.GetComponent<UnitSlot>().unitID;
+        int unitCount01 = garrisonSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        int unitCount02 = otherArmyUnit.GetComponent<UnitSlot>().howManyUnits;
+        float mPoints01 = garrisonSlots[a].GetComponent<UnitSlot>().movementPoints;
+        float mPoints02 = otherArmyUnit.GetComponent<UnitSlot>().movementPoints;
+        garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+        otherArmyUnit.GetComponent<UnitSlot>().RemoveUnits();
+
+        garrisonSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
+        otherArmyUnit.GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
+    }
+
     public void AddUnits (short a, short b)
     {
         garrisonSlots[b].GetComponent<UnitSlot>().howManyUnits += garrisonSlots[a].GetComponent<UnitSlot>().howManyUnits;
+        garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
+    }
+
+    public void AddUnits (short a, GameObject otherArmyUnit)
+    {
+        otherArmyUnit.GetComponent<UnitSlot>().howManyUnits += garrisonSlots[a].GetComponent<UnitSlot>().howManyUnits;
         garrisonSlots[a].GetComponent<UnitSlot>().RemoveUnits();
     }
 
@@ -267,9 +288,25 @@ public class City : MonoBehaviour
         UnitSplitWindow.Instance.PrepareUnitsToSwap(garrisonSlots[a].GetComponent<UnitSlot>(), garrisonSlots[b].GetComponent<UnitSlot>(), this, a, b);
     }
 
-    public bool AreGarrisonSlotsSameType (short a, short b)
+    public void SplitUnits (short a, short b, Army otherArmy, GameObject otherArmyUnit) // Spliting with another army
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(garrisonSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
+    }
+
+    public void SplitUnits (short a, short b, PlaceHolderArmy otherArmy, GameObject otherArmyUnit) // Spliting with a placeholder army
+    {
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(garrisonSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
+    }
+
+    public bool AreUnitSlotsSameType (short a, short b)
     {
         if (garrisonSlots[a].GetComponent<UnitSlot>().unitID == garrisonSlots[b].GetComponent<UnitSlot>().unitID) return true;
+        else return false;
+    }
+
+    public bool AreUnitSlotsSameType (short a, GameObject otherArmyUnit)
+    {
+        if (garrisonSlots[a].GetComponent<UnitSlot>().unitID == otherArmyUnit.GetComponent<UnitSlot>().unitID) return true;
         else return false;
     }
 }

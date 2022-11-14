@@ -169,7 +169,7 @@ public class ArmyInformation : MonoBehaviour
             if (selectedArmy.GetComponentInParent<Army>().AreUnitSlotsSameType(a, b))return true;
             else return false;
         }else{
-            if (selectedArmy.GetComponentInParent<City>().AreGarrisonSlotsSameType(a, b))return true;
+            if (selectedArmy.GetComponentInParent<City>().AreUnitSlotsSameType(a, b))return true;
             else return false;
         }
     }

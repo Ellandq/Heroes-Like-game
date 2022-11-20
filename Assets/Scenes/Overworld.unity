@@ -14240,7 +14240,6 @@ MonoBehaviour:
   slider: {fileID: 101582820}
   unitCount01: {fileID: 1316657365}
   unitCount02: {fileID: 2105311071}
-  placeHolderArmy: {fileID: 5480519946274517254}
 --- !u!222 &1424608109
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17121,8 +17120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameGrid: {fileID: 258225769}
   uiManager: {fileID: 1643765250}
-  turnManager: {fileID: 985370010}
   gameHandler: {fileID: 1026378176}
+  unitSplitWindow: {fileID: 1424608108}
   State: 0
   numberOfPlayers: 2
   numberOfHumanPlayers: 0
@@ -21754,6 +21753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2053716899653080476}
   - component: {fileID: 5480519946274517254}
+  - component: {fileID: 5480519946274517255}
   m_Layer: 7
   m_Name: PlaceHolderArmy
   m_TagString: Army
@@ -21771,6 +21771,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8d49ca07a87789459145e9a65e3bacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitSlots:
+  - {fileID: 3256742047141253034}
+  - {fileID: 2641143173298531522}
+  - {fileID: 4141332189022427482}
+  - {fileID: 2972757308904709987}
+  - {fileID: 5620591113476770113}
+  - {fileID: 7237296489297375976}
+  - {fileID: 5882408514643219810}
+--- !u!114 &5480519946274517255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480519946274517253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325d0fe0380c5bb47957f25ff07fe021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unitSlots:

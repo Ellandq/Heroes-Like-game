@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [SerializeField] public GameGrid gameGrid;
     [SerializeField] private GameObject uiManager;
-    [SerializeField] private GameObject turnManager;
     [SerializeField] public GameObject gameHandler;
+    [SerializeField] private UnitSplitWindow unitSplitWindow;
 
     private Coroutine waitForSceneToDeload;
 
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameComponentsReady == 2)
         {
-            turnManager.GetComponent<TurnManager>().StartGame();
+            TurnManager.Instance.GetComponent<TurnManager>().StartGame();
         }
         else gameComponentsReady++;
     }
@@ -95,7 +95,8 @@ public class GameManager : MonoBehaviour
             break;
 
             case GameState.CityLeft:
-
+                unitSplitWindow.SetInstanceStatus();
+                UpdateGameState(GameState.PlayerTurn);
             break;
         }
 

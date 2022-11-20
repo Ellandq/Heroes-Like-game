@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System.Linq;
 
-public class PlaceHolderArmy : MonoBehaviour
+public class UnitsInformation : MonoBehaviour
 {
     [Header("Unit slots references")]
     [SerializeField] public List <GameObject> unitSlots;
@@ -56,19 +54,14 @@ public class PlaceHolderArmy : MonoBehaviour
         unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
     }
 
-    public void SplitUnits (short a, short b) // Split units with itself
+    public void SplitUnits (short a, short b) // Spliting with itself
     {
-        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), a, b);
+        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), this, a, b);
     }
 
-    public void SplitUnits (short a, short b, Army otherArmy, GameObject otherArmyUnit) // Split units with another army
+    public void SplitUnits (short a, short b, UnitsInformation otherArmy, GameObject otherArmyUnit) // Spliting with another army
     {
         UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
-    }
-
-    public void SplitUnits (short a, short b, City otherCity, GameObject otherCityUnit) // Split units with another army
-    {
-        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherCity.garrisonSlots[b].GetComponent<UnitSlot>(), this, otherCity, a, b);
     }
 
     public bool AreUnitSlotsSameType (short a, short b)

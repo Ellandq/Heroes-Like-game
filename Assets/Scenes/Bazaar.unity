@@ -2678,6 +2678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cityInteractibleObjects: {fileID: 1109342418}
   currentCity: {fileID: 0}
+  currentCityGarrison: {fileID: 0}
   owningPlayer: {fileID: 0}
   armiesNearCity: []
   availableEnteranceCells: []
@@ -8427,6 +8428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1397607401}
   - component: {fileID: 1397607402}
+  - component: {fileID: 1397607403}
   m_Layer: 7
   m_Name: PlaceHolderArmy
   m_TagString: Army
@@ -8465,6 +8467,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8d49ca07a87789459145e9a65e3bacb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitSlots:
+  - {fileID: 1398643565}
+  - {fileID: 1787305229}
+  - {fileID: 505717125}
+  - {fileID: 358529093}
+  - {fileID: 2125863121}
+  - {fileID: 56992790}
+  - {fileID: 640720108}
+--- !u!114 &1397607403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397607400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325d0fe0380c5bb47957f25ff07fe021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unitSlots:

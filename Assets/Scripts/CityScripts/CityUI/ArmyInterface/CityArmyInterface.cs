@@ -22,7 +22,7 @@ public class CityArmyInterface : MonoBehaviour
     [SerializeField] List <Button> unitInfoButtons;
     [SerializeField] List <GameObject> unitCountDisplay;
 
-    [SerializeField] internal Army army;
+    [SerializeField] internal UnitsInformation army;
     private bool interactingWithPlaceholder;
     private List <GridCell> neighbourCells;
     public UnityEvent onArmyInterfaceReload;
@@ -37,8 +37,8 @@ public class CityArmyInterface : MonoBehaviour
     {
         if (CityManager.Instance.availableEnteranceCells.Count > 0){
             interactingWithPlaceholder = true;
-            units01 = new List<GameObject>(CityManager.Instance.currentCity.garrisonSlots);
-            units02 = new List<GameObject>(placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots);
+            units01 = new List<GameObject>(CityManager.Instance.currentCityGarrison.unitSlots);
+            units02 = new List<GameObject>(placeholderArmy.GetComponent<UnitsInformation>().unitSlots);
             this.transform.GetChild(0).gameObject.SetActive(true);
             UpdateUnitDisplay();
         }else{
@@ -49,8 +49,8 @@ public class CityArmyInterface : MonoBehaviour
     public void GetArmyUnits(Army interactedArmy)
     {
         interactingWithPlaceholder = false;
-        army = interactedArmy;
-        units01 = new List<GameObject>(CityManager.Instance.currentCity.garrisonSlots);
+        army = interactedArmy.GetComponent<UnitsInformation>();
+        units01 = new List<GameObject>(CityManager.Instance.currentCityGarrison.unitSlots);
         units02 = new List<GameObject>(interactedArmy.unitSlots);
         this.transform.GetChild(0).gameObject.SetActive(true);
         UpdateUnitDisplay();
@@ -62,7 +62,7 @@ public class CityArmyInterface : MonoBehaviour
         for (int i = 0; i < 7; i++){
             units01[i] = null;
             units02[i] = null;
-            placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().RemoveUnits();
+            placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().RemoveUnits();
         }
         army = null;
         UpdateUnitDisplay();
@@ -146,26 +146,26 @@ public class CityArmyInterface : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.SwapUnitsPosition(a, b);
+                    CityManager.Instance.currentCityGarrison.SwapUnitsPosition(a, b);
                 }else{
-                    CityManager.Instance.currentCity.SwapUnitsPosition(a, army.unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.SwapUnitsPosition(a, army.unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army.SwapUnitsPosition(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b]);
+                army.SwapUnitsPosition(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b]);
             }else{
                 army.SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.SwapUnitsPosition(a, b);
+                    CityManager.Instance.currentCityGarrison.SwapUnitsPosition(a, b);
                 }else{
-                    CityManager.Instance.currentCity.SwapUnitsPosition(a, placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.SwapUnitsPosition(a, placeholderArmy.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                placeholderArmy.GetComponent<PlaceHolderArmy>().SwapUnitsPosition(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b]);
+                placeholderArmy.GetComponent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b]);
             }else{
-                placeholderArmy.GetComponent<PlaceHolderArmy>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                placeholderArmy.GetComponent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
         
@@ -177,26 +177,26 @@ public class CityArmyInterface : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.AddUnits(a, b);
+                    CityManager.Instance.currentCityGarrison.AddUnits(a, b);
                 }else{
-                    CityManager.Instance.currentCity.AddUnits(a, army.unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.AddUnits(a, army.unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army.AddUnits(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b]);
+                army.AddUnits(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b]);
             }else{
                 army.AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.AddUnits(a, b);
+                    CityManager.Instance.currentCityGarrison.AddUnits(a, b);
                 }else{
-                    CityManager.Instance.currentCity.AddUnits(a, placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.AddUnits(a, placeholderArmy.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                placeholderArmy.GetComponent<PlaceHolderArmy>().AddUnits(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b]);
+                placeholderArmy.GetComponent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b]);
             }else{
-                placeholderArmy.GetComponent<PlaceHolderArmy>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                placeholderArmy.GetComponent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
         RefreshElement();
@@ -207,26 +207,26 @@ public class CityArmyInterface : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.SplitUnits(a, b);
+                    CityManager.Instance.currentCityGarrison.SplitUnits(a, b);
                 }else{
-                    CityManager.Instance.currentCity.SplitUnits(a, Convert.ToInt16(b - 7), army, army.unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.SplitUnits(a, Convert.ToInt16(b - 7), army, army.unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army.SplitUnits(Convert.ToInt16(a - 7), b, CityManager.Instance.currentCity, CityManager.Instance.currentCity.garrisonSlots[a - 7]);
+                army.SplitUnits(Convert.ToInt16(a - 7), b, CityManager.Instance.currentCityGarrison, CityManager.Instance.currentCityGarrison.unitSlots[a - 7]);
             }else{
                 army.SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    CityManager.Instance.currentCity.SplitUnits(a, b);
+                    CityManager.Instance.currentCityGarrison.SplitUnits(a, b);
                 }else{
-                    CityManager.Instance.currentCity.SplitUnits(a, Convert.ToInt16(b - 7), placeholderArmy.GetComponent<PlaceHolderArmy>(), placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    CityManager.Instance.currentCityGarrison.SplitUnits(a, Convert.ToInt16(b - 7), placeholderArmy.GetComponent<UnitsInformation>(), placeholderArmy.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                placeholderArmy.GetComponent<PlaceHolderArmy>().SplitUnits(Convert.ToInt16(a - 7), b, CityManager.Instance.currentCity, CityManager.Instance.currentCity.garrisonSlots[a - 7]);
+                placeholderArmy.GetComponent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), b, CityManager.Instance.currentCityGarrison, CityManager.Instance.currentCityGarrison.unitSlots[a - 7]);
             }else{
-                placeholderArmy.GetComponent<PlaceHolderArmy>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                placeholderArmy.GetComponent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
     }
@@ -236,14 +236,14 @@ public class CityArmyInterface : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    if (CityManager.Instance.currentCity.AreUnitSlotsSameType(a, b)) return true;
+                    if (CityManager.Instance.currentCityGarrison.AreUnitSlotsSameType(a, b)) return true;
                     else return false;
                 }else{
-                    if (CityManager.Instance.currentCity.AreUnitSlotsSameType(a, army.unitSlots[b - 7])) return true;
+                    if (CityManager.Instance.currentCityGarrison.AreUnitSlotsSameType(a, army.unitSlots[b - 7])) return true;
                     else return false;
                 }
             }else if (b < 7){
-                if (army.AreUnitSlotsSameType(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b])) return true;
+                if (army.AreUnitSlotsSameType(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b])) return true;
                 else return false;
             }else{
                 if (army.AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
@@ -252,17 +252,17 @@ public class CityArmyInterface : MonoBehaviour
         }else{
             if (a < 7){
                 if (b < 7){
-                    if (CityManager.Instance.currentCity.AreUnitSlotsSameType(a, b)) return true;
+                    if (CityManager.Instance.currentCityGarrison.AreUnitSlotsSameType(a, b)) return true;
                     else return false;
                 }else{
-                    if (CityManager.Instance.currentCity.AreUnitSlotsSameType(a, placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[b - 7])) return true;
+                    if (CityManager.Instance.currentCityGarrison.AreUnitSlotsSameType(a, placeholderArmy.GetComponent<UnitsInformation>().unitSlots[b - 7])) return true;
                     else return false;
                 }
             }else if (b < 7){
-                if (placeholderArmy.GetComponent<PlaceHolderArmy>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), CityManager.Instance.currentCity.garrisonSlots[b])) return true;
+                if (placeholderArmy.GetComponent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), CityManager.Instance.currentCityGarrison.unitSlots[b])) return true;
                 else return false;
             }else{
-                if (placeholderArmy.GetComponent<PlaceHolderArmy>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
+                if (placeholderArmy.GetComponent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
                 else return false;
             }
         }
@@ -288,7 +288,7 @@ public class CityArmyInterface : MonoBehaviour
         ClearSelection();
     }
 
-    private bool IsArmyEmpty(Army army)
+    private bool IsArmyEmpty(UnitsInformation army)
     {
         foreach (GameObject unit in army.unitSlots){
             if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
@@ -299,7 +299,7 @@ public class CityArmyInterface : MonoBehaviour
 
     private bool IsPlaceHolderArmyEmpty ()
     {
-        foreach (GameObject unit in placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots){
+        foreach (GameObject unit in placeholderArmy.GetComponent<UnitsInformation>().unitSlots){
             if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
             else continue;
         }
@@ -313,9 +313,9 @@ public class CityArmyInterface : MonoBehaviour
             int[] _unitCount = new int[7]; 
             float[] _unitMovement = new float[7]; 
             for (int i = 0; i < 7; i++){
-                _unitType[i] = placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().unitID;
-                _unitCount[i] = placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
-                _unitMovement[i] = placeholderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
+                _unitType[i] = placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID;
+                _unitCount[i] = placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
+                _unitMovement[i] = placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
             }
             WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().playerColorString, 
             CityManager.Instance.availableEnteranceCells[0].GetPosition(), _unitType, _unitCount);

@@ -55,7 +55,7 @@ public class ArmyInformation : MonoBehaviour
     private void GetArmyUnits(GameObject armyObject)
     {
         selectedArmy = armyObject;
-        units = new List<GameObject>(armyObject.GetComponentInParent<Army>().unitSlots);
+        units = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);
         UpdateUnitDisplay();
     }
 
@@ -132,9 +132,9 @@ public class ArmyInformation : MonoBehaviour
     public void SwapUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
-            selectedArmy.GetComponentInParent<Army>().SwapUnitsPosition(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, b);
         }else{
-            selectedArmy.GetComponentInParent<City>().SwapUnitsPosition(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, b);
         }
         RemoveButtonHighlights();
         UpdateUnitDisplay();
@@ -144,9 +144,9 @@ public class ArmyInformation : MonoBehaviour
     public void AddUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
-            selectedArmy.GetComponentInParent<Army>().AddUnits(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().AddUnits(a, b);
         }else{
-            selectedArmy.GetComponentInParent<City>().AddUnits(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().AddUnits(a, b);
         }
         RemoveButtonHighlights();
         UpdateUnitDisplay();
@@ -156,9 +156,9 @@ public class ArmyInformation : MonoBehaviour
     public void SplitUnits (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
-            selectedArmy.GetComponentInParent<Army>().SplitUnits(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().SplitUnits(a, b);
         }else{
-            selectedArmy.GetComponentInParent<City>().SplitUnits(a, b);
+            selectedArmy.GetComponentInParent<UnitsInformation>().SplitUnits(a, b);
         }
     }
 
@@ -166,10 +166,10 @@ public class ArmyInformation : MonoBehaviour
     public bool AreUnitsSameType (short a, short b)
     {
         if (selectedArmy.tag == "Army"){
-            if (selectedArmy.GetComponentInParent<Army>().AreUnitSlotsSameType(a, b))return true;
+            if (selectedArmy.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, b))return true;
             else return false;
         }else{
-            if (selectedArmy.GetComponentInParent<City>().AreUnitSlotsSameType(a, b))return true;
+            if (selectedArmy.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, b))return true;
             else return false;
         }
     }

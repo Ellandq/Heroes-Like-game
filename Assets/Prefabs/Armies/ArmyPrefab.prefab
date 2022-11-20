@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &2682776652649668650
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &2944581863151965067
@@ -139,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &3819773267028321811
@@ -186,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &4644565787811614284
@@ -198,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1223356772884605653}
   - component: {fileID: 3758476043382561979}
+  - component: {fileID: 183635039299591906}
   - component: {fileID: 6921744632174633901}
   m_Layer: 7
   m_Name: ArmyPrefab
@@ -241,7 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2596d2c9f06c84488044335390b9f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
+  onMovementPointsChanged:
+    m_PersistentCalls:
+      m_Calls: []
   turnManager: {fileID: 0}
   gameGrid: {fileID: 0}
   flag: {fileID: 6560312266923234945}
@@ -258,13 +265,26 @@ MonoBehaviour:
   - {fileID: 4790178493349705224}
   - {fileID: 7496930890108587425}
   - {fileID: 6762431109089847851}
-  unitSlot1: {fileID: 2398234423498502371}
-  unitSlot2: {fileID: 2944581863151965067}
-  unitSlot3: {fileID: 3819773267028321811}
-  unitSlot4: {fileID: 2682776652649668650}
-  unitSlot5: {fileID: 4790178493349705224}
-  unitSlot6: {fileID: 7496930890108587425}
-  unitSlot7: {fileID: 6762431109089847851}
+--- !u!114 &183635039299591906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644565787811614284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325d0fe0380c5bb47957f25ff07fe021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitSlots:
+  - {fileID: 2398234423498502371}
+  - {fileID: 2944581863151965067}
+  - {fileID: 3819773267028321811}
+  - {fileID: 2682776652649668650}
+  - {fileID: 4790178493349705224}
+  - {fileID: 7496930890108587425}
+  - {fileID: 6762431109089847851}
 --- !u!114 &6921744632174633901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +325,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   visablePath: {fileID: 0}
-  gameGrid: {fileID: 0}
   thisArmy: {fileID: 3758476043382561979}
   objectToInteractWith: {fileID: 0}
   isMoving: 0
@@ -354,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &6560312266923234945
@@ -496,6 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0
 --- !u!1 &6797657239303417881
@@ -672,5 +693,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotEmpty: 1
   unitName: Empty
+  unitID: 0
   howManyUnits: 0
   movementPoints: 0

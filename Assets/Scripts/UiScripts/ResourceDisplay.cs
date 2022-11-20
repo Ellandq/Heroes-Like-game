@@ -7,7 +7,9 @@ using TMPro;
 
 public class ResourceDisplay : MonoBehaviour
 {
-    Player currentPlayer;
+    private Player currentPlayer;
+
+    [Header ("Resource display referances")]
     [SerializeField] GameObject goldCounter;
     [SerializeField] GameObject woodCounter;
     [SerializeField] GameObject oreCounter;

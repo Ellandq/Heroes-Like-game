@@ -11,6 +11,7 @@ public class CityManager : MonoBehaviour
 
     [Header("Interactable objects")]
     public City currentCity;
+    public UnitsInformation currentCityGarrison;
     public Player owningPlayer;
 
     [Header("City Information")]
@@ -25,6 +26,7 @@ public class CityManager : MonoBehaviour
         Instance = this;
         try{
             currentCity = SceneStateManager.displayedCity.GetComponent<City>();
+            currentCityGarrison = SceneStateManager.displayedCity.GetComponent<UnitsInformation>();
             owningPlayer = currentCity.ownedByPlayer.GetComponent<Player>();
         }catch (NullReferenceException){
             Debug.Log("City object has not been selected");

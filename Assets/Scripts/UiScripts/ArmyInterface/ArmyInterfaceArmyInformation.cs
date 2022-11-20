@@ -40,8 +40,8 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         interactingWithPlaceholder = true;
         army01 = armyObject;
         army02 = placeHolderArmy;
-        units01 = new List<GameObject>(armyObject.GetComponentInParent<Army>().unitSlots);
-        units02 = new List<GameObject>(placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots);
+        units01 = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);
+        units02 = new List<GameObject>(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots);
         this.transform.GetChild(0).gameObject.SetActive(true);
         UpdateUnitDisplay();
         neighbourCells = GameGrid.Instance.GetEmptyNeighbourCell(army01.GetComponent<Army>().gridPosition);
@@ -53,8 +53,8 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         interactingWithPlaceholder = false;
         army01 = armyObject;
         army02 = interactedArmy;
-        units01 = new List<GameObject>(armyObject.GetComponentInParent<Army>().unitSlots);
-        units02 = new List<GameObject>(interactedArmy.GetComponentInParent<Army>().unitSlots);
+        units01 = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);
+        units02 = new List<GameObject>(interactedArmy.GetComponentInParent<UnitsInformation>().unitSlots);
         this.transform.GetChild(0).gameObject.SetActive(true);
         UpdateUnitDisplay();
         neighbourCells = GameGrid.Instance.GetEmptyNeighbourCell(army01.GetComponent<Army>().gridPosition);
@@ -66,7 +66,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         for (int i = 0; i < 7; i++){
             units01[i] = null;
             units02[i] = null;
-            placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().RemoveUnits();
+            placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().RemoveUnits();
         }
         army01 = null;
         army02 = null;
@@ -151,26 +151,26 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().SwapUnitsPosition(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().SwapUnitsPosition(a, army02.GetComponentInParent<Army>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, army02.GetComponentInParent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponentInParent<Army>().SwapUnitsPosition(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b]);
+                army02.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b]);
             }else{
-                army02.GetComponentInParent<Army>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().SwapUnitsPosition(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().SwapUnitsPosition(a, army02.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().SwapUnitsPosition(a, army02.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponent<PlaceHolderArmy>().SwapUnitsPosition(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b]);
+                army02.GetComponent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b]);
             }else{
-                army02.GetComponent<PlaceHolderArmy>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponent<UnitsInformation>().SwapUnitsPosition(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
         
@@ -182,26 +182,26 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().AddUnits(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().AddUnits(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().AddUnits(a, army02.GetComponentInParent<Army>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().AddUnits(a, army02.GetComponentInParent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponentInParent<Army>().AddUnits(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b]);
+                army02.GetComponentInParent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b]);
             }else{
-                army02.GetComponentInParent<Army>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponentInParent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().AddUnits(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().AddUnits(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().AddUnits(a, army02.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().AddUnits(a, army02.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponent<PlaceHolderArmy>().AddUnits(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b]);
+                army02.GetComponent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b]);
             }else{
-                army02.GetComponent<PlaceHolderArmy>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponent<UnitsInformation>().AddUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
         RefreshElement();
@@ -212,26 +212,26 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().SplitUnits(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().SplitUnits(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().SplitUnits(a, Convert.ToInt16(b - 7), army02.GetComponentInParent<Army>(), army02.GetComponentInParent<Army>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().SplitUnits(a, Convert.ToInt16(b - 7), army02.GetComponentInParent<UnitsInformation>(), army02.GetComponentInParent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponentInParent<Army>().SplitUnits(Convert.ToInt16(a - 7), b, army01.GetComponentInParent<Army>(), army01.GetComponentInParent<Army>().unitSlots[a - 7]);
+                army02.GetComponentInParent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), b, army01.GetComponentInParent<UnitsInformation>(), army01.GetComponentInParent<UnitsInformation>().unitSlots[a - 7]);
             }else{
-                army02.GetComponentInParent<Army>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponentInParent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    army01.GetComponentInParent<Army>().SplitUnits(a, b);
+                    army01.GetComponentInParent<UnitsInformation>().SplitUnits(a, b);
                 }else{
-                    army01.GetComponentInParent<Army>().SplitUnits(a, Convert.ToInt16(b - 7), army02.GetComponent<PlaceHolderArmy>(), army02.GetComponent<PlaceHolderArmy>().unitSlots[b - 7]);
+                    army01.GetComponentInParent<UnitsInformation>().SplitUnits(a, Convert.ToInt16(b - 7), army02.GetComponent<UnitsInformation>(), army02.GetComponent<UnitsInformation>().unitSlots[b - 7]);
                 }
             }else if (b < 7){
-                army02.GetComponent<PlaceHolderArmy>().SplitUnits(Convert.ToInt16(a - 7), b, army01.GetComponentInParent<Army>(), army01.GetComponentInParent<Army>().unitSlots[a - 7]);
+                army02.GetComponent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), b, army01.GetComponentInParent<UnitsInformation>(), army01.GetComponentInParent<UnitsInformation>().unitSlots[a - 7]);
             }else{
-                army02.GetComponent<PlaceHolderArmy>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
+                army02.GetComponent<UnitsInformation>().SplitUnits(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7));
             }
         }
     }
@@ -241,33 +241,33 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
         if (!interactingWithPlaceholder){
             if (a < 7){
                 if (b < 7){
-                    if (army01.GetComponentInParent<Army>().AreUnitSlotsSameType(a, b)) return true;
+                    if (army01.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, b)) return true;
                     else return false;
                 }else{
-                    if (army01.GetComponentInParent<Army>().AreUnitSlotsSameType(a, army02.GetComponentInParent<Army>().unitSlots[b - 7])) return true;
+                    if (army01.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, army02.GetComponentInParent<UnitsInformation>().unitSlots[b - 7])) return true;
                     else return false;
                 }
             }else if (b < 7){
-                if (army02.GetComponentInParent<Army>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b])) return true;
+                if (army02.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b])) return true;
                 else return false;
             }else{
-                if (army02.GetComponentInParent<Army>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
+                if (army02.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
                 else return false;
             }
         }else{
             if (a < 7){
                 if (b < 7){
-                    if (army01.GetComponentInParent<Army>().AreUnitSlotsSameType(a, b)) return true;
+                    if (army01.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, b)) return true;
                     else return false;
                 }else{
-                    if (army01.GetComponentInParent<Army>().AreUnitSlotsSameType(a, army02.GetComponent<PlaceHolderArmy>().unitSlots[b - 7])) return true;
+                    if (army01.GetComponentInParent<UnitsInformation>().AreUnitSlotsSameType(a, army02.GetComponent<UnitsInformation>().unitSlots[b - 7])) return true;
                     else return false;
                 }
             }else if (b < 7){
-                if (army02.GetComponent<PlaceHolderArmy>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), army01.GetComponentInParent<Army>().unitSlots[b])) return true;
+                if (army02.GetComponent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), army01.GetComponentInParent<UnitsInformation>().unitSlots[b])) return true;
                 else return false;
             }else{
-                if (army02.GetComponent<PlaceHolderArmy>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
+                if (army02.GetComponent<UnitsInformation>().AreUnitSlotsSameType(Convert.ToInt16(a - 7), Convert.ToInt16(b - 7))) return true;
                 else return false;
             }
         }
@@ -312,7 +312,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
 
     private bool IsPlaceHolderArmyEmpty ()
     {
-        foreach (GameObject unit in placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots){
+        foreach (GameObject unit in placeHolderArmy.GetComponent<UnitsInformation>().unitSlots){
             if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
             else continue;
         }
@@ -326,9 +326,9 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             int[] _unitCount = new int[7]; 
             float[] _unitMovement = new float[7]; 
             for (int i = 0; i < 7; i++){
-                _unitType[i] = placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().unitID;
-                _unitCount[i] = placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
-                _unitMovement[i] = placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
+                _unitType[i] = placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID;
+                _unitCount[i] = placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
+                _unitMovement[i] = placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
             }
             WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().playerColorString, 
             neighbourCells[0].GetPosition(), _unitType, _unitCount);
@@ -340,9 +340,9 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
     private void ReturnUnits ()
     {
         for (int i = 0; i < 7; i++){
-            if (placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().slotEmpty) continue;
-            army01.GetComponent<Army>().unitSlots[i].GetComponent<UnitSlot>().ChangeSlotStatus(placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().unitID, 
-            placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits, placeHolderArmy.GetComponent<PlaceHolderArmy>().unitSlots[i].GetComponent<UnitSlot>().movementPoints);
+            if (placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().slotEmpty) continue;
+            army01.GetComponent<Army>().unitSlots[i].GetComponent<UnitSlot>().ChangeSlotStatus(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID, 
+            placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits, placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints);
         }
         ArmyInformation.Instance.RefreshElement();
     }

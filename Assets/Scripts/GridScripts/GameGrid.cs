@@ -20,10 +20,10 @@ public class GameGrid : MonoBehaviour
     }
 
     // Creates the grid when the game starts
-    public void CreateGrid(int _gridLength, int _gridWidth)
+    public void CreateGrid(Vector2Int gridSize)
     {
-        gridLength = _gridLength;
-        gridWidth = _gridWidth;
+        gridLength = gridSize.x;
+        gridWidth = gridSize.y;
         gameGrid = new GameObject[gridLength, gridWidth];
         pathNodeArray = new PathNode[gridLength, gridWidth];
 

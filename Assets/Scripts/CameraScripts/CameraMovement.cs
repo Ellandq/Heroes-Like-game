@@ -162,6 +162,14 @@ public class CameraMovement: MonoBehaviour
         }
     }
 
+    public void CameraTeleportToWorldObject ()
+    {
+        cameraFollowingObject = false;
+        cameraFollowObject.transform.position = (objectToMoveTowards.transform.position + CalculateCameraOffset());
+        position = cameraFollowObject.transform.position;
+        transform.position = cameraFollowObject.transform.position;
+    }
+
     // Calculates the position based on the camera rotation, angle and the selected object position
     internal Vector3 CalculateCameraOffset ()
     {

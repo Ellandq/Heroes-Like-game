@@ -6,10 +6,12 @@ public class UIManager : MonoBehaviour
 {   
     [SerializeField] internal PlayerDisplay playerDisplay;
 
-    void Start ()
+    public void Awake ()
     {
         TurnManager.OnNewPlayerTurn += ChangeCurrentPlayer;
+        GameManager.Instance.StartGame();
     }
+
     private void ChangeCurrentPlayer (Player _currentPlayer)
     {
         playerDisplay.ChangeDisplay(_currentPlayer.playerColorString + " " + _currentPlayer.playerName);

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a2f3c9b2672c14b86573eb6f26664d, type: 3}
+  m_Name: MagicHall_4
+  m_EditorClassIdentifier: 
+  buildingID: 18
+  buildingName: Magic Hall 4
+  goldCost: 1000
+  woodCost: 0
+  oreCost: 0
+  gemCost: 0
+  mercuryCost: 0
+  sulfurCost: 0
+  crystalCost: 0
+  additionalRequirements: 11000000
+  buildingIcon: {fileID: 21300000, guid: b7bc65cb9356f264fa5dee94c68cb1a8, type: 3}

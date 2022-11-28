@@ -9,10 +9,9 @@ public class TurnManager : MonoBehaviour
     public static TurnManager Instance;
 
     [Header("Object Referances")]
-    [SerializeField] private PlayerManager playerManager;
     [SerializeField] private PlayerTurn playerTurn;
     [SerializeField] private AiTurn aiTurn;
-    [SerializeField] private GameObject uiManager;
+    [SerializeField] private UIManager uiManager;
     private Player player;
 
     [Header("Turn Information")]
@@ -26,19 +25,21 @@ public class TurnManager : MonoBehaviour
 
     public static event Action<Player> OnNewPlayerTurn;
     public UnityEvent OnNewDay;
-    public UnityEvent OnTurnManagerReady;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
         dayCounter = 1;
         weekCounter = 1;
         monthCounter = 1;
-
         currentPlayerTurn = 0;
-        playerCount = Convert.ToInt16(playerManager.players.Length);
-        player = playerManager.players[currentPlayerTurn].GetComponent<Player>();
-        OnTurnManagerReady.Invoke();
+    }
+
+    public void SetupTurnManager ()
+    {
+        playerCount = Convert.ToInt16(PlayerManager.Instance.players.Length);
+        player = PlayerManager.Instance.players[currentPlayerTurn].GetComponent<Player>();
+        GameManager.Instance.StartGame();
     }
 
     // Starts the game
@@ -59,7 +60,7 @@ public class TurnManager : MonoBehaviour
             OnNewDay.Invoke();
             currentPlayerTurn = 0;
         } 
-        player = playerManager.players[currentPlayerTurn].GetComponent<Player>();
+        player = PlayerManager.Instance.players[currentPlayerTurn].GetComponent<Player>();
         OnNewPlayerTurn.Invoke(player);
         player.NewTurnUpdate();  
     }

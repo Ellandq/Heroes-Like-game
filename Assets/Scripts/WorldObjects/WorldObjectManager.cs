@@ -17,9 +17,6 @@ public class WorldObjectManager : MonoBehaviour
     [SerializeField] private GameObject minePrefab;
     [SerializeField] private GameObject resourcePrefab;
 
-    [Header("Grid information")]
-    [SerializeField] GameGrid gameGrid;
-
     [Header("Cities information")]
     public List<GameObject> cities;
     public int numberOfCities = 0;
@@ -37,75 +34,70 @@ public class WorldObjectManager : MonoBehaviour
     public int numberOfResources = 0;
 
 
-    string [] worldObjectArray;
-    string currentReadLine;
-    string [] splitLine;
-    string myFilePath, fileName;
-    string mapName;
-
-    public UnityEvent OnGameLoad;
+    private string [] worldObjectArray;
+    private string currentReadLine;
+    private string [] splitLine;
+    private string myFilePath;
+    private string mapName;
     
     void Start ()
     {
         Instance = this;
-        gameGrid = FindObjectOfType<GameGrid>();
+    }
 
-        fileName = "WorldObjects.txt";
-        mapName = "TestMap";
-        myFilePath = Application.dataPath + "/Maps/" + mapName + "/" + fileName;
-
+    public void SetupWorldObjects ()
+    {
+        if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
+        else mapName = SceneStateManager.defaultMap;
+        myFilePath = "Maps/" + mapName + "/WorldObjects";
         ReadfromFile();
     }
 
     private void ReadfromFile ()
     {
-        if (File.Exists(myFilePath))
+        worldObjectArray = Resources.Load<TextAsset>(myFilePath).text.Split('\n');
+        for (int i = 0; i < worldObjectArray.Length; i++)
         {
-            worldObjectArray = File.ReadAllLines (myFilePath);
-
-            for (int i = 0; i < worldObjectArray.Length; i++)
+            currentReadLine = worldObjectArray[i];
+            splitLine = currentReadLine.Split(' ');
+            if (splitLine[0] == "Enviroment")
             {
-                currentReadLine = worldObjectArray[i];
-                splitLine = currentReadLine.Split(' ');
-                if (splitLine[0] == "Enviroment")
-                {
-                    InitialEnviromentSetup(splitLine);
-                }
-                else if (splitLine[0] == "City")
-                {
-                    InitialCitySetup(splitLine);
-                }
-                else if (splitLine[0] == "NeutralBuilding")
-                {
-                    InitialNeutralBuildingSetup(splitLine);
-                }
-                else if (splitLine[0] == "Mine")
-                {
-                    InitialMineSetup(splitLine);
-                }
-                else if (splitLine[0] == "Dwelling")
-                {
-                    InitialDwellingSetup(splitLine);
-                }
-                else if (splitLine[0] == "Army")
-                {
-                    InitialArmySetup(splitLine);
-                }
-                else if (splitLine[0] == "Resource")
-                {
-                    InitialResourceSetup(splitLine);
-                }
-                else if (splitLine[0] == "Artifact")
-                {
-                    InitialArtifactSetup(splitLine);
-                }
-                else
-                {
-                    Debug.LogError("World object is not defined");
-                }
+                InitialEnviromentSetup(splitLine);
             }
-            OnGameLoad.Invoke();
+            else if (splitLine[0] == "City")
+            {
+                InitialCitySetup(splitLine);
+            }
+            else if (splitLine[0] == "NeutralBuilding")
+            {
+                InitialNeutralBuildingSetup(splitLine);
+            }
+            else if (splitLine[0] == "Mine")
+            {
+                InitialMineSetup(splitLine);
+            }
+            else if (splitLine[0] == "Dwelling")
+            {
+                InitialDwellingSetup(splitLine);
+            }
+            else if (splitLine[0] == "Army")
+            {
+                InitialArmySetup(splitLine);
+            }
+            else if (splitLine[0] == "Resource")
+            {
+                InitialResourceSetup(splitLine);
+            }
+            else if (splitLine[0] == "Artifact")
+            {
+                InitialArtifactSetup(splitLine);
+            }
+            else
+            {
+                Debug.LogError("World object is not defined");
+            }
         }
+        GameManager.Instance.StartGame();
     }
     #region Enviroment
     private void InitialEnviromentSetup (string [] _splitLine)
@@ -125,12 +117,12 @@ public class WorldObjectManager : MonoBehaviour
         int gridPosY = Convert.ToInt32(_splitLine[3]);
         Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
         
-        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+        if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
 
-        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
         float cityOrientation = float.Parse(_splitLine[4]);
 
         // Third part is the town fraction
@@ -171,38 +163,9 @@ public class WorldObjectManager : MonoBehaviour
             chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
             chosenPlayer.NewCity(cities[numberOfCities]);
         }
-        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfCities++;   
     }
-    // private bool CheckCitySpace(Vector2Int _gridPosition)
-    // {
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y - 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y - 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y - 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y - 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y - 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y - 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y - 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y - 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y - 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y - 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y)))    .isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y)))    .isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y)))    .isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y)))    .isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y)))    .isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y + 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y + 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y + 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y + 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y + 1))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 2), (_gridPosition.y + 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x - 1), (_gridPosition.y + 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x),     (_gridPosition.y + 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 1), (_gridPosition.y + 2))).isOccupied) return false;
-    //     if (!gameGrid.GetGridCellInformation(new Vector2Int((_gridPosition.x + 2), (_gridPosition.y + 2))).isOccupied) return false;
-    //     return true;
-    // }
     #endregion
 
     #region Building
@@ -223,12 +186,12 @@ public class WorldObjectManager : MonoBehaviour
         int gridPosY = Convert.ToInt32(_splitLine[3]);
         Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
         
-        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+        if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
 
-        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
         float mineOrientation = float.Parse(_splitLine[4]);
 
         // Third part is the mine type
@@ -264,7 +227,7 @@ public class WorldObjectManager : MonoBehaviour
             chosenPlayer.NewMine(mines[numberOfMines]);
         }
 
-        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfMines++;
     }
     #endregion
@@ -287,12 +250,12 @@ public class WorldObjectManager : MonoBehaviour
         int gridPosY = Convert.ToInt32(_splitLine[3]);
         Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
 
-        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+        if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
 
-        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
         float armyOrientation = float.Parse(_splitLine[4]);
 
         // Third part are the army units
@@ -310,7 +273,6 @@ public class WorldObjectManager : MonoBehaviour
         armies[numberOfArmies].gameObject.name = ownedByPlayer + " Army " + (numberOfArmies + 1);
 
         // Adding the army to the approprieate player
-        
         for (int i = 0; i < playerManager.players.Length; i++)
         {
             if (playerManager.players[i].name == ownedByPlayer + " Player")
@@ -325,7 +287,7 @@ public class WorldObjectManager : MonoBehaviour
             chosenPlayer.NewArmy(armies[numberOfArmies]);
         }
 
-        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfArmies++;   
     }
 
@@ -337,12 +299,12 @@ public class WorldObjectManager : MonoBehaviour
         // Second part is the grid position and orientation
         Vector2Int gridPosition = _gridPosition;
 
-        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+        if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
 
-        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
         float armyOrientation = 0f;
 
         // Third part are the army units
@@ -376,7 +338,7 @@ public class WorldObjectManager : MonoBehaviour
             chosenPlayer.NewArmy(armies[numberOfArmies]);
         }
 
-        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfArmies++;  
     }
 
@@ -400,11 +362,11 @@ public class WorldObjectManager : MonoBehaviour
         int gridPosY = Convert.ToInt32(_splitLine[2]);
         Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
 
-        if (gameGrid.GetGridCellInformation(gridPosition).isOccupied){
+        if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
-        Vector3 objectPosition = gameGrid.GetWorldPosFromGridPos(gridPosition);
+        Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
         string resourceType = _splitLine[3];
         int resourceCount = Convert.ToInt32(_splitLine[4]);
 
@@ -413,7 +375,7 @@ public class WorldObjectManager : MonoBehaviour
         resources[numberOfResources].transform.parent = transform;
         resources[numberOfResources].gameObject.name = resourceType + ": " + (numberOfResources + 1);
 
-        gameGrid.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
         numberOfResources++;  
     }
     #endregion

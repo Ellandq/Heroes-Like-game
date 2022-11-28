@@ -2777,7 +2777,6 @@ MonoBehaviour:
   armyPrefab: {fileID: 4644565787811614284, guid: ec4c9fd15e1390c4eab1fa9d4dcefe5f, type: 3}
   minePrefab: {fileID: 4550133501109898335, guid: f52e05d6b2524cc46add8c6d5b5b2b55, type: 3}
   resourcePrefab: {fileID: 1565423184103051000, guid: b6688b6fe2f9dec42801d2226d703e55, type: 3}
-  gameGrid: {fileID: 258225769}
   cities: []
   numberOfCities: 0
   armies: []
@@ -9682,7 +9681,7 @@ MonoBehaviour:
   playerManager: {fileID: 1264792663}
   playerTurn: {fileID: 985370013}
   aiTurn: {fileID: 985370012}
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 1643765256}
   dayCounter: 0
   weekCounter: 0
   monthCounter: 0
@@ -17118,10 +17117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcd8b5b0ca3a934a969cf079106a975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameGrid: {fileID: 258225769}
   uiManager: {fileID: 1643765250}
   gameHandler: {fileID: 1026378176}
   unitSplitWindow: {fileID: 1424608108}
+  resourceDisplay: {fileID: 2112501774}
   State: 0
   numberOfPlayers: 2
   numberOfHumanPlayers: 0
@@ -21752,7 +21751,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2053716899653080476}
-  - component: {fileID: 5480519946274517254}
   - component: {fileID: 5480519946274517255}
   m_Layer: 7
   m_Name: PlaceHolderArmy
@@ -21761,26 +21759,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5480519946274517254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5480519946274517253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d49ca07a87789459145e9a65e3bacb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitSlots:
-  - {fileID: 3256742047141253034}
-  - {fileID: 2641143173298531522}
-  - {fileID: 4141332189022427482}
-  - {fileID: 2972757308904709987}
-  - {fileID: 5620591113476770113}
-  - {fileID: 7237296489297375976}
-  - {fileID: 5882408514643219810}
 --- !u!114 &5480519946274517255
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class TownAndArmySelection : MonoBehaviour
     {
         Instance = this;
         TurnManager.OnNewPlayerTurn += UpdatePlayerDisplay;
+        GameManager.Instance.StartGame();
     }
 
     // Updates the Player display

@@ -27,11 +27,13 @@ public class ObjectSelector : MonoBehaviour
     private void Awake ()
     {
         Instance = this;
+
     }
 
     private void Start ()
     {
         TurnManager.OnNewPlayerTurn += ClearSelection;
+        GameManager.Instance.StartGame();
     }
 
     // Checks each frame if the mouse is over an interactible object

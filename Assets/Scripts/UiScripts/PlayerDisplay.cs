@@ -9,11 +9,12 @@ public class PlayerDisplay : MonoBehaviour
     [SerializeField] GameObject playerDisplay;
     private Text displayedPlayer;
 
-    void Start()
+    void Awake()
     {
         if (playerDisplay != null){
             displayedPlayer = playerDisplay.GetComponent<Text>();
         }
+        GameManager.Instance.StartGame();
     }
     
     public void ChangeDisplay (string playerName)

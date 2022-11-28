@@ -20,7 +20,7 @@ public class TurnDisplay : MonoBehaviour
         dayDisplay.text = "1";
         weekDisplay.text = "1";
         monthDisplay.text = "1";
-
+        GameManager.Instance.StartGame();
     }
 
     private void UpdateTurnDisplay ()

@@ -71,6 +71,8 @@ public class Player : MonoBehaviour
         mercury = 5;
         sulfur = 5;
         crystals = 5;
+
+        PlayerManager.Instance.PlayerManagerReady();
     }
 
     // Adds a new army for the player
@@ -225,6 +227,18 @@ public class Player : MonoBehaviour
         PlayerManager.Instance.UpdatePlayerUI(this);
     }
 
+    // Removes a set amount of resources
+    public void RemoveResources (int[] resourceList)
+    {
+        gold -= resourceList[0];
+        wood -= resourceList[1];
+        ore -= resourceList[2];
+        gems -= resourceList[3];
+        mercury -= resourceList[4];
+        sulfur -= resourceList[5];
+        crystals -= resourceList[6];
+    }
+    
     // A daily player update
     private void PlayerDailyUpdate ()
     {
@@ -291,15 +305,6 @@ public class Player : MonoBehaviour
                     Debug.Log(this.gameObject.name + " has " + daysToLoose + " turns to regain a city.");
                 }
             }
-        }
-    }
-
-    // Checks if the player is ready for the game to start
-    public void CheckPlayerStatus()
-    {
-        objectsCreated++;
-        if (objectsCreated == objectsToCreate){
-            PlayerManager.Instance.PlayerManagerReady();
         }
     }
 

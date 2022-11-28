@@ -30,7 +30,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Color green;
 
     [Header("Events")]
-    public UnityEvent OnPlayerManagerReady;
     public UnityPlayerEvent OnNextPlayerTurn;
     public UnityEvent OnNewDayPlayerUpdate;
     public static event Action OnCurrentPlayerResourcesGained;
@@ -38,12 +37,23 @@ public class PlayerManager : MonoBehaviour
     public void Awake ()
     {
         Instance = this;
+    }
+
+    public void SetupPlayerManager ()
+    {
         playerColours = GameManager.Instance.allPlayerColours;
         playablePlayerColours = GameManager.Instance.playerColours;
         CreatePlayers(GameManager.Instance.numberOfPlayers);
         TurnManager.OnNewPlayerTurn += NextPlayerTurn;
         TurnManager.OnNewPlayerTurn += UpdateCurrentPlayer;
-        
+    }
+
+    public void PlayerManagerReady ()
+    {
+        playersReady++;
+        if (playersReady == players.Length){
+            GameManager.Instance.StartGame();
+        }
     }
 
     // Creates a new player
@@ -64,6 +74,7 @@ public class PlayerManager : MonoBehaviour
             players[i].gameObject.name = playerColours[i] + " " + defaultPlayerName;
             players[i].GetComponent<Player>().playerColor = AssignPlayerColour(playerColours[i]);
         }
+        GameManager.Instance.StartGame();
     }
 
     // An update to run on each new day
@@ -76,15 +87,6 @@ public class PlayerManager : MonoBehaviour
     public void NextPlayerTurn (Player _player)
     {
         OnNextPlayerTurn?.Invoke(_player);
-    }
-
-    // Checks if the player manager is ready to start the game
-    public void PlayerManagerReady ()
-    {
-        playersReady++;
-        if (playersReady == players.Length){
-            OnPlayerManagerReady.Invoke();
-        }
     }
 
     // Updates the current player 

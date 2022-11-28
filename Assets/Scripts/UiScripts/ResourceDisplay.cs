@@ -37,6 +37,7 @@ public class ResourceDisplay : MonoBehaviour
         displayedMercury = mercuryCounter.GetComponent<TextMeshProUGUI>();
         displayedSulfur = sulfurCounter.GetComponent<TextMeshProUGUI>();
         displayedCrystals = crystalCounter.GetComponent<TextMeshProUGUI>();
+        GameManager.Instance.StartGame();
     }
 
     private void UpdateDisplay (Player _currentPlayer)
@@ -51,7 +52,7 @@ public class ResourceDisplay : MonoBehaviour
         displayedCrystals.text = Convert.ToString(currentPlayer.crystals);
     }
 
-    private void UpdateDisplay ()
+    public void UpdateDisplay ()
     {
         displayedGold.text = Convert.ToString(currentPlayer.gold);
         displayedWood.text = Convert.ToString(currentPlayer.wood);

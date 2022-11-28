@@ -20,6 +20,7 @@ public class CityManager : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onResourcesChanged;
+    public UnityEvent<int> onNewBuildingCreated;
 
     private void Awake ()
     {

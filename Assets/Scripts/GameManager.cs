@@ -9,17 +9,18 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [SerializeField] public GameGrid gameGrid;
     [SerializeField] private GameObject uiManager;
     [SerializeField] public GameObject gameHandler;
     [SerializeField] private UnitSplitWindow unitSplitWindow;
+    [SerializeField] private ResourceDisplay resourceDisplay;
 
     private Coroutine waitForSceneToDeload;
+    private Coroutine waitForGameToBeReady;
 
     public GameState State;
 
+    private MapScriptableObject selectedMapInformation;
     string mapFilePath, mapName;
-    string [] mapInformationSplit;
     public short numberOfPlayers;
     public short numberOfHumanPlayers;
     public string [] allPlayerColours;
@@ -31,44 +32,47 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        mapName = "TestMap";
-        mapFilePath = Application.dataPath + "/Maps/" + mapName + "/MapInfo.txt";
-        GameSetup();
-        uiManager.SetActive(true);
+        if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
+        else mapName = SceneStateManager.defaultMap;
+        mapFilePath = "Maps/" + mapName + "/MapInformationObject";
+        selectedMapInformation = Resources.Load<MapScriptableObject>(mapFilePath);
+        waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
     }
 
     private void Start ()
     {
         Mathf.Clamp(numberOfPlayers, 1, 6);
-        
     }
 
     private void GameSetup()
     {
-        mapInformationSplit = File.ReadAllLines(mapFilePath);
-        
-        gameGrid.CreateGrid(Convert.ToInt32(mapInformationSplit[0]), Convert.ToInt32(mapInformationSplit[1]));//Creates the game grid
-        numberOfPlayers = Convert.ToInt16(mapInformationSplit[2]); //Sets up the number of players
+        GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);//Creates the game grid
+        numberOfPlayers = selectedMapInformation.numberOfPlayers; //Sets up the number of players
 
         Array.Resize(ref allPlayerColours, numberOfPlayers);
         for (int i = 0; i < allPlayerColours.Length; i++)
         {
-            allPlayerColours[i] = mapInformationSplit[i+3]; // Sets up player colours
+            allPlayerColours[i] = selectedMapInformation.players[i]; // Sets up player colours
         }
-        numberOfHumanPlayers = Convert.ToInt16(mapInformationSplit[3 + numberOfPlayers]);
+        numberOfHumanPlayers = selectedMapInformation.numberOfHumanPlayers;
 
         Array.Resize(ref playerColours, numberOfHumanPlayers);
         for (int i = 0; i < playerColours.Length; i++)
         {
-            playerColours[i] = mapInformationSplit[i + numberOfPlayers + 4];
-        }  
+            playerColours[i] = selectedMapInformation.humanPlayers[i];
+        } 
+        uiManager.SetActive(true);
+        PlayerManager.Instance.SetupPlayerManager();
+        TurnManager.Instance.SetupTurnManager();
+        WorldObjectManager.Instance.SetupWorldObjects();
     }
 
     public void StartGame()
     {
-        if (gameComponentsReady == 2)
+        if (gameComponentsReady == 9)
         {
             TurnManager.Instance.GetComponent<TurnManager>().StartGame();
+            CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
         }
         else gameComponentsReady++;
     }
@@ -91,11 +95,18 @@ public class GameManager : MonoBehaviour
             break;
 
             case GameState.CityEntered:
-
+                if (CameraManager.Instance.cameraMovement.cameraFollowingObject){
+                    CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
+                }
             break;
 
             case GameState.CityLeft:
+                GameManager.Instance.EnableWorldObjects();
+                waitForSceneToDeload = null;
+                SceneStateManager.interactingArmy = null;
+                ArmyInformation.Instance.RefreshElement();
                 unitSplitWindow.SetInstanceStatus();
+                resourceDisplay.UpdateDisplay();
                 UpdateGameState(GameState.PlayerTurn);
             break;
         }
@@ -141,11 +152,15 @@ public class GameManager : MonoBehaviour
         while (IsCityOpened()){
             yield return null;
         }
-        GameManager.Instance.EnableWorldObjects();
-        waitForSceneToDeload = null;
-        SceneStateManager.interactingArmy = null;
-        ArmyInformation.Instance.RefreshElement();
         UpdateGameState(GameState.CityLeft);
+    }
+
+    private IEnumerator WaitForGameToBeReady (){
+        while (PlayerManager.Instance == null){
+            yield return null;
+        }
+        GameSetup();
+        waitForGameToBeReady = null;
     }
 }
 

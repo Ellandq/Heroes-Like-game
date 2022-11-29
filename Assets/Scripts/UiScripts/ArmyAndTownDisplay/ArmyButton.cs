@@ -59,7 +59,9 @@ public class ArmyButton : MonoBehaviour
     public void ResetArmyButton ()
     {
         if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
-        movementSlider.gameObject.SetActive(false);
+        if (movementSlider.gameObject.activeSelf){
+            movementSlider.gameObject.SetActive(false);
+        }
         connectedArmy = null;
         HighlighLogic();
     }

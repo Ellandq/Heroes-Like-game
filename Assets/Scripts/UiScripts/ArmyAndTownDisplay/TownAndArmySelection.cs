@@ -41,4 +41,9 @@ public class TownAndArmySelection : MonoBehaviour
     {
         townDisplay.UpdateTownDisplay(currentPlayer);
     }
+
+    private void OnEnable ()
+    {
+        if (currentPlayer != null)  UpdateCurrentArmyDisplay();
+    }
 }

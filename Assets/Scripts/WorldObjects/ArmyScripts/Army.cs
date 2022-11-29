@@ -31,9 +31,6 @@ public class Army : MonoBehaviour
         TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);
          
-        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>()){
-            TownAndArmySelection.Instance.UpdateCurrentArmyDisplay(); 
-        }
         armyReady = true;
     }
 

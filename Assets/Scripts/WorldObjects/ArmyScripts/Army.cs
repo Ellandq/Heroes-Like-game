@@ -141,6 +141,12 @@ public class Army : MonoBehaviour
         TurnManager.Instance.OnNewDay.RemoveListener(RestoreMovementPoints);
         onMovementPointsChanged.RemoveAllListeners();
         GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
+
+        if (ObjectSelector.Instance.lastObjectSelected != null){
+            if (ObjectSelector.Instance.lastObjectSelected == transform.GetChild(0)){
+                ObjectSelector.Instance.RemoveSelectedObject();
+            }
+        }
         
         try{
             if (CameraManager.Instance.cameraMovement.cameraFollowingObject) CameraManager.Instance.cameraMovement.CameraRemoveObjectToFollow();

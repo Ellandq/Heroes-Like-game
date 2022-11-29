@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -34,8 +35,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
         else mapName = SceneStateManager.defaultMap;
-        mapFilePath = "Maps/" + mapName + "/MapInformationObject";
-        selectedMapInformation = Resources.Load<MapScriptableObject>(mapFilePath);
+        mapFilePath = "Assets/Maps/" + mapName + "/MapInformationObject.asset";
+        selectedMapInformation = (MapScriptableObject)AssetDatabase.LoadAssetAtPath(mapFilePath, typeof (MapScriptableObject));
         waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
     }
 
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
 
         switch (newState){
             case GameState.PlayerTurn:
-
+                ArmyInformation.Instance.RefreshElement();
             break;
 
             case GameState.FinishedTurn:
@@ -101,10 +102,9 @@ public class GameManager : MonoBehaviour
             break;
 
             case GameState.CityLeft:
-                GameManager.Instance.EnableWorldObjects();
+                EnableWorldObjects();
                 waitForSceneToDeload = null;
                 SceneStateManager.interactingArmy = null;
-                ArmyInformation.Instance.RefreshElement();
                 unitSplitWindow.SetInstanceStatus();
                 resourceDisplay.UpdateDisplay();
                 UpdateGameState(GameState.PlayerTurn);

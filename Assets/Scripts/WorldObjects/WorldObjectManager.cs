@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 
 public class WorldObjectManager : MonoBehaviour
@@ -49,13 +50,13 @@ public class WorldObjectManager : MonoBehaviour
     {
         if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
         else mapName = SceneStateManager.defaultMap;
-        myFilePath = "Maps/" + mapName + "/WorldObjects";
+        myFilePath = "Assets/Maps/" + mapName + "/WorldObjects.txt";
         ReadfromFile();
     }
 
     private void ReadfromFile ()
     {
-        worldObjectArray = Resources.Load<TextAsset>(myFilePath).text.Split('\n');
+        worldObjectArray = ((TextAsset)AssetDatabase.LoadAssetAtPath(myFilePath, typeof (TextAsset))).text.Split('\n');
         for (int i = 0; i < worldObjectArray.Length; i++)
         {
             currentReadLine = worldObjectArray[i];

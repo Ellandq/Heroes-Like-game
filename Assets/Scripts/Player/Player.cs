@@ -315,8 +315,8 @@ public class Player : MonoBehaviour
             CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedArmies[0].transform.GetChild(0).gameObject);
             ObjectSelector.Instance.AddSelectedObject(ownedArmies[0].transform.GetChild(0).gameObject);
         }else if (ownedCities.Count > 0){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0].transform.GetChild(0).gameObject);
-            ObjectSelector.Instance.AddSelectedObject(ownedCities[0].transform.GetChild(0).gameObject);
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0]);
+            ObjectSelector.Instance.AddSelectedObject(ownedCities[0]);
         }
     }
 

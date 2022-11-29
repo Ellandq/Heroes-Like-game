@@ -13,14 +13,20 @@ public class CityDwellingButton : MonoBehaviour
 
     private void Start ()
     {
+        objectSelected = false;
         DwellingUI.Instance.onDwellingUpdate.AddListener(DeactivateHighlight);
     }
 
     public void ActivateHighlight ()
     {
-        DwellingUI.Instance.onDwellingUpdate?.Invoke();
-        objectSelected = true;
-        thisButton.gameObject.GetComponent<Image>().sprite = unitButtonHighlight;
+        if (objectSelected){
+            
+        }else{
+            DwellingUI.Instance.onDwellingUpdate?.Invoke();
+            objectSelected = true;
+            thisButton.gameObject.GetComponent<Image>().sprite = unitButtonHighlight;
+        }
+        
     }
 
     private void DeactivateHighlight ()

@@ -14,8 +14,6 @@ public class DwellingUI : MonoBehaviour
         Instance = this;
     }
 
-    
-
     private void OnDestroy ()
     {
         onDwellingUpdate.RemoveAllListeners();

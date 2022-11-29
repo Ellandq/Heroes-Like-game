@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0be4eb04830c07b419ff9fea9c035c75, type: 3}
-  m_Name: Dw_Bazaar_T1_2
+  m_Name: Dw_Bazaar_T4_2
   m_EditorClassIdentifier: 
-  unitName: 2
-  unitWeeklyGain: 23
+  unit: 0
+  unitWeeklyGain: 2
+  unitIcon: {fileID: 21300000, guid: e4b60a9a97d9c9b4e9271242d647c9e2, type: 3}

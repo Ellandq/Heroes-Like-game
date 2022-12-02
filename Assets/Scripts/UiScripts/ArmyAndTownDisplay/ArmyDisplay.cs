@@ -8,7 +8,7 @@ public class ArmyDisplay : MonoBehaviour
     [SerializeField] private GameObject armyDisplayPrefab;
     [SerializeField] private GameObject armyDisplayCanvas;
     [SerializeField] private List <GameObject> armyDisplay;
-    
+
     [Header ("Display Images")]
     [SerializeField] private Sprite armyImage;
     [SerializeField] private Sprite emptyCell;

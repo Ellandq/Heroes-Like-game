@@ -30,8 +30,11 @@ public class Army : MonoBehaviour
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);
-         
         armyReady = true;
+
+        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>()){
+            TownAndArmySelection.Instance.UpdateCurrentArmyDisplay();
+        }
     }
 
     public void AddOwningPlayer(GameObject _ownedByPlayer)

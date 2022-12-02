@@ -124,13 +124,13 @@ public class GameManager : MonoBehaviour
         gameHandler.SetActive(true);
     }
 
-    public void EnterCity (GameObject cityToEnter, string _cityFraction)
+    public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
     {
         UpdateGameState(GameState.CityEntered);
         SceneStateManager.EnterCity(cityToEnter, _cityFraction);
     }
 
-    public void EnterCity (GameObject cityToEnter, string _cityFraction, Army _interactingArmy)
+    public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction, Army _interactingArmy)
     {
         UpdateGameState(GameState.CityEntered);
         SceneStateManager.interactingArmy = _interactingArmy;

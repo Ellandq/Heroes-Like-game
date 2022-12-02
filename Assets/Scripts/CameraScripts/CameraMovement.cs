@@ -118,6 +118,7 @@ public class CameraMovement: MonoBehaviour
         if(keyboardInput.isRightPressed){
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
+            cameraFollowingObject = false;
         }
         if(keyboardInput.isLeftPressed){
            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on -X axis 

@@ -22,6 +22,9 @@ public class CityManager : MonoBehaviour
     public UnityEvent onResourcesChanged;
     public UnityEvent<int> onNewBuildingCreated;
 
+    [Header ("Object referances")]
+    [SerializeField] public CityResourceDisplay cityResourceDisplay;
+
     private void Awake ()
     {
         Instance = this;
@@ -64,6 +67,7 @@ public class CityManager : MonoBehaviour
             }
         }
         
+        DwellingUI.Instance.UpdateDwellingDisplay();
     }
 
     public void ExitCityScene ()

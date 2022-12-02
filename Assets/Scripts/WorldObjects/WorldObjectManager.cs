@@ -127,8 +127,8 @@ public class WorldObjectManager : MonoBehaviour
         float cityOrientation = float.Parse(_splitLine[4]);
 
         // Third part is the town fraction
-        string cityFraction = _splitLine[5];
-
+        CityFraction cityFraction = GetCityFraction(Convert.ToInt32(_splitLine[5]));
+        
         // Fourth part, buildings
         int [] cityBuildingStatus = new int [30];
         for (int j = 0; j < 30; j++)
@@ -148,7 +148,7 @@ public class WorldObjectManager : MonoBehaviour
         );
         cities[numberOfCities].transform.parent = transform;
         cities[numberOfCities].gameObject.name = "City " + (numberOfCities + 1) + " : " + cityFraction;
-
+        
         // Adding the city to the approprieate player
         
         for (int i = 0; i < playerManager.players.Length; i++)
@@ -388,5 +388,26 @@ public class WorldObjectManager : MonoBehaviour
     }
     #endregion
 
-    
+    private CityFraction GetCityFraction (int index){
+        switch (index){
+            case 0:
+                return CityFraction.Bazaar;
+            case 1:
+                return CityFraction.Coalition;
+            case 2:
+                return CityFraction.DarkOnes;
+            case 3:
+                return CityFraction.Hive;
+            case 4:
+                return CityFraction.Magic;
+            case 5:
+                return CityFraction.Temple;
+            default:
+                return CityFraction.Bazaar;
+        }
+    }
+}
+
+public enum CityFraction{
+    Bazaar, Coalition, DarkOnes, Hive, Magic, Temple
 }

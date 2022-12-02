@@ -23,3 +23,8 @@ public enum UnitName
     // Temple units
     Temple_T1_1, Temple_T1_2, Temple_T2_1, Temple_T2_2, Temple_T3_1, Temple_T3_2, Temple_T4_1, Temple_T4_2
 }
+
+public enum UnitSkills
+{
+    
+}

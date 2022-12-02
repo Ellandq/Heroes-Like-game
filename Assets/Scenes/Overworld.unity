@@ -2739,6 +2739,7 @@ GameObject:
   m_Component:
   - component: {fileID: 381926979}
   - component: {fileID: 381926980}
+  - component: {fileID: 381926981}
   m_Layer: 0
   m_Name: WorldObjectManager
   m_TagString: Untagged
@@ -2785,33 +2786,28 @@ MonoBehaviour:
   numberOfMines: 0
   resources: []
   numberOfResources: 0
-  OnGameLoad:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 963194232}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: EnableCamera
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1735143846}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+--- !u!114 &381926981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381926978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddee8973001402e4f83763238379e300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dwellingObjects:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 6075b6866f2e3b14584d8823e1e6a6bd, type: 2}
+  - {fileID: 11400000, guid: 96119b7e4fe144044880549beb2883c3, type: 2}
+  - {fileID: 11400000, guid: c4cabe2f90c28934898ff16285ff6b8e, type: 2}
+  - {fileID: 11400000, guid: 68ea1e4b9c41023498d812f416018807, type: 2}
+  - {fileID: 11400000, guid: 9131175261eda6b4dbfb2aa523439499, type: 2}
+  - {fileID: 11400000, guid: 8370b12fa5caaf74dbd811199d61778e, type: 2}
+  - {fileID: 11400000, guid: aa55c2c84aca91b49955e30cbb65369f, type: 2}
+  - {fileID: 11400000, guid: ee853e3b0aa062748ab6b6fc3cf3452f, type: 2}
 --- !u!1 &385605799
 GameObject:
   m_ObjectHideFlags: 0
@@ -9678,7 +9674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb93ff9bac4493f4cad94cb26416e500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 1264792663}
   playerTurn: {fileID: 985370013}
   aiTurn: {fileID: 985370012}
   uiManager: {fileID: 1643765256}
@@ -9705,21 +9700,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1264792663}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: NewDayUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnTurnManagerReady:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1735143846}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12687,21 +12667,6 @@ MonoBehaviour:
   yellow: {r: 0.9811321, g: 0.87702733, b: 0.023139905, a: 0}
   lightGreen: {r: 0.5033481, g: 0.8490566, b: 0.01201493, a: 0}
   green: {r: 0.098962344, g: 0.509434, b: 0, a: 0}
-  OnPlayerManagerReady:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1735143846}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnNextPlayerTurn:
     m_PersistentCalls:
       m_Calls: []

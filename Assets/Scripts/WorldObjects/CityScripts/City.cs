@@ -11,7 +11,7 @@ public class City : MonoBehaviour
 
     [Header("Main city information")]
     [SerializeField] public GameObject ownedByPlayer;
-    public string cityFraction;
+    public CityFraction cityFraction;
     public Vector2Int gridPosition;
     private Vector3 position;
     public Vector3 rotation;
@@ -27,10 +27,12 @@ public class City : MonoBehaviour
     bool cityEmpty;
     [SerializeField] public List <GameObject> garrisonSlots;
 
+    [Header ("City Buildings")]
     public List<Int16> cityBuildings;
+    public CityDwellingInformation cityDwellingInformation;
 
     public void CityInitialization (string _ownedByPlayer, 
-        string _cityFraction, Vector2Int _gridPosition,
+        CityFraction _cityFraction, Vector2Int _gridPosition,
         float _cityOrientation, int [] _cityBuildingStatus, int [] _cityGarrison)
     {
         cityBuildingAlreadybuilt = false;
@@ -93,21 +95,29 @@ public class City : MonoBehaviour
 
         if (cityBuildings[22] == 1 | cityBuildings[23] == 1){ // 30 - tier 1 built
             cityBuildings.Add(1);
+            if (cityBuildings[22] == 1) cityDwellingInformation.AddDwelling(cityFraction, 1);
+            if (cityBuildings[23] == 1) cityDwellingInformation.AddDwelling(cityFraction, 2);
         }else{
             cityBuildings.Add(0);
         }
         if (cityBuildings[24] == 1 | cityBuildings[25] == 1){ // 31 - tier 2 built
             cityBuildings.Add(1);
+            if (cityBuildings[24] == 1) cityDwellingInformation.AddDwelling(cityFraction, 3);
+            if (cityBuildings[25] == 1) cityDwellingInformation.AddDwelling(cityFraction, 4);
         }else{
             cityBuildings.Add(0);
         }
         if (cityBuildings[26] == 1 | cityBuildings[27] == 1){ // 32 - tier 3 built 
             cityBuildings.Add(1);
+            if (cityBuildings[26] == 1) cityDwellingInformation.AddDwelling(cityFraction, 5);
+            if (cityBuildings[27] == 1) cityDwellingInformation.AddDwelling(cityFraction, 6);
         }else{
             cityBuildings.Add(0);
         }
         if (cityBuildings[28] == 1 | cityBuildings[29] == 1){ // 33 - tier 4 built
             cityBuildings.Add(1);
+            if (cityBuildings[28] == 1) cityDwellingInformation.AddDwelling(cityFraction, 7);
+            if (cityBuildings[29] == 1) cityDwellingInformation.AddDwelling(cityFraction, 8);
         }else{
             cityBuildings.Add(0);
         }
@@ -131,6 +141,7 @@ public class City : MonoBehaviour
     private void FinalizeCity ()
     {
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
         enteranceCells = new List<PathNode>();
         cityReady = true;
     }
@@ -192,6 +203,11 @@ public class City : MonoBehaviour
         }
     }
 
+    private void CityDailyUpdate ()
+    {
+        cityDwellingInformation.AddDailyUnits();
+    }
+
     public void CityInteraction (GameObject interactingArmy)
     {
         Debug.Log("Interacting army with city: " + interactingArmy.name);
@@ -233,56 +249,90 @@ public class City : MonoBehaviour
         return true;
     }
 
+    public List<int> GetEmptyGarrisonSlotCount ()
+    {
+        List<int> emptySlots = new List<int>();
+        if (garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(0);
+        if (garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(1);
+        if (garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(2);
+        if (garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(3);
+        if (garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(4);
+        if (garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(5);
+        if (garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(6);
+        return emptySlots;
+    }
+
+    // public int GetSameUnitSlotIndex ()
+    // {
+    //     List<int> emptySlots = new List<int>();
+    //     if (garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(0);
+    //     if (garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(1);
+    //     if (garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(2);
+    //     if (garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(3);
+    //     if (garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(4);
+    //     if (garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(5);
+    //     if (garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(6);
+    //     return emptySlots;
+    // }
+
     public void CreateNewBuilding (int id, int[] resourceCost)
     {
         cityBuildingAlreadybuilt = true;
-        if (id > 21 && id < 30){
+        if (id > 21 && id < 30){    // If the built building is a dwelling, block the alternative path and/or change the building status of the selected tier (id's from 30 to 33)
             switch (id)
             {
                 case 22:
                     cityBuildings[id] = 1;
                     cityBuildings[30] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 1);
                 break;
 
                 case 23:
                     cityBuildings[id] = 1;
                     cityBuildings[30] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 2);
                 break;
 
                 case 24:
                     cityBuildings[id] = 1;
                     cityBuildings[25] = 2;
                     cityBuildings[31] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 3);
                 break;
 
                 case 25:
                     cityBuildings[id] = 1;
                     cityBuildings[24] = 2;
                     cityBuildings[31] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 4);
                 break;
 
                 case 26:
                     cityBuildings[id] = 1;
                     cityBuildings[27] = 2;
                     cityBuildings[32] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 5);
                 break;
 
                 case 27:
                     cityBuildings[id] = 1;
                     cityBuildings[26] = 2;
                     cityBuildings[32] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 6);
                 break;
 
                 case 28:
                     cityBuildings[id] = 1;
                     cityBuildings[29] = 2;
                     cityBuildings[33] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 7);
                 break;
 
                 case 29:
                     cityBuildings[id] = 1;
                     cityBuildings[28] = 2;
                     cityBuildings[33] = 1;
+                    cityDwellingInformation.AddDwelling(cityFraction, 8);
                 break;
             }
         }else{

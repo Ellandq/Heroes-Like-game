@@ -27,6 +27,7 @@ public class ArmyButton : MonoBehaviour
         movementSlider.maxValue = connectedArmy.GetComponentInParent<Army>().maxMovementPoints;
         movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
         connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
+        HighlighLogic();
     }
 
     // Selects an army if the button is pressed

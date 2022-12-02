@@ -7,8 +7,16 @@ public class DwellingObject : ScriptableObject
 {
     [Header ("Basic Dwelling Information")]
     public UnitName unit;
-    public short unitWeeklyGain;
+    public float unitWeeklyGain;
+    public short dwellingIndex;
     public Sprite unitIcon;
 
-    // [Header ("World Object Dwelling Information")]
+    [Header ("Single Unit Cost")]
+    public short goldCost;
+    public short woodCost;
+    public short oreCost;
+    public short gemCost;
+    public short mercuryCost;
+    public short sulfurCost;
+    public short crystalCost;
 }

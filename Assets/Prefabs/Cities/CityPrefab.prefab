@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 6255956726544892676}
   - component: {fileID: 7799780420752473731}
   - component: {fileID: 1596385647280678955}
+  - component: {fileID: 1900778989486256422}
   m_Layer: 0
   m_Name: CityPrefab
   m_TagString: City
@@ -1314,15 +1315,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21da8c935f700584783e078c40d791c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 357466241432077456, guid: ff2409fd1191acf469a10af121cdbd33, type: 3}
-  gameGrid: {fileID: 0}
   flag: {fileID: 7977195255200368121}
   ownedByPlayer: {fileID: 0}
-  cityFraction: 
+  cityFraction: 0
   gridPosition: {x: 0, y: 0}
   rotation: {x: 0, y: 0, z: 0}
   cityGoldProduction: 0
   canBeSelectedByCurrentPlayer: 0
+  cityBuildingAlreadybuilt: 0
   cityEnterance: {fileID: 267576068781087459}
   enteranceCells: []
   garrisonSlots:
@@ -1333,36 +1333,8 @@ MonoBehaviour:
   - {fileID: 2767771019013949530}
   - {fileID: 252166735983418791}
   - {fileID: 2763146837062339831}
-  villageHall: 1
-  townHall: 0
-  cityHall: 0
-  tavern: 0
-  prison: 1
-  fort: 0
-  citadel: 0
-  castle: 0
-  caravan: 0
-  shipyard: 0
-  bonusBuilding_1: 0
-  bonusBuilding_2: 0
-  equipementBuilding: 0
-  racialBuilding: 0
-  graalBuilding: 0
-  magicHall_1: 0
-  magicHall_2: 0
-  magicHall_3: 0
-  magicHall_4: 0
-  magicHall_5: 0
-  addMagicBuilding_1: 0
-  addMagicBuilding_2: 0
-  tier1Up: 0
-  tier1Down: 0
-  tier2Up: 0
-  tier2Down: 0
-  tier3Up: 0
-  tier3Down: 0
-  tier4Up: 0
-  tier4Down: 0
+  cityBuildings: 
+  cityDwellingInformation: {fileID: 1900778989486256422}
 --- !u!114 &1596385647280678955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1383,6 +1355,31 @@ MonoBehaviour:
   - {fileID: 2767771019013949530}
   - {fileID: 252166735983418791}
   - {fileID: 2763146837062339831}
+--- !u!114 &1900778989486256422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068778115147324785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2940c93feb2554c4388548fa08ed1f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedCity: {fileID: 7799780420752473731}
+  cityDwellings:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cityDwellingUnitCount:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!1 &7977195255200368121
 GameObject:
   m_ObjectHideFlags: 0

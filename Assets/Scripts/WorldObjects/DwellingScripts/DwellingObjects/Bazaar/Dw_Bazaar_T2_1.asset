@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be4eb04830c07b419ff9fea9c035c75, type: 3}
   m_Name: Dw_Bazaar_T2_1
   m_EditorClassIdentifier: 
-  unit: 0
+  unit: 3
   unitWeeklyGain: 6
+  dwellingIndex: 3
   unitIcon: {fileID: 21300000, guid: d755ef760a551d341a6c709520343b33, type: 3}
+  goldCost: 220
+  woodCost: 0
+  oreCost: 0
+  gemCost: 0
+  mercuryCost: 0
+  sulfurCost: 0
+  crystalCost: 0

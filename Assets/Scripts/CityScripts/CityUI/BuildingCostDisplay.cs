@@ -86,5 +86,6 @@ public class BuildingCostDisplay : MonoBehaviour
         transform.parent.parent.gameObject.SetActive(false);
         cityResourceDisplay.UpdateDisplay();
         CityManager.Instance.onNewBuildingCreated.Invoke(currentBuildingID);
+        DwellingUI.Instance.UpdateDwellingDisplay();
     }
 }

@@ -2740,6 +2740,7 @@ GameObject:
   - component: {fileID: 381926979}
   - component: {fileID: 381926980}
   - component: {fileID: 381926981}
+  - component: {fileID: 381926982}
   m_Layer: 0
   m_Name: WorldObjectManager
   m_TagString: Untagged
@@ -2808,6 +2809,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8370b12fa5caaf74dbd811199d61778e, type: 2}
   - {fileID: 11400000, guid: aa55c2c84aca91b49955e30cbb65369f, type: 2}
   - {fileID: 11400000, guid: ee853e3b0aa062748ab6b6fc3cf3452f, type: 2}
+--- !u!114 &381926982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381926978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c489d593f17bcdb49a56e6f6341753f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitObjects:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: e2847468399487747966bea8169fe569, type: 2}
+  - {fileID: 11400000, guid: aef6830759cd9864392749161b219f83, type: 2}
+  - {fileID: 11400000, guid: a83a8a1e762bed643a30f98aa3b2620f, type: 2}
+  - {fileID: 11400000, guid: c5e8e459e2f5de64588948d027d9e93a, type: 2}
+  - {fileID: 11400000, guid: 130f4662f231e0540ad3597595a52b02, type: 2}
+  - {fileID: 11400000, guid: 7d6484e3e2845ad499d7998c4fc603b0, type: 2}
+  - {fileID: 11400000, guid: 5762c87ae406169499116790b4ed74f8, type: 2}
+  - {fileID: 11400000, guid: 67533201e8316e949be0218b030400e8, type: 2}
 --- !u!1 &385605799
 GameObject:
   m_ObjectHideFlags: 0
@@ -21638,7 +21661,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21672,7 +21697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21703,7 +21730,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21791,7 +21820,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21825,7 +21856,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21842,7 +21875,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21859,7 +21894,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0

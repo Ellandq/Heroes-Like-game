@@ -11,6 +11,7 @@ public class DwellingUI : MonoBehaviour
     [SerializeField] private List<CityDwellingButton> dwellingButtons;
     [SerializeField] private List<CityDwellingBuyButton> dwellingBuyButtons;
     [SerializeField] private GameObject unitShopUI;
+    public List<int> emptyCitySlots;
     public UnityEvent onDwellingUpdate;
 
     private void Awake ()
@@ -22,13 +23,14 @@ public class DwellingUI : MonoBehaviour
     {
         transform.parent.gameObject.SetActive(false);
         unitShopUI.SetActive(true);
-
+        UpdateEmptyCitySlots();
     }
 
     public void CloseDwellingUI ()
     {
         transform.parent.gameObject.SetActive(true);
         unitShopUI.SetActive(false);
+        CityArmyInterface.Instance.RefreshElement();
     }
 
     private void ResetDwellingDispaly ()
@@ -40,10 +42,13 @@ public class DwellingUI : MonoBehaviour
 
     public void UpdateDwellingDisplay ()
     {
+        UpdateEmptyCitySlots();
         ResetDwellingDispaly();
         for (int i = 0; i < CityManager.Instance.currentCity.cityDwellingInformation.cityDwellings.Count; i++){
             if (CityManager.Instance.currentCity.cityDwellingInformation.cityDwellings[i] != null){
-                dwellingButtons[i].UpdateButton(CityManager.Instance.currentCity.cityDwellingInformation.cityDwellings[i].unitIcon, Convert.ToString(Math.Floor(CityManager.Instance.currentCity.cityDwellingInformation.cityDwellingUnitCount[i])));
+                dwellingButtons[i].UpdateButton(CityManager.Instance.currentCity.cityDwellingInformation.cityDwellings[i].unitIcon, 
+                Convert.ToString(Math.Floor(CityManager.Instance.currentCity.cityDwellingInformation.cityDwellingUnitCount[i])), 
+                (short)CityManager.Instance.currentCity.cityDwellingInformation.cityDwellings[i].unit);
             }else{
                 dwellingButtons[i].DisableButton();
             }
@@ -61,6 +66,11 @@ public class DwellingUI : MonoBehaviour
         for (int i = 0; i < dwellingButtons.Count; i++){
             if (i != _buttonIndex) dwellingBuyButtons[i].DeactivateHighlight();
         }
+    }
+
+    public void UpdateEmptyCitySlots ()
+    {
+        emptyCitySlots = CityManager.Instance.currentCity.GetEmptyGarrisonSlotCount();
     }
 
     private void OnDestroy ()

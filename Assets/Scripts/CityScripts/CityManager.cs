@@ -8,11 +8,13 @@ public class CityManager : MonoBehaviour
 {
     [SerializeField] private CityInteractibleObjects cityInteractibleObjects;
     public static CityManager Instance;
+    Coroutine waitForArmyToBeCreated;
 
     [Header("Interactable objects")]
     public City currentCity;
     public UnitsInformation currentCityGarrison;
     public Player owningPlayer;
+    public bool armyCreationStatus;
 
     [Header("City Information")]
     public List <Army> armiesNearCity;
@@ -28,6 +30,7 @@ public class CityManager : MonoBehaviour
     private void Awake ()
     {
         Instance = this;
+        armyCreationStatus = false;
         try{
             currentCity = SceneStateManager.displayedCity.GetComponent<City>();
             currentCityGarrison = SceneStateManager.displayedCity.GetComponent<UnitsInformation>();
@@ -73,6 +76,19 @@ public class CityManager : MonoBehaviour
     public void ExitCityScene ()
     {
         CityArmyInterface.Instance.ResetElement();
+        if (!armyCreationStatus){
+            waitForArmyToBeCreated = StartCoroutine(WaitForArmyToBeCreated());
+        }else{
+            SceneStateManager.ExitCity();
+        }
+        
+    }
+
+    private IEnumerator WaitForArmyToBeCreated (){
+        while (!armyCreationStatus){
+            yield return null;
+        }
         SceneStateManager.ExitCity();
+        waitForArmyToBeCreated = null;
     }
 }

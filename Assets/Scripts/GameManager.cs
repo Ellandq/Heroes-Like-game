@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -32,12 +33,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null){
+            Instance = this;
+        }else{
+            Destroy(this);
+        }
+        DontDestroyOnLoad(this);
+        
         if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
         else mapName = SceneStateManager.defaultMap;
         mapFilePath = "Assets/Maps/" + mapName + "/MapInformationObject.asset";
         selectedMapInformation = (MapScriptableObject)AssetDatabase.LoadAssetAtPath(mapFilePath, typeof (MapScriptableObject));
         waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
+        Debug.Log(Application.dataPath + "/Maps/" + mapName + "/MapInformationObject.asset");
+
+        // Directory.CreateDirectory(Application.persistentDataPath + "/Maps");
+        // Directory.CreateDirectory(Application.persistentDataPath + "/Maps/TestMap");
+        // BinaryFormatter bf = new BinaryFormatter();
+        // FileStream file = File.Create(Application.persistentDataPath + )
     }
 
     private void Start ()

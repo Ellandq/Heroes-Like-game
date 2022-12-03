@@ -97,8 +97,7 @@ public class Player : MonoBehaviour
             }
             if (waitForObjectToBeDestroyed == null)
             {
-                    waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
-
+                waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
             }
         }else{
             objectToDestroy = armyToRemove;

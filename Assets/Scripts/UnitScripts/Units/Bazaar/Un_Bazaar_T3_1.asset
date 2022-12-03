@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Un_Bazaar_T3_1
   m_EditorClassIdentifier: 
   unitName: 5
+  unitNameString: Bazaar_T3_1
   health: 95
   minDamage: 16
   maxDamage: 22

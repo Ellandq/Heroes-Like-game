@@ -262,18 +262,25 @@ public class City : MonoBehaviour
         return emptySlots;
     }
 
-    // public int GetSameUnitSlotIndex ()
-    // {
-    //     List<int> emptySlots = new List<int>();
-    //     if (garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(0);
-    //     if (garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(1);
-    //     if (garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(2);
-    //     if (garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(3);
-    //     if (garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(4);
-    //     if (garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(5);
-    //     if (garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(6);
-    //     return emptySlots;
-    // }
+    public int GetSameUnitSlotIndex (int id)
+    {
+        if (garrisonSlots[0].GetComponent<UnitSlot>().unitID == id) return 0;
+        if (garrisonSlots[1].GetComponent<UnitSlot>().unitID == id) return 1;
+        if (garrisonSlots[2].GetComponent<UnitSlot>().unitID == id) return 2;
+        if (garrisonSlots[3].GetComponent<UnitSlot>().unitID == id) return 3;
+        if (garrisonSlots[4].GetComponent<UnitSlot>().unitID == id) return 4;
+        if (garrisonSlots[5].GetComponent<UnitSlot>().unitID == id) return 5;
+        if (garrisonSlots[6].GetComponent<UnitSlot>().unitID == id) return 6;
+        return 7;
+    }
+
+    public void AddUnits (int unitID, int unitCount, int garrisonIndex){
+        if (garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().slotEmpty){
+            garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().SetSlotStatus(unitID, unitCount);
+        }else{
+            garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().AddUnits(unitCount);
+        }
+    }
 
     public void CreateNewBuilding (int id, int[] resourceCost)
     {

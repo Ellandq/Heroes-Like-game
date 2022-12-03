@@ -278,11 +278,17 @@ public class CityArmyInterface : MonoBehaviour
     {
         if (interactingWithPlaceholder){
             if (!IsPlaceHolderArmyEmpty()){
+                CityManager.Instance.armyCreationStatus = false;
                 CreateNewArmy();
+            }else{
+                CityManager.Instance.armyCreationStatus = true;
             }
         }else{
             if(IsArmyEmpty(army)){
                 WorldObjectManager.Instance.RemoveArmy(army.gameObject);
+                CityManager.Instance.armyCreationStatus = true;
+            }else{
+                CityManager.Instance.armyCreationStatus = true;
             }
         }
         ClearSelection();
@@ -322,5 +328,7 @@ public class CityArmyInterface : MonoBehaviour
         }else{
             Debug.Log("No available spaces");
         }
+        CityManager.Instance.armyCreationStatus = true;
     }
+    
 }

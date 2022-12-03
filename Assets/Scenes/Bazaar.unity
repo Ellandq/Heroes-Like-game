@@ -1009,7 +1009,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -4482,7 +4484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -4942,7 +4946,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 387983666}
-  - component: {fileID: 387983665}
   - component: {fileID: 387983667}
   m_Layer: 0
   m_Name: CityManager
@@ -4951,18 +4954,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &387983665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387983664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f01bc723a1bb74d459df02caacdf2598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &387983666
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,6 +4984,7 @@ MonoBehaviour:
   currentCity: {fileID: 0}
   currentCityGarrison: {fileID: 0}
   owningPlayer: {fileID: 0}
+  armyCreationStatus: 0
   armiesNearCity: []
   availableEnteranceCells: []
   onResourcesChanged:
@@ -6133,6 +6125,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 1416787052}
   buttonIndex: 3
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &455890017
 GameObject:
   m_ObjectHideFlags: 0
@@ -6530,6 +6523,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 934853347}
   buttonIndex: 0
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &498705100
 GameObject:
   m_ObjectHideFlags: 0
@@ -6928,7 +6922,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -7662,6 +7658,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 1987214469}
   buttonIndex: 5
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &560206677
 GameObject:
   m_ObjectHideFlags: 0
@@ -8449,6 +8446,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 2067174333}
   buttonIndex: 4
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &633462757
 GameObject:
   m_ObjectHideFlags: 0
@@ -8569,7 +8567,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -8628,6 +8628,7 @@ MonoBehaviour:
   buttonIndex: 5
   unitBuyButton: {fileID: 554990453}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &645053387
 GameObject:
   m_ObjectHideFlags: 0
@@ -8835,6 +8836,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 1643681586}
   buttonIndex: 2
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &664644777
 GameObject:
   m_ObjectHideFlags: 0
@@ -12475,6 +12477,7 @@ MonoBehaviour:
   buttonIndex: 4
   unitBuyButton: {fileID: 631056827}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &902694849
 GameObject:
   m_ObjectHideFlags: 0
@@ -20163,7 +20166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -21459,6 +21464,7 @@ MonoBehaviour:
   buttonIndex: 2
   unitBuyButton: {fileID: 663066040}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &1488034304
 GameObject:
   m_ObjectHideFlags: 0
@@ -23187,6 +23193,7 @@ MonoBehaviour:
   buttonIndex: 3
   unitBuyButton: {fileID: 444835581}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &1610731672
 GameObject:
   m_ObjectHideFlags: 0
@@ -24393,6 +24400,7 @@ MonoBehaviour:
   - {fileID: 631056827}
   - {fileID: 554990453}
   unitShopUI: {fileID: 1933251794}
+  emptyCitySlots: 
   onDwellingUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -24924,6 +24932,7 @@ MonoBehaviour:
   buttonIndex: 0
   unitBuyButton: {fileID: 485245242}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &1778018201
 GameObject:
   m_ObjectHideFlags: 0
@@ -25044,7 +25053,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -25871,6 +25882,7 @@ MonoBehaviour:
   dwellingUnitCountDisplay: {fileID: 1778018201}
   buttonIndex: 1
   unitsAvailableToBuy: 0
+  objectSelected: 0
 --- !u!1 &1852017881
 GameObject:
   m_ObjectHideFlags: 0
@@ -29664,6 +29676,7 @@ MonoBehaviour:
   buttonIndex: 1
   unitBuyButton: {fileID: 1843264210}
   isSlotEmpty: 0
+  objectSelected: 0
 --- !u!1 &2125863121
 GameObject:
   m_ObjectHideFlags: 0
@@ -29708,7 +29721,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0

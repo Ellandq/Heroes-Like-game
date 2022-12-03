@@ -13,22 +13,24 @@ public class CityDwellingBuyButton : MonoBehaviour
     [SerializeField] Button thisButton;  
     [SerializeField] GameObject dwellingUnitCountDisplay;
     [SerializeField] private short buttonIndex;
-
+    private short unitID;
     public short unitsAvailableToBuy;
     public bool objectSelected;
+    private int availableSlotIndex;
 
     private void Start ()
     {
         objectSelected = false;
     }
 
-    public void UpdateButton (Sprite _unitIcon, string currentUnitCount)
+    public void UpdateButton (Sprite _unitIcon, string currentUnitCount, short _unitID)
     {
+        unitID = _unitID;
         unitIcon.sprite = _unitIcon;
-        thisButton.interactable = true;
         dwellingUnitCountDisplay.SetActive(true);
         dwellingUnitCountDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentUnitCount;
         unitsAvailableToBuy = CityManager.Instance.currentCity.cityDwellingInformation.CalculateUnitsAvailableToBuy(buttonIndex);
+        ChceckAvailableSlots();
     }
 
     public void DisableButton ()
@@ -55,10 +57,26 @@ public class CityDwellingBuyButton : MonoBehaviour
         objectSelected = false;
     }
 
+    private void ChceckAvailableSlots ()
+    {
+        availableSlotIndex = CityManager.Instance.currentCity.GetSameUnitSlotIndex(unitID);
+        if (availableSlotIndex == 7){
+            if (DwellingUI.Instance.emptyCitySlots.Count > 0){
+                availableSlotIndex = DwellingUI.Instance.emptyCitySlots[0];
+                thisButton.interactable = true;
+            }else{
+                thisButton.interactable = false;
+            }
+        }else{
+            thisButton.interactable = true;
+        }
+    }
+
     public void BuyUnits (int _unitCount)
     {
         CityManager.Instance.currentCity.cityDwellingInformation.BuyUnits(buttonIndex, _unitCount);
         DwellingUI.Instance.UpdateDwellingDisplay();
         CityManager.Instance.cityResourceDisplay.UpdateDisplay();
+        CityManager.Instance.currentCity.AddUnits(unitID, _unitCount, availableSlotIndex);
     }
 }

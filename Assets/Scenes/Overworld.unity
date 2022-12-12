@@ -9482,7 +9482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae60d38bbdce17545a6971a13147ae7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 523101609}
   cameraZoomObject: {fileID: 1349672394}
   maxCameraHeight: 70
   minCameraHeight: 22
@@ -12677,11 +12676,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00231528b540ee43ba43e5a0b159727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playablePlayerColours: []
   playerPrefab: {fileID: 8928521277174213271, guid: 02c40828b3f2f3245bd3e3f1ab37d20d, type: 3}
   neutralPlayer: {fileID: 1687944377}
   currentPlayer: {fileID: 0}
-  players: []
+  players:
+  - {fileID: 0}
+  allPlayers: 
+  humanPlayers: 
+  playerColorList: []
   blue: {r: 0, g: 0.27058825, b: 1, a: 0}
   lightBlue: {r: 0.049750824, g: 0.71849185, b: 0.8113208, a: 0}
   purple: {r: 0.47355205, g: 0.022027409, b: 0.9339623, a: 0}
@@ -16753,8 +16755,7 @@ MonoBehaviour:
   onCityAdded:
     m_PersistentCalls:
       m_Calls: []
-  playerName: 
-  playerColorString: 
+  thisPlayerTag: 0
   playerColor: {r: 0, g: 0, b: 0, a: 0}
   isPlayerAi: 1
   turnDone: 0
@@ -17110,10 +17111,12 @@ MonoBehaviour:
   unitSplitWindow: {fileID: 1424608108}
   resourceDisplay: {fileID: 2112501774}
   State: 0
+  selectedMapInformation: {fileID: 11400000, guid: 419c31f5e5e4aba4598e3314186e6d10, type: 2}
+  selectedMapWorldObjects: {fileID: 11400000, guid: c15732cdcf559b7439c8d96800add8ab, type: 2}
   numberOfPlayers: 2
+  playerTags: 
   numberOfHumanPlayers: 0
-  allPlayerColours: []
-  playerColours: []
+  humanPlayerTags: 
 --- !u!4 &1735143847
 Transform:
   m_ObjectHideFlags: 0

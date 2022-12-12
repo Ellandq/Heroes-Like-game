@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    [SerializeField] GameObject inputManager;
-    private MouseInput mouseInput;
-    private KeyboardInput keyboardInput;
-    
     public Transform cameraZoomObject;
-
     private float zoomObjectRotation;
     private bool centerCalculated;
 
@@ -28,36 +23,32 @@ public class CameraZoom : MonoBehaviour
     [Header("Offset Options")]
     public float smoothSpeed = 0.125f;
 
-    void Awake()
+    // On Awake calculates the current camera angle
+    void Awake() 
     {
-        mouseInput = inputManager.GetComponent<MouseInput>();
-        keyboardInput = inputManager.GetComponent<KeyboardInput>();
-
         anglePercentage = (cameraZoomObject.transform.localEulerAngles.x - minCameraAngle) / (maxCameraAngle - minCameraAngle);
     }
 
-    void Update()
+    // Every frame checks if the requirements are met to rotate the camera
+    void Update() 
     {
         if (CameraManager.Instance.cameraEnabled)
         {
-            if (CameraManager.Instance.cameraEnabled)
+            if (!InputManager.Instance.mouseInput.IsMouseOverUI())
             {
-                if (!mouseInput.IsMouseOverUI())
-                {
-                    if (mouseInput.mouseScrollStatus > 0f) // forward
-                {
-                    ZoomCamera();
-                    CameraManager.Instance.cameraMovement.cameraFollowingObject = false;
-                }
-                if (mouseInput.mouseScrollStatus < 0f) // backwards
-                {
-                    UnZoomCamera();   
-                    CameraManager.Instance.cameraMovement.cameraFollowingObject = false;  
-                }
-                }
-            }  
+                if (InputManager.Instance.mouseInput.mouseScrollStatus > 0f) // forward
+            {
+                ZoomCamera();
+                CameraManager.Instance.cameraMovement.cameraFollowingObject = false;
+            }
+            if (InputManager.Instance.mouseInput.mouseScrollStatus < 0f) // backwards
+            {
+                UnZoomCamera();   
+                CameraManager.Instance.cameraMovement.cameraFollowingObject = false;  
+            }
+            }
         }
-        if (mouseInput.mouseButtonPressed_2){
+        if (InputManager.Instance.mouseInput.mouseButtonPressed_2){
             CameraManager.Instance.cameraEnabled = false;
             if (Cursor.lockState == CursorLockMode.None) Cursor.lockState = CursorLockMode.Locked;
             RotateCamera();
@@ -67,10 +58,12 @@ public class CameraZoom : MonoBehaviour
             CameraManager.Instance.cameraEnabled = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        if (keyboardInput.resetCameraPressed){
+        if (InputManager.Instance.keyboardInput.resetCameraPressed){
             ResetCamera();
         }
     }
+
+    // Script to zoom in the camera
     void ZoomCamera()
     {
         if (cameraZoomObject.transform.position.y > minCameraHeight | cameraZoomObject.transform.rotation.x > minCameraAngle)
@@ -90,6 +83,8 @@ public class CameraZoom : MonoBehaviour
             cameraZoomObject.transform.position = position;
         }
     }
+ 
+    // Script to unzoom in the camera
     void UnZoomCamera()
     {
         if (cameraZoomObject.transform.position.y < maxCameraHeight | cameraZoomObject.transform.rotation.x < maxCameraAngle)
@@ -109,6 +104,8 @@ public class CameraZoom : MonoBehaviour
             cameraZoomObject.transform.position = position;
         }
     }
+
+    // Rotates the camera according to the height and angle
     void RotateCamera ()
     {
         Vector3 rotation = cameraZoomObject.transform.localEulerAngles;
@@ -131,17 +128,20 @@ public class CameraZoom : MonoBehaviour
         CameraManager.Instance.cameraMovement.position = transform.position;
     }
 
+    // Returns the adjusted camera height
     private float CameraUpdatedHeight()
     {
         anglePercentage = (cameraZoomObject.transform.localEulerAngles.x - minCameraAngle) / (maxCameraAngle - minCameraAngle);
         return (((maxCameraHeight - minCameraHeight) * anglePercentage) + minCameraHeight);
     }
 
+    // Resets the camera rotation to it's neutral state
     private void ResetCamera()
     {
         cameraZoomObject.transform.localEulerAngles = new Vector3 (cameraZoomObject.transform.localEulerAngles.x, 0, 0);
     }
 
+    // Moves and rotates the camera to the adjusted position
     void LateUpdate()
     {
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, cameraZoomObject.transform.position, smoothSpeed);

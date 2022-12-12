@@ -27,12 +27,14 @@ public class CityArmyInterface : MonoBehaviour
     private List <GridCell> neighbourCells;
     public UnityEvent onArmyInterfaceReload;
 
+    // Sets the static instance of this class
     private void Awake ()
     {
         Instance = this;
         selectedUnit = null;
     }
 
+    // Checks all available enterences for a selectable army object
     public void GetArmyUnits()
     {
         if (CityManager.Instance.availableEnteranceCells.Count > 0){
@@ -46,6 +48,7 @@ public class CityArmyInterface : MonoBehaviour
         }
     }
 
+    // takes the units from a given army
     public void GetArmyUnits(Army interactedArmy)
     {
         interactingWithPlaceholder = false;
@@ -56,6 +59,7 @@ public class CityArmyInterface : MonoBehaviour
         UpdateUnitDisplay();
     }
 
+    // Resets the UI for army display
     private void ClearSelection()
     {
         RemoveButtonHighlights();
@@ -70,6 +74,7 @@ public class CityArmyInterface : MonoBehaviour
         UnitSplitWindow.Instance.DisableUnitSwapWindow();
     }
 
+    // Updates the displayed armies
     private void UpdateUnitDisplay ()
     {
         for (int i = 0; i < units01.Count; i++){
@@ -119,18 +124,21 @@ public class CityArmyInterface : MonoBehaviour
         } 
     }
 
+    // Removes all button highlights
     public void RemoveButtonHighlights ()
     {
         onArmyInterfaceReload?.Invoke();
         selectedUnit = null;
     }
 
+    // Removes all button highlights
     public void RemoveButtonHighlights (Player player)
     {
         onArmyInterfaceReload?.Invoke();
         selectedUnit = null;
     }
 
+    // Changes the selected unit based on the gived slot ID
     public void ChangeSelectedUnit (short slotID)
     {
         if (slotID < 7){
@@ -141,6 +149,7 @@ public class CityArmyInterface : MonoBehaviour
         
     }
 
+    // Attempts to swap two different units
     public void SwapUnits (short a, short b)
     {
         if (!interactingWithPlaceholder){
@@ -172,6 +181,7 @@ public class CityArmyInterface : MonoBehaviour
         RefreshElement();
     }
 
+    // Adds one unit to another
     public void AddUnits (short a, short b)
     {
         if (!interactingWithPlaceholder){
@@ -202,6 +212,7 @@ public class CityArmyInterface : MonoBehaviour
         RefreshElement();
     }
 
+    // Preperes two units to split 
     public void SplitUnits (short a, short b)
     {
         if (!interactingWithPlaceholder){
@@ -231,6 +242,7 @@ public class CityArmyInterface : MonoBehaviour
         }
     }
 
+    // Chcecks if the units are of the same type
     public bool AreUnitsSameType (short a, short b)
     {
         if (!interactingWithPlaceholder){
@@ -268,12 +280,14 @@ public class CityArmyInterface : MonoBehaviour
         }
     }
 
+    // Refreshes this UI
     public void RefreshElement ()
     {
         RemoveButtonHighlights();
         UpdateUnitDisplay();
     }
 
+    // Resets this UI element
     public void ResetElement ()
     {
         if (interactingWithPlaceholder){
@@ -294,6 +308,7 @@ public class CityArmyInterface : MonoBehaviour
         ClearSelection();
     }
 
+    // Checks if an Army is empty
     private bool IsArmyEmpty(UnitsInformation army)
     {
         foreach (GameObject unit in army.unitSlots){
@@ -303,6 +318,7 @@ public class CityArmyInterface : MonoBehaviour
         return true;
     }
 
+    // Checks if a placeholder army is empty
     private bool IsPlaceHolderArmyEmpty ()
     {
         foreach (GameObject unit in placeholderArmy.GetComponent<UnitsInformation>().unitSlots){
@@ -312,6 +328,7 @@ public class CityArmyInterface : MonoBehaviour
         return true;
     }
 
+    // Creates a new army
     private void CreateNewArmy ()
     {
         if (CityManager.Instance.availableEnteranceCells.Count > 0){
@@ -323,12 +340,11 @@ public class CityArmyInterface : MonoBehaviour
                 _unitCount[i] = placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
                 _unitMovement[i] = placeholderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
             }
-            WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().playerColorString, 
+            WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().thisPlayerTag, 
             CityManager.Instance.availableEnteranceCells[0].GetPosition(), _unitType, _unitCount);
         }else{
             Debug.Log("No available spaces");
         }
         CityManager.Instance.armyCreationStatus = true;
     }
-    
 }

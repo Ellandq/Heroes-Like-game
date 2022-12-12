@@ -12,7 +12,7 @@ public class Mine : MonoBehaviour
 
     [Header("Mine information")]
     [SerializeField] GameObject ownedByPlayer;
-    public string mineType;
+    public ResourceType mineType;
     public Vector2Int gridPosition;
     private Vector3 position;
     private Vector3 rotation;
@@ -68,7 +68,7 @@ public class Mine : MonoBehaviour
         flag.SetActive(false);
     }
 
-    public void MineInitialization (string _ownedByPLayer, string _mineType, Vector2Int _gridPosition, float _mineOrientation, int [] _mineGarrisonUnits)
+    public void MineInitialization (PlayerTag _ownedByPLayer, ResourceType _mineType, Vector2Int _gridPosition, float _mineOrientation, int [] _mineGarrisonUnits)
     {
         mineType = _mineType;
         gridPosition = _gridPosition;

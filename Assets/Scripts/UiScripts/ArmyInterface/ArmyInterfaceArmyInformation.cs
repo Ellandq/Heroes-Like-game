@@ -330,7 +330,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
                 _unitCount[i] = placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits;
                 _unitMovement[i] = placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints;
             }
-            WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().playerColorString, 
+            WorldObjectManager.Instance.CreateNewArmy(PlayerManager.Instance.currentPlayer.GetComponent<Player>().thisPlayerTag, 
             neighbourCells[0].GetPosition(), _unitType, _unitCount);
         }else{
             Debug.Log("No available spaces");

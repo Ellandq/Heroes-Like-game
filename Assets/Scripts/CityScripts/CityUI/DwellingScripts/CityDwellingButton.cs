@@ -6,12 +6,12 @@ using TMPro;
 
 public class CityDwellingButton : MonoBehaviour
 {
-    [SerializeField] Sprite unitButtonDefault; 
-    [SerializeField] Sprite unitButtonHighlight;  
-    [SerializeField] Image unitIcon;
-    [SerializeField] Sprite defaultUnitIcon;
-    [SerializeField] Button thisButton;  
-    [SerializeField] GameObject dwellingUnitCountDisplay;
+    [SerializeField] private Sprite unitButtonDefault; 
+    [SerializeField] private Sprite unitButtonHighlight;  
+    [SerializeField] private Image unitIcon;
+    [SerializeField] private Sprite defaultUnitIcon;
+    [SerializeField] private Button thisButton;  
+    [SerializeField] private GameObject dwellingUnitCountDisplay;
     [SerializeField] private short buttonIndex;
     [SerializeField] private CityDwellingBuyButton unitBuyButton;
 

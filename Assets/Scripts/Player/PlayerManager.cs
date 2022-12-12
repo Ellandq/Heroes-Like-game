@@ -8,18 +8,23 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     private string defaultPlayerName = "Player";
-    private string [] playerColours;
-    public string [] playablePlayerColours;
+    // private string [] playerColours;
+    // public string [] playablePlayerColours;
     private short playersReady = 0;
 
     [Header("Player information")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public GameObject neutralPlayer;
     [SerializeField] public Player currentPlayer;
-    public GameObject[] players;
+    public List<GameObject> players;
     private Color currentPlayerColor;
 
+    [Header ("All Players Information")]
+    [SerializeField] public List<PlayerTag> allPlayers;
+    [SerializeField] public List<PlayerTag> humanPlayers;
+
     [Header("Player colors")]
+    [SerializeField] private List<Color> playerColorList;
     [SerializeField] private Color blue;
     [SerializeField] private Color lightBlue;
     [SerializeField] private Color purple;
@@ -37,12 +42,20 @@ public class PlayerManager : MonoBehaviour
     public void Awake ()
     {
         Instance = this;
+        playerColorList.Add(blue);
+        playerColorList.Add(lightBlue);
+        playerColorList.Add(purple);
+        playerColorList.Add(red);
+        playerColorList.Add(orange);
+        playerColorList.Add(yellow);
+        playerColorList.Add(lightGreen);
+        playerColorList.Add(green);
     }
 
     public void SetupPlayerManager ()
     {
-        playerColours = GameManager.Instance.allPlayerColours;
-        playablePlayerColours = GameManager.Instance.playerColours;
+        allPlayers = GameManager.Instance.playerTags;
+        humanPlayers = GameManager.Instance.humanPlayerTags;
         CreatePlayers(GameManager.Instance.numberOfPlayers);
         TurnManager.OnNewPlayerTurn += NextPlayerTurn;
         TurnManager.OnNewPlayerTurn += UpdateCurrentPlayer;
@@ -51,7 +64,7 @@ public class PlayerManager : MonoBehaviour
     public void PlayerManagerReady ()
     {
         playersReady++;
-        if (playersReady == players.Length){
+        if (playersReady == players.Count){
             GameManager.Instance.StartGame();
         }
     }
@@ -59,7 +72,7 @@ public class PlayerManager : MonoBehaviour
     // Creates a new player
     private void CreatePlayers (int howManyPlayers)
     {
-        players = new GameObject[howManyPlayers];
+        players = new List<GameObject>(howManyPlayers);
 
         if (playerPrefab == null)
         {
@@ -68,11 +81,12 @@ public class PlayerManager : MonoBehaviour
 
         for (int i = 0; i < howManyPlayers; i++)
         {
-            players[i] = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            players[i].GetComponent<Player>();
+            players.Add(Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity));
             players[i].transform.parent = transform;
-            players[i].gameObject.name = playerColours[i] + " " + defaultPlayerName;
-            players[i].GetComponent<Player>().playerColor = AssignPlayerColour(playerColours[i]);
+            players[i].gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
+            players[i].GetComponent<Player>().playerColor = AssignPlayerColour(allPlayers[i]);
+            players[i].GetComponent<Player>().thisPlayerTag = allPlayers[i];
+
         }
         GameManager.Instance.StartGame();
     }
@@ -102,44 +116,14 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Sets the player color 
-    private Color AssignPlayerColour (string playerColour)
+    private Color AssignPlayerColour (PlayerTag tag)
     {
-        switch (playerColour){
-            case "Blue":
-                currentPlayerColor = blue;
-            break;
-
-            case "LightBlue":
-                currentPlayerColor = lightBlue;
-            break;
-
-            case "Purple":
-                currentPlayerColor = purple;
-            break;
-
-            case "Red":
-                currentPlayerColor = red;
-            break;
-
-            case "Orange":
-                currentPlayerColor = orange;
-            break;
-
-            case "Yellow":
-                currentPlayerColor = yellow;
-            break;
-
-            case "LightGreen":
-                currentPlayerColor = lightGreen;
-            break;
-
-            case "Green":
-                currentPlayerColor = green;
-            break;
-        }
-        return currentPlayerColor;
+        return playerColorList[(int)tag - 1];
     }
 }
 
+public enum PlayerTag{
+    None, Blue, LightBlue, Purple, Red, Orange, Yellow, LightGreen, Green
+}
 [System.Serializable]
 public class UnityPlayerEvent : UnityEvent<Player> { }

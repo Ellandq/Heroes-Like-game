@@ -40,7 +40,7 @@ public class Army : MonoBehaviour
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
-        if (_ownedByPlayer.name != "Neutral Player"){
+        if (ownedByPlayer.GetComponent<Player>().thisPlayerTag != PlayerTag.None){
             flag.SetActive(true);
             flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
         }
@@ -53,7 +53,7 @@ public class Army : MonoBehaviour
         flag.SetActive(false);
     }
 
-    public void ArmyInitialization (string _ownedByPLayer, Vector2Int _gridPosition, float _armyOrientation, int [] _armyUnits)
+    public void ArmyInitialization (PlayerTag _ownedByPLayer, Vector2Int _gridPosition, float _armyOrientation, int [] _armyUnits)
     {
         gridPosition = _gridPosition;
         rotation.y = _armyOrientation;

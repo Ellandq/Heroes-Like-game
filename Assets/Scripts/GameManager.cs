@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header ("Object References")]
     [SerializeField] private GameObject uiManager;
     [SerializeField] public GameObject gameHandler;
     [SerializeField] private UnitSplitWindow unitSplitWindow;
@@ -18,15 +20,21 @@ public class GameManager : MonoBehaviour
 
     private Coroutine waitForSceneToDeload;
     private Coroutine waitForGameToBeReady;
-
+    
+    [Header ("Game State Information")]
     public GameState State;
 
-    private MapScriptableObject selectedMapInformation;
-    string mapFilePath, mapName;
-    public short numberOfPlayers;
-    public short numberOfHumanPlayers;
-    public string [] allPlayerColours;
-    public string [] playerColours;
+    [Header ("Map information")]
+    [SerializeField] private MapScriptableObject selectedMapInformation;
+    [SerializeField] public MapWorldObjects selectedMapWorldObjects;
+
+    [Header ("PLayer Information")]
+    [SerializeField] public short numberOfPlayers;
+    [SerializeField] public List<PlayerTag> playerTags;
+    [SerializeField] public short numberOfHumanPlayers;
+    [SerializeField] public List<PlayerTag> humanPlayerTags;
+
+    private string mapFilePath, mapName;
     private short gameComponentsReady = 0;
 
     public static Action <GameState> OnGameStateChanged;
@@ -40,17 +48,32 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
         
-        if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
-        else mapName = SceneStateManager.defaultMap;
-        mapFilePath = "Assets/Maps/" + mapName + "/MapInformationObject.asset";
-        selectedMapInformation = (MapScriptableObject)AssetDatabase.LoadAssetAtPath(mapFilePath, typeof (MapScriptableObject));
-        waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
-        Debug.Log(Application.dataPath + "/Maps/" + mapName + "/MapInformationObject.asset");
+        if (SceneStateManager.selectedMapName != null){
+            mapName = SceneStateManager.selectedMapName;
+        }
+        else{
+            mapName = SceneStateManager.defaultMap;
+        }
 
-        // Directory.CreateDirectory(Application.persistentDataPath + "/Maps");
-        // Directory.CreateDirectory(Application.persistentDataPath + "/Maps/TestMap");
-        // BinaryFormatter bf = new BinaryFormatter();
-        // FileStream file = File.Create(Application.persistentDataPath + )
+        mapFilePath = Application.dataPath + "/Maps/" + mapName;
+        
+        if (Directory.Exists(Application.dataPath + "/Maps")){
+            BinaryFormatter bf = new BinaryFormatter();
+            if (Directory.Exists(mapFilePath)){
+                FileStream file = File.Open(mapFilePath + "/MapInformation.txt", FileMode.Open);
+                JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), selectedMapInformation);
+                file.Close();
+
+                file = File.Open(mapFilePath + "/MapWorldObjects.txt", FileMode.Open);
+                JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), selectedMapWorldObjects);
+                file.Close();
+            }else{
+                Debug.LogError("Selected map does not exist");
+            }
+        }else{
+            Debug.LogError("The Map folder does not exist");
+        }
+        waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
     }
 
     private void Start ()
@@ -61,20 +84,12 @@ public class GameManager : MonoBehaviour
     private void GameSetup()
     {
         GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);//Creates the game grid
-        numberOfPlayers = selectedMapInformation.numberOfPlayers; //Sets up the number of players
 
-        Array.Resize(ref allPlayerColours, numberOfPlayers);
-        for (int i = 0; i < allPlayerColours.Length; i++)
-        {
-            allPlayerColours[i] = selectedMapInformation.players[i]; // Sets up player colours
-        }
+        numberOfPlayers = selectedMapInformation.numberOfPlayers;
+        playerTags = selectedMapInformation.players;
         numberOfHumanPlayers = selectedMapInformation.numberOfHumanPlayers;
+        humanPlayerTags = selectedMapInformation.humanPlayers;
 
-        Array.Resize(ref playerColours, numberOfHumanPlayers);
-        for (int i = 0; i < playerColours.Length; i++)
-        {
-            playerColours[i] = selectedMapInformation.humanPlayers[i];
-        } 
         uiManager.SetActive(true);
         PlayerManager.Instance.SetupPlayerManager();
         TurnManager.Instance.SetupTurnManager();
@@ -161,7 +176,7 @@ public class GameManager : MonoBehaviour
         else return false;
     }
 
-    public IEnumerator WaitForSceneToDeload (){
+    private IEnumerator WaitForSceneToDeload (){
         while (IsCityOpened()){
             yield return null;
         }

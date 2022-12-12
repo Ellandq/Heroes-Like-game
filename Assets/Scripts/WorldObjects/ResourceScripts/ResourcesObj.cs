@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ResourcesObj : MonoBehaviour
 {
-    private string resourceType;
+    private ResourceType resourceType;
     private int count;
     private Vector2Int gridPosition;
 
-    public void ResourceInitialization (string _resourceType, int _count, Vector2Int _gridPosition)
+    public void ResourceInitialization (ResourceType _resourceType, int _count, Vector2Int _gridPosition)
     {
         count = _count;
         resourceType = _resourceType;

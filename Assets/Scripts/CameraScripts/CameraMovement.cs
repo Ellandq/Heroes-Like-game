@@ -163,6 +163,7 @@ public class CameraMovement: MonoBehaviour
         }
     }
 
+    // Teleports the camera to the currently selected object
     public void CameraTeleportToWorldObject ()
     {
         cameraFollowingObject = false;

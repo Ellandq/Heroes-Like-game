@@ -23,11 +23,13 @@ public class GridCell : MonoBehaviour
         posX = x;
         posZ = z;
     }
+
     // Get the position of this grid space on the grid
     public Vector2Int GetPosition()
     {
         return new Vector2Int(posX, posZ);
     }
+
     // Checks what object entered it's trigger
     void  OnTriggerEnter (Collider other)
     {
@@ -43,6 +45,7 @@ public class GridCell : MonoBehaviour
             pathNode.occupyingObject = objectInThisGridSpace;
         }
     }
+
     // Checks whether the leaving object is the same as the occupying one and changes GridCell status accordingly
     void OnTriggerExit (Collider other)
     {
@@ -50,6 +53,7 @@ public class GridCell : MonoBehaviour
             RemoveOccupyingObject();
         }
     }
+
     // Changes the status of this GridCell to an empty one
     public void RemoveOccupyingObject()
     {

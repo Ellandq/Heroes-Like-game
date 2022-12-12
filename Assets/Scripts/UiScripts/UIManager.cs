@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,6 @@ public class UIManager : MonoBehaviour
 
     private void ChangeCurrentPlayer (Player _currentPlayer)
     {
-        playerDisplay.ChangeDisplay(_currentPlayer.playerColorString + " " + _currentPlayer.playerName);
+        playerDisplay.ChangeDisplay(Enum.GetName(typeof (PlayerTag), _currentPlayer.thisPlayerTag) + " Player");
     }
 }

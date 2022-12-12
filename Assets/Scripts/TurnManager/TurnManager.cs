@@ -37,7 +37,7 @@ public class TurnManager : MonoBehaviour
 
     public void SetupTurnManager ()
     {
-        playerCount = Convert.ToInt16(PlayerManager.Instance.players.Length);
+        playerCount = Convert.ToInt16(PlayerManager.Instance.players.Count);
         player = PlayerManager.Instance.players[currentPlayerTurn].GetComponent<Player>();
         GameManager.Instance.StartGame();
     }

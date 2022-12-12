@@ -20,6 +20,7 @@ public class CityUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHan
         rectTransform = selectedObjectUnit.GetComponent<RectTransform>();
     }
 
+    // checks if the selected slot is empty and begins dragging if it isn't
     public void OnBeginDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
@@ -31,6 +32,7 @@ public class CityUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHan
         }
     }
 
+    // Updates the dragged object position
     public void OnDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
@@ -38,6 +40,7 @@ public class CityUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHan
         }
     }
 
+    // When the 
     public void OnEndDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){

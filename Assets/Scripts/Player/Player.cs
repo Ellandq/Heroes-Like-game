@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,14 +18,14 @@ public class Player : MonoBehaviour
     private GameObject objectToDestroy;
 
     [Header("Player basic information")]
-    private City currentCity;
-    private Army currentArmy;
-    private Mine currentMine;
-    public string playerName;
-    public string playerColorString;
+    public PlayerTag thisPlayerTag;
     public Color playerColor;
     public bool isPlayerAi = true;
     public bool turnDone = false;
+
+    private City currentCity;
+    private Army currentArmy;
+    private Mine currentMine;
 
     [Header("Player structures and armies: ")]
     public List<GameObject> ownedArmies;
@@ -54,16 +55,7 @@ public class Player : MonoBehaviour
         playerLost = false;
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
-        string[] str = this.name.Split(' ');
-        playerColorString = str[0];
-        playerName = str[1];
-        foreach (string colour in PlayerManager.Instance.playablePlayerColours)
-        {
-            if (playerColorString == colour)
-            {
-                isPlayerAi = false;
-            }
-        }
+        
         gold = 10000;
         wood = 20;
         ore = 20;
@@ -144,31 +136,31 @@ public class Player : MonoBehaviour
         {
             switch (ownedMines[i].GetComponent<Mine>().mineType)
             {
-                case "Gold":
+                case ResourceType.Gold:
                     goldProduction += 1000;
                 break;
 
-                case "Wood":
+                case ResourceType.Wood:
                     woodProduction += 2;
                 break;
                 
-                case "Ore":
+                case ResourceType.Ore:
                     oreProduction += 2;
                 break;
                 
-                case "Gem":
+                case ResourceType.Gems:
                     gemProduction += 1;
                 break;
                 
-                case "Mercury":
+                case ResourceType.Mercury:
                     mercuryProduction += 1;
                 break;
                 
-                case "Sulfur":
+                case ResourceType.Sulfur:
                     sulfurProduction += 1;
                 break;
                 
-                case "Crystal":
+                case ResourceType.Crystal:
                     crystalProduction += 1;
                 break;
                 
@@ -190,35 +182,35 @@ public class Player : MonoBehaviour
     }
 
     // Adds a given resource to the player
-    public void AddResources (string _resourceType, int _resourceCount)
+    public void AddResources (ResourceType _resourceType, int _resourceCount)
     {
         switch (_resourceType)
             {
-            case "Gold":
+            case ResourceType.Gold:
                 gold += _resourceCount;
             break;
 
-            case "Wood":
+            case ResourceType.Wood:
                 wood += _resourceCount;
             break;
             
-            case "Ore":
+            case ResourceType.Ore:
                 ore += _resourceCount;
             break;
             
-            case "Gem":
+            case ResourceType.Gems:
                 gems += _resourceCount;
             break;
             
-            case "Mercury":
+            case ResourceType.Mercury:
                 mercury += _resourceCount;
             break;
             
-            case "Sulfur":
+            case ResourceType.Sulfur:
                 sulfur += _resourceCount;
             break;
             
-            case "Crystal":
+            case ResourceType.Crystal:
                 crystals += _resourceCount;
             break;
            

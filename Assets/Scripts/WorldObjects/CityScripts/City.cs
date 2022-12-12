@@ -31,7 +31,7 @@ public class City : MonoBehaviour
     public List<Int16> cityBuildings;
     public CityDwellingInformation cityDwellingInformation;
 
-    public void CityInitialization (string _ownedByPlayer, 
+    public void CityInitialization (PlayerTag _ownedByPlayer, 
         CityFraction _cityFraction, Vector2Int _gridPosition,
         float _cityOrientation, int [] _cityBuildingStatus, int [] _cityGarrison)
     {

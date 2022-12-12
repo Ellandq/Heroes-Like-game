@@ -34,69 +34,73 @@ public class WorldObjectManager : MonoBehaviour
     public List<GameObject> resources;
     public int numberOfResources = 0;
 
-
-    private string [] worldObjectArray;
-    private string currentReadLine;
-    private string [] splitLine;
-    private string myFilePath;
-    private string mapName;
+    private MapWorldObjects mapWorldObjects;
     
-    void Start ()
+    private void Start ()
     {
         Instance = this;
     }
 
     public void SetupWorldObjects ()
     {
-        if (SceneStateManager.selectedMapName != null)  mapName = SceneStateManager.selectedMapName;
-        else mapName = SceneStateManager.defaultMap;
-        myFilePath = "Assets/Maps/" + mapName + "/WorldObjects.txt";
-        ReadfromFile();
+        mapWorldObjects = GameManager.Instance.selectedMapWorldObjects;
+        CreateWorldObjects();
     }
 
-    private void ReadfromFile ()
+    private void CreateWorldObjects()
     {
-        worldObjectArray = ((TextAsset)AssetDatabase.LoadAssetAtPath(myFilePath, typeof (TextAsset))).text.Split('\n');
-        for (int i = 0; i < worldObjectArray.Length; i++)
-        {
-            currentReadLine = worldObjectArray[i];
-            splitLine = currentReadLine.Split(' ');
-            if (splitLine[0] == "Enviroment")
-            {
-                InitialEnviromentSetup(splitLine);
+        // Cities
+        for (int i = 0; i < mapWorldObjects.citiesCount; i++){
+            List<int>cityInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.cities.Count/mapWorldObjects.citiesCount; j++){
+                cityInfoList.Add(mapWorldObjects.cities[j + (mapWorldObjects.cities.Count/mapWorldObjects.citiesCount * i)]);
             }
-            else if (splitLine[0] == "City")
-            {
-                InitialCitySetup(splitLine);
+            InitialCitySetup(cityInfoList);
+        }
+
+        // Armies
+        for (int i = 0; i < mapWorldObjects.armiesCount; i++){
+            List<int>armyInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.armies.Count/mapWorldObjects.armiesCount; j++){
+                armyInfoList.Add(mapWorldObjects.armies[j + (mapWorldObjects.armies.Count/mapWorldObjects.armiesCount * i)]);
             }
-            else if (splitLine[0] == "NeutralBuilding")
-            {
-                InitialNeutralBuildingSetup(splitLine);
+            InitialArmySetup(armyInfoList);
+        }
+
+        // Mines
+        for (int i = 0; i < mapWorldObjects.minesCount; i++){
+            List<int>mineInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.mines.Count/mapWorldObjects.minesCount; j++){
+                mineInfoList.Add(mapWorldObjects.mines[j + (mapWorldObjects.mines.Count/mapWorldObjects.minesCount * i)]);
             }
-            else if (splitLine[0] == "Mine")
-            {
-                InitialMineSetup(splitLine);
+            InitialMineSetup(mineInfoList);
+        }
+
+        // Resources
+        for (int i = 0; i < mapWorldObjects.resourcesCount; i++){
+            List<int>resourceInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.resources.Count/mapWorldObjects.resourcesCount; j++){
+                resourceInfoList.Add(mapWorldObjects.resources[j + (mapWorldObjects.resources.Count/mapWorldObjects.resourcesCount * i)]);
             }
-            else if (splitLine[0] == "Dwelling")
-            {
-                InitialDwellingSetup(splitLine);
+            InitialResourceSetup(resourceInfoList);
+        }
+
+        // Dwellings
+        for (int i = 0; i < mapWorldObjects.dwellingsCount; i++){
+            List<int>dwellingInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.dwellings.Count/mapWorldObjects.dwellingsCount; j++){
+                dwellingInfoList.Add(mapWorldObjects.dwellings[j + (mapWorldObjects.dwellings.Count/mapWorldObjects.dwellingsCount * i)]);
             }
-            else if (splitLine[0] == "Army")
-            {
-                InitialArmySetup(splitLine);
+            InitialDwellingSetup(dwellingInfoList);
+        }
+
+        // Buildings
+        for (int i = 0; i < mapWorldObjects.buildingsCount; i++){
+            List<int>buildingInfoList = new List<int>();
+            for (int j = 0; j < mapWorldObjects.buildings.Count/mapWorldObjects.buildingsCount; j++){
+                buildingInfoList.Add(mapWorldObjects.buildings[j + (mapWorldObjects.buildings.Count/mapWorldObjects.buildingsCount * i)]);
             }
-            else if (splitLine[0] == "Resource")
-            {
-                InitialResourceSetup(splitLine);
-            }
-            else if (splitLine[0] == "Artifact")
-            {
-                InitialArtifactSetup(splitLine);
-            }
-            else
-            {
-                Debug.LogError("World object is not defined");
-            }
+            InitialBuildingSetup(buildingInfoList);
         }
         GameManager.Instance.StartGame();
     }
@@ -108,15 +112,13 @@ public class WorldObjectManager : MonoBehaviour
     #endregion
 
     #region City
-    private void InitialCitySetup (string [] _splitLine)
+    private void InitialCitySetup (List<int> cityInfo)
     {
         // First part is the playerOnwership
-        string ownedByPlayer = _splitLine[1];
+        PlayerTag ownedByPlayer = (PlayerTag)cityInfo[0];
         
         // Second part is the grid position and orientation
-        int gridPosX = Convert.ToInt32(_splitLine[2]);
-        int gridPosY = Convert.ToInt32(_splitLine[3]);
-        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+        Vector2Int gridPosition = new Vector2Int(cityInfo[1], cityInfo[2]);
         
         if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
@@ -124,22 +126,23 @@ public class WorldObjectManager : MonoBehaviour
         }
 
         Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
-        float cityOrientation = float.Parse(_splitLine[4]);
+        float cityOrientation = Convert.ToSingle(cityInfo[3]);
 
         // Third part is the town fraction
-        CityFraction cityFraction = GetCityFraction(Convert.ToInt32(_splitLine[5]));
+        // CityFraction cityFraction = (CityFraction)cityInfo[4];
+        CityFraction cityFraction = CityFraction.Bazaar;
         
         // Fourth part, buildings
         int [] cityBuildingStatus = new int [30];
         for (int j = 0; j < 30; j++)
         {
-            cityBuildingStatus[j] = Convert.ToInt32(_splitLine[j + 6]);
+            cityBuildingStatus[j] = cityInfo[j + 5];
         }
         // Fifth part is the city garrison
         int [] cityGarrison = new int [14];
         for (int j = 0; j < cityGarrison.Length; j++)
         {
-            cityGarrison[j] = Convert.ToInt32(_splitLine[j + 36]);
+            cityGarrison[j] = cityInfo[j + 35];
         }
 
         cities.Add(Instantiate(cityPrefab, objectPosition, Quaternion.identity));
@@ -151,7 +154,7 @@ public class WorldObjectManager : MonoBehaviour
         
         // Adding the city to the approprieate player
         
-        for (int i = 0; i < playerManager.players.Length; i++)
+        for (int i = 0; i < playerManager.players.Count; i++)
         {
             if (playerManager.players[i].name == ownedByPlayer + " Player")
             {
@@ -160,7 +163,7 @@ public class WorldObjectManager : MonoBehaviour
                 break;
             }
         }
-        if (ownedByPlayer  == "Neutral"){
+        if (ownedByPlayer  == PlayerTag.None){
             chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
             chosenPlayer.NewCity(cities[numberOfCities]);
         }
@@ -170,22 +173,20 @@ public class WorldObjectManager : MonoBehaviour
     #endregion
 
     #region Building
-    private void InitialNeutralBuildingSetup (string [] _splitLine)
+    private void InitialBuildingSetup (List<int> buildingInfo)
     {
 
     }
     #endregion
 
     #region Mine
-    private void InitialMineSetup (string [] _splitLine)
+    private void InitialMineSetup (List<int> mineInfo)
     {
         // First part is the playerOnwership
-        string ownedByPlayer = _splitLine[1];
+        PlayerTag ownedByPlayer = (PlayerTag)mineInfo[0];
         
         // Second part is the grid position and orientation
-        int gridPosX = Convert.ToInt32(_splitLine[2]);
-        int gridPosY = Convert.ToInt32(_splitLine[3]);
-        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+        Vector2Int gridPosition = new Vector2Int(mineInfo[1], mineInfo[2]);
         
         if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
@@ -193,16 +194,16 @@ public class WorldObjectManager : MonoBehaviour
         }
 
         Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
-        float mineOrientation = float.Parse(_splitLine[4]);
+        float mineOrientation = Convert.ToSingle(mineInfo[3]);
 
         // Third part is the mine type
-        string mineType = _splitLine[5];
+        ResourceType mineType = (ResourceType)mineInfo[4];
 
         // Fifth part is the mine garrison (usually empty)
         int [] mineGarrison = new int [14];
         for (int j = 0; j < mineGarrison.Length; j++)
         {
-            mineGarrison[j] = Convert.ToInt32(_splitLine[j + 6]);
+            mineGarrison[j] = mineInfo[j + 5];
         }
 
         mines.Add(Instantiate(minePrefab, objectPosition, Quaternion.identity));
@@ -214,7 +215,7 @@ public class WorldObjectManager : MonoBehaviour
 
         // Adding the mine to the approprieate player
         
-        for (int i = 0; i < playerManager.players.Length; i++)
+        for (int i = 0; i < playerManager.players.Count; i++)
         {
             if (playerManager.players[i].name == ownedByPlayer + " Player")
             {
@@ -223,7 +224,7 @@ public class WorldObjectManager : MonoBehaviour
                 break;
             }
         }
-        if (ownedByPlayer  == "Neutral"){
+        if (ownedByPlayer  == PlayerTag.None){
             chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
             chosenPlayer.NewMine(mines[numberOfMines]);
         }
@@ -234,36 +235,34 @@ public class WorldObjectManager : MonoBehaviour
     #endregion
 
     #region Dwelling
-    private void InitialDwellingSetup (string [] _splitLine)
+    private void InitialDwellingSetup (List<int> dwellingInfo)
     {
 
     }
     #endregion
 
     #region Army
-    private void InitialArmySetup (string [] _splitLine)
+    private void InitialArmySetup (List<int> armyInfo)
     {
         // First part is the playerOnwership
-        string ownedByPlayer = _splitLine[1];
+        PlayerTag ownedByPlayer = (PlayerTag)armyInfo[0];
         
         // Second part is the grid position and orientation
-        int gridPosX = Convert.ToInt32(_splitLine[2]);
-        int gridPosY = Convert.ToInt32(_splitLine[3]);
-        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
-
+        Vector2Int gridPosition = new Vector2Int(armyInfo[1], armyInfo[2]);
+        
         if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
 
         Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
-        float armyOrientation = float.Parse(_splitLine[4]);
+        float armyOrientation = Convert.ToSingle(armyInfo[3]);
 
         // Third part are the army units
         int [] armyUnits = new int [14];
         for (int j = 0; j < armyUnits.Length; j++)
         {
-            armyUnits[j] = Convert.ToInt32(_splitLine[j + 3]);
+            armyUnits[j] = armyInfo[j + 4]; // ?
         }
 
         armies.Add(Instantiate(armyPrefab, objectPosition, Quaternion.identity));
@@ -274,7 +273,7 @@ public class WorldObjectManager : MonoBehaviour
         armies[numberOfArmies].gameObject.name = ownedByPlayer + " Army " + (numberOfArmies + 1);
 
         // Adding the army to the approprieate player
-        for (int i = 0; i < playerManager.players.Length; i++)
+        for (int i = 0; i < playerManager.players.Count; i++)
         {
             if (playerManager.players[i].name == ownedByPlayer + " Player")
             {
@@ -283,7 +282,7 @@ public class WorldObjectManager : MonoBehaviour
                 break;
             }
         }
-        if (ownedByPlayer  == "Neutral"){
+        if (ownedByPlayer  == PlayerTag.None){
             chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
             chosenPlayer.NewArmy(armies[numberOfArmies]);
         }
@@ -292,10 +291,10 @@ public class WorldObjectManager : MonoBehaviour
         numberOfArmies++;   
     }
 
-    public void CreateNewArmy (string _playerColor, Vector2Int _gridPosition, int[] _unitType, int[] _unitCount)
+    public void CreateNewArmy (PlayerTag tag, Vector2Int _gridPosition, int[] _unitType, int[] _unitCount)
     {
         // First part is the playerOnwership
-        string ownedByPlayer = _playerColor;
+        PlayerTag ownedByPlayer = tag;
         
         // Second part is the grid position and orientation
         Vector2Int gridPosition = _gridPosition;
@@ -325,7 +324,7 @@ public class WorldObjectManager : MonoBehaviour
 
         // Adding the army to the approprieate player
         
-        for (int i = 0; i < playerManager.players.Length; i++)
+        for (int i = 0; i < playerManager.players.Count; i++)
         {
             if (playerManager.players[i].name == ownedByPlayer + " Player")
             {
@@ -334,7 +333,7 @@ public class WorldObjectManager : MonoBehaviour
                 break;
             }
         }
-        if (ownedByPlayer  == "Neutral"){
+        if (ownedByPlayer  == PlayerTag.None){
             chosenPlayer = playerManager.neutralPlayer.GetComponent<Player>();
             chosenPlayer.NewArmy(armies[numberOfArmies]);
         }
@@ -357,19 +356,17 @@ public class WorldObjectManager : MonoBehaviour
     #endregion
 
     #region Resources
-    private void InitialResourceSetup (string [] _splitLine)
+    private void InitialResourceSetup (List<int> resourceInfo)
     {
-        int gridPosX = Convert.ToInt32(_splitLine[1]);
-        int gridPosY = Convert.ToInt32(_splitLine[2]);
-        Vector2Int gridPosition = new Vector2Int(gridPosX, gridPosY);
+        Vector2Int gridPosition = new Vector2Int(resourceInfo[0], resourceInfo[1]);
 
         if (GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied){
             Debug.Log("Objects overlapping");
             return;
         }
         Vector3 objectPosition = GameGrid.Instance.GetWorldPosFromGridPos(gridPosition);
-        string resourceType = _splitLine[3];
-        int resourceCount = Convert.ToInt32(_splitLine[4]);
+        ResourceType resourceType = (ResourceType)resourceInfo[2];
+        int resourceCount = resourceInfo[3];
 
         resources.Add(Instantiate(resourcePrefab, objectPosition, Quaternion.identity));
         resources[numberOfResources].GetComponent<ResourcesObj>().ResourceInitialization(resourceType, resourceCount, gridPosition);
@@ -382,7 +379,7 @@ public class WorldObjectManager : MonoBehaviour
     #endregion
 
     #region Artifacts
-    private void InitialArtifactSetup (string [] _splitLine)
+    private void InitialArtifactSetup (List<int> artifactInfo)
     {
 
     }
@@ -410,4 +407,12 @@ public class WorldObjectManager : MonoBehaviour
 
 public enum CityFraction{
     Bazaar, Coalition, DarkOnes, Hive, Magic, Temple
+}
+
+public enum ObjectType{
+    City, Army, Mine, Dwelling, Building, Resource
+}
+
+public enum ResourceType{
+    Gold, Wood, Ore, Gems, Mercury, Sulfur, Crystal
 }

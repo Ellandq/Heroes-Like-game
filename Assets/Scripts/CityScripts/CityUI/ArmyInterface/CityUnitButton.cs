@@ -15,16 +15,17 @@ public class CityUnitButton : MonoBehaviour, IDropHandler
 
     [SerializeField] private CityUnitButton buttonToSwap;
 
-    void Start ()
+    // Checks if ArmyInterfaceArmyInformation static instance is set
+    private void Start ()
     {
         try{
             ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload.AddListener(DeactivateHighlight);
         }catch (NullReferenceException){
             Debug.Log("Army Information instance is missing");
         }
-        
     }
 
+    // Activates this buttons highlight
     public void ActivateHighlight ()
     {
         ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload?.Invoke();
@@ -32,11 +33,13 @@ public class CityUnitButton : MonoBehaviour, IDropHandler
         ArmyInterfaceArmyInformation.Instance.ChangeSelectedUnit(slotID);
     }
 
+    // Deactivates this buttons highlight
     private void DeactivateHighlight ()
     {
         thisButton.gameObject.GetComponent<Image>().sprite = unitButtonDefault;
     }
 
+    // When an object is dropped on top of this checks if the given object is valid and proceeds accordingly
     public void OnDrop (PointerEventData eventData)
     {
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "ArmyInterfaceUnitIcons"){

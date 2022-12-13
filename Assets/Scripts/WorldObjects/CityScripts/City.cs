@@ -14,7 +14,7 @@ public class City : MonoBehaviour
     public CityFraction cityFraction;
     public Vector2Int gridPosition;
     private Vector3 position;
-    public Vector3 rotation;
+    private Vector3 rotation;
     public int cityGoldProduction;
     public bool canBeSelectedByCurrentPlayer;
     public bool cityBuildingAlreadybuilt = false;
@@ -24,13 +24,14 @@ public class City : MonoBehaviour
     [SerializeField] public List<PathNode> enteranceCells;
 
     [Header("Garrison refrences")]
-    bool cityEmpty;
+    private bool cityEmpty;
     [SerializeField] public List <GameObject> garrisonSlots;
 
     [Header ("City Buildings")]
     public List<Int16> cityBuildings;
     public CityDwellingInformation cityDwellingInformation;
 
+    // Initialize the City
     public void CityInitialization (PlayerTag _ownedByPlayer, 
         CityFraction _cityFraction, Vector2Int _gridPosition,
         float _cityOrientation, int [] _cityBuildingStatus, int [] _cityGarrison)
@@ -102,22 +103,44 @@ public class City : MonoBehaviour
         }
         if (cityBuildings[24] == 1 | cityBuildings[25] == 1){ // 31 - tier 2 built
             cityBuildings.Add(1);
-            if (cityBuildings[24] == 1) cityDwellingInformation.AddDwelling(cityFraction, 3);
-            if (cityBuildings[25] == 1) cityDwellingInformation.AddDwelling(cityFraction, 4);
+            if (cityBuildings[24] == 1){
+                cityDwellingInformation.AddDwelling(cityFraction, 3);
+                cityBuildings[25] = 2;
+            }else{
+                if (cityBuildings[25] == 1){
+                    cityDwellingInformation.AddDwelling(cityFraction, 4);
+                    cityBuildings[24] = 2;
+                }
+            }
         }else{
             cityBuildings.Add(0);
         }
         if (cityBuildings[26] == 1 | cityBuildings[27] == 1){ // 32 - tier 3 built 
             cityBuildings.Add(1);
-            if (cityBuildings[26] == 1) cityDwellingInformation.AddDwelling(cityFraction, 5);
-            if (cityBuildings[27] == 1) cityDwellingInformation.AddDwelling(cityFraction, 6);
+            if (cityBuildings[26] == 1){
+                cityDwellingInformation.AddDwelling(cityFraction, 5);
+                cityBuildings[27] = 2;
+            }else{
+                if (cityBuildings[27] == 1){
+                    cityDwellingInformation.AddDwelling(cityFraction, 6);
+                    cityBuildings[26] = 2;
+                }
+            }
         }else{
             cityBuildings.Add(0);
         }
         if (cityBuildings[28] == 1 | cityBuildings[29] == 1){ // 33 - tier 4 built
             cityBuildings.Add(1);
-            if (cityBuildings[28] == 1) cityDwellingInformation.AddDwelling(cityFraction, 7);
-            if (cityBuildings[29] == 1) cityDwellingInformation.AddDwelling(cityFraction, 8);
+            if (cityBuildings[28] == 1){
+                cityDwellingInformation.AddDwelling(cityFraction, 7);
+                cityBuildings[29] = 2;
+            }else{
+                if (cityBuildings[29] == 1){
+                    cityDwellingInformation.AddDwelling(cityFraction, 8);
+                    cityBuildings[28] = 2;
+                }
+            }
+            
         }else{
             cityBuildings.Add(0);
         }
@@ -125,6 +148,7 @@ public class City : MonoBehaviour
         #endregion
 
         #region City Garrison
+
         garrisonSlots[0].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[0], _cityGarrison[1]);
         garrisonSlots[1].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[2], _cityGarrison[3]);
         garrisonSlots[2].GetComponent<UnitSlot>().SetSlotStatus(_cityGarrison[4], _cityGarrison[5]);
@@ -138,6 +162,7 @@ public class City : MonoBehaviour
         CityGoldProductionCheck();
     }
 
+    // Finalizing the city
     private void FinalizeCity ()
     {
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
@@ -146,6 +171,7 @@ public class City : MonoBehaviour
         cityReady = true;
     }
 
+    // Add a player owner
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
@@ -156,6 +182,7 @@ public class City : MonoBehaviour
         if (!cityReady) FinalizeCity();
     }
 
+    // Change the owning player
     private void ChangeOwningPlayer (GameObject _ownedByPlayer)
     {
         ownedByPlayer.GetComponent<Player>().ownedCities.Remove(this.gameObject);
@@ -171,18 +198,20 @@ public class City : MonoBehaviour
         ownedByPlayer.GetComponent<Player>().onCityAdded?.Invoke();
     }
 
+    // Remove the owning player
     public void RemoveOwningPlayer ()
     {
         ownedByPlayer = PlayerManager.Instance.neutralPlayer;
         flag.SetActive(false);
     }
 
+    // Check the current city gold production
     private void CityGoldProductionCheck()
     {
         if (cityBuildings[0] == 1){
-            cityGoldProduction = 250;
+            cityGoldProduction = 500;
             if (cityBuildings[1] == 1){
-                cityGoldProduction = 500;
+                cityGoldProduction = 750;
                 if (cityBuildings[2] == 1){
                     cityGoldProduction = 1000;
                 }
@@ -193,6 +222,7 @@ public class City : MonoBehaviour
         }
     }
 
+    // Check if the city can be selected by a given player (on new turn update)
     private void UpdateCitySelectionAvailability(Player _player)
     {
         if (_player.gameObject.name  == ownedByPlayer.name){
@@ -203,11 +233,13 @@ public class City : MonoBehaviour
         }
     }
 
+    // The daily update for a city
     private void CityDailyUpdate ()
     {
         cityDwellingInformation.AddDailyUnits();
     }
 
+    // Interaction with a city by a given army
     public void CityInteraction (GameObject interactingArmy)
     {
         Debug.Log("Interacting army with city: " + interactingArmy.name);
@@ -222,21 +254,25 @@ public class City : MonoBehaviour
         }
     }
 
+    // Interaction with a city
     public void CityInteraction ()
     {
         GameManager.Instance.EnterCity(this.gameObject, cityFraction);
     }
 
+    // Return a list of city enterences nodes
     public void GetEnteranceInformation (List <PathNode> _enteranceList)
     {
         enteranceCells = _enteranceList;
     }
 
+    // Return the current city rotation
     public float GetCityRotation ()
     {
         return rotation.y;
     }
 
+    // Check if City is empty
     private bool IsCityEmpty ()
     {
         if (!garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) return false;
@@ -249,6 +285,7 @@ public class City : MonoBehaviour
         return true;
     }
 
+    // Return a list of id's of empty garrison slots
     public List<int> GetEmptyGarrisonSlotCount ()
     {
         List<int> emptySlots = new List<int>();
@@ -262,6 +299,7 @@ public class City : MonoBehaviour
         return emptySlots;
     }
 
+    // Return an id of the same unit type
     public int GetSameUnitSlotIndex (int id)
     {
         if (garrisonSlots[0].GetComponent<UnitSlot>().unitID == id) return 0;
@@ -274,6 +312,7 @@ public class City : MonoBehaviour
         return 7;
     }
 
+    // Add units to a selected garrison slot
     public void AddUnits (int unitID, int unitCount, int garrisonIndex){
         if (garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().slotEmpty){
             garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().SetSlotStatus(unitID, unitCount);
@@ -282,6 +321,7 @@ public class City : MonoBehaviour
         }
     }
 
+    // Create a new building 
     public void CreateNewBuilding (int id, int[] resourceCost)
     {
         cityBuildingAlreadybuilt = true;

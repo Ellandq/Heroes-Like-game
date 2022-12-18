@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be4eb04830c07b419ff9fea9c035c75, type: 3}
+  m_Name: Dw_Hive_T3_2
+  m_EditorClassIdentifier: 
+  unit: 30
+  unitWeeklyGain: 3
+  dwellingIndex: 4
+  unitIcon: {fileID: 21300000, guid: f5c01f4c613424e4ca00c5a510b927cf, type: 3}
+  goldCost: 1100
+  woodCost: 0
+  oreCost: 0
+  gemCost: 0
+  mercuryCost: 0
+  sulfurCost: 0
+  crystalCost: 0

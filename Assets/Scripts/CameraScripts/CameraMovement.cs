@@ -16,14 +16,15 @@ public class CameraMovement: MonoBehaviour
     private int screenHeight;
 
     [Header("Camera Options")]
-    [SerializeField] private int speed = 5;
+    [SerializeField] private int minSpeed = 5;
     [SerializeField] private int maxSpeed = 10;
     [SerializeField] private int distanceFromBoundary = 50;
     [SerializeField] private int minDistanceFromBoundary = 5;
     [SerializeField] internal Vector2 cameraMoveLimit;
-    internal bool cameraFollowingObject;
     [SerializeField] private float rotation;
     [SerializeField] private float moveSpeed;
+    
+    internal bool cameraFollowingObject;
     internal Vector3 position;  
     private Vector3 cameraOffset; 
     private Vector3 adjustedMovementVector;
@@ -70,7 +71,7 @@ public class CameraMovement: MonoBehaviour
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.x > screenWidth - distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, adjustedMovementVector.z) * speed * Time.deltaTime); // move on +X axis
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, adjustedMovementVector.z) * minSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
@@ -81,7 +82,7 @@ public class CameraMovement: MonoBehaviour
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.x < 0 + distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * speed * Time.deltaTime); // move on -X axis
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * minSpeed * Time.deltaTime); // move on -X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
@@ -92,7 +93,7 @@ public class CameraMovement: MonoBehaviour
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.y > screenHeight - distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * speed * Time.deltaTime); // move on +Z axis
+            cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * minSpeed * Time.deltaTime); // move on +Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
@@ -103,7 +104,7 @@ public class CameraMovement: MonoBehaviour
             cameraFollowingObject = false;
         }
         else if (mouseInput.screenPosition.y < 0 + distanceFromBoundary) {
-            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * speed * Time.deltaTime); // move on -Z axis
+            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * minSpeed * Time.deltaTime); // move on -Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }

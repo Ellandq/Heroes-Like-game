@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Dw_Bazaar_T4_1
   m_EditorClassIdentifier: 
   unit: 7
-  unitWeeklyGain: 2
+  unitWeeklyGain: 4
   dwellingIndex: 5
   unitIcon: {fileID: 21300000, guid: c70c09cedb8f41a458962ffaa6da7339, type: 3}
-  goldCost: 4000
-  woodCost: 0
-  oreCost: 0
+  goldCost: 2000
+  woodCost: 2
+  oreCost: 2
   gemCost: 0
-  mercuryCost: 2
+  mercuryCost: 0
   sulfurCost: 0
   crystalCost: 0

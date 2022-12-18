@@ -153,4 +153,10 @@ public class GameGrid : MonoBehaviour
         }
         return neighbourList;
     }
+
+
+    // public List<GridCell> GetSurroundingCells (Vector2Int gridPosition, float rotation, Vector2Int size)
+    // {
+        
+    // }
 }

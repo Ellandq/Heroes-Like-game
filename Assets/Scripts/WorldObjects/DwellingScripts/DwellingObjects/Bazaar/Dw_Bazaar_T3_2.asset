@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Dw_Bazaar_T3_2
   m_EditorClassIdentifier: 
   unit: 6
-  unitWeeklyGain: 5
+  unitWeeklyGain: 6
   dwellingIndex: 4
   unitIcon: {fileID: 21300000, guid: c47ade287418cd9479955cdd3ac7454f, type: 3}
-  goldCost: 650
+  goldCost: 550
   woodCost: 0
   oreCost: 0
   gemCost: 0

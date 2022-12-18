@@ -22,4 +22,4 @@ MonoBehaviour:
   gemCost: 2
   mercuryCost: 0
   sulfurCost: 0
-  crystalCost: 0
+  crystalCost: 2

@@ -130,7 +130,7 @@ public class WorldObjectManager : MonoBehaviour
 
         // Third part is the town fraction
         // CityFraction cityFraction = (CityFraction)cityInfo[4];
-        CityFraction cityFraction = CityFraction.Bazaar;
+        CityFraction cityFraction = CityFraction.Coalition;
         
         // Fourth part, buildings
         int [] cityBuildingStatus = new int [30];
@@ -406,7 +406,7 @@ public class WorldObjectManager : MonoBehaviour
 }
 
 public enum CityFraction{
-    Bazaar, Coalition, DarkOnes, Hive, Magic, Temple
+    Random, Bazaar, Coalition, DarkOnes, Hive, Magic, Temple
 }
 
 public enum ObjectType{

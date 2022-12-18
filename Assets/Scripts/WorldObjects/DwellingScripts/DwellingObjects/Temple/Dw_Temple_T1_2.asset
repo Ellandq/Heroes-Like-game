@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be4eb04830c07b419ff9fea9c035c75, type: 3}
+  m_Name: Dw_Temple_T1_2
+  m_EditorClassIdentifier: 
+  unit: 42
+  unitWeeklyGain: 9
+  dwellingIndex: 2
+  unitIcon: {fileID: 21300000, guid: ded3e8e0c8b45974aa9f7e53d76494cf, type: 3}
+  goldCost: 40
+  woodCost: 0
+  oreCost: 0
+  gemCost: 0
+  mercuryCost: 0
+  sulfurCost: 0
+  crystalCost: 0

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bc65089bc6ad248a933a004108ae1a, type: 3}
+  m_Name: Un_Temple_T3_2
+  m_EditorClassIdentifier: 
+  unitName: 46
+  unitNameString: Temple_T3_2
+  health: 95
+  minDamage: 12
+  maxDamage: 18
+  attack: 15
+  defense: 24
+  rangeAttack: 30
+  rangeDefense: 24
+  mana: 0
+  ammunition: 8
+  speed: 4
+  movement: 7
+  experiance: 203
+  mapMovement: 21
+  unitSkillList: 

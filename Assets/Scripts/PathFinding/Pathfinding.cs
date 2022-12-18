@@ -26,14 +26,18 @@ public class Pathfinding
     // Returns a Vector3 List that acts as a cooridinate path for an object to follow
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition){
         
+        // Convert the start and end positions from world coordinates to grid coordinates
         Vector2Int startGridPosition = GameGrid.Instance.GetGridPosFromWorld(startWorldPosition);
         Vector2Int endGridPosition = GameGrid.Instance.GetGridPosFromWorld(endWorldPosition);
 
+        // Find the path in grid coordinates and convert it to world coordinates
         List<PathNode> path = FindPath(startGridPosition, endGridPosition);
         if (path == null){
+            // Return null if no path is found
             return null;
         }else{
             List<Vector3> vectorPath = new List<Vector3>();
+            // Convert the path to a list of Vector3 objects
             foreach (PathNode pathNode in path){
                 vectorPath.Add(new Vector3(pathNode.gridPosX, .5f, pathNode.gridPosZ) * GameGrid.Instance.gridSpaceSize);
             }
@@ -44,8 +48,11 @@ public class Pathfinding
     // Returns a PathNode List that acts as a cooridinate path for an object to follow
     public List<PathNode> FindPath(Vector2Int startGridPosition, Vector2Int endGridPosition)
     {
+        // Initialize the node grid, open list, and closed list
         nodeGrid = new PathNode[GameGrid.Instance.gridLength, GameGrid.Instance.gridWidth];
         nodeGrid = GameGrid.Instance.pathNodeArray;
+
+        // Get the start and end nodes
         PathNode startNode = GameGrid.Instance.GetPathNodeInformation(startGridPosition);
         PathNode endNode = GameGrid.Instance.GetPathNodeInformation(endGridPosition);
         openList = new List<PathNode> { startNode };
@@ -54,36 +61,43 @@ public class Pathfinding
         isTargetPositionInteractable = false;
         isTargetObjectSmall = false;
         
+        // If the end node is occupied by an interactable object, check whether it is small or has entrances
         if (endNode.isOccupyingObjectInteratable){
             isTargetPositionInteractable = true;
             if (endNode.occupyingObject.tag == "Army" | endNode.occupyingObject.tag == "Resource"){
                 isTargetObjectSmall = true;
             }else {
                 targetEnterances = endNode.occupyingObject.GetComponent<ObjectEnterance>().GetEnteranceList();
+                // If the object has entrances, find the entrance closest to the start position
                 if (targetEnterances.Count > 0){
                     PathNode bestEnterance = targetEnterances[0];
                     int minDistance = int.MaxValue;
                     int currentDistance;
                     for (int i = 0; i < targetEnterances.Count; i++)
                     {
+                        // Calculate the distance from the start node to the current entrance
                         currentDistance = CalculateDistanceCost(startNode, targetEnterances[i]);
                         if (currentDistance < minDistance)
                         {
+                            // If the entrance is walkable and closer than the current best entrance, set it as the new best entrance
                             if (targetEnterances[i].isWalkable){
                                 minDistance = currentDistance;
                                 bestEnterance = targetEnterances[i];
                             }
                         }
                     }
+                    // If no walkable entrance was found, return null
                     if (bestEnterance == null){
                         startNode.isWalkable = false;
                         return null;
                     }
+                    // Set the end node to the best entrance
                     endNode = bestEnterance;
                 } 
             }
         }
 
+        // Set the gCost and hCost of all nodes to large numbers, and set their cameFromCell values to null
         for (int x = 0; x < GameGrid.Instance.GetGridWidth(); x++)
         {
             for (int z = 0; z < GameGrid.Instance.GetGridLength(); z++)
@@ -95,12 +109,17 @@ public class Pathfinding
             }
         }
 
+        // Set the gCost of the start node to 0 and calculate its hCost and fCost
         startNode.gCost = 0;
         startNode.hCost = CalculateDistanceCost(startNode, endNode);
         startNode.CalculateFCost();
         
+        // Continue searching for a path until the open list is empty or the end node has been added to the closed list
         while (openList.Count > 0){
+            // Sort the open list by fCost
             PathNode currentNode = GetLowestFCostNode(openList);
+
+            // If the current node is the end node, retrace the path and return 
             if (currentNode == endNode){
                 return CalculatePath(endNode);
             }else if (isTargetObjectSmall){
@@ -134,9 +153,7 @@ public class Pathfinding
                         openList.Add(neighbourNode);
                     }
                 }
-
             }
-
         }
         // Out of nodes on the map
         startNode.isWalkable = false;

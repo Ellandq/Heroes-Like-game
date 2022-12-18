@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bc65089bc6ad248a933a004108ae1a, type: 3}
+  m_Name: Un_Hive_T1_1
+  m_EditorClassIdentifier: 
+  unitName: 25
+  unitNameString: Hive_T1_1
+  health: 8
+  minDamage: 1
+  maxDamage: 2
+  attack: 12
+  defense: 12
+  rangeAttack: 0
+  rangeDefense: 24
+  mana: 0
+  ammunition: 0
+  speed: 4
+  movement: 6
+  experiance: 6
+  mapMovement: 19
+  unitSkillList: 

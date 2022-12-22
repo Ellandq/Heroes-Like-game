@@ -17,13 +17,15 @@ public class CameraManager : MonoBehaviour
     internal bool cameraEnabled;
     internal bool cameraMovementEnabled;
 
-    void Start ()
+    // Creating a static instance of this class
+    private void Start ()
     {
         Instance = this;
         cameraEnabled = false;
         cameraMovementEnabled = false;
     }
 
+    // Enable camera Movment
     public void EnableCamera ()
     {
         cameraEnabled = true;

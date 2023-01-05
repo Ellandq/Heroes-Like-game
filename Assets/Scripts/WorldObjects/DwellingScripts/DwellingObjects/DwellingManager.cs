@@ -15,8 +15,6 @@ public class DwellingManager : MonoBehaviour
     }
 
     public DwellingObject GetDwellingObject (CityFraction fraction, int index){
-        Debug.Log("Fraction: " + Enum.GetName(typeof(CityFraction), fraction) + " Index: " + index);
-        Debug.Log("Calculated: " + (index + 8 * ((int)fraction - 1)));
         return dwellingObjects[index + 8 * ((int)fraction - 1)];
     }
 

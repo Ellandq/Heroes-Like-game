@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -92,7 +94,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -140,7 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -188,7 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -249,22 +257,13 @@ MonoBehaviour:
   onMovementPointsChanged:
     m_PersistentCalls:
       m_Calls: []
-  turnManager: {fileID: 0}
-  gameGrid: {fileID: 0}
   flag: {fileID: 6560312266923234945}
   ownedByPlayer: {fileID: 0}
   gridPosition: {x: 0, y: 0}
   maxMovementPoints: 0
   movementPoints: 0
   canBeSelectedByCurrentPlayer: 0
-  unitSlots:
-  - {fileID: 2398234423498502371}
-  - {fileID: 2944581863151965067}
-  - {fileID: 3819773267028321811}
-  - {fileID: 2682776652649668650}
-  - {fileID: 4790178493349705224}
-  - {fileID: 7496930890108587425}
-  - {fileID: 6762431109089847851}
+  unitsInformation: {fileID: 183635039299591906}
 --- !u!114 &183635039299591906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +371,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -515,7 +516,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0
@@ -692,7 +695,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  unitObject: {fileID: 0}
+  unitName: 0
+  unitNameString: Empty
   unitID: 0
   howManyUnits: 0
   movementPoints: 0

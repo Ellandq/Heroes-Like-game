@@ -12,6 +12,56 @@ public class UnitsInformation : MonoBehaviour
         return unitSlots;
     }
 
+    public float CheckMovementPoints ()
+    {
+        float movement = 10000f;
+        for (int i = 0; i < 7; i++){
+            if (!unitSlots[i].GetComponent<UnitSlot>().slotEmpty){
+                if (unitSlots[i].GetComponent<UnitSlot>().GetMovementPoints() < movement){
+                    movement = unitSlots[i].GetComponent<UnitSlot>().GetMovementPoints();
+                }
+            }
+        }
+        return movement;
+    }
+
+    public void RestoreMovementPoints()
+    {
+        for (int i = 0; i < 7; i++){
+            if (!unitSlots[i].GetComponent<UnitSlot>().slotEmpty){
+                unitSlots[i].GetComponent<UnitSlot>().RestoreMovementPoints();
+            }
+        }
+    }
+
+    public void RemoveMovementPoints(int _movementCost)
+    {
+        for (int i = 0; i < 7; i++){
+            unitSlots[i].GetComponent<UnitSlot>().RemoveMovementPoints(_movementCost);
+        }
+    }
+
+    // Check if army is empty
+    public bool IsArmyEmpty ()
+    {
+        foreach (GameObject unit in unitSlots){
+            if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
+            else continue;
+        }
+        return true;
+    }
+
+    public void SetUnitStatus (int[] unitInfo)
+    {
+        unitSlots[0].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[0], unitInfo[1]);
+        unitSlots[1].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[2], unitInfo[3]);
+        unitSlots[2].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[4], unitInfo[5]);
+        unitSlots[3].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[6], unitInfo[7]);
+        unitSlots[4].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[8], unitInfo[9]);
+        unitSlots[5].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[10], unitInfo[11]);
+        unitSlots[6].GetComponent<UnitSlot>().SetSlotStatus(unitInfo[12], unitInfo[13]);
+    }
+
     public void SwapUnitsPosition (short a, short b)
     {
         int id01 = unitSlots[a].GetComponent<UnitSlot>().unitID;

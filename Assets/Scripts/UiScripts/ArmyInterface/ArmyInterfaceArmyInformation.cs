@@ -303,7 +303,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
 
     private bool IsArmyEmpty(GameObject army)
     {
-        foreach (GameObject unit in army.GetComponent<Army>().unitSlots){
+        foreach (GameObject unit in army.GetComponent<Army>().unitsInformation.unitSlots){
             if (!unit.GetComponent<UnitSlot>().slotEmpty) return false;
             else continue;
         }
@@ -341,7 +341,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
     {
         for (int i = 0; i < 7; i++){
             if (placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().slotEmpty) continue;
-            army01.GetComponent<Army>().unitSlots[i].GetComponent<UnitSlot>().ChangeSlotStatus(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID, 
+            army01.GetComponent<Army>().unitsInformation.unitSlots[i].GetComponent<UnitSlot>().ChangeSlotStatus(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID, 
             placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits, placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints);
         }
         ArmyInformation.Instance.RefreshElement();

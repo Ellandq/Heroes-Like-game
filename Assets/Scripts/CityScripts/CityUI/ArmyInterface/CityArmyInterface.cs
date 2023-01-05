@@ -54,7 +54,7 @@ public class CityArmyInterface : MonoBehaviour
         interactingWithPlaceholder = false;
         army = interactedArmy.GetComponent<UnitsInformation>();
         units01 = new List<GameObject>(CityManager.Instance.currentCityGarrison.unitSlots);
-        units02 = new List<GameObject>(interactedArmy.unitSlots);
+        units02 = new List<GameObject>(interactedArmy.unitsInformation.unitSlots);
         this.transform.GetChild(0).gameObject.SetActive(true);
         UpdateUnitDisplay();
     }

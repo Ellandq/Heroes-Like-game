@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class UnitSlot : MonoBehaviour
 {
+    [Header ("Unit information")]
     public bool slotEmpty = true;
     public UnitObject unitObject;
     public UnitName unitName;
@@ -46,7 +47,7 @@ public class UnitSlot : MonoBehaviour
         unitID = _unitId; 
         howManyUnits = _howManyUnits;
         unitObject = UnitManager.Instance.GetUnitObject(unitID);
-        movementPoints = unitObject.mapMovement; 
+        movementPoints = unitObject.mapMovement * 100; 
     }
 
     public void RemoveUnits()
@@ -63,5 +64,24 @@ public class UnitSlot : MonoBehaviour
     public void AddUnits (int _unitCount)
     {
         howManyUnits += _unitCount;
+    }
+
+    public void RestoreMovementPoints ()
+    {
+        if (unitObject != null){
+            movementPoints = unitObject.mapMovement * 100;
+        }
+    }
+
+    public void RemoveMovementPoints (int movmentPointsToRemove)
+    {
+        if (!slotEmpty){
+            movementPoints -= movmentPointsToRemove;
+        }
+    }
+
+    public float GetMovementPoints ()
+    {
+        return movementPoints;
     }
 }

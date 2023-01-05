@@ -15,11 +15,11 @@ public class HeroesManager : MonoBehaviour
 
 }
 public enum HeroSkill{
-
+    
 }
 
 public enum HeroSpecialAbility{
-
+    
 }
 
 public enum HeroType{

@@ -7,7 +7,7 @@ using System.Linq;
 public class CityDwellingInformation : MonoBehaviour
 {
     [SerializeField] City connectedCity;
-    private Player ownedByPlayer;
+    [SerializeField] private Player ownedByPlayer;
     [SerializeField] public List<DwellingObject> cityDwellings;
     [SerializeField] public List<float> cityDwellingUnitCount;
     private List<int> unitCalculatedCost;
@@ -15,6 +15,11 @@ public class CityDwellingInformation : MonoBehaviour
     private void Start ()
     {
         ownedByPlayer = connectedCity.ownedByPlayer.GetComponent<Player>();
+    }
+
+    public void ChangeOwningPlayer (Player _player)
+    {
+        ownedByPlayer = _player;
     }
 
     public void AddDailyUnits ()
@@ -37,12 +42,12 @@ public class CityDwellingInformation : MonoBehaviour
         cityDwellingUnitCount[tmp.dwellingIndex - 1] = (tmp.unitWeeklyGain / 2);
     }
 
-    public void AddDwelling (UnitName unitName)
-    {
-        // DwellingObject tmp = DwellingManager.Instance.GetDwellingObject(fraction, index);
-        // cityDwellings[tmp.dwellingIndex - 1] = tmp;
-        // cityDwellingUnitCount[tmp.dwellingIndex - 1] = (tmp.unitWeeklyGain / 2);
-    }
+    // public void AddDwelling (UnitName unitName)
+    // {
+    //     // DwellingObject tmp = DwellingManager.Instance.GetDwellingObject(fraction, index);
+    //     // cityDwellings[tmp.dwellingIndex - 1] = tmp;
+    //     // cityDwellingUnitCount[tmp.dwellingIndex - 1] = (tmp.unitWeeklyGain / 2);
+    // }
 
     public void BuyUnits (int index, int unitCount)
     {

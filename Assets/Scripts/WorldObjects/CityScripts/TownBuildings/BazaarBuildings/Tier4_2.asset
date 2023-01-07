@@ -20,6 +20,6 @@ MonoBehaviour:
   gemCost: 7
   mercuryCost: 7
   sulfurCost: 7
-  crystalsCost: 7
+  crystalCost: 7
   additionalRequirements: 2000000015000000
   buildingIcon: {fileID: 21300000, guid: 7ccd02c2ebdabc04ba2e77f53a2c1606, type: 3}

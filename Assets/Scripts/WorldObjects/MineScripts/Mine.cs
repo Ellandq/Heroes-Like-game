@@ -6,8 +6,6 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
     private bool mineReady = false;
-    [SerializeField] PlayerManager playerManager;
-    [SerializeField] GameGrid gameGrid;
     [SerializeField] GameObject flag;
 
     [Header("Mine information")]
@@ -32,8 +30,6 @@ public class Mine : MonoBehaviour
 
     private void FinalizeMine ()
     {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-        gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         enteranceCells = new List<PathNode>();
         mineReady = true;
     }
@@ -64,7 +60,7 @@ public class Mine : MonoBehaviour
 
     public void RemoveOwningPlayer ()
     {
-        ownedByPlayer = playerManager.neutralPlayer;
+        ownedByPlayer = PlayerManager.Instance.neutralPlayer;
         flag.SetActive(false);
     }
 

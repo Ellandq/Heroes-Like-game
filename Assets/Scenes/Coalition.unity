@@ -409,7 +409,7 @@ MonoBehaviour:
   - {fileID: 139170377}
   - {fileID: 977706139}
   army: {fileID: 0}
-  onArmyInterfaceReload:
+  onCityReload:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &17243979
@@ -1009,12 +1009,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &70751920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1531,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 255, y: 402}
+  m_AnchoredPosition: {x: 35, y: 402}
   m_SizeDelta: {x: 105.233, y: 45.404}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &117945611
@@ -4484,12 +4486,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &364049448
 GameObject:
   m_ObjectHideFlags: 0
@@ -6922,12 +6926,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &519820238
 GameObject:
   m_ObjectHideFlags: 0
@@ -8567,12 +8573,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &644423642
 GameObject:
   m_ObjectHideFlags: 0
@@ -9971,7 +9979,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 198.1, y: 82.2}
+  m_AnchoredPosition: {x: 26, y: 82.2}
   m_SizeDelta: {x: 100.858, y: 35.083}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &743146404
@@ -12055,7 +12063,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh95282
+  m_Name: pb_Mesh268320
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16703,7 +16711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34, y: 402}
+  m_AnchoredPosition: {x: 254.9, y: 401.1}
   m_SizeDelta: {x: 105.233, y: 45.404}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200169480
@@ -16837,7 +16845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.1, y: 81.4}
+  m_AnchoredPosition: {x: 198, y: 82}
   m_SizeDelta: {x: 100.858, y: 35.083}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205252791
@@ -20166,12 +20174,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &1409511790
 GameObject:
   m_ObjectHideFlags: 0
@@ -21134,7 +21144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456894700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 119.0617, y: -7.0396843, z: 1706158.9}
+  m_LocalPosition: {x: 119, y: -7, z: 1706159}
   m_LocalScale: {x: 5.4, y: 5.4, z: 5.4}
   m_Children:
   - {fileID: 70751921}
@@ -25053,12 +25063,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &1791064723
 GameObject:
   m_ObjectHideFlags: 0
@@ -29721,12 +29733,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &2135748096
 GameObject:
   m_ObjectHideFlags: 0

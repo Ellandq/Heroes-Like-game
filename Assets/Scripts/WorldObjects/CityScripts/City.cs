@@ -194,6 +194,7 @@ public class City : MonoBehaviour
             ownedByPlayer = _ownedByPlayer;
             flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
         }
+        cityDwellingInformation.ChangeOwningPlayer(ownedByPlayer.GetComponent<Player>());
         ownedByPlayer.GetComponent<Player>().ownedCities.Add(this.gameObject);
         ownedByPlayer.GetComponent<Player>().onCityAdded?.Invoke();
     }

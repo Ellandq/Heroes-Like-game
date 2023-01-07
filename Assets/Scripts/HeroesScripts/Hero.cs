@@ -28,7 +28,6 @@ public class Hero : ScriptableObject
     [SerializeField] public short ammunition;
     [SerializeField] public short speed;
     [SerializeField] public short movement;
-    [SerializeField] public short experiance;
     [SerializeField] public short mapMovement;
 
     [Header ("Hero Abilities:")]
@@ -54,7 +53,6 @@ public class Hero : ScriptableObject
     [System.NonSerialized] public short adjusted_ammunition;
     [System.NonSerialized] public short adjusted_speed;
     [System.NonSerialized] public short adjusted_movement;
-    [System.NonSerialized] public short adjusted_experiance;
     [System.NonSerialized] public short adjusted_mapMovement;
 
     public void ResetHero ()

@@ -2741,6 +2741,7 @@ GameObject:
   - component: {fileID: 381926980}
   - component: {fileID: 381926981}
   - component: {fileID: 381926982}
+  - component: {fileID: 381926983}
   m_Layer: 0
   m_Name: WorldObjectManager
   m_TagString: Untagged
@@ -2911,6 +2912,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7ceedcb1bae70474996658bcfe5c5e34, type: 2}
   - {fileID: 11400000, guid: a3b14c6da0722594f92f78ec72ea0815, type: 2}
   - {fileID: 11400000, guid: addfd4cd4d9aaf24593997103e544db5, type: 2}
+--- !u!114 &381926983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381926978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f355c9425801f40bd59e7378e33366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroList:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 1a58935ab44bdcb4e88bde55d45cd54a, type: 2}
+  - {fileID: 11400000, guid: 0b9e60402462ce54db9a0742a8fed890, type: 2}
+  - {fileID: 11400000, guid: 6f88606e699eb3d4ea25e6c1abec3509, type: 2}
+  - {fileID: 11400000, guid: fac01bb92cac2c74fa26708d73be71f0, type: 2}
+  - {fileID: 11400000, guid: 683be7b6169bdb64ca945b43859ee792, type: 2}
+  - {fileID: 11400000, guid: 8a38c654816c0d34095669ff58d36fc4, type: 2}
+  - {fileID: 11400000, guid: 4158a87a3bae2d54a8c491527f89e354, type: 2}
+  - {fileID: 11400000, guid: fd8d2972fe8c3f04ba3fabf2fdf3ad2c, type: 2}
+  - {fileID: 11400000, guid: f13cfb328d067d240a2be44b4dcc847c, type: 2}
+  - {fileID: 11400000, guid: 2577eed9aef5fd646977812463c10889, type: 2}
+  - {fileID: 11400000, guid: 8a19625b4df25a54bbf22cfeb272cc9a, type: 2}
+  - {fileID: 11400000, guid: 2eac120d98b69674ebfc34b111815b90, type: 2}
 --- !u!1 &385605799
 GameObject:
   m_ObjectHideFlags: 0
@@ -21744,12 +21771,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &4141332189022427482
 GameObject:
   m_ObjectHideFlags: 0
@@ -21780,12 +21809,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!4 &4454955955911433687
 Transform:
   m_ObjectHideFlags: 0
@@ -21813,12 +21844,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &5480519946274517253
 GameObject:
   m_ObjectHideFlags: 0
@@ -21903,12 +21936,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &7237296489297375976
 GameObject:
   m_ObjectHideFlags: 0
@@ -21939,12 +21974,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!114 &8215089656811118718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21958,12 +21995,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!114 &9086005468768332398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21977,9 +22016,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
   unitObject: {fileID: 0}
   unitName: 0
-  unitNameString: Empty
-  unitID: 0
   howManyUnits: 0
-  movementPoints: 0
+  heroObject: {fileID: 0}
+  heroTag: 0

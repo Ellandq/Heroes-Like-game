@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fed59cff7f22054eb503379c3de15cd, type: 3}
+  m_Name: He_Coalition_Male_Mage
+  m_EditorClassIdentifier: 
+  heroName: 
+  heroType: 8
+  heroTag: 9
+  heroLevel: 1
+  heroExperiance: 0
+  maxHealth: 100
+  health: 100
+  minDamage: 16
+  maxDamage: 24
+  attack: 10
+  defense: 10
+  rangeAttack: 0
+  rangeDefense: 10
+  mana: 10
+  ammunition: 0
+  speed: 6
+  movement: 6
+  mapMovement: 22
+  skills: 
+  specialAbility: 0
+  spellBook: 
+  heroInventory: 
+  backpack: 

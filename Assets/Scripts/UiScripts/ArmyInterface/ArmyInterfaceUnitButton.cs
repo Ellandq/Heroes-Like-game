@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,6 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler
         }catch (NullReferenceException){
             Debug.Log("Army Information instance is missing");
         }
-        
     }
 
     public void ActivateHighlight ()
@@ -44,18 +44,25 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler
             {
                 buttonToSwap = eventData.pointerDrag.GetComponentInParent<ArmyInterfaceUnitButton>();
                 if (isSlotEmpty){
-                    if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                        ArmyInterfaceArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
-                    }else{
-                        ArmyInterfaceArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
-                    }
-                }else 
-                {
-                    if (ArmyInterfaceArmyInformation.Instance.AreUnitsSameType(buttonToSwap.slotID, slotID)){
+                    if (!ArmyInterfaceArmyInformation.Instance.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
                         if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
                             ArmyInterfaceArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
                         }else{
-                            ArmyInterfaceArmyInformation.Instance.AddUnits(buttonToSwap.slotID, slotID);
+                            ArmyInterfaceArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
+                        }
+                    }else{
+                        ArmyInterfaceArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
+                    }
+                }else{
+                    if (!ArmyInterfaceArmyInformation.Instance.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
+                        if (ArmyInterfaceArmyInformation.Instance.AreUnitsSameType(buttonToSwap.slotID, slotID)){
+                            if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
+                                ArmyInterfaceArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
+                            }else{
+                                ArmyInterfaceArmyInformation.Instance.AddUnits(buttonToSwap.slotID, slotID);
+                            }
+                        }else{
+                            ArmyInterfaceArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
                         }
                     }else{
                         ArmyInterfaceArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);

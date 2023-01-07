@@ -6,72 +6,133 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System.Linq;
 
 public class ArmyInterfaceArmyInformation : MonoBehaviour
 {
+    // Singleton instance of this script
     public static ArmyInterfaceArmyInformation Instance;
+
+    // Lists of units for the two armies being displayed in the interface
     [SerializeField] List <GameObject> units01;
     [SerializeField] List <GameObject> units02;
+
+    // Default background image for the interface
     [SerializeField] Sprite defaultBackground;
+
+    // Placeholder army used when interacting with an empty cell on the game grid
     [SerializeField] GameObject placeHolderArmy;
 
+    // Currently selected unit in the interface
     public UnitSlot selectedUnit;
 
+    // UI elements for the unit information display
     [Header("UI Referances")]
     [SerializeField] List <GameObject> unitInfoSlot;
     [SerializeField] List <Button> unitInfoButtons;
     [SerializeField] List <GameObject> unitCountDisplay;
 
+    // GameObjects for the two armies being displayed in the interface
     [SerializeField] internal GameObject army01;
     [SerializeField] internal GameObject army02;
+
+    // Flag to indicate whether the placeholder army is being used
     private bool interactingWithPlaceholder;
+
+    // List of empty cells surrounding the active army
     private List <GridCell> neighbourCells;
+
+    // Event that is triggered when the interface is reloaded
     public UnityEvent onArmyInterfaceReload;
 
+    // Initialization function
     private void Awake ()
     {
+        // Set the singleton instance
         Instance = this;
+
+        // Initialize selectedUnit to null
         selectedUnit = null;
     }
 
+    // Function to set up the interface for the given army
     public void GetArmyUnits(GameObject armyObject)
     {
+        // Disable camera movement
         CameraManager.Instance.cameraEnabled = false;
+
+        // Set interactingWithPlaceholder flag
         interactingWithPlaceholder = true;
+
+        // Set the two armies being displayed in the interface
         army01 = armyObject;
         army02 = placeHolderArmy;
+
+        // Get the units for each army
         units01 = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);
         units02 = new List<GameObject>(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots);
+
+        // Enable the interface gameObject
         this.transform.GetChild(0).gameObject.SetActive(true);
+
+        // Update the display of units in the interface
         UpdateUnitDisplay();
+
+        // Get the empty cells surrounding the active army
         neighbourCells = GameGrid.Instance.GetEmptyNeighbourCell(army01.GetComponent<Army>().gridPosition);
     }
 
+    // Function to set up the interface for the given army and the army it is interacting with
     public void GetArmyUnits(GameObject armyObject, GameObject interactedArmy)
     {
+        // Disable camera movement
         CameraManager.Instance.cameraEnabled = false;
+
+        // Clear interactingWithPlaceholder flag
         interactingWithPlaceholder = false;
+
+        // Set the two armies being displayed in the interface
         army01 = armyObject;
         army02 = interactedArmy;
+
+        // Get the units for each army
         units01 = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);
         units02 = new List<GameObject>(interactedArmy.GetComponentInParent<UnitsInformation>().unitSlots);
+
+        // Enable the interface gameObject
         this.transform.GetChild(0).gameObject.SetActive(true);
+
+        // Update the display of units in the interface
         UpdateUnitDisplay();
+
+        // Get the empty cells surrounding the active army
         neighbourCells = GameGrid.Instance.GetEmptyNeighbourCell(army01.GetComponent<Army>().gridPosition);
     }
 
+    // Function to reset the state of the interface
     private void ClearSelection()
     {
+        // Remove highlights from all unit buttons
         RemoveButtonHighlights();
+
+        // Clear the units and unit slots in both armies and the placeholder army
         for (int i = 0; i < 7; i++){
             units01[i] = null;
             units02[i] = null;
             placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().RemoveUnits();
         }
+
+        // Clear the army gameObjects
         army01 = null;
         army02 = null;
+
+        // Update the display of units in the interface
         UpdateUnitDisplay();
+
+        // Disable the interface gameObject
         this.transform.GetChild(0).gameObject.SetActive(false);
+
+        // Disable the unit split window
         UnitSplitWindow.Instance.DisableUnitSwapWindow();
     }
 
@@ -81,11 +142,17 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             if (units01[i] != null){
                 if (!units01[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i].interactable = true;
-                    unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units01[i].GetComponent<UnitSlot>().unitID));
-                    unitInfoSlot[i].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
-                    unitCountDisplay[i].SetActive(true);
-                    unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units01[i].GetComponent<UnitSlot>().howManyUnits);
-
+                    // Check if the selected unit is a hero
+                    if (units01[i].GetComponent<UnitSlot>().isSlotHero){
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units01[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                        unitInfoSlot[i].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(false);
+                    }else{
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units01[i].GetComponent<UnitSlot>().unitID));
+                        unitInfoSlot[i].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(true);
+                        unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units01[i].GetComponent<UnitSlot>().howManyUnits);                       
+                    }
                 }else{
                     unitInfoButtons[i].interactable = false;
                     unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
@@ -104,11 +171,17 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             if (units02[i] != null){
                 if (!units02[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i + 7].interactable = true;
-                    unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units02[i].GetComponent<UnitSlot>().unitID));
-                    unitInfoSlot[i + 7].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
-                    unitCountDisplay[i + 7].SetActive(true);
-                    unitCountDisplay[i + 7].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units02[i].GetComponent<UnitSlot>().howManyUnits);
-
+                    // Check if the selected unit is a hero
+                    if (units02[i].GetComponent<UnitSlot>().isSlotHero){
+                        unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units02[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                        unitInfoSlot[i + 7].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i + 7].SetActive(false);
+                    }else{
+                        unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units02[i].GetComponent<UnitSlot>().unitID));
+                        unitInfoSlot[i + 7].GetComponentInParent<ArmyInterfaceUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i + 7].SetActive(true);
+                        unitCountDisplay[i + 7].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units02[i].GetComponent<UnitSlot>().howManyUnits);
+                    }
                 }else{
                     unitInfoButtons[i + 7].interactable = false;
                     unitInfoSlot[i + 7].GetComponent<Image>().sprite = defaultBackground;
@@ -122,6 +195,38 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
                 unitCountDisplay[i + 7].SetActive(false);
             }
         } 
+    }
+
+    public bool AreUnitsHeroes(int id01, int id02)
+    {
+        if (id01 < 7){
+            if (id02 < 7){
+                if (units01[id01].GetComponent<UnitSlot>().isSlotHero || units01[id02].GetComponent<UnitSlot>().isSlotHero){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                if (units01[id01].GetComponent<UnitSlot>().isSlotHero || units02[id02 - 7].GetComponent<UnitSlot>().isSlotHero){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }else if (id02 < 7){
+            if (units02[id01 - 7].GetComponent<UnitSlot>().isSlotHero || units01[id02].GetComponent<UnitSlot>().isSlotHero){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            if (units02[id01 - 7].GetComponent<UnitSlot>().isSlotHero || units02[id02 - 7].GetComponent<UnitSlot>().isSlotHero){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
     }
 
     public void RemoveButtonHighlights ()

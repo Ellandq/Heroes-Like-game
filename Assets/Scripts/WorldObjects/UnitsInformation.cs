@@ -86,8 +86,7 @@ public class UnitsInformation : MonoBehaviour
         float mPoints01 = unitSlots[a].GetComponent<UnitSlot>().movementPoints;
         float mPoints02 = otherArmyUnit.GetComponent<UnitSlot>().movementPoints;
         unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
-        otherArmyUnit.GetComponent<UnitSlot>().RemoveUnits();
-
+        otherArmyUnit.GetComponent<UnitSlot>().RemoveUnits(); 
         unitSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
         otherArmyUnit.GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
     }

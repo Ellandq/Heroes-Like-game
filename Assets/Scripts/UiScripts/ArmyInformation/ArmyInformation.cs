@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System.Linq;
 
 public class ArmyInformation : MonoBehaviour
 {
@@ -88,10 +89,17 @@ public class ArmyInformation : MonoBehaviour
             if (units[i] != null){
                 if (!units[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i].interactable = true;
-                    unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units[i].GetComponent<UnitSlot>().unitID));
-                    unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = false;
-                    unitCountDisplay[i].SetActive(true);
-                    unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units[i].GetComponent<UnitSlot>().howManyUnits);
+                    // Check if the selected unit is a hero
+                    if (units[i].GetComponent<UnitSlot>().isSlotHero){
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                        unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(false);
+                    }else{
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units[i].GetComponent<UnitSlot>().unitID));
+                        unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(true);
+                        unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units[i].GetComponent<UnitSlot>().howManyUnits);
+                    }
 
                 }else{
                     unitInfoButtons[i].interactable = false;
@@ -106,6 +114,16 @@ public class ArmyInformation : MonoBehaviour
                 unitCountDisplay[i].SetActive(false);
             }
         }  
+    }
+
+    // Check if any of the units on given positions are heroes
+    public bool AreUnitsHeroes(int id01, int id02)
+    {
+        if (units[id01].GetComponent<UnitSlot>().isSlotHero || units[id02].GetComponent<UnitSlot>().isSlotHero){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     // Removes all button highlighs

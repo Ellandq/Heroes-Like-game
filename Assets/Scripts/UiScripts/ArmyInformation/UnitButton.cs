@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,18 +48,25 @@ public class UnitButton : MonoBehaviour, IDropHandler
             {
                 buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitButton>();
                 if (isSlotEmpty){
-                    if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                        ArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
-                    }else{
-                        ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
-                    }
-                }else 
-                {
-                    if (ArmyInformation.Instance.AreUnitsSameType(buttonToSwap.slotID, slotID)){
+                    if (!ArmyInformation.Instance.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
                         if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
                             ArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
                         }else{
-                            ArmyInformation.Instance.AddUnits(buttonToSwap.slotID, slotID);
+                            ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
+                        }
+                    }else{
+                        ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
+                    }
+                }else{
+                    if (!ArmyInformation.Instance.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
+                        if (ArmyInformation.Instance.AreUnitsSameType(buttonToSwap.slotID, slotID)){
+                            if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
+                                ArmyInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
+                            }else{
+                                ArmyInformation.Instance.AddUnits(buttonToSwap.slotID, slotID);
+                            }
+                        }else{
+                            ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
                         }
                     }else{
                         ArmyInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +26,7 @@ public class CityArmyInterface : MonoBehaviour
     [SerializeField] internal UnitsInformation army;
     private bool interactingWithPlaceholder;
     private List <GridCell> neighbourCells;
-    public UnityEvent onArmyInterfaceReload;
+    public UnityEvent onCityReload;
 
     // Sets the static instance of this class
     private void Awake ()
@@ -81,11 +82,17 @@ public class CityArmyInterface : MonoBehaviour
             if (units01[i] != null){
                 if (!units01[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i].interactable = true;
-                    unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units01[i].GetComponent<UnitSlot>().unitID));
-                    unitInfoSlot[i].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
-                    unitCountDisplay[i].SetActive(true);
-                    unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units01[i].GetComponent<UnitSlot>().howManyUnits);
-
+                    // Check if the selected unit is a hero
+                    if (units01[i].GetComponent<UnitSlot>().isSlotHero){
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units01[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                        unitInfoSlot[i].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(false);
+                    }else{
+                        unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units01[i].GetComponent<UnitSlot>().unitID));
+                        unitInfoSlot[i].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i].SetActive(true);
+                        unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units01[i].GetComponent<UnitSlot>().howManyUnits);                       
+                    }
                 }else{
                     unitInfoButtons[i].interactable = false;
                     unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
@@ -104,11 +111,17 @@ public class CityArmyInterface : MonoBehaviour
             if (units02[i] != null){
                 if (!units02[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i + 7].interactable = true;
-                    unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units02[i].GetComponent<UnitSlot>().unitID));
-                    unitInfoSlot[i + 7].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
-                    unitCountDisplay[i + 7].SetActive(true);
-                    unitCountDisplay[i + 7].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units02[i].GetComponent<UnitSlot>().howManyUnits);
-
+                    // Check if the selected unit is a hero
+                    if (units02[i].GetComponent<UnitSlot>().isSlotHero){
+                        unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units02[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                        unitInfoSlot[i + 7].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i + 7].SetActive(false);
+                    }else{
+                        unitInfoSlot[i + 7].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units02[i].GetComponent<UnitSlot>().unitID));
+                        unitInfoSlot[i + 7].GetComponentInParent<CityUnitButton>().isSlotEmpty = false;
+                        unitCountDisplay[i + 7].SetActive(true);
+                        unitCountDisplay[i + 7].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units02[i].GetComponent<UnitSlot>().howManyUnits);
+                    }
                 }else{
                     unitInfoButtons[i + 7].interactable = false;
                     unitInfoSlot[i + 7].GetComponent<Image>().sprite = defaultBackground;
@@ -127,14 +140,14 @@ public class CityArmyInterface : MonoBehaviour
     // Removes all button highlights
     public void RemoveButtonHighlights ()
     {
-        onArmyInterfaceReload?.Invoke();
+        onCityReload?.Invoke();
         selectedUnit = null;
     }
 
     // Removes all button highlights
     public void RemoveButtonHighlights (Player player)
     {
-        onArmyInterfaceReload?.Invoke();
+        onCityReload?.Invoke();
         selectedUnit = null;
     }
 

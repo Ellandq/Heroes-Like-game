@@ -47,6 +47,11 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
         
+        LoadMap();
+    }
+
+    public void LoadMap ()
+    {
         if (SceneStateManager.selectedMapName != null){
             mapName = SceneStateManager.selectedMapName;
         }
@@ -75,24 +80,16 @@ public class GameManager : MonoBehaviour
         waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
     }
 
-    private void Start ()
-    {
-        Mathf.Clamp(numberOfPlayers, 1, 6);
-    }
-
     private void GameSetup()
     {
         GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);//Creates the game grid
 
         numberOfPlayers = selectedMapInformation.numberOfPlayers;
         playerTags = selectedMapInformation.players;
-        numberOfHumanPlayers = selectedMapInformation.numberOfHumanPlayers;
-        humanPlayerTags = selectedMapInformation.humanPlayers;
+        numberOfHumanPlayers = selectedMapInformation.numberOfPossibleHumanPlayers;
+        humanPlayerTags = selectedMapInformation.possibleHumanPlayers;
 
-        uiManager.SetActive(true);
-        PlayerManager.Instance.SetupPlayerManager();
-        TurnManager.Instance.SetupTurnManager();
-        WorldObjectManager.Instance.SetupWorldObjects();
+        UpdateGameState(GameState.LoadGame);
     }
 
     public void StartGame()
@@ -110,6 +107,13 @@ public class GameManager : MonoBehaviour
         State = newState;
 
         switch (newState){
+            case GameState.LoadGame:
+                uiManager.SetActive(true);
+                PlayerManager.Instance.SetupPlayerManager();
+                TurnManager.Instance.SetupTurnManager();
+                WorldObjectManager.Instance.SetupWorldObjects();
+            break;
+
             case GameState.PlayerTurn:
                 ArmyInformation.Instance.RefreshElement();
             break;
@@ -192,6 +196,8 @@ public class GameManager : MonoBehaviour
 }
 
 public enum GameState{
+    LoadGame,
+    SaveGame,
     PlayerTurn,
     FinishedTurn,
     AiTurn,

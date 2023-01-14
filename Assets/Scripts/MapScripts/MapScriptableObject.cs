@@ -8,6 +8,6 @@ public class MapScriptableObject : ScriptableObject
     [SerializeField] public Vector2Int mapSize;
     [SerializeField] public short numberOfPlayers;
     [SerializeField] public List<PlayerTag> players;
-    [SerializeField] public short numberOfHumanPlayers;
-    [SerializeField] public List<PlayerTag> humanPlayers;
+    [SerializeField] public short numberOfPossibleHumanPlayers;
+    [SerializeField] public List<PlayerTag> possibleHumanPlayers;
 }

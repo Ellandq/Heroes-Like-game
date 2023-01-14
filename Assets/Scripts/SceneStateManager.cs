@@ -15,6 +15,9 @@ public class SceneStateManager
     public static string selectedMapName;
     public static string defaultMap = "TestMap";
 
+    [Header ("Player Information")]
+    public static List<PlayerTag> humanPlayers;
+
     public static void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
     {
         SceneStateManager.displayedCity = cityToEnter;

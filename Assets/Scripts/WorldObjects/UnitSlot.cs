@@ -130,6 +130,8 @@ public class UnitSlot : MonoBehaviour
     {
         if (unitObject != null){
             movementPoints = unitObject.mapMovement * 100;
+        }else if (heroObject != null){
+            movementPoints = heroObject.mapMovement * 100;
         }
     }
 

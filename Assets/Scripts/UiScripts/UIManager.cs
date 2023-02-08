@@ -17,4 +17,9 @@ public class UIManager : MonoBehaviour
     {
         playerDisplay.ChangeDisplay(Enum.GetName(typeof (PlayerTag), _currentPlayer.thisPlayerTag) + " Player");
     }
+
+    public void UpdateUI ()
+    {
+        
+    }
 }

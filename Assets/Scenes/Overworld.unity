@@ -17220,10 +17220,13 @@ MonoBehaviour:
   State: 0
   selectedMapInformation: {fileID: 11400000, guid: 419c31f5e5e4aba4598e3314186e6d10, type: 2}
   selectedMapWorldObjects: {fileID: 11400000, guid: c15732cdcf559b7439c8d96800add8ab, type: 2}
+  tmpMapWorldObject: {fileID: 11400000, guid: d5306cbc494a355478846c5cb3410a5f, type: 2}
   numberOfPlayers: 2
   playerTags: 
   numberOfHumanPlayers: 0
   humanPlayerTags: 
+  saveFileName: 
+  saveFilePath: 
 --- !u!4 &1735143847
 Transform:
   m_ObjectHideFlags: 0

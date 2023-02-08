@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
+    [Header ("Movement objects")]
     public Transform cameraZoomObject;
-    private float zoomObjectRotation;
-    private bool centerCalculated;
+    
 
     [Header("Height Options")]
     [SerializeField] private float maxCameraHeight = 70f;
@@ -18,10 +18,13 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float maxCameraAngle = 90f;
     [SerializeField] private float minCameraAngle = 30f;
     [SerializeField] private float anglePercentage;
-    private Vector3 centerOfRotation;
 
     [Header("Offset Options")]
     public float smoothSpeed = 0.125f;
+
+    private Vector3 centerOfRotation;
+    private float zoomObjectRotation;
+    private bool centerCalculated;
 
     // On Awake calculates the current camera angle
     void Awake() 
@@ -32,30 +35,29 @@ public class CameraZoom : MonoBehaviour
     // Every frame checks if the requirements are met to rotate the camera
     void Update() 
     {
-        if (CameraManager.Instance.cameraEnabled)
+        if (CameraManager.Instance.cameraRotating)
         {
-            if (!InputManager.Instance.mouseInput.IsMouseOverUI())
-            {
+            if (!InputManager.Instance.mouseInput.IsMouseOverUI()){
                 if (InputManager.Instance.mouseInput.mouseScrollStatus > 0f) // forward
-            {
-                ZoomCamera();
-                CameraManager.Instance.cameraMovement.cameraFollowingObject = false;
-            }
-            if (InputManager.Instance.mouseInput.mouseScrollStatus < 0f) // backwards
-            {
-                UnZoomCamera();   
-                CameraManager.Instance.cameraMovement.cameraFollowingObject = false;  
-            }
+                {
+                    ZoomCamera();
+                    CameraManager.Instance.cameraMovement.cameraFollowingObject = false;
+                }
+                if (InputManager.Instance.mouseInput.mouseScrollStatus < 0f) // backwards
+                {
+                    UnZoomCamera();   
+                    CameraManager.Instance.cameraMovement.cameraFollowingObject = false;  
+                }
             }
         }
         if (InputManager.Instance.mouseInput.mouseButtonPressed_2){
-            CameraManager.Instance.cameraEnabled = false;
+            CameraManager.Instance.cameraRotating = true;
             if (Cursor.lockState == CursorLockMode.None) Cursor.lockState = CursorLockMode.Locked;
             RotateCamera();
 
         }else{
             centerCalculated = false;
-            CameraManager.Instance.cameraEnabled = true;
+            CameraManager.Instance.cameraRotating = false;
             Cursor.lockState = CursorLockMode.None;
         }
         if (InputManager.Instance.keyboardInput.resetCameraPressed){

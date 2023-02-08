@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable ,CreateAssetMenu(fileName = "MapWorldObjects", menuName = "ScriptableObjects/MapWorldObjects")]
 public class MapWorldObjects : ScriptableObject
 {
+    [SerializeField] public string mapName;
     [SerializeField] public int citiesCount;
     [SerializeField] public List<int> cities;
     [SerializeField] public int armiesCount;

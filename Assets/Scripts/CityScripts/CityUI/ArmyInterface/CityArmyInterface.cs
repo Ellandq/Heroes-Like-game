@@ -10,9 +10,12 @@ using TMPro;
 
 public class CityArmyInterface : MonoBehaviour
 {
+    // Static instance of this class
     public static CityArmyInterface Instance;
-    [SerializeField] List <GameObject> units01;
-    [SerializeField] List <GameObject> units02;
+
+    [Header ("Units List")]
+    [SerializeField] List <GameObject> units01; // interacting units
+    [SerializeField] List <GameObject> units02; // units interacted with
     [SerializeField] Sprite defaultBackground;
     [SerializeField] GameObject placeholderArmy;
 

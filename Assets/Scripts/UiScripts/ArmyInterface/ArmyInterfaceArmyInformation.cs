@@ -59,7 +59,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
     public void GetArmyUnits(GameObject armyObject)
     {
         // Disable camera movement
-        CameraManager.Instance.cameraEnabled = false;
+        CameraManager.Instance.DisableCamera();
 
         // Set interactingWithPlaceholder flag
         interactingWithPlaceholder = true;
@@ -86,7 +86,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
     public void GetArmyUnits(GameObject armyObject, GameObject interactedArmy)
     {
         // Disable camera movement
-        CameraManager.Instance.cameraEnabled = false;
+        CameraManager.Instance.DisableCamera();
 
         // Clear interactingWithPlaceholder flag
         interactingWithPlaceholder = false;

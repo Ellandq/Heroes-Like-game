@@ -8,8 +8,6 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     private string defaultPlayerName = "Player";
-    // private string [] playerColours;
-    // public string [] playablePlayerColours;
     private short playersReady = 0;
 
     [Header("Player information")]
@@ -125,5 +123,10 @@ public class PlayerManager : MonoBehaviour
 public enum PlayerTag{
     None, Blue, LightBlue, Purple, Red, Orange, Yellow, LightGreen, Green
 }
+
+public enum PlayerState{
+    TurnCompleted, TurnWaiting, TurnCurrent, PlayerDefeated, PlayerWon,
+}
+
 [System.Serializable]
 public class UnityPlayerEvent : UnityEvent<Player> { }

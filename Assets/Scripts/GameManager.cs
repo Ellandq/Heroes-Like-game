@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static Action <GameState> OnGameStateChanged;
 
     [Header ("Object References")]
     [SerializeField] private GameObject uiManager;
@@ -22,10 +23,13 @@ public class GameManager : MonoBehaviour
     
     [Header ("Game State Information")]
     public GameState State;
+    private bool mapLoaded;
 
     [Header ("Map information")]
     [SerializeField] private MapScriptableObject selectedMapInformation;
     [SerializeField] public MapWorldObjects selectedMapWorldObjects;
+    [SerializeField] private MapWorldObjects tmpMapWorldObjects;
+    [SerializeField] private SaveFileScriptableObject saveFileScriptableObject;
 
     [Header ("PLayer Information")]
     [SerializeField] public short numberOfPlayers;
@@ -33,24 +37,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] public short numberOfHumanPlayers;
     [SerializeField] public List<PlayerTag> humanPlayerTags;
 
+    [Header ("Save information")]
+    [SerializeField] private string saveFileName, saveFilePath;
+
     private string mapFilePath, mapName;
     private short gameComponentsReady = 0;
 
-    public static Action <GameState> OnGameStateChanged;
-
     private void Awake()
     {
+        
         if (Instance == null){
             Instance = this;
+            DontDestroyOnLoad(this);
+            if (SceneManager.GetActiveScene().name == "Overworld"){
+                mapLoaded = false;
+                NewGame();
+            }
         }else{
             Destroy(this);
         }
-        DontDestroyOnLoad(this);
-        
-        LoadMap();
     }
 
-    public void LoadMap ()
+    private void NewGame ()
     {
         if (SceneStateManager.selectedMapName != null){
             mapName = SceneStateManager.selectedMapName;
@@ -80,6 +88,39 @@ public class GameManager : MonoBehaviour
         waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
     }
 
+    public void LoadGame (string _saveFileName)
+    {
+        string _mapName = selectedMapWorldObjects.mapName;
+        
+
+        if (Directory.Exists(Application.dataPath + "/SaveFiles")){
+            BinaryFormatter bf = new BinaryFormatter();
+            saveFileName = _saveFileName;
+            saveFilePath = Application.dataPath + "/SaveFiles/" + saveFileName;
+
+            //  Load the mapWorldObjects information from save file
+            FileStream file = File.Open(saveFilePath + "/MapWorldObjects.txt", FileMode.Open);
+            JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), tmpMapWorldObjects);
+            file.Close();
+
+            if (tmpMapWorldObjects.mapName == _mapName){
+                selectedMapWorldObjects = tmpMapWorldObjects;
+            }else{
+                // Load the map information from the "Maps" folder
+                file = File.Open(mapFilePath + "/MapInformation.txt", FileMode.Open);
+                JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), selectedMapInformation);
+                file.Close();
+                
+            }
+        
+        }   
+    }
+
+    public void SaveGame (string _saveFileName)
+    {
+        
+    }
+
     private void GameSetup()
     {
         GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);//Creates the game grid
@@ -98,6 +139,8 @@ public class GameManager : MonoBehaviour
         {
             TurnManager.Instance.GetComponent<TurnManager>().StartGame();
             CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
+            CameraManager.Instance.EnableCamera();
+            mapLoaded = true;
         }
         else gameComponentsReady++;
     }

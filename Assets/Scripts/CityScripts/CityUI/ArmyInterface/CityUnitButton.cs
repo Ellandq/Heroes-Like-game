@@ -7,8 +7,11 @@ using UnityEngine.EventSystems;
 
 public class CityUnitButton : MonoBehaviour, IDropHandler
 {
+    [Header ("Button Images")]
     [SerializeField] Sprite unitButtonDefault; 
     [SerializeField] Sprite unitButtonHighlight;  
+
+    [Header ("Button information")]
     [SerializeField] Button thisButton;  
     [SerializeField] short slotID;
     public bool isSlotEmpty;

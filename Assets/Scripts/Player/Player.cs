@@ -18,10 +18,11 @@ public class Player : MonoBehaviour
     private GameObject objectToDestroy;
 
     [Header("Player basic information")]
+    [SerializeField] private PlayerState playerState;
     public PlayerTag thisPlayerTag;
     public Color playerColor;
     public bool isPlayerAi = true;
-    public bool turnDone = false;
+    // public bool turnDone = false;
 
     private City currentCity;
     private Army currentArmy;
@@ -276,20 +277,7 @@ public class Player : MonoBehaviour
                     playerLost = true;
                 }else{
                     if (daysToLoose == 0){
-                        Debug.Log(this.gameObject.name + " has lost. ");
-                        int objectCount = ownedArmies.Count - 1;
-                        for (int i = objectCount; i >= 0; i--){
-                            WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
-                        }
-                        objectCount = ownedCities.Count - 1;
-                        for (int i = objectCount; i >= 0; i--){
-                            ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
-                        }
-                        objectCount = ownedMines.Count - 1;
-                        for (int i = objectCount; i >= 0; i--){
-                            ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
-                        }
-                        playerLost = true;
+                        PlayerLoose();
                     }
                 }
                 if (!playerLost){
@@ -297,6 +285,24 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void PlayerLoose ()
+    {
+        Debug.Log(this.gameObject.name + " has lost. ");
+        int objectCount = ownedArmies.Count - 1;
+        for (int i = objectCount; i >= 0; i--){
+            WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
+        }
+        objectCount = ownedCities.Count - 1;
+        for (int i = objectCount; i >= 0; i--){
+            ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
+        }
+        objectCount = ownedMines.Count - 1;
+        for (int i = objectCount; i >= 0; i--){
+            ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
+        }
+        playerLost = true;
     }
 
     // Ads an object to follow on the start of the turn

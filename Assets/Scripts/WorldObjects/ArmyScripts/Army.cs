@@ -26,8 +26,10 @@ public class Army : MonoBehaviour
     // Finalizes the army object
     private void FinalizeArmy ()
     {
+        // Sets the movement points 
         maxMovementPoints = Convert.ToInt16(unitsInformation.CheckMovementPoints());
         movementPoints = maxMovementPoints;
+
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);

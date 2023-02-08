@@ -13,8 +13,9 @@ public class KeyboardInput : MonoBehaviour
     internal bool isRightPressed;
     internal bool resetCameraPressed;
     internal bool isLeftShiftPressed;
-    //internal bool isTabKeyPressed;
-    //internal bool isSpaceKeyPressed
+    internal bool isEscapePressed;
+    internal bool isTabPressed;
+    internal bool isSpacePressed;
 
     private void Update ()
     {
@@ -57,6 +58,24 @@ public class KeyboardInput : MonoBehaviour
             isLeftShiftPressed = true;
         }else{
             isLeftShiftPressed = false;
+        }
+
+        if(Input.GetKey(KeyCode.Tab)){
+            isTabPressed = true;
+        }else{
+            isTabPressed = false;
+        }
+
+        if(Input.GetKey(KeyCode.Space)){
+            isSpacePressed = true;
+        }else{
+            isSpacePressed = false;
+        }
+
+        if(Input.GetKey(KeyCode.Escape)){
+            isEscapePressed = true;
+        }else{
+            isEscapePressed = false;
         }
     }
 }

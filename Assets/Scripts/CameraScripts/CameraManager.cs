@@ -11,10 +11,13 @@ public class CameraManager : MonoBehaviour
     public static CameraManager Instance;
     // Store a referance to all sub camera scripts
 
+    [Header ("Camera script references")]
     [SerializeField] internal CameraMovement cameraMovement;
     [SerializeField] internal CameraZoom cameraZoom;
 
+    [Header ("Camera status")]
     internal bool cameraEnabled;
+    internal bool cameraRotating;
     internal bool cameraMovementEnabled;
 
     // Creating a static instance of this class

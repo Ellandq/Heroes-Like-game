@@ -5,15 +5,9 @@ using UnityEngine;
 
 public class CameraMovement: MonoBehaviour 
 {
-    [SerializeField] internal CameraManager cameraManager;
-    [SerializeField] private GameObject inputManager;
+    [Header ("Movement objects")]
     [SerializeField] internal Transform cameraFollowObject;
     [SerializeField] private GameObject objectToMoveTowards;
-    private MouseInput mouseInput;
-    private KeyboardInput keyboardInput;
-
-    private int screenWidth;
-    private int screenHeight;
 
     [Header("Camera Options")]
     [SerializeField] private int minSpeed = 5;
@@ -25,18 +19,17 @@ public class CameraMovement: MonoBehaviour
     [SerializeField] private float moveSpeed;
     
     internal bool cameraFollowingObject;
+
     internal Vector3 position;  
     private Vector3 cameraOffset; 
     private Vector3 adjustedMovementVector;
 
-    private void Awake()
-    {
-        mouseInput = inputManager.GetComponent<MouseInput>();
-        keyboardInput = inputManager.GetComponent<KeyboardInput>();
-    }
+    private int screenWidth;
+    private int screenHeight;
 
 	private void Start () 
     {
+        // Set the scren size variables
         screenWidth = Screen.width;
         screenHeight = Screen.height;
 	}
@@ -44,7 +37,7 @@ public class CameraMovement: MonoBehaviour
     // Check what type of movement if any is supposed to run every frame
 	private void Update () 
     {
-        if (cameraManager.cameraEnabled)
+        if (CameraManager.Instance.cameraEnabled && !CameraManager.Instance.cameraRotating)
         {
             EdgeScrollingMovement();
             ManualCameraMovement();
@@ -65,45 +58,45 @@ public class CameraMovement: MonoBehaviour
         position = transform.position;
         adjustedMovementVector = CalculateMovementAngle();
 
-        if (mouseInput.screenPosition.x > screenWidth - minDistanceFromBoundary) {
+        if (InputManager.Instance.mouseInput.screenPosition.x > screenWidth - minDistanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        else if (mouseInput.screenPosition.x > screenWidth - distanceFromBoundary) {
+        else if (InputManager.Instance.mouseInput.screenPosition.x > screenWidth - distanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, adjustedMovementVector.z) * minSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
-        if (mouseInput.screenPosition.x < 0 + minDistanceFromBoundary) {
+        if (InputManager.Instance.mouseInput.screenPosition.x < 0 + minDistanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on -X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        else if (mouseInput.screenPosition.x < 0 + distanceFromBoundary) {
+        else if (InputManager.Instance.mouseInput.screenPosition.x < 0 + distanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * minSpeed * Time.deltaTime); // move on -X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
-        if (mouseInput.screenPosition.y > screenHeight - minDistanceFromBoundary) {
+        if (InputManager.Instance.mouseInput.screenPosition.y > screenHeight - minDistanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on +Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        else if (mouseInput.screenPosition.y > screenHeight - distanceFromBoundary) {
+        else if (InputManager.Instance.mouseInput.screenPosition.y > screenHeight - distanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * minSpeed * Time.deltaTime); // move on +Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
 
-        if (mouseInput.screenPosition.y < 0 + minDistanceFromBoundary) {
+        if (InputManager.Instance.mouseInput.screenPosition.y < 0 + minDistanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on -Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        else if (mouseInput.screenPosition.y < 0 + distanceFromBoundary) {
+        else if (InputManager.Instance.mouseInput.screenPosition.y < 0 + distanceFromBoundary) {
             cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * minSpeed * Time.deltaTime); // move on -Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
@@ -116,22 +109,22 @@ public class CameraMovement: MonoBehaviour
     {
         position = transform.position;
 
-        if(keyboardInput.isRightPressed){
+        if(InputManager.Instance.keyboardInput.isRightPressed){
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.x, 0, -adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on +X axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        if(keyboardInput.isLeftPressed){
+        if(InputManager.Instance.keyboardInput.isLeftPressed){
            cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.x, 0, adjustedMovementVector.z) * maxSpeed * Time.deltaTime); // move on -X axis 
            position = cameraFollowObject.transform.position;
            cameraFollowingObject = false;
         }
-        if(keyboardInput.isUpPressed){
+        if(InputManager.Instance.keyboardInput.isUpPressed){
             cameraFollowObject.transform.Translate(new Vector3(adjustedMovementVector.z, 0, adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on +Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
         }
-        if(keyboardInput.isDownPressed){
+        if(InputManager.Instance.keyboardInput.isDownPressed){
             cameraFollowObject.transform.Translate(new Vector3(-adjustedMovementVector.z, 0, -adjustedMovementVector.x) * maxSpeed * Time.deltaTime); // move on -Z axis
             position = cameraFollowObject.transform.position;
             cameraFollowingObject = false;
@@ -156,12 +149,9 @@ public class CameraMovement: MonoBehaviour
     // Moves the camera towards the selected object
     public void CameraFollowWorldObject ()
     {
-        if (cameraFollowingObject)
-        {
-            cameraFollowObject.transform.position = Vector3.Lerp(cameraFollowObject.transform.position, (objectToMoveTowards.transform.position + CalculateCameraOffset()), moveSpeed/10 * Time.deltaTime);
-            position = cameraFollowObject.transform.position;
-            transform.position = cameraFollowObject.transform.position;
-        }
+        cameraFollowObject.transform.position = Vector3.Lerp(cameraFollowObject.transform.position, (objectToMoveTowards.transform.position + CalculateCameraOffset()), moveSpeed/10 * Time.deltaTime);
+        position = cameraFollowObject.transform.position;
+        transform.position = cameraFollowObject.transform.position;
     }
 
     // Teleports the camera to the currently selected object

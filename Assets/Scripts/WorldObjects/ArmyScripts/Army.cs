@@ -36,7 +36,7 @@ public class Army : MonoBehaviour
         armyReady = true;
 
         if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.State == GameState.PlayerTurn){
-            TownAndArmySelection.Instance.UpdateCurrentArmyDisplay();
+            UIManager.Instance.UpdateCurrentArmyDisplay();
         }
     }
 

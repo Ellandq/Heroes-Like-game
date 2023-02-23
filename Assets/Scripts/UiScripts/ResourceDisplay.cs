@@ -10,37 +10,22 @@ public class ResourceDisplay : MonoBehaviour
     private Player currentPlayer;
 
     [Header ("Resource display referances")]
-    [SerializeField] GameObject goldCounter;
-    [SerializeField] GameObject woodCounter;
-    [SerializeField] GameObject oreCounter;
-    [SerializeField] GameObject gemCounter;
-    [SerializeField] GameObject mercuryCounter;
-    [SerializeField] GameObject sulfurCounter;
-    [SerializeField] GameObject crystalCounter;
-
-    private TextMeshProUGUI displayedGold;
-    private TextMeshProUGUI displayedWood;
-    private TextMeshProUGUI displayedOre;
-    private TextMeshProUGUI displayedGems;
-    private TextMeshProUGUI displayedMercury;
-    private TextMeshProUGUI displayedSulfur;
-    private TextMeshProUGUI displayedCrystals;
+    [SerializeField] private TextMeshProUGUI displayedGold;
+    [SerializeField] private TextMeshProUGUI displayedWood;
+    [SerializeField] private TextMeshProUGUI displayedOre;
+    [SerializeField] private TextMeshProUGUI displayedGems;
+    [SerializeField] private TextMeshProUGUI displayedMercury;
+    [SerializeField] private TextMeshProUGUI displayedSulfur;
+    [SerializeField] private TextMeshProUGUI displayedCrystals;
 
     private void Start()
     {
         TurnManager.OnNewPlayerTurn += UpdateDisplay;
         PlayerManager.OnCurrentPlayerResourcesGained += UpdateDisplay;
-        displayedGold = goldCounter.GetComponent<TextMeshProUGUI>();
-        displayedWood = woodCounter.GetComponent<TextMeshProUGUI>();
-        displayedOre = oreCounter.GetComponent<TextMeshProUGUI>();
-        displayedGems = gemCounter.GetComponent<TextMeshProUGUI>();
-        displayedMercury = mercuryCounter.GetComponent<TextMeshProUGUI>();
-        displayedSulfur = sulfurCounter.GetComponent<TextMeshProUGUI>();
-        displayedCrystals = crystalCounter.GetComponent<TextMeshProUGUI>();
-        GameManager.Instance.StartGame();
+        UIManager.Instance.UIManagerReady();
     }
 
-    private void UpdateDisplay (Player _currentPlayer)
+    public void UpdateDisplay (Player _currentPlayer)
     {
         currentPlayer = _currentPlayer;
         displayedGold.text = Convert.ToString(currentPlayer.gold);

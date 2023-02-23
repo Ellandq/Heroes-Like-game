@@ -5,63 +5,131 @@ using UnityEngine.UI;
 
 public class ArmyDisplay : MonoBehaviour
 {
-    [SerializeField] private GameObject armyDisplayPrefab;
-    [SerializeField] private GameObject armyDisplayCanvas;
-    [SerializeField] private List <GameObject> armyDisplay;
+    [SerializeField] private ArmySelectionMovementButtons movementButtons;
+    [SerializeField] public Player currentPlayer;
 
-    [Header ("Display Images")]
-    [SerializeField] private Sprite armyImage;
-    [SerializeField] private Sprite emptyCell;
+    [Header ("Army Buttons Information")]
+    [SerializeField] private List <RectTransform> armySlotsPosition;
+    [SerializeField] private List <ArmyButton> armySlots;
+
+    [Header ("Army Display Positional Information")]
+    [SerializeField] private RectTransform rotationObject;
+    [SerializeField] private Vector3 rotation;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] public int currentPosition;
+    private Quaternion targetRotation;
+    [SerializeField] private bool manualMovementEnabled;
+
+    private void Start ()
+    {
+        UIManager.Instance.UIManagerReady();
+    }
 
     // Updates the army display
     internal void UpdateArmyDisplay (Player player)
     {
+        currentPlayer = player;
         ResetArmyDisplay();
-        if (player.ownedArmies.Count > 3){
-            for (int i = 3; i < player.ownedArmies.Count; i++){
-                armyDisplay.Add(Instantiate(armyDisplayPrefab, new Vector3(armyDisplayPrefab.transform.position.x, (-90 * (i - 1)), 0), Quaternion.identity));
-                armyDisplay[i].transform.SetParent(this.gameObject.transform, false);
-                armyDisplay[i].gameObject.name = "Army (" + i + ")"; 
-            }
+        ResetDisplayPosition();
+        for (int i = 0; i < currentPlayer.ownedArmies.Count && i < 4; i++){
+            armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[i]);
         }
-        for (int i = 0; i < player.ownedArmies.Count; i++){
-            armyDisplay[i].GetComponent<Image>().sprite = armyImage;
-            armyDisplay[i].GetComponent<ArmyButton>().UpdateConnectedArmy(player.ownedArmies[i]);
-            armyDisplay[i].GetComponent<Button>().interactable = true;
-            armyDisplay[i].GetComponent<ArmyButton>().movementSlider.gameObject.SetActive(true);
-        }
-        this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - armyDisplay.Count) * 42, 0);
+        movementButtons.UpdateButtonStatus();
     }
 
-    // Checks if the armies are correctly placed on the content scroller
+    internal void UpdateArmyDisplay ()
+    {
+        ResetArmyDisplay();
+        for (int i = 0; i < currentPlayer.ownedArmies.Count && i < 4; i++){
+            armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[i]);
+        }
+        movementButtons.UpdateButtonStatus();
+    }
+
+    // Rotates the object if the 
     private void Update ()
     {
-        if (this.gameObject.GetComponent<RectTransform>().anchoredPosition.y < (3 - armyDisplay.Count) * 42 | this.gameObject.GetComponent<RectTransform>().anchoredPosition.y > (armyDisplay.Count - 3) * 42){
-            this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Clamp(this.gameObject.GetComponent<RectTransform>().anchoredPosition.y, (3 - armyDisplay.Count) * 42,(armyDisplay.Count - 3) * 42), 0);
-            armyDisplayCanvas.GetComponent<ScrollRect>().velocity = Vector2.zero;
+        if (!manualMovementEnabled){
+            Quaternion currentRotation = rotationObject.localRotation;
+            Quaternion desiredRotation = Quaternion.Euler(rotation);
+
+            float distance = Quaternion.Angle(currentRotation, desiredRotation);
+
+            if (distance > 0.1f)
+            {
+                targetRotation = Quaternion.Lerp(targetRotation, desiredRotation, Time.deltaTime * rotationSpeed);
+                rotationObject.localRotation = targetRotation;
+            }
+            else if (distance > 0f)
+            {
+                float maxAngle = Mathf.Min(Time.deltaTime * rotationSpeed, distance);
+                targetRotation = Quaternion.RotateTowards(currentRotation, desiredRotation, maxAngle);
+                rotationObject.localRotation = targetRotation;
+            }  
         }
-        
     }
 
     // Resets the army display
     private void ResetArmyDisplay ()
     {
-        if (armyDisplay.Count > 3){
-            foreach (GameObject displayedArmy in armyDisplay){
-                if (displayedArmy == armyDisplay[0] | displayedArmy == armyDisplay[1] | displayedArmy == armyDisplay[2]) continue;
-                Destroy(displayedArmy);
-            }
-            armyDisplay.RemoveRange(3, (armyDisplay.Count - 3));
+        for (int i = 0; i < 12; i++){
+            armySlots[i].ResetArmyButton();
         }
-        armyDisplay[0].GetComponent<Image>().sprite = emptyCell;
-        armyDisplay[0].GetComponent<Button>().interactable = false;
-        armyDisplay[0].GetComponent<ArmyButton>().ResetArmyButton();
-        armyDisplay[1].GetComponent<Image>().sprite = emptyCell;
-        armyDisplay[1].GetComponent<Button>().interactable = false;
-        armyDisplay[1].GetComponent<ArmyButton>().ResetArmyButton();
-        armyDisplay[2].GetComponent<Image>().sprite = emptyCell;
-        armyDisplay[2].GetComponent<Button>().interactable = false;
-        armyDisplay[2].GetComponent<ArmyButton>().ResetArmyButton();
+    }
+
+    // Updates the slots that will be visable when the object rotation updates
+    private void UpdateNewSlot (int amount){
+        int startingSlot;
+        int endingSlot;
+        int currentArmy;
+        if (amount > 0){
+            startingSlot = (currentPosition + 4);
+            endingSlot = startingSlot + amount - 1;
+            currentArmy = startingSlot;
+
+            if (startingSlot > 11)startingSlot %= 12;
+            if (endingSlot > 11) endingSlot %= 12;
+            
+            for (int i = startingSlot; (i >= startingSlot || i <= endingSlot) && !(i > endingSlot && i < startingSlot); i++){
+                armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[currentArmy]);
+                if (i == 11){
+                    if (endingSlot == i) break;
+                    i = 0;
+                }
+                currentArmy++;
+            }
+        }else{
+            startingSlot = (currentPosition - 1);
+            endingSlot = startingSlot + amount + 1;
+            currentArmy = startingSlot;
+
+            if (startingSlot > 11)startingSlot %= 12;
+            if (endingSlot > 11) endingSlot %= 12;
+            
+            for (int i = startingSlot; (i <= startingSlot || i >= endingSlot) && !(i < endingSlot && i > startingSlot); i--){
+                armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[currentArmy]);
+                if (i == 0){
+                    if (endingSlot == i) break;
+                    i = 11;
+                }
+                currentArmy--;
+            }
+        }
         
+    }
+
+    // Updates the rotation to the new position
+    public void RotateDisplay (int movementValue){
+        UpdateNewSlot(movementValue);
+        rotation.z += (30f * movementValue);
+        currentPosition += movementValue;
+    }
+
+    // Resets the position to the starting value
+    private void ResetDisplayPosition ()
+    {
+        rotation.z = 0f;
+        currentPosition = 0;
+        transform.localEulerAngles = rotation;
     }
 }

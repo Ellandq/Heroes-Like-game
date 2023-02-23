@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 23
   unitNameString: DarkOnes_T4_1
+  unitTier: 4
   health: 250
   minDamage: 28
   maxDamage: 60

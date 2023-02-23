@@ -380,7 +380,7 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
 
     public void RefreshElement ()
     {
-        ArmyInformation.Instance.RefreshElement();
+        UIManager.Instance.RefreshCurrentArmyDisplay();
         RemoveButtonHighlights();
         UpdateUnitDisplay();
     }
@@ -449,6 +449,6 @@ public class ArmyInterfaceArmyInformation : MonoBehaviour
             army01.GetComponent<Army>().unitsInformation.unitSlots[i].GetComponent<UnitSlot>().ChangeSlotStatus(placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().unitID, 
             placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().howManyUnits, placeHolderArmy.GetComponent<UnitsInformation>().unitSlots[i].GetComponent<UnitSlot>().movementPoints);
         }
-        ArmyInformation.Instance.RefreshElement();
+        UIManager.Instance.RefreshCurrentArmyDisplay();
     }
 }

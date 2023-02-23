@@ -1,0 +1,1644 @@
+UnitSlot:
+
+Accessed Variables:
+  slotEmpty - UnitSlot
+  isSlotHero - UnitSlot
+  unitID - UnitSlot
+  movementPoints - UnitSlot
+  unitObject - UnitSlot
+  unitName - UnitSlot
+  howManyUnits - UnitSlot
+  heroObject - UnitSlot
+  heroTag - UnitSlot
+  useGUILayout - UnitSlot
+  runInEditMode - UnitSlot
+  allowPrefabModeInPlayMode - UnitSlot
+  enabled - UnitSlot
+  isActiveAndEnabled - UnitSlot
+  transform - UnitSlot
+  gameObject - UnitSlot
+  tag - UnitSlot
+  rigidbody - UnitSlot
+  rigidbody2D - UnitSlot
+  camera - UnitSlot
+  light - UnitSlot
+  animation - UnitSlot
+  constantForce - UnitSlot
+  renderer - UnitSlot
+  audio - UnitSlot
+  networkView - UnitSlot
+  collider - UnitSlot
+  collider2D - UnitSlot
+  hingeJoint - UnitSlot
+  particleSystem - UnitSlot
+  name - UnitSlot
+  hideFlags - UnitSlot
+
+ObjectInteraction:
+  City
+  Mine
+  Army
+  ResourcesObj
+
+Accessed Variables:
+  objectTag - ObjectInteraction
+  useGUILayout - ObjectInteraction
+  runInEditMode - ObjectInteraction
+  allowPrefabModeInPlayMode - ObjectInteraction
+  enabled - ObjectInteraction
+  isActiveAndEnabled - ObjectInteraction
+  transform - ObjectInteraction
+  gameObject - ObjectInteraction
+  tag - ObjectInteraction
+  rigidbody - ObjectInteraction
+  rigidbody2D - ObjectInteraction
+  camera - ObjectInteraction
+  light - ObjectInteraction
+  animation - ObjectInteraction
+  constantForce - ObjectInteraction
+  renderer - ObjectInteraction
+  audio - ObjectInteraction
+  networkView - ObjectInteraction
+  collider - ObjectInteraction
+  collider2D - ObjectInteraction
+  hingeJoint - ObjectInteraction
+  particleSystem - ObjectInteraction
+  name - ObjectInteraction
+  hideFlags - ObjectInteraction
+
+MineEnterance:
+  Mine
+  GameGrid
+
+Accessed Variables:
+  enteranceList - MineEnterance
+  gridPosition - MineEnterance
+  mineRotation - MineEnterance
+  useGUILayout - MineEnterance
+  runInEditMode - MineEnterance
+  allowPrefabModeInPlayMode - MineEnterance
+  enabled - MineEnterance
+  isActiveAndEnabled - MineEnterance
+  transform - MineEnterance
+  gameObject - MineEnterance
+  tag - MineEnterance
+  rigidbody - MineEnterance
+  rigidbody2D - MineEnterance
+  camera - MineEnterance
+  light - MineEnterance
+  animation - MineEnterance
+  constantForce - MineEnterance
+  renderer - MineEnterance
+  audio - MineEnterance
+  networkView - MineEnterance
+  collider - MineEnterance
+  collider2D - MineEnterance
+  hingeJoint - MineEnterance
+  particleSystem - MineEnterance
+  name - MineEnterance
+  hideFlags - MineEnterance
+
+ObjectEnterance:
+
+Accessed Variables:
+  enteranceNodes - ObjectEnterance
+  enteranceNodeCount - ObjectEnterance
+  useGUILayout - ObjectEnterance
+  runInEditMode - ObjectEnterance
+  allowPrefabModeInPlayMode - ObjectEnterance
+  enabled - ObjectEnterance
+  isActiveAndEnabled - ObjectEnterance
+  transform - ObjectEnterance
+  gameObject - ObjectEnterance
+  tag - ObjectEnterance
+  rigidbody - ObjectEnterance
+  rigidbody2D - ObjectEnterance
+  camera - ObjectEnterance
+  light - ObjectEnterance
+  animation - ObjectEnterance
+  constantForce - ObjectEnterance
+  renderer - ObjectEnterance
+  audio - ObjectEnterance
+  networkView - ObjectEnterance
+  collider - ObjectEnterance
+  collider2D - ObjectEnterance
+  hingeJoint - ObjectEnterance
+  particleSystem - ObjectEnterance
+  name - ObjectEnterance
+  hideFlags - ObjectEnterance
+
+Mine:
+
+Accessed Variables:
+  mineReady - Mine
+  flag - Mine
+  ownedByPlayer - Mine
+  mineType - Mine
+  gridPosition - Mine
+  position - Mine
+  rotation - Mine
+  mineEnterance - Mine
+  enteranceCells - Mine
+  mineGarrisonSlot1 - Mine
+  mineGarrisonSlot2 - Mine
+  mineGarrisonSlot3 - Mine
+  mineGarrisonSlot4 - Mine
+  mineGarrisonSlot5 - Mine
+  mineGarrisonSlot6 - Mine
+  mineGarrisonSlot7 - Mine
+  useGUILayout - Mine
+  runInEditMode - Mine
+  allowPrefabModeInPlayMode - Mine
+  enabled - Mine
+  isActiveAndEnabled - Mine
+  transform - Mine
+  gameObject - Mine
+  tag - Mine
+  rigidbody - Mine
+  rigidbody2D - Mine
+  camera - Mine
+  light - Mine
+  animation - Mine
+  constantForce - Mine
+  renderer - Mine
+  audio - Mine
+  networkView - Mine
+  collider - Mine
+  collider2D - Mine
+  hingeJoint - Mine
+  particleSystem - Mine
+  name - Mine
+  hideFlags - Mine
+
+CharacterPathFindingMovementHandler:
+  VisablePath
+  Army
+
+Accessed Variables:
+  moveToNextNode - CharacterPathFindingMovementHandler
+  onMoveFinish - CharacterPathFindingMovementHandler
+  objectToInteractWith - CharacterPathFindingMovementHandler
+  pathVectorList - CharacterPathFindingMovementHandler
+  pathCost - CharacterPathFindingMovementHandler
+  previousSelectedPosition - CharacterPathFindingMovementHandler
+  currentPathIndex - CharacterPathFindingMovementHandler
+  isReadyToMove - CharacterPathFindingMovementHandler
+  isMoving - CharacterPathFindingMovementHandler
+  useGUILayout - CharacterPathFindingMovementHandler
+  runInEditMode - CharacterPathFindingMovementHandler
+  allowPrefabModeInPlayMode - CharacterPathFindingMovementHandler
+  enabled - CharacterPathFindingMovementHandler
+  isActiveAndEnabled - CharacterPathFindingMovementHandler
+  transform - CharacterPathFindingMovementHandler
+  gameObject - CharacterPathFindingMovementHandler
+  tag - CharacterPathFindingMovementHandler
+  rigidbody - CharacterPathFindingMovementHandler
+  rigidbody2D - CharacterPathFindingMovementHandler
+  camera - CharacterPathFindingMovementHandler
+  light - CharacterPathFindingMovementHandler
+  animation - CharacterPathFindingMovementHandler
+  constantForce - CharacterPathFindingMovementHandler
+  renderer - CharacterPathFindingMovementHandler
+  audio - CharacterPathFindingMovementHandler
+  networkView - CharacterPathFindingMovementHandler
+  collider - CharacterPathFindingMovementHandler
+  collider2D - CharacterPathFindingMovementHandler
+  hingeJoint - CharacterPathFindingMovementHandler
+  particleSystem - CharacterPathFindingMovementHandler
+  name - CharacterPathFindingMovementHandler
+  hideFlags - CharacterPathFindingMovementHandler
+
+UnitsInformation:
+
+Accessed Variables:
+  unitSlots - UnitsInformation
+  useGUILayout - UnitsInformation
+  runInEditMode - UnitsInformation
+  allowPrefabModeInPlayMode - UnitsInformation
+  enabled - UnitsInformation
+  isActiveAndEnabled - UnitsInformation
+  transform - UnitsInformation
+  gameObject - UnitsInformation
+  tag - UnitsInformation
+  rigidbody - UnitsInformation
+  rigidbody2D - UnitsInformation
+  camera - UnitsInformation
+  light - UnitsInformation
+  animation - UnitsInformation
+  constantForce - UnitsInformation
+  renderer - UnitsInformation
+  audio - UnitsInformation
+  networkView - UnitsInformation
+  collider - UnitsInformation
+  collider2D - UnitsInformation
+  hingeJoint - UnitsInformation
+  particleSystem - UnitsInformation
+  name - UnitsInformation
+  hideFlags - UnitsInformation
+
+Army:
+  UnitsInformation
+
+Accessed Variables:
+  armyReady - Army
+  onMovementPointsChanged - Army
+  flag - Army
+  ownedByPlayer - Army
+  gridPosition - Army
+  position - Army
+  rotation - Army
+  maxMovementPoints - Army
+  movementPoints - Army
+  canBeSelectedByCurrentPlayer - Army
+  useGUILayout - Army
+  runInEditMode - Army
+  allowPrefabModeInPlayMode - Army
+  enabled - Army
+  isActiveAndEnabled - Army
+  transform - Army
+  gameObject - Army
+  tag - Army
+  rigidbody - Army
+  rigidbody2D - Army
+  camera - Army
+  light - Army
+  animation - Army
+  constantForce - Army
+  renderer - Army
+  audio - Army
+  networkView - Army
+  collider - Army
+  collider2D - Army
+  hingeJoint - Army
+  particleSystem - Army
+  name - Army
+  hideFlags - Army
+
+CityEnterance:
+  City
+  GameGrid
+
+Accessed Variables:
+  enteranceList - CityEnterance
+  gridPosition - CityEnterance
+  cityRotation - CityEnterance
+  useGUILayout - CityEnterance
+  runInEditMode - CityEnterance
+  allowPrefabModeInPlayMode - CityEnterance
+  enabled - CityEnterance
+  isActiveAndEnabled - CityEnterance
+  transform - CityEnterance
+  gameObject - CityEnterance
+  tag - CityEnterance
+  rigidbody - CityEnterance
+  rigidbody2D - CityEnterance
+  camera - CityEnterance
+  light - CityEnterance
+  animation - CityEnterance
+  constantForce - CityEnterance
+  renderer - CityEnterance
+  audio - CityEnterance
+  networkView - CityEnterance
+  collider - CityEnterance
+  collider2D - CityEnterance
+  hingeJoint - CityEnterance
+  particleSystem - CityEnterance
+  name - CityEnterance
+  hideFlags - CityEnterance
+
+CityDwellingInformation:
+  City
+  Player
+
+Accessed Variables:
+  cityDwellings - CityDwellingInformation
+  cityDwellingUnitCount - CityDwellingInformation
+  unitCalculatedCost - CityDwellingInformation
+  useGUILayout - CityDwellingInformation
+  runInEditMode - CityDwellingInformation
+  allowPrefabModeInPlayMode - CityDwellingInformation
+  enabled - CityDwellingInformation
+  isActiveAndEnabled - CityDwellingInformation
+  transform - CityDwellingInformation
+  gameObject - CityDwellingInformation
+  tag - CityDwellingInformation
+  rigidbody - CityDwellingInformation
+  rigidbody2D - CityDwellingInformation
+  camera - CityDwellingInformation
+  light - CityDwellingInformation
+  animation - CityDwellingInformation
+  constantForce - CityDwellingInformation
+  renderer - CityDwellingInformation
+  audio - CityDwellingInformation
+  networkView - CityDwellingInformation
+  collider - CityDwellingInformation
+  collider2D - CityDwellingInformation
+  hingeJoint - CityDwellingInformation
+  particleSystem - CityDwellingInformation
+  name - CityDwellingInformation
+  hideFlags - CityDwellingInformation
+
+City:
+  CityDwellingInformation
+
+Accessed Variables:
+  cityReady - City
+  flag - City
+  ownedByPlayer - City
+  cityFraction - City
+  gridPosition - City
+  position - City
+  rotation - City
+  cityGoldProduction - City
+  canBeSelectedByCurrentPlayer - City
+  cityBuildingAlreadybuilt - City
+  cityEnterance - City
+  enteranceCells - City
+  cityEmpty - City
+  garrisonSlots - City
+  cityBuildings - City
+  useGUILayout - City
+  runInEditMode - City
+  allowPrefabModeInPlayMode - City
+  enabled - City
+  isActiveAndEnabled - City
+  transform - City
+  gameObject - City
+  tag - City
+  rigidbody - City
+  rigidbody2D - City
+  camera - City
+  light - City
+  animation - City
+  constantForce - City
+  renderer - City
+  audio - City
+  networkView - City
+  collider - City
+  collider2D - City
+  hingeJoint - City
+  particleSystem - City
+  name - City
+  hideFlags - City
+
+Player:
+  City
+  Army
+  Mine
+
+Accessed Variables:
+  waitForObjectToBeDestroyed - Player
+  onArmyAdded - Player
+  onCityAdded - Player
+  objectsToCreate - Player
+  objectsCreated - Player
+  daysToLoose - Player
+  lastObjectSelectedByPlayer - Player
+  playerLost - Player
+  objectToDestroy - Player
+  playerState - Player
+  thisPlayerTag - Player
+  playerColor - Player
+  isPlayerAi - Player
+  ownedArmies - Player
+  ownedCities - Player
+  ownedMines - Player
+  gold - Player
+  wood - Player
+  ore - Player
+  gems - Player
+  mercury - Player
+  sulfur - Player
+  crystals - Player
+  goldProduction - Player
+  woodProduction - Player
+  oreProduction - Player
+  gemProduction - Player
+  mercuryProduction - Player
+  sulfurProduction - Player
+  crystalProduction - Player
+  useGUILayout - Player
+  runInEditMode - Player
+  allowPrefabModeInPlayMode - Player
+  enabled - Player
+  isActiveAndEnabled - Player
+  transform - Player
+  gameObject - Player
+  tag - Player
+  rigidbody - Player
+  rigidbody2D - Player
+  camera - Player
+  light - Player
+  animation - Player
+  constantForce - Player
+  renderer - Player
+  audio - Player
+  networkView - Player
+  collider - Player
+  collider2D - Player
+  hingeJoint - Player
+  particleSystem - Player
+  name - Player
+  hideFlags - Player
+
+PathNode:
+  GridCell
+  PathNode
+
+Accessed Variables:
+  occupyingObject - PathNode
+  posX - PathNode
+  posZ - PathNode
+  gridPosX - PathNode
+  gridPosZ - PathNode
+  gCost - PathNode
+  hCost - PathNode
+  fCost - PathNode
+  isWalkable - PathNode
+  isOccupyingObjectInteratable - PathNode
+  useGUILayout - PathNode
+  runInEditMode - PathNode
+  allowPrefabModeInPlayMode - PathNode
+  enabled - PathNode
+  isActiveAndEnabled - PathNode
+  transform - PathNode
+  gameObject - PathNode
+  tag - PathNode
+  rigidbody - PathNode
+  rigidbody2D - PathNode
+  camera - PathNode
+  light - PathNode
+  animation - PathNode
+  constantForce - PathNode
+  renderer - PathNode
+  audio - PathNode
+  networkView - PathNode
+  collider - PathNode
+  collider2D - PathNode
+  hingeJoint - PathNode
+  particleSystem - PathNode
+  name - PathNode
+  hideFlags - PathNode
+
+GridCell:
+  PathNode
+
+Accessed Variables:
+  posX - GridCell
+  posZ - GridCell
+  currentColidingObject - GridCell
+  currentColidingObjectCoordinates - GridCell
+  objectInThisGridSpace - GridCell
+  isOccupied - GridCell
+  isObjectInteractable - GridCell
+  useGUILayout - GridCell
+  runInEditMode - GridCell
+  allowPrefabModeInPlayMode - GridCell
+  enabled - GridCell
+  isActiveAndEnabled - GridCell
+  transform - GridCell
+  gameObject - GridCell
+  tag - GridCell
+  rigidbody - GridCell
+  rigidbody2D - GridCell
+  camera - GridCell
+  light - GridCell
+  animation - GridCell
+  constantForce - GridCell
+  renderer - GridCell
+  audio - GridCell
+  networkView - GridCell
+  collider - GridCell
+  collider2D - GridCell
+  hingeJoint - GridCell
+  particleSystem - GridCell
+  name - GridCell
+  hideFlags - GridCell
+
+TownButton:
+
+Accessed Variables:
+  townHighlight - TownButton
+  connectedCity - TownButton
+  useGUILayout - TownButton
+  runInEditMode - TownButton
+  allowPrefabModeInPlayMode - TownButton
+  enabled - TownButton
+  isActiveAndEnabled - TownButton
+  transform - TownButton
+  gameObject - TownButton
+  tag - TownButton
+  rigidbody - TownButton
+  rigidbody2D - TownButton
+  camera - TownButton
+  light - TownButton
+  animation - TownButton
+  constantForce - TownButton
+  renderer - TownButton
+  audio - TownButton
+  networkView - TownButton
+  collider - TownButton
+  collider2D - TownButton
+  hingeJoint - TownButton
+  particleSystem - TownButton
+  name - TownButton
+  hideFlags - TownButton
+
+ArmyButton:
+  Slider
+
+Accessed Variables:
+  armyHighlight - ArmyButton
+  connectedArmy - ArmyButton
+  useGUILayout - ArmyButton
+  runInEditMode - ArmyButton
+  allowPrefabModeInPlayMode - ArmyButton
+  enabled - ArmyButton
+  isActiveAndEnabled - ArmyButton
+  transform - ArmyButton
+  gameObject - ArmyButton
+  tag - ArmyButton
+  rigidbody - ArmyButton
+  rigidbody2D - ArmyButton
+  camera - ArmyButton
+  light - ArmyButton
+  animation - ArmyButton
+  constantForce - ArmyButton
+  renderer - ArmyButton
+  audio - ArmyButton
+  networkView - ArmyButton
+  collider - ArmyButton
+  collider2D - ArmyButton
+  hingeJoint - ArmyButton
+  particleSystem - ArmyButton
+  name - ArmyButton
+  hideFlags - ArmyButton
+
+GameGrid:
+
+Accessed Variables:
+  pathfinding - GameGrid
+  gridLength - GameGrid
+  gridWidth - GameGrid
+  gridSpaceSize - GameGrid
+  gridCellPrefab - GameGrid
+  gameGrid - GameGrid
+  pathNodeArray - GameGrid
+  useGUILayout - GameGrid
+  runInEditMode - GameGrid
+  allowPrefabModeInPlayMode - GameGrid
+  enabled - GameGrid
+  isActiveAndEnabled - GameGrid
+  transform - GameGrid
+  gameObject - GameGrid
+  tag - GameGrid
+  rigidbody - GameGrid
+  rigidbody2D - GameGrid
+  camera - GameGrid
+  light - GameGrid
+  animation - GameGrid
+  constantForce - GameGrid
+  renderer - GameGrid
+  audio - GameGrid
+  networkView - GameGrid
+  collider - GameGrid
+  collider2D - GameGrid
+  hingeJoint - GameGrid
+  particleSystem - GameGrid
+  name - GameGrid
+  hideFlags - GameGrid
+
+ArmyDisplay:
+
+Accessed Variables:
+  armyDisplayPrefab - ArmyDisplay
+  armyDisplayCanvas - ArmyDisplay
+  armyDisplay - ArmyDisplay
+  armyImage - ArmyDisplay
+  emptyCell - ArmyDisplay
+  useGUILayout - ArmyDisplay
+  runInEditMode - ArmyDisplay
+  allowPrefabModeInPlayMode - ArmyDisplay
+  enabled - ArmyDisplay
+  isActiveAndEnabled - ArmyDisplay
+  transform - ArmyDisplay
+  gameObject - ArmyDisplay
+  tag - ArmyDisplay
+  rigidbody - ArmyDisplay
+  rigidbody2D - ArmyDisplay
+  camera - ArmyDisplay
+  light - ArmyDisplay
+  animation - ArmyDisplay
+  constantForce - ArmyDisplay
+  renderer - ArmyDisplay
+  audio - ArmyDisplay
+  networkView - ArmyDisplay
+  collider - ArmyDisplay
+  collider2D - ArmyDisplay
+  hingeJoint - ArmyDisplay
+  particleSystem - ArmyDisplay
+  name - ArmyDisplay
+  hideFlags - ArmyDisplay
+
+UnitButton:
+  Button
+  UnitButton
+
+Accessed Variables:
+  unitButtonDefault - UnitButton
+  unitButtonHighlight - UnitButton
+  slotID - UnitButton
+  isSlotEmpty - UnitButton
+  useGUILayout - UnitButton
+  runInEditMode - UnitButton
+  allowPrefabModeInPlayMode - UnitButton
+  enabled - UnitButton
+  isActiveAndEnabled - UnitButton
+  transform - UnitButton
+  gameObject - UnitButton
+  tag - UnitButton
+  rigidbody - UnitButton
+  rigidbody2D - UnitButton
+  camera - UnitButton
+  light - UnitButton
+  animation - UnitButton
+  constantForce - UnitButton
+  renderer - UnitButton
+  audio - UnitButton
+  networkView - UnitButton
+  collider - UnitButton
+  collider2D - UnitButton
+  hingeJoint - UnitButton
+  particleSystem - UnitButton
+  name - UnitButton
+  hideFlags - UnitButton
+
+UnitDragAndDrop:
+  UnitButton
+
+Accessed Variables:
+  canvas - UnitDragAndDrop
+  selectedObjectUnit - UnitDragAndDrop
+  startingPosition - UnitDragAndDrop
+  rectTransform - UnitDragAndDrop
+  canvasGroup - UnitDragAndDrop
+  useGUILayout - UnitDragAndDrop
+  runInEditMode - UnitDragAndDrop
+  allowPrefabModeInPlayMode - UnitDragAndDrop
+  enabled - UnitDragAndDrop
+  isActiveAndEnabled - UnitDragAndDrop
+  transform - UnitDragAndDrop
+  gameObject - UnitDragAndDrop
+  tag - UnitDragAndDrop
+  rigidbody - UnitDragAndDrop
+  rigidbody2D - UnitDragAndDrop
+  camera - UnitDragAndDrop
+  light - UnitDragAndDrop
+  animation - UnitDragAndDrop
+  constantForce - UnitDragAndDrop
+  renderer - UnitDragAndDrop
+  audio - UnitDragAndDrop
+  networkView - UnitDragAndDrop
+  collider - UnitDragAndDrop
+  collider2D - UnitDragAndDrop
+  hingeJoint - UnitDragAndDrop
+  particleSystem - UnitDragAndDrop
+  name - UnitDragAndDrop
+  hideFlags - UnitDragAndDrop
+
+WorldObjectManager:
+  PlayerManager
+  Player
+
+Accessed Variables:
+  cityPrefab - WorldObjectManager
+  armyPrefab - WorldObjectManager
+  minePrefab - WorldObjectManager
+  resourcePrefab - WorldObjectManager
+  cities - WorldObjectManager
+  numberOfCities - WorldObjectManager
+  armies - WorldObjectManager
+  numberOfArmies - WorldObjectManager
+  mines - WorldObjectManager
+  numberOfMines - WorldObjectManager
+  resources - WorldObjectManager
+  numberOfResources - WorldObjectManager
+  mapWorldObjects - WorldObjectManager
+  useGUILayout - WorldObjectManager
+  runInEditMode - WorldObjectManager
+  allowPrefabModeInPlayMode - WorldObjectManager
+  enabled - WorldObjectManager
+  isActiveAndEnabled - WorldObjectManager
+  transform - WorldObjectManager
+  gameObject - WorldObjectManager
+  tag - WorldObjectManager
+  rigidbody - WorldObjectManager
+  rigidbody2D - WorldObjectManager
+  camera - WorldObjectManager
+  light - WorldObjectManager
+  animation - WorldObjectManager
+  constantForce - WorldObjectManager
+  renderer - WorldObjectManager
+  audio - WorldObjectManager
+  networkView - WorldObjectManager
+  collider - WorldObjectManager
+  collider2D - WorldObjectManager
+  hingeJoint - WorldObjectManager
+  particleSystem - WorldObjectManager
+  name - WorldObjectManager
+  hideFlags - WorldObjectManager
+
+DwellingManager:
+
+Accessed Variables:
+  dwellingObjects - DwellingManager
+  useGUILayout - DwellingManager
+  runInEditMode - DwellingManager
+  allowPrefabModeInPlayMode - DwellingManager
+  enabled - DwellingManager
+  isActiveAndEnabled - DwellingManager
+  transform - DwellingManager
+  gameObject - DwellingManager
+  tag - DwellingManager
+  rigidbody - DwellingManager
+  rigidbody2D - DwellingManager
+  camera - DwellingManager
+  light - DwellingManager
+  animation - DwellingManager
+  constantForce - DwellingManager
+  renderer - DwellingManager
+  audio - DwellingManager
+  networkView - DwellingManager
+  collider - DwellingManager
+  collider2D - DwellingManager
+  hingeJoint - DwellingManager
+  particleSystem - DwellingManager
+  name - DwellingManager
+  hideFlags - DwellingManager
+
+UnitManager:
+
+Accessed Variables:
+  unitObjects - UnitManager
+  useGUILayout - UnitManager
+  runInEditMode - UnitManager
+  allowPrefabModeInPlayMode - UnitManager
+  enabled - UnitManager
+  isActiveAndEnabled - UnitManager
+  transform - UnitManager
+  gameObject - UnitManager
+  tag - UnitManager
+  rigidbody - UnitManager
+  rigidbody2D - UnitManager
+  camera - UnitManager
+  light - UnitManager
+  animation - UnitManager
+  constantForce - UnitManager
+  renderer - UnitManager
+  audio - UnitManager
+  networkView - UnitManager
+  collider - UnitManager
+  collider2D - UnitManager
+  hingeJoint - UnitManager
+  particleSystem - UnitManager
+  name - UnitManager
+  hideFlags - UnitManager
+
+HeroesManager:
+
+Accessed Variables:
+  heroList - HeroesManager
+  useGUILayout - HeroesManager
+  runInEditMode - HeroesManager
+  allowPrefabModeInPlayMode - HeroesManager
+  enabled - HeroesManager
+  isActiveAndEnabled - HeroesManager
+  transform - HeroesManager
+  gameObject - HeroesManager
+  tag - HeroesManager
+  rigidbody - HeroesManager
+  rigidbody2D - HeroesManager
+  camera - HeroesManager
+  light - HeroesManager
+  animation - HeroesManager
+  constantForce - HeroesManager
+  renderer - HeroesManager
+  audio - HeroesManager
+  networkView - HeroesManager
+  collider - HeroesManager
+  collider2D - HeroesManager
+  hingeJoint - HeroesManager
+  particleSystem - HeroesManager
+  name - HeroesManager
+  hideFlags - HeroesManager
+
+ObjectSelector:
+
+Accessed Variables:
+  onSelectedObjectChange - ObjectSelector
+  armyHighlight - ObjectSelector
+  playerCamera - ObjectSelector
+  uiCamera - ObjectSelector
+  layersToHit - ObjectSelector
+  uiLayers - ObjectSelector
+  lastObjectSelected - ObjectSelector
+  objectSelected - ObjectSelector
+  selectedObject - ObjectSelector
+  selectedObjectTag - ObjectSelector
+  useGUILayout - ObjectSelector
+  runInEditMode - ObjectSelector
+  allowPrefabModeInPlayMode - ObjectSelector
+  enabled - ObjectSelector
+  isActiveAndEnabled - ObjectSelector
+  transform - ObjectSelector
+  gameObject - ObjectSelector
+  tag - ObjectSelector
+  rigidbody - ObjectSelector
+  rigidbody2D - ObjectSelector
+  camera - ObjectSelector
+  light - ObjectSelector
+  animation - ObjectSelector
+  constantForce - ObjectSelector
+  renderer - ObjectSelector
+  audio - ObjectSelector
+  networkView - ObjectSelector
+  collider - ObjectSelector
+  collider2D - ObjectSelector
+  hingeJoint - ObjectSelector
+  particleSystem - ObjectSelector
+  name - ObjectSelector
+  hideFlags - ObjectSelector
+
+InputManager:
+  GridInteractionManager
+  MouseInput
+  KeyboardInput
+
+Accessed Variables:
+  useGUILayout - InputManager
+  runInEditMode - InputManager
+  allowPrefabModeInPlayMode - InputManager
+  enabled - InputManager
+  isActiveAndEnabled - InputManager
+  transform - InputManager
+  gameObject - InputManager
+  tag - InputManager
+  rigidbody - InputManager
+  rigidbody2D - InputManager
+  camera - InputManager
+  light - InputManager
+  animation - InputManager
+  constantForce - InputManager
+  renderer - InputManager
+  audio - InputManager
+  networkView - InputManager
+  collider - InputManager
+  collider2D - InputManager
+  hingeJoint - InputManager
+  particleSystem - InputManager
+  name - InputManager
+  hideFlags - InputManager
+
+MouseInput:
+  InputManager
+
+Accessed Variables:
+  screenPosition - MouseInput
+  worldPosition - MouseInput
+  pointerLayersToHit - MouseInput
+  mouseScrollStatus - MouseInput
+  layersToHit - MouseInput
+  mouseButtonPressed_0 - MouseInput
+  mouseButtonPressed_1 - MouseInput
+  mouseButtonPressed_2 - MouseInput
+  useGUILayout - MouseInput
+  runInEditMode - MouseInput
+  allowPrefabModeInPlayMode - MouseInput
+  enabled - MouseInput
+  isActiveAndEnabled - MouseInput
+  transform - MouseInput
+  gameObject - MouseInput
+  tag - MouseInput
+  rigidbody - MouseInput
+  rigidbody2D - MouseInput
+  camera - MouseInput
+  light - MouseInput
+  animation - MouseInput
+  constantForce - MouseInput
+  renderer - MouseInput
+  audio - MouseInput
+  networkView - MouseInput
+  collider - MouseInput
+  collider2D - MouseInput
+  hingeJoint - MouseInput
+  particleSystem - MouseInput
+  name - MouseInput
+  hideFlags - MouseInput
+
+KeyboardInput:
+  InputManager
+
+Accessed Variables:
+  isUpPressed - KeyboardInput
+  isDownPressed - KeyboardInput
+  isLeftPressed - KeyboardInput
+  isRightPressed - KeyboardInput
+  resetCameraPressed - KeyboardInput
+  isLeftShiftPressed - KeyboardInput
+  isEscapePressed - KeyboardInput
+  isTabPressed - KeyboardInput
+  isSpacePressed - KeyboardInput
+  useGUILayout - KeyboardInput
+  runInEditMode - KeyboardInput
+  allowPrefabModeInPlayMode - KeyboardInput
+  enabled - KeyboardInput
+  isActiveAndEnabled - KeyboardInput
+  transform - KeyboardInput
+  gameObject - KeyboardInput
+  tag - KeyboardInput
+  rigidbody - KeyboardInput
+  rigidbody2D - KeyboardInput
+  camera - KeyboardInput
+  light - KeyboardInput
+  animation - KeyboardInput
+  constantForce - KeyboardInput
+  renderer - KeyboardInput
+  audio - KeyboardInput
+  networkView - KeyboardInput
+  collider - KeyboardInput
+  collider2D - KeyboardInput
+  hingeJoint - KeyboardInput
+  particleSystem - KeyboardInput
+  name - KeyboardInput
+  hideFlags - KeyboardInput
+
+ArmyInformation:
+  UnitSlot
+
+Accessed Variables:
+  units - ArmyInformation
+  defaultBackground - ArmyInformation
+  unitInfoSlot - ArmyInformation
+  unitInfoButtons - ArmyInformation
+  unitCountDisplay - ArmyInformation
+  selectedArmy - ArmyInformation
+  unitIconsFilePath - ArmyInformation
+  onUnitDisplayReload - ArmyInformation
+  useGUILayout - ArmyInformation
+  runInEditMode - ArmyInformation
+  allowPrefabModeInPlayMode - ArmyInformation
+  enabled - ArmyInformation
+  isActiveAndEnabled - ArmyInformation
+  transform - ArmyInformation
+  gameObject - ArmyInformation
+  tag - ArmyInformation
+  rigidbody - ArmyInformation
+  rigidbody2D - ArmyInformation
+  camera - ArmyInformation
+  light - ArmyInformation
+  animation - ArmyInformation
+  constantForce - ArmyInformation
+  renderer - ArmyInformation
+  audio - ArmyInformation
+  networkView - ArmyInformation
+  collider - ArmyInformation
+  collider2D - ArmyInformation
+  hingeJoint - ArmyInformation
+  particleSystem - ArmyInformation
+  name - ArmyInformation
+  hideFlags - ArmyInformation
+
+CameraMovement:
+
+Accessed Variables:
+  cameraFollowObject - CameraMovement
+  objectToMoveTowards - CameraMovement
+  minSpeed - CameraMovement
+  maxSpeed - CameraMovement
+  distanceFromBoundary - CameraMovement
+  minDistanceFromBoundary - CameraMovement
+  cameraMoveLimit - CameraMovement
+  rotation - CameraMovement
+  moveSpeed - CameraMovement
+  cameraFollowingObject - CameraMovement
+  position - CameraMovement
+  cameraOffset - CameraMovement
+  adjustedMovementVector - CameraMovement
+  screenWidth - CameraMovement
+  screenHeight - CameraMovement
+  useGUILayout - CameraMovement
+  runInEditMode - CameraMovement
+  allowPrefabModeInPlayMode - CameraMovement
+  enabled - CameraMovement
+  isActiveAndEnabled - CameraMovement
+  transform - CameraMovement
+  gameObject - CameraMovement
+  tag - CameraMovement
+  rigidbody - CameraMovement
+  rigidbody2D - CameraMovement
+  camera - CameraMovement
+  light - CameraMovement
+  animation - CameraMovement
+  constantForce - CameraMovement
+  renderer - CameraMovement
+  audio - CameraMovement
+  networkView - CameraMovement
+  collider - CameraMovement
+  collider2D - CameraMovement
+  hingeJoint - CameraMovement
+  particleSystem - CameraMovement
+  name - CameraMovement
+  hideFlags - CameraMovement
+
+CameraZoom:
+
+Accessed Variables:
+  cameraZoomObject - CameraZoom
+  maxCameraHeight - CameraZoom
+  minCameraHeight - CameraZoom
+  zoomSpeed - CameraZoom
+  zoomPercentage - CameraZoom
+  maxCameraAngle - CameraZoom
+  minCameraAngle - CameraZoom
+  anglePercentage - CameraZoom
+  smoothSpeed - CameraZoom
+  centerOfRotation - CameraZoom
+  zoomObjectRotation - CameraZoom
+  centerCalculated - CameraZoom
+  useGUILayout - CameraZoom
+  runInEditMode - CameraZoom
+  allowPrefabModeInPlayMode - CameraZoom
+  enabled - CameraZoom
+  isActiveAndEnabled - CameraZoom
+  transform - CameraZoom
+  gameObject - CameraZoom
+  tag - CameraZoom
+  rigidbody - CameraZoom
+  rigidbody2D - CameraZoom
+  camera - CameraZoom
+  light - CameraZoom
+  animation - CameraZoom
+  constantForce - CameraZoom
+  renderer - CameraZoom
+  audio - CameraZoom
+  networkView - CameraZoom
+  collider - CameraZoom
+  collider2D - CameraZoom
+  hingeJoint - CameraZoom
+  particleSystem - CameraZoom
+  name - CameraZoom
+  hideFlags - CameraZoom
+
+CameraManager:
+  CameraMovement
+  CameraZoom
+
+Accessed Variables:
+  cameraEnabled - CameraManager
+  cameraRotating - CameraManager
+  cameraMovementEnabled - CameraManager
+  useGUILayout - CameraManager
+  runInEditMode - CameraManager
+  allowPrefabModeInPlayMode - CameraManager
+  enabled - CameraManager
+  isActiveAndEnabled - CameraManager
+  transform - CameraManager
+  gameObject - CameraManager
+  tag - CameraManager
+  rigidbody - CameraManager
+  rigidbody2D - CameraManager
+  camera - CameraManager
+  light - CameraManager
+  animation - CameraManager
+  constantForce - CameraManager
+  renderer - CameraManager
+  audio - CameraManager
+  networkView - CameraManager
+  collider - CameraManager
+  collider2D - CameraManager
+  hingeJoint - CameraManager
+  particleSystem - CameraManager
+  name - CameraManager
+  hideFlags - CameraManager
+
+AiTurn:
+
+Accessed Variables:
+  useGUILayout - AiTurn
+  runInEditMode - AiTurn
+  allowPrefabModeInPlayMode - AiTurn
+  enabled - AiTurn
+  isActiveAndEnabled - AiTurn
+  transform - AiTurn
+  gameObject - AiTurn
+  tag - AiTurn
+  rigidbody - AiTurn
+  rigidbody2D - AiTurn
+  camera - AiTurn
+  light - AiTurn
+  animation - AiTurn
+  constantForce - AiTurn
+  renderer - AiTurn
+  audio - AiTurn
+  networkView - AiTurn
+  collider - AiTurn
+  collider2D - AiTurn
+  hingeJoint - AiTurn
+  particleSystem - AiTurn
+  name - AiTurn
+  hideFlags - AiTurn
+
+PlayerTurn:
+
+Accessed Variables:
+  useGUILayout - PlayerTurn
+  runInEditMode - PlayerTurn
+  allowPrefabModeInPlayMode - PlayerTurn
+  enabled - PlayerTurn
+  isActiveAndEnabled - PlayerTurn
+  transform - PlayerTurn
+  gameObject - PlayerTurn
+  tag - PlayerTurn
+  rigidbody - PlayerTurn
+  rigidbody2D - PlayerTurn
+  camera - PlayerTurn
+  light - PlayerTurn
+  animation - PlayerTurn
+  constantForce - PlayerTurn
+  renderer - PlayerTurn
+  audio - PlayerTurn
+  networkView - PlayerTurn
+  collider - PlayerTurn
+  collider2D - PlayerTurn
+  hingeJoint - PlayerTurn
+  particleSystem - PlayerTurn
+  name - PlayerTurn
+  hideFlags - PlayerTurn
+
+TurnManager:
+  PlayerTurn
+  AiTurn
+  UIManager
+  Player
+
+Accessed Variables:
+  dayCounter - TurnManager
+  weekCounter - TurnManager
+  monthCounter - TurnManager
+  currentPlayerTurn - TurnManager
+  playerCount - TurnManager
+  OnNewDay - TurnManager
+  useGUILayout - TurnManager
+  runInEditMode - TurnManager
+  allowPrefabModeInPlayMode - TurnManager
+  enabled - TurnManager
+  isActiveAndEnabled - TurnManager
+  transform - TurnManager
+  gameObject - TurnManager
+  tag - TurnManager
+  rigidbody - TurnManager
+  rigidbody2D - TurnManager
+  camera - TurnManager
+  light - TurnManager
+  animation - TurnManager
+  constantForce - TurnManager
+  renderer - TurnManager
+  audio - TurnManager
+  networkView - TurnManager
+  collider - TurnManager
+  collider2D - TurnManager
+  hingeJoint - TurnManager
+  particleSystem - TurnManager
+  name - TurnManager
+  hideFlags - TurnManager
+
+ArmyInterfaceArmyInformation:
+  UnitSlot
+
+Accessed Variables:
+  units01 - ArmyInterfaceArmyInformation
+  units02 - ArmyInterfaceArmyInformation
+  defaultBackground - ArmyInterfaceArmyInformation
+  placeHolderArmy - ArmyInterfaceArmyInformation
+  unitInfoSlot - ArmyInterfaceArmyInformation
+  unitInfoButtons - ArmyInterfaceArmyInformation
+  unitCountDisplay - ArmyInterfaceArmyInformation
+  army01 - ArmyInterfaceArmyInformation
+  army02 - ArmyInterfaceArmyInformation
+  interactingWithPlaceholder - ArmyInterfaceArmyInformation
+  neighbourCells - ArmyInterfaceArmyInformation
+  onArmyInterfaceReload - ArmyInterfaceArmyInformation
+  useGUILayout - ArmyInterfaceArmyInformation
+  runInEditMode - ArmyInterfaceArmyInformation
+  allowPrefabModeInPlayMode - ArmyInterfaceArmyInformation
+  enabled - ArmyInterfaceArmyInformation
+  isActiveAndEnabled - ArmyInterfaceArmyInformation
+  transform - ArmyInterfaceArmyInformation
+  gameObject - ArmyInterfaceArmyInformation
+  tag - ArmyInterfaceArmyInformation
+  rigidbody - ArmyInterfaceArmyInformation
+  rigidbody2D - ArmyInterfaceArmyInformation
+  camera - ArmyInterfaceArmyInformation
+  light - ArmyInterfaceArmyInformation
+  animation - ArmyInterfaceArmyInformation
+  constantForce - ArmyInterfaceArmyInformation
+  renderer - ArmyInterfaceArmyInformation
+  audio - ArmyInterfaceArmyInformation
+  networkView - ArmyInterfaceArmyInformation
+  collider - ArmyInterfaceArmyInformation
+  collider2D - ArmyInterfaceArmyInformation
+  hingeJoint - ArmyInterfaceArmyInformation
+  particleSystem - ArmyInterfaceArmyInformation
+  name - ArmyInterfaceArmyInformation
+  hideFlags - ArmyInterfaceArmyInformation
+
+TownDisplay:
+
+Accessed Variables:
+  townDisplayPrefab - TownDisplay
+  townDisplayCanvas - TownDisplay
+  townDisplay - TownDisplay
+  townImage - TownDisplay
+  emptyCell - TownDisplay
+  useGUILayout - TownDisplay
+  runInEditMode - TownDisplay
+  allowPrefabModeInPlayMode - TownDisplay
+  enabled - TownDisplay
+  isActiveAndEnabled - TownDisplay
+  transform - TownDisplay
+  gameObject - TownDisplay
+  tag - TownDisplay
+  rigidbody - TownDisplay
+  rigidbody2D - TownDisplay
+  camera - TownDisplay
+  light - TownDisplay
+  animation - TownDisplay
+  constantForce - TownDisplay
+  renderer - TownDisplay
+  audio - TownDisplay
+  networkView - TownDisplay
+  collider - TownDisplay
+  collider2D - TownDisplay
+  hingeJoint - TownDisplay
+  particleSystem - TownDisplay
+  name - TownDisplay
+  hideFlags - TownDisplay
+
+TownAndArmySelection:
+  TownDisplay
+  ArmyDisplay
+  Player
+
+Accessed Variables:
+  useGUILayout - TownAndArmySelection
+  runInEditMode - TownAndArmySelection
+  allowPrefabModeInPlayMode - TownAndArmySelection
+  enabled - TownAndArmySelection
+  isActiveAndEnabled - TownAndArmySelection
+  transform - TownAndArmySelection
+  gameObject - TownAndArmySelection
+  tag - TownAndArmySelection
+  rigidbody - TownAndArmySelection
+  rigidbody2D - TownAndArmySelection
+  camera - TownAndArmySelection
+  light - TownAndArmySelection
+  animation - TownAndArmySelection
+  constantForce - TownAndArmySelection
+  renderer - TownAndArmySelection
+  audio - TownAndArmySelection
+  networkView - TownAndArmySelection
+  collider - TownAndArmySelection
+  collider2D - TownAndArmySelection
+  hingeJoint - TownAndArmySelection
+  particleSystem - TownAndArmySelection
+  name - TownAndArmySelection
+  hideFlags - TownAndArmySelection
+
+PlayerManager:
+  Player
+
+Accessed Variables:
+  defaultPlayerName - PlayerManager
+  playersReady - PlayerManager
+  playerPrefab - PlayerManager
+  neutralPlayer - PlayerManager
+  players - PlayerManager
+  currentPlayerColor - PlayerManager
+  allPlayers - PlayerManager
+  humanPlayers - PlayerManager
+  playerColorList - PlayerManager
+  blue - PlayerManager
+  lightBlue - PlayerManager
+  purple - PlayerManager
+  red - PlayerManager
+  orange - PlayerManager
+  yellow - PlayerManager
+  lightGreen - PlayerManager
+  green - PlayerManager
+  OnNextPlayerTurn - PlayerManager
+  OnNewDayPlayerUpdate - PlayerManager
+  useGUILayout - PlayerManager
+  runInEditMode - PlayerManager
+  allowPrefabModeInPlayMode - PlayerManager
+  enabled - PlayerManager
+  isActiveAndEnabled - PlayerManager
+  transform - PlayerManager
+  gameObject - PlayerManager
+  tag - PlayerManager
+  rigidbody - PlayerManager
+  rigidbody2D - PlayerManager
+  camera - PlayerManager
+  light - PlayerManager
+  animation - PlayerManager
+  constantForce - PlayerManager
+  renderer - PlayerManager
+  audio - PlayerManager
+  networkView - PlayerManager
+  collider - PlayerManager
+  collider2D - PlayerManager
+  hingeJoint - PlayerManager
+  particleSystem - PlayerManager
+  name - PlayerManager
+  hideFlags - PlayerManager
+
+VisablePath:
+
+Accessed Variables:
+  movementPathDisplayPrefab - VisablePath
+  walkableTile - VisablePath
+  lockedTile - VisablePath
+  blockedTile - VisablePath
+  pathList - VisablePath
+  useGUILayout - VisablePath
+  runInEditMode - VisablePath
+  allowPrefabModeInPlayMode - VisablePath
+  enabled - VisablePath
+  isActiveAndEnabled - VisablePath
+  transform - VisablePath
+  gameObject - VisablePath
+  tag - VisablePath
+  rigidbody - VisablePath
+  rigidbody2D - VisablePath
+  camera - VisablePath
+  light - VisablePath
+  animation - VisablePath
+  constantForce - VisablePath
+  renderer - VisablePath
+  audio - VisablePath
+  networkView - VisablePath
+  collider - VisablePath
+  collider2D - VisablePath
+  hingeJoint - VisablePath
+  particleSystem - VisablePath
+  name - VisablePath
+  hideFlags - VisablePath
+
+UnitSplitWindow:
+  Image
+  Image
+  Slider
+  TextMeshProUGUI
+  TextMeshProUGUI
+  UnitsInformation
+  UnitsInformation
+  City
+  City
+
+Accessed Variables:
+  totalUnitCount - UnitSplitWindow
+  unitID_1 - UnitSplitWindow
+  unitID_2 - UnitSplitWindow
+  splitWith - UnitSplitWindow
+  useGUILayout - UnitSplitWindow
+  runInEditMode - UnitSplitWindow
+  allowPrefabModeInPlayMode - UnitSplitWindow
+  enabled - UnitSplitWindow
+  isActiveAndEnabled - UnitSplitWindow
+  transform - UnitSplitWindow
+  gameObject - UnitSplitWindow
+  tag - UnitSplitWindow
+  rigidbody - UnitSplitWindow
+  rigidbody2D - UnitSplitWindow
+  camera - UnitSplitWindow
+  light - UnitSplitWindow
+  animation - UnitSplitWindow
+  constantForce - UnitSplitWindow
+  renderer - UnitSplitWindow
+  audio - UnitSplitWindow
+  networkView - UnitSplitWindow
+  collider - UnitSplitWindow
+  collider2D - UnitSplitWindow
+  hingeJoint - UnitSplitWindow
+  particleSystem - UnitSplitWindow
+  name - UnitSplitWindow
+  hideFlags - UnitSplitWindow
+
+PlayerDisplay:
+  UIManager
+  Text
+
+Accessed Variables:
+  playerDisplay - PlayerDisplay
+  useGUILayout - PlayerDisplay
+  runInEditMode - PlayerDisplay
+  allowPrefabModeInPlayMode - PlayerDisplay
+  enabled - PlayerDisplay
+  isActiveAndEnabled - PlayerDisplay
+  transform - PlayerDisplay
+  gameObject - PlayerDisplay
+  tag - PlayerDisplay
+  rigidbody - PlayerDisplay
+  rigidbody2D - PlayerDisplay
+  camera - PlayerDisplay
+  light - PlayerDisplay
+  animation - PlayerDisplay
+  constantForce - PlayerDisplay
+  renderer - PlayerDisplay
+  audio - PlayerDisplay
+  networkView - PlayerDisplay
+  collider - PlayerDisplay
+  collider2D - PlayerDisplay
+  hingeJoint - PlayerDisplay
+  particleSystem - PlayerDisplay
+  name - PlayerDisplay
+  hideFlags - PlayerDisplay
+
+UIManager:
+  PlayerDisplay
+
+Accessed Variables:
+  useGUILayout - UIManager
+  runInEditMode - UIManager
+  allowPrefabModeInPlayMode - UIManager
+  enabled - UIManager
+  isActiveAndEnabled - UIManager
+  transform - UIManager
+  gameObject - UIManager
+  tag - UIManager
+  rigidbody - UIManager
+  rigidbody2D - UIManager
+  camera - UIManager
+  light - UIManager
+  animation - UIManager
+  constantForce - UIManager
+  renderer - UIManager
+  audio - UIManager
+  networkView - UIManager
+  collider - UIManager
+  collider2D - UIManager
+  hingeJoint - UIManager
+  particleSystem - UIManager
+  name - UIManager
+  hideFlags - UIManager
+
+GameManager:
+  UnitSplitWindow
+  ResourceDisplay
+
+Accessed Variables:
+  uiManager - GameManager
+  gameHandler - GameManager
+  waitForSceneToDeload - GameManager
+  waitForGameToBeReady - GameManager
+  State - GameManager
+  mapLoaded - GameManager
+  selectedMapInformation - GameManager
+  selectedMapWorldObjects - GameManager
+  tmpMapWorldObjects - GameManager
+  saveFileScriptableObject - GameManager
+  numberOfPlayers - GameManager
+  playerTags - GameManager
+  numberOfHumanPlayers - GameManager
+  humanPlayerTags - GameManager
+  saveFileName - GameManager
+  saveFilePath - GameManager
+  mapFilePath - GameManager
+  mapName - GameManager
+  gameComponentsReady - GameManager
+  useGUILayout - GameManager
+  runInEditMode - GameManager
+  allowPrefabModeInPlayMode - GameManager
+  enabled - GameManager
+  isActiveAndEnabled - GameManager
+  transform - GameManager
+  gameObject - GameManager
+  tag - GameManager
+  rigidbody - GameManager
+  rigidbody2D - GameManager
+  camera - GameManager
+  light - GameManager
+  animation - GameManager
+  constantForce - GameManager
+  renderer - GameManager
+  audio - GameManager
+  networkView - GameManager
+  collider - GameManager
+  collider2D - GameManager
+  hingeJoint - GameManager
+  particleSystem - GameManager
+  name - GameManager
+  hideFlags - GameManager
+
+TurnDisplay:
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+
+Accessed Variables:
+  turnCount - TurnDisplay
+  useGUILayout - TurnDisplay
+  runInEditMode - TurnDisplay
+  allowPrefabModeInPlayMode - TurnDisplay
+  enabled - TurnDisplay
+  isActiveAndEnabled - TurnDisplay
+  transform - TurnDisplay
+  gameObject - TurnDisplay
+  tag - TurnDisplay
+  rigidbody - TurnDisplay
+  rigidbody2D - TurnDisplay
+  camera - TurnDisplay
+  light - TurnDisplay
+  animation - TurnDisplay
+  constantForce - TurnDisplay
+  renderer - TurnDisplay
+  audio - TurnDisplay
+  networkView - TurnDisplay
+  collider - TurnDisplay
+  collider2D - TurnDisplay
+  hingeJoint - TurnDisplay
+  particleSystem - TurnDisplay
+  name - TurnDisplay
+  hideFlags - TurnDisplay
+
+ResourceDisplay:
+  Player
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+  TextMeshProUGUI
+
+Accessed Variables:
+  goldCounter - ResourceDisplay
+  woodCounter - ResourceDisplay
+  oreCounter - ResourceDisplay
+  gemCounter - ResourceDisplay
+  mercuryCounter - ResourceDisplay
+  sulfurCounter - ResourceDisplay
+  crystalCounter - ResourceDisplay
+  useGUILayout - ResourceDisplay
+  runInEditMode - ResourceDisplay
+  allowPrefabModeInPlayMode - ResourceDisplay
+  enabled - ResourceDisplay
+  isActiveAndEnabled - ResourceDisplay
+  transform - ResourceDisplay
+  gameObject - ResourceDisplay
+  tag - ResourceDisplay
+  rigidbody - ResourceDisplay
+  rigidbody2D - ResourceDisplay
+  camera - ResourceDisplay
+  light - ResourceDisplay
+  animation - ResourceDisplay
+  constantForce - ResourceDisplay
+  renderer - ResourceDisplay
+  audio - ResourceDisplay
+  networkView - ResourceDisplay
+  collider - ResourceDisplay
+  collider2D - ResourceDisplay
+  hingeJoint - ResourceDisplay
+  particleSystem - ResourceDisplay
+  name - ResourceDisplay
+  hideFlags - ResourceDisplay
+
+ArmyHighlight:
+
+Accessed Variables:
+  selectedObject - ArmyHighlight
+  highlightAdjustedPosition - ArmyHighlight
+  useGUILayout - ArmyHighlight
+  runInEditMode - ArmyHighlight
+  allowPrefabModeInPlayMode - ArmyHighlight
+  enabled - ArmyHighlight
+  isActiveAndEnabled - ArmyHighlight
+  transform - ArmyHighlight
+  gameObject - ArmyHighlight
+  tag - ArmyHighlight
+  rigidbody - ArmyHighlight
+  rigidbody2D - ArmyHighlight
+  camera - ArmyHighlight
+  light - ArmyHighlight
+  animation - ArmyHighlight
+  constantForce - ArmyHighlight
+  renderer - ArmyHighlight
+  audio - ArmyHighlight
+  networkView - ArmyHighlight
+  collider - ArmyHighlight
+  collider2D - ArmyHighlight
+  hingeJoint - ArmyHighlight
+  particleSystem - ArmyHighlight
+  name - ArmyHighlight
+  hideFlags - ArmyHighlight
+

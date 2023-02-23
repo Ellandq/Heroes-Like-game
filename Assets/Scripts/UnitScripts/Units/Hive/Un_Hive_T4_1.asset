@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 31
   unitNameString: Hive_T4_1
+  unitTier: 4
   health: 275
   minDamage: 45
   maxDamage: 65

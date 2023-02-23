@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 36
   unitNameString: Magic_T2_2
+  unitTier: 2
   health: 16
   minDamage: 3
   maxDamage: 4

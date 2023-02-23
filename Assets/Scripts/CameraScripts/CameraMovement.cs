@@ -39,14 +39,17 @@ public class CameraMovement: MonoBehaviour
     {
         if (CameraManager.Instance.cameraEnabled && !CameraManager.Instance.cameraRotating)
         {
+            // Movement on the x, y and z axis relative to the camera rotation
             EdgeScrollingMovement();
             ManualCameraMovement();
         }
         if (cameraFollowingObject) CameraFollowWorldObject();
         
+        // Clamp the camera position based on the max available values set while loading the map
         position.x = Mathf.Clamp(position.x, 0, cameraMoveLimit.x);
         position.z = Mathf.Clamp(position.z, -20, cameraMoveLimit.y);
 
+        // Sets the camera position to vector 3 position variable
         transform.position = position;
         cameraFollowObject.transform.position = position;
         rotation = transform.localEulerAngles.y;

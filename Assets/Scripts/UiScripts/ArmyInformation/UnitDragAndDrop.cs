@@ -8,7 +8,7 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private UnitButton connectedUnitButton;
     [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject selectedObjectUnit;
+    [SerializeField] private GameObject selectedUnitObject;
 
     private Vector3 startingPosition;
     private RectTransform rectTransform;
@@ -16,16 +16,16 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private void Awake ()
     {
-        canvasGroup = selectedObjectUnit.GetComponent<CanvasGroup>();
-        rectTransform = selectedObjectUnit.GetComponent<RectTransform>();
+        canvasGroup = selectedUnitObject.GetComponent<CanvasGroup>();
+        rectTransform = selectedUnitObject.GetComponent<RectTransform>();
     }
 
     // When object is being dragged sets the selection object image to the same as this one
     public void OnBeginDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
-            selectedObjectUnit.GetComponent<Image>().sprite = this.gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
-            selectedObjectUnit.SetActive(true);
+            selectedUnitObject.GetComponent<Image>().sprite = this.gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+            selectedUnitObject.SetActive(true);
             rectTransform.position = transform.GetChild(0).GetComponent<RectTransform>().position;
             startingPosition = rectTransform.position;
             canvasGroup.blocksRaycasts = false;
@@ -44,7 +44,7 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnEndDrag (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
-            selectedObjectUnit.SetActive(false);
+            selectedUnitObject.SetActive(false);
             canvasGroup.blocksRaycasts = true;
             rectTransform.anchoredPosition = startingPosition;
         }
@@ -54,7 +54,7 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnDrop (PointerEventData eventData)
     {
         if (!connectedUnitButton.isSlotEmpty){
-            selectedObjectUnit.SetActive(false);
+            selectedUnitObject.SetActive(false);
             canvasGroup.blocksRaycasts = true;
             rectTransform.anchoredPosition = startingPosition;
         }

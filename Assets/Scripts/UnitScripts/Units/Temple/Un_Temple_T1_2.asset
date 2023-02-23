@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 42
   unitNameString: Temple_T1_2
+  unitTier: 1
   health: 20
   minDamage: 3
   maxDamage: 5

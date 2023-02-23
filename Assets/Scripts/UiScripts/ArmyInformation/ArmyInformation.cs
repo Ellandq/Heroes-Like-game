@@ -10,16 +10,23 @@ using System.Linq;
 
 public class ArmyInformation : MonoBehaviour
 {
-    public static ArmyInformation Instance;
+    [Header ("Units information")]
     [SerializeField] private List <GameObject> units;
-    [SerializeField] private Sprite defaultBackground;
+    [SerializeField] private UnitSlot selectedUnit;
 
-    public UnitSlot selectedUnit;
+    [Header ("UI Sprites")]
+    [SerializeField] private Sprite defaultBackground;
+    [SerializeField] private Sprite iconFrame;
+    [SerializeField] private Sprite iconFrameBackground;
+    [SerializeField] private Sprite bannerOpen;
+    [SerializeField] private Sprite bannerClosed;
 
     [Header("UI Referances")]
     [SerializeField] private List <GameObject> unitInfoSlot;
     [SerializeField] private List <Button> unitInfoButtons;
     [SerializeField] private List <GameObject> unitCountDisplay;
+    [SerializeField] private List <GameObject> unitCountDisplayBackground;
+    [SerializeField] private List <GameObject> unitBanners;
 
     internal GameObject selectedArmy;
     private string unitIconsFilePath;
@@ -28,11 +35,11 @@ public class ArmyInformation : MonoBehaviour
 
     private void Start ()
     {
-        Instance = this;
         ObjectSelector.Instance.onSelectedObjectChange.AddListener(ChangeSelectedArmy);
         TurnManager.OnNewPlayerTurn += RemoveButtonHighlights;
         selectedUnit = null;
 
+        UIManager.Instance.UIManagerReady();
     }
 
     // Changes the selected army
@@ -85,33 +92,46 @@ public class ArmyInformation : MonoBehaviour
     // Updates the unit display
     private void UpdateUnitDisplay ()
     {
+        // AdjustUnitPosition();
         for (int i = 0; i < units.Count; i++){
             if (units[i] != null){
                 if (!units[i].GetComponent<UnitSlot>().slotEmpty){
                     unitInfoButtons[i].interactable = true;
+                    unitInfoSlot[i].SetActive(true);
+                    if (i != 0){
+                        unitBanners[i].GetComponent<Image>().sprite = bannerOpen;
+                    }
                     // Check if the selected unit is a hero
                     if (units[i].GetComponent<UnitSlot>().isSlotHero){
                         unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), units[i].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
                         unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = false;
                         unitCountDisplay[i].SetActive(false);
+                        unitCountDisplayBackground[i].SetActive(false);
                     }else{
                         unitInfoSlot[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), units[i].GetComponent<UnitSlot>().unitID));
                         unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = false;
                         unitCountDisplay[i].SetActive(true);
+                        unitCountDisplayBackground[i].SetActive(true);
                         unitCountDisplay[i].GetComponentInChildren<TMP_Text>().text = Convert.ToString(units[i].GetComponent<UnitSlot>().howManyUnits);
                     }
 
                 }else{
+                    unitBanners[i].GetComponent<Image>().sprite = bannerClosed;
+                    unitInfoSlot[i].SetActive(false);
                     unitInfoButtons[i].interactable = false;
                     unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
                     unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = true;
                     unitCountDisplay[i].SetActive(false);
+                    unitCountDisplayBackground[i].SetActive(false);
                 }
             }else{
+                unitBanners[i].GetComponent<Image>().sprite = bannerClosed;
+                unitInfoSlot[i].SetActive(false);
                 unitInfoButtons[i].interactable = false;
                 unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
                 unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = true;
                 unitCountDisplay[i].SetActive(false);
+                unitCountDisplayBackground[i].SetActive(false);
             }
         }  
     }

@@ -152,13 +152,13 @@ public class TownHallUI : MonoBehaviour
         hallImage.sprite = buildingInformation[((int)BuildingID.TownHall)].buildingIcon;
         hallName.text = "Town Hall";
         hallStatus = ((int)BuildingID.VillageHall);
-        if (currentCity.cityBuildings[((int)BuildingID.TownHall)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.TownHall)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.TownHall)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.TownHall)].Equals(CityBuildingState.Built)){
                 hallImage.sprite = buildingInformation[((int)BuildingID.CityHall)].buildingIcon;
                 hallName.text = "City Hall";
                 hallStatus = ((int)BuildingID.TownHall);
-                if (currentCity.cityBuildings[((int)BuildingID.CityHall)] != 2){
-                    if (currentCity.cityBuildings[((int)BuildingID.CityHall)] == 1){
+                if (!currentCity.cityBuildings[((int)BuildingID.CityHall)].Equals(CityBuildingState.Blocked)){
+                    if (currentCity.cityBuildings[((int)BuildingID.CityHall)].Equals(CityBuildingState.Built)){
                     hallStatus = ((int)BuildingID.CityHall);
                     hallStatusImage.sprite = buildingMaxed;
                     }else{
@@ -187,18 +187,18 @@ public class TownHallUI : MonoBehaviour
         fortImage.sprite = buildingInformation[((int)BuildingID.Fort)].buildingIcon;
         fortName.text = "Fort";
         fortStatus = 0;
-        if (currentCity.cityBuildings[((int)BuildingID.Fort)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Fort)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Fort)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Fort)].Equals(CityBuildingState.Built)){
                 fortImage.sprite = buildingInformation[((int)BuildingID.Citadel)].buildingIcon;
                 fortName.text = "Citadel";
                 fortStatus = ((int)BuildingID.Fort);
-                if (currentCity.cityBuildings[((int)BuildingID.Citadel)] != 2){
-                    if (currentCity.cityBuildings[((int)BuildingID.Citadel)] == 1){
+                if (!currentCity.cityBuildings[((int)BuildingID.Citadel)].Equals(CityBuildingState.Blocked)){
+                    if (currentCity.cityBuildings[((int)BuildingID.Citadel)].Equals(CityBuildingState.Built)){
                         fortImage.sprite = buildingInformation[((int)BuildingID.Castle)].buildingIcon;
                         fortName.text = "Castle";
                         fortStatus = ((int)BuildingID.Citadel);
-                        if (currentCity.cityBuildings[((int)BuildingID.Castle)] != 2){
-                            if (currentCity.cityBuildings[((int)BuildingID.Castle)] == 1){
+                        if (!currentCity.cityBuildings[((int)BuildingID.Castle)].Equals(CityBuildingState.Blocked)){
+                            if (currentCity.cityBuildings[((int)BuildingID.Castle)].Equals(CityBuildingState.Built)){
                                 fortStatus = ((int)BuildingID.Citadel);
                                 fortStatusImage.sprite = buildingMaxed;
                             }else{
@@ -237,8 +237,8 @@ public class TownHallUI : MonoBehaviour
         }
         // TAVERN
         tavernImage.sprite = buildingInformation[((int)BuildingID.Tavern)].buildingIcon;
-        if (currentCity.cityBuildings[((int)BuildingID.Tavern)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tavern)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tavern)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tavern)].Equals(CityBuildingState.Built)){
                 tavernStatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tavern))){
@@ -254,8 +254,8 @@ public class TownHallUI : MonoBehaviour
         // EQUIPEMENT
         equipementImage.sprite = buildingInformation[((int)BuildingID.EquipementBuilding)].buildingIcon;
         equipementName.text = buildingInformation[((int)BuildingID.EquipementBuilding)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.EquipementBuilding)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.EquipementBuilding)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.EquipementBuilding)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.EquipementBuilding)].Equals(CityBuildingState.Built)){
                 equipementStatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.EquipementBuilding))){
@@ -271,8 +271,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 1.1
         T1_1_Image.sprite = buildingInformation[((int)BuildingID.Tier1_1)].buildingIcon;
         T1_1_Name.text = buildingInformation[((int)BuildingID.Tier1_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier1_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier1_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier1_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier1_1)].Equals(CityBuildingState.Built)){
                 T1_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier1_1))){
@@ -288,8 +288,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 1.2
         T1_2_Image.sprite = buildingInformation[((int)BuildingID.Tier1_2)].buildingIcon;
         T1_2_Name.text = buildingInformation[((int)BuildingID.Tier1_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier1_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier1_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier1_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier1_2)].Equals(CityBuildingState.Built)){
                 T1_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier1_2))){
@@ -305,8 +305,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 2.1
         T2_1_Image.sprite = buildingInformation[((int)BuildingID.Tier2_1)].buildingIcon;
         T2_1_Name.text = buildingInformation[((int)BuildingID.Tier2_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier2_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier2_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier2_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier2_1)].Equals(CityBuildingState.Built)){
                 T2_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier2_1))){
@@ -322,8 +322,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 2.2
         T2_2_Image.sprite = buildingInformation[((int)BuildingID.Tier2_2)].buildingIcon;
         T2_2_Name.text = buildingInformation[((int)BuildingID.Tier2_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier2_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier2_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier2_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier2_2)].Equals(CityBuildingState.Built)){
                 T2_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier2_2))){
@@ -339,8 +339,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 3.1
         T3_1_Image.sprite = buildingInformation[((int)BuildingID.Tier3_1)].buildingIcon;
         T3_1_Name.text = buildingInformation[((int)BuildingID.Tier3_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier3_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier3_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier3_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier3_1)].Equals(CityBuildingState.Built)){
                 T3_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier3_1))){
@@ -356,8 +356,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 3.2
         T3_2_Image.sprite = buildingInformation[((int)BuildingID.Tier3_2)].buildingIcon;
         T3_2_Name.text = buildingInformation[((int)BuildingID.Tier3_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier3_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier3_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier3_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier3_2)].Equals(CityBuildingState.Built)){
                 T3_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier3_2))){
@@ -373,8 +373,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 4.1
         T4_1_Image.sprite = buildingInformation[((int)BuildingID.Tier4_1)].buildingIcon;
         T4_1_Name.text = buildingInformation[((int)BuildingID.Tier4_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier4_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier4_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier4_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier4_1)].Equals(CityBuildingState.Built)){
                 T4_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier4_1))){
@@ -390,8 +390,8 @@ public class TownHallUI : MonoBehaviour
         // Tier 4.2
         T4_2_Image.sprite = buildingInformation[((int)BuildingID.Tier4_2)].buildingIcon;
         T4_2_Name.text = buildingInformation[((int)BuildingID.Tier4_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.Tier4_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Tier4_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Tier4_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Tier4_2)].Equals(CityBuildingState.Built)){
                 T4_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Tier4_2))){
@@ -408,28 +408,28 @@ public class TownHallUI : MonoBehaviour
         magicGuildImage.sprite = buildingInformation[((int)BuildingID.MagicHall_1)].buildingIcon;
         magicGuildStatus = 0;
         magicGuildName.text = "Magic Guild lv. 1";
-        if (currentCity.cityBuildings[((int)BuildingID.MagicHall_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.MagicHall_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_1)].Equals(CityBuildingState.Built)){
                 magicGuildImage.sprite = buildingInformation[((int)BuildingID.MagicHall_2)].buildingIcon;
                 magicGuildName.text = "Magic Guild lv. 2";
                 magicGuildStatus = ((int)BuildingID.MagicHall_1);
-                if (currentCity.cityBuildings[((int)BuildingID.MagicHall_2)] != 2){
-                    if (currentCity.cityBuildings[((int)BuildingID.MagicHall_2)] == 1){
+                if (!currentCity.cityBuildings[((int)BuildingID.MagicHall_2)].Equals(CityBuildingState.Blocked)){
+                    if (currentCity.cityBuildings[((int)BuildingID.MagicHall_2)].Equals(CityBuildingState.Built)){
                         magicGuildImage.sprite = buildingInformation[((int)BuildingID.MagicHall_3)].buildingIcon;
                         magicGuildName.text = "Magic Guild lv. 3";
                         magicGuildStatus = ((int)BuildingID.MagicHall_2);
-                        if (currentCity.cityBuildings[((int)BuildingID.MagicHall_3)] != 2){
-                            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_3)] == 1){
+                        if (!currentCity.cityBuildings[((int)BuildingID.MagicHall_3)].Equals(CityBuildingState.Blocked)){
+                            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_3)].Equals(CityBuildingState.Built)){
                                 magicGuildImage.sprite = buildingInformation[((int)BuildingID.MagicHall_4)].buildingIcon;
                                 magicGuildName.text = "Magic Guild lv. 4";
                                 magicGuildStatus = ((int)BuildingID.MagicHall_3);
-                                if (currentCity.cityBuildings[((int)BuildingID.MagicHall_4)] != 2){
-                                    if (currentCity.cityBuildings[((int)BuildingID.MagicHall_4)] == 1){
+                                if (!currentCity.cityBuildings[((int)BuildingID.MagicHall_4)].Equals(CityBuildingState.Blocked)){
+                                    if (currentCity.cityBuildings[((int)BuildingID.MagicHall_4)].Equals(CityBuildingState.Built)){
                                         magicGuildImage.sprite = buildingInformation[((int)BuildingID.MagicHall_5)].buildingIcon;
                                         magicGuildName.text = "Magic Guild lv. 5";
                                         magicGuildStatus = ((int)BuildingID.MagicHall_4);
-                                        if (currentCity.cityBuildings[((int)BuildingID.MagicHall_5)] != 2){
-                                            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_5)] == 1){
+                                        if (!currentCity.cityBuildings[((int)BuildingID.MagicHall_5)].Equals(CityBuildingState.Blocked)){
+                                            if (currentCity.cityBuildings[((int)BuildingID.MagicHall_5)].Equals(CityBuildingState.Built)){
                                                 magicGuildStatusImage.sprite = buildingMaxed;
                                                 magicGuildStatus = ((int)BuildingID.MagicHall_5);
                                             }else{
@@ -492,8 +492,8 @@ public class TownHallUI : MonoBehaviour
         // ADDITIONAL MAGIC 1
         additionalMagic_1_Image.sprite = buildingInformation[((int)BuildingID.AdditionalMagic_1)].buildingIcon;
         additionalMagic_1_Name.text = buildingInformation[((int)BuildingID.AdditionalMagic_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_1)].Equals(CityBuildingState.Built)){
                 additionalMagic_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.AdditionalMagic_1))){
@@ -510,8 +510,8 @@ public class TownHallUI : MonoBehaviour
         // ADDITIONAL MAGIC 2
         additionalMagic_2_Image.sprite = buildingInformation[((int)BuildingID.AdditionalMagic_2)].buildingIcon;
         additionalMagic_2_Name.text = buildingInformation[((int)BuildingID.AdditionalMagic_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.AdditionalMagic_2)].Equals(CityBuildingState.Built)){
                 additionalMagic_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.AdditionalMagic_2))){
@@ -528,8 +528,8 @@ public class TownHallUI : MonoBehaviour
         // RACIAL BUILDING 
         racialBuildingImage.sprite = buildingInformation[((int)BuildingID.RacialBuilding)].buildingIcon;
         racialBuildingName.text = buildingInformation[((int)BuildingID.RacialBuilding)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.RacialBuilding)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.RacialBuilding)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.RacialBuilding)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.RacialBuilding)].Equals(CityBuildingState.Built)){
                 racialBuildingStatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.RacialBuilding))){
@@ -545,8 +545,8 @@ public class TownHallUI : MonoBehaviour
 
         // CARAVAN 
         caravanImage.sprite = buildingInformation[((int)BuildingID.Caravan)].buildingIcon;
-        if (currentCity.cityBuildings[((int)BuildingID.Caravan)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Caravan)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Caravan)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Caravan)].Equals(CityBuildingState.Built)){
                 caravanStatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Caravan))){ 
@@ -562,8 +562,8 @@ public class TownHallUI : MonoBehaviour
 
         // SHIPYARD
         shipyardImage.sprite = buildingInformation[((int)BuildingID.Shipyard)].buildingIcon;
-        if (currentCity.cityBuildings[((int)BuildingID.Shipyard)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.Shipyard)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.Shipyard)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Shipyard)].Equals(CityBuildingState.Built)){
                 shipyardStatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.Shipyard))){
@@ -580,8 +580,8 @@ public class TownHallUI : MonoBehaviour
         // BONUS BUILDING 1
         bonusBuilding_1_Image.sprite = buildingInformation[((int)BuildingID.BonusBuilding_1)].buildingIcon;
         bonusBuilding_1_Name.text = buildingInformation[((int)BuildingID.BonusBuilding_1)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_1)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_1)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.BonusBuilding_1)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_1)].Equals(CityBuildingState.Built)){
                 bonusBuilding_1_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.BonusBuilding_1))){
@@ -598,8 +598,8 @@ public class TownHallUI : MonoBehaviour
         // BONUS BUILDING 2
         bonusBuilding_2_Image.sprite = buildingInformation[((int)BuildingID.BonusBuilding_2)].buildingIcon;
         bonusBuilding_2_Name.text = buildingInformation[((int)BuildingID.BonusBuilding_2)].buildingName;
-        if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_2)] != 2){
-            if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_2)] == 1){
+        if (!currentCity.cityBuildings[((int)BuildingID.BonusBuilding_2)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.BonusBuilding_2)].Equals(CityBuildingState.Built)){
                 bonusBuilding_2_StatusImage.sprite = buildingMaxed;
             }else{
                 if (CheckBuildingRequirements(((int)BuildingID.BonusBuilding_2))){

@@ -25,6 +25,7 @@ public class CameraManager : MonoBehaviour
     {
         Instance = this;
         cameraEnabled = false;
+        cameraRotating = false;
         cameraMovementEnabled = false;
     }
 

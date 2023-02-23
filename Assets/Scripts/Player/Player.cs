@@ -330,7 +330,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
         ObjectSelector.Instance.RemoveSelectedObject();
-        if (PlayerManager.Instance.currentPlayer == this) TownAndArmySelection.Instance.UpdatePlayerDisplay(this); 
+        if (PlayerManager.Instance.currentPlayer == this) UIManager.Instance.UpdatePlayerDisplay(this); 
 
         waitForObjectToBeDestroyed = null;
     }

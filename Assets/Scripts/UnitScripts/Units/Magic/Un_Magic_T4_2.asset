@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Un_Magic_T4_2
   m_EditorClassIdentifier: 
   unitName: 40
-  unitNameString: Magic_T4_1
+  unitNameString: Magic_T4_2
+  unitTier: 4
   health: 210
   minDamage: 34
   maxDamage: 50

@@ -143,7 +143,7 @@ public class UnitSplitWindow : MonoBehaviour
             selectedGarrison = null;
             transform.GetChild(0).gameObject.SetActive(false);
         }else{
-            ArmyInformation.Instance.RefreshElement();
+            UIManager.Instance.RefreshCurrentArmyDisplay();
             ArmyInterfaceArmyInformation.Instance.RefreshElement();
             totalUnitCount = 0;
             selectedArmy = null;

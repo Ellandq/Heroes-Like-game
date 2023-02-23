@@ -8,6 +8,7 @@ public class UnitObject : ScriptableObject
     [Header ("Unit Information")]
     public UnitName unitName;
     public string unitNameString;
+    public short unitTier;
 
     [Header ("Unit stats")]
     public short health;

@@ -16,18 +16,19 @@ public class CityArmyInterface : MonoBehaviour
     [Header ("Units List")]
     [SerializeField] List <GameObject> units01; // interacting units
     [SerializeField] List <GameObject> units02; // units interacted with
-    [SerializeField] Sprite defaultBackground;
-    [SerializeField] GameObject placeholderArmy;
 
-    public UnitSlot selectedUnit;
+    [Header ("Army Information")]
+    [SerializeField] private GameObject placeholderArmy;
+    [SerializeField] private UnitsInformation army;
+    [SerializeField] public UnitSlot selectedUnit;
+    [SerializeField] private bool interactingWithPlaceholder;
 
     [Header("UI Referances")]
     [SerializeField] List <GameObject> unitInfoSlot;
     [SerializeField] List <Button> unitInfoButtons;
     [SerializeField] List <GameObject> unitCountDisplay;
+    [SerializeField] private Sprite defaultBackground;
 
-    [SerializeField] internal UnitsInformation army;
-    private bool interactingWithPlaceholder;
     private List <GridCell> neighbourCells;
     public UnityEvent onCityReload;
 

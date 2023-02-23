@@ -384,25 +384,6 @@ public class WorldObjectManager : MonoBehaviour
 
     }
     #endregion
-
-    private CityFraction GetCityFraction (int index){
-        switch (index){
-            case 0:
-                return CityFraction.Bazaar;
-            case 1:
-                return CityFraction.Coalition;
-            case 2:
-                return CityFraction.DarkOnes;
-            case 3:
-                return CityFraction.Hive;
-            case 4:
-                return CityFraction.Magic;
-            case 5:
-                return CityFraction.Temple;
-            default:
-                return CityFraction.Bazaar;
-        }
-    }
 }
 
 public enum CityFraction{
@@ -415,4 +396,8 @@ public enum ObjectType{
 
 public enum ResourceType{
     Gold, Wood, Ore, Gems, Mercury, Sulfur, Crystal
+}
+
+public enum CityBuildingState{
+    NotBuilt = 0, Built = 1, Blocked = 2
 }

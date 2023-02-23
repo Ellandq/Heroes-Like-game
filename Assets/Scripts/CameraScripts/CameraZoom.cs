@@ -27,15 +27,15 @@ public class CameraZoom : MonoBehaviour
     private bool centerCalculated;
 
     // On Awake calculates the current camera angle
-    void Awake() 
+    private void Awake() 
     {
         anglePercentage = (cameraZoomObject.transform.localEulerAngles.x - minCameraAngle) / (maxCameraAngle - minCameraAngle);
     }
 
     // Every frame checks if the requirements are met to rotate the camera
-    void Update() 
+    private void Update() 
     {
-        if (CameraManager.Instance.cameraRotating)
+        if (!CameraManager.Instance.cameraRotating)
         {
             if (!InputManager.Instance.mouseInput.IsMouseOverUI()){
                 if (InputManager.Instance.mouseInput.mouseScrollStatus > 0f) // forward
@@ -66,7 +66,7 @@ public class CameraZoom : MonoBehaviour
     }
 
     // Script to zoom in the camera
-    void ZoomCamera()
+    private void ZoomCamera()
     {
         if (cameraZoomObject.transform.position.y > minCameraHeight | cameraZoomObject.transform.rotation.x > minCameraAngle)
         {
@@ -87,7 +87,7 @@ public class CameraZoom : MonoBehaviour
     }
  
     // Script to unzoom in the camera
-    void UnZoomCamera()
+    private void UnZoomCamera()
     {
         if (cameraZoomObject.transform.position.y < maxCameraHeight | cameraZoomObject.transform.rotation.x < maxCameraAngle)
         {
@@ -108,7 +108,7 @@ public class CameraZoom : MonoBehaviour
     }
 
     // Rotates the camera according to the height and angle
-    void RotateCamera ()
+    private void RotateCamera ()
     {
         Vector3 rotation = cameraZoomObject.transform.localEulerAngles;
         Vector3 position = CameraManager.Instance.cameraMovement.cameraFollowObject.position;
@@ -144,7 +144,7 @@ public class CameraZoom : MonoBehaviour
     }
 
     // Moves and rotates the camera to the adjusted position
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, cameraZoomObject.transform.position, smoothSpeed);
         smoothedPosition.x = transform.position.x;

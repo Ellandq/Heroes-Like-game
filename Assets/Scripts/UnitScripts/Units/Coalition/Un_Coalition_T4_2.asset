@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 16
   unitNameString: Coalition_T4_2
+  unitTier: 4
   health: 230
   minDamage: 40
   maxDamage: 65

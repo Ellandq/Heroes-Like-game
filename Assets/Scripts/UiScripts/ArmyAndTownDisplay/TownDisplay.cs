@@ -5,59 +5,131 @@ using UnityEngine.UI;
 
 public class TownDisplay : MonoBehaviour
 {
-    [SerializeField] private GameObject townDisplayPrefab;
-    [SerializeField] private GameObject townDisplayCanvas;
-    [SerializeField] private List <GameObject> townDisplay;
+    [SerializeField] private TownSelectionMovementButtons movementButtons;
+    [SerializeField] public Player currentPlayer;
 
-    [Header ("Display Images")]
-    [SerializeField] private Sprite townImage;
-    [SerializeField] private Sprite emptyCell;
+    [Header ("Town Buttons Information")]
+    [SerializeField] private List <RectTransform> citySlotsPosition;
+    [SerializeField] private List <TownButton> citySlots;
 
-    // Updates the City display
-    internal void UpdateTownDisplay (Player player)
+    [Header ("Town Display Positional Information")]
+    [SerializeField] private RectTransform rotationObject;
+    [SerializeField] private Vector3 rotation;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] public int currentPosition;
+    private Quaternion targetRotation;
+    [SerializeField] private bool manualMovementEnabled;
+
+    private void Start ()
     {
-        ResetTownDisplay();
-        if (player.ownedArmies.Count > 3){
-            for (int i = 3; i < player.ownedCities.Count; i++){
-                townDisplay.Add(Instantiate(townDisplayPrefab, new Vector3(townDisplayPrefab.transform.position.x, (-90 * (i - 1)), 0), Quaternion.identity));
-                townDisplay[i].transform.SetParent(this.gameObject.transform, false);
-                townDisplay[i].gameObject.name = "Town (" + i + ")"; 
-            }
-        }
-        for (int i = 0; i < player.ownedCities.Count; i++){
-            townDisplay[i].GetComponent<Image>().sprite = townImage;
-            townDisplay[i].GetComponent<TownButton>().UpdateConnectedCity(player.ownedCities[i]);
-            townDisplay[i].GetComponent<Button>().interactable = true;
-        }
-        this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, (3 - townDisplay.Count) * 42, 0);
+        UIManager.Instance.UIManagerReady();
     }
 
-    // Checks if the cities are correctly placed on the content scroller
+    // Updates the town display
+    internal void UpdateCityDisplay (Player player)
+    {
+        currentPlayer = player;
+        ResetTownDisplay();
+        ResetDisplayPosition();
+        for (int i = 0; i < currentPlayer.ownedCities.Count && i < 4; i++){
+            citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[i]);
+        }
+        movementButtons.UpdateButtonStatus();
+    }
+
+    internal void UpdateTownDisplay ()
+    {
+        ResetTownDisplay();
+        for (int i = 0; i < currentPlayer.ownedCities.Count && i < 4; i++){
+            citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[i]);
+        }
+        movementButtons.UpdateButtonStatus();
+    }
+
+    // Rotates the object if the 
     private void Update ()
     {
-        if (this.gameObject.GetComponent<RectTransform>().anchoredPosition.y < (3 - townDisplay.Count) * 42 | this.gameObject.GetComponent<RectTransform>().anchoredPosition.y > (townDisplay.Count - 3) * 42){
-            this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, Mathf.Clamp(this.gameObject.GetComponent<RectTransform>().anchoredPosition.y, (3 - townDisplay.Count) * 42,(townDisplay.Count - 3) * 42), 0);
-            townDisplayCanvas.GetComponent<ScrollRect>().velocity = Vector2.zero;
+        if (!manualMovementEnabled){
+            Quaternion currentRotation = rotationObject.localRotation;
+            Quaternion desiredRotation = Quaternion.Euler(rotation);
+
+            float distance = Quaternion.Angle(currentRotation, desiredRotation);
+
+            if (distance > 0.1f)
+            {
+                targetRotation = Quaternion.Lerp(targetRotation, desiredRotation, Time.deltaTime * rotationSpeed);
+                rotationObject.localRotation = targetRotation;
+            }
+            else if (distance > 0f)
+            {
+                float maxAngle = Mathf.Min(Time.deltaTime * rotationSpeed, distance);
+                targetRotation = Quaternion.RotateTowards(currentRotation, desiredRotation, maxAngle);
+                rotationObject.localRotation = targetRotation;
+            }  
+        }
+    }
+
+    // Resets the town display
+    private void ResetTownDisplay ()
+    {
+        for (int i = 0; i < 12; i++){
+            citySlots[i].ResetCityButton();
+        }
+    }
+
+    // Updates the slots that will be visable when the object rotation updates
+    private void UpdateNewSlot (int amount){
+        int startingSlot;
+        int endingSlot;
+        int currentArmy;
+        if (amount > 0){
+            startingSlot = (currentPosition + 4);
+            endingSlot = startingSlot + amount - 1;
+            currentArmy = startingSlot;
+
+            if (startingSlot > 11)startingSlot %= 12;
+            if (endingSlot > 11) endingSlot %= 12;
+            
+            for (int i = startingSlot; (i >= startingSlot || i <= endingSlot) && !(i > endingSlot && i < startingSlot); i++){
+                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentArmy]);
+                if (i == 11){
+                    if (endingSlot == i) break;
+                    i = 0;
+                }
+                currentArmy++;
+            }
+        }else{
+            startingSlot = (currentPosition - 1);
+            endingSlot = startingSlot + amount + 1;
+            currentArmy = startingSlot;
+
+            if (startingSlot > 11)startingSlot %= 12;
+            if (endingSlot > 11) endingSlot %= 12;
+            
+            for (int i = startingSlot; (i <= startingSlot || i >= endingSlot) && !(i < endingSlot && i > startingSlot); i--){
+                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentArmy]);
+                if (i == 0){
+                    if (endingSlot == i) break;
+                    i = 11;
+                }
+                currentArmy--;
+            }
         }
         
     }
 
-    // Resets the city display
-    private void ResetTownDisplay ()
+    // Updates the rotation to the new position
+    public void RotateDisplay (int movementValue){
+        UpdateNewSlot(movementValue);
+        rotation.z += (30f * movementValue);
+        currentPosition += movementValue;
+    }
+
+    // Resets the position to the starting value
+    private void ResetDisplayPosition ()
     {
-        if (townDisplay.Count > 3){
-            foreach (GameObject displayedTown in townDisplay){
-                if (displayedTown == townDisplay[0] | displayedTown == townDisplay[1] | displayedTown == townDisplay[2]) continue;
-                Destroy(displayedTown);
-            }
-            townDisplay.RemoveRange(3, (townDisplay.Count - 3));
-        }else{
-            townDisplay[0].GetComponent<Image>().sprite = emptyCell;
-            townDisplay[0].GetComponent<Button>().interactable = false;
-            townDisplay[1].GetComponent<Image>().sprite = emptyCell;
-            townDisplay[1].GetComponent<Button>().interactable = false;
-            townDisplay[2].GetComponent<Image>().sprite = emptyCell;
-            townDisplay[2].GetComponent<Button>().interactable = false;
-        }
+        rotation.z = 0f;
+        currentPosition = 0;
+        transform.localEulerAngles = rotation;
     }
 }

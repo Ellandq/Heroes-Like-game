@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 3
   unitNameString: Bazaar_T2_1
+  unitTier: 2
   health: 35
   minDamage: 6
   maxDamage: 8

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: 18
   unitNameString: DarkOnes_T1_2
+  unitTier: 1
   health: 12
   minDamage: 1
   maxDamage: 3

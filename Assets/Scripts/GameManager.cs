@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public static Action <GameState> OnGameStateChanged;
 
     [Header ("Object References")]
-    [SerializeField] private GameObject uiManager;
     [SerializeField] public GameObject gameHandler;
     [SerializeField] private UnitSplitWindow unitSplitWindow;
     [SerializeField] private ResourceDisplay resourceDisplay;
@@ -135,12 +134,15 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (gameComponentsReady == 9)
+        if (gameComponentsReady == 7 && !mapLoaded)
         {
             TurnManager.Instance.GetComponent<TurnManager>().StartGame();
             CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
             CameraManager.Instance.EnableCamera();
             mapLoaded = true;
+
+            // ScriptDependencyAnalyser.Instance.AnalyseDependencies();
+            // ScriptDependencyAnalyser.Instance.SaveDependencies();
         }
         else gameComponentsReady++;
     }
@@ -151,14 +153,13 @@ public class GameManager : MonoBehaviour
 
         switch (newState){
             case GameState.LoadGame:
-                uiManager.SetActive(true);
                 PlayerManager.Instance.SetupPlayerManager();
                 TurnManager.Instance.SetupTurnManager();
                 WorldObjectManager.Instance.SetupWorldObjects();
             break;
 
             case GameState.PlayerTurn:
-                ArmyInformation.Instance.RefreshElement();
+                UIManager.Instance.RefreshCurrentArmyDisplay();
             break;
 
             case GameState.FinishedTurn:
@@ -179,8 +180,7 @@ public class GameManager : MonoBehaviour
                 EnableWorldObjects();
                 waitForSceneToDeload = null;
                 SceneStateManager.interactingArmy = null;
-                unitSplitWindow.SetInstanceStatus();
-                resourceDisplay.UpdateDisplay();
+                UIManager.Instance.UpdateResourceDisplay();
                 UpdateGameState(GameState.PlayerTurn);
             break;
         }

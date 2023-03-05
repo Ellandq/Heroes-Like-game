@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UnitButton : MonoBehaviour, IDropHandler
+public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private ArmyInformation armyInformation;
+    private bool isMouseOver = false;
+    private IEnumerator checkMouseOverCoroutine;
 
     [Header ("Unit button sprites")]
     [SerializeField] private Sprite unitFrameDefault; 
@@ -43,19 +45,19 @@ public class UnitButton : MonoBehaviour, IDropHandler
     // When a dragged object is dropped on this one, it runs a few checks to determine what it should do
     public void OnDrop (PointerEventData eventData)
     {
+        //  Checks if the dropped object is a unitIcon
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "UnitIcons"){
+            // Checks if the dropped object isn't this object
             if (eventData.pointerDrag != this.gameObject)
             {
                 buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitButton>();
-                if (isSlotEmpty){
+                if (isSlotEmpty){   // Logic for when this slot is empty
                     if (!armyInformation.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
                         if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
                             armyInformation.SplitUnits(buttonToSwap.slotID, slotID);
                         }
-                    }else{
-                        armyInformation.SwapUnits(buttonToSwap.slotID, slotID);
                     }
-                }else{
+                }else{ 
                     if (!armyInformation.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
                         if (armyInformation.AreUnitsSameType(buttonToSwap.slotID, slotID)){
                             if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
@@ -63,14 +65,36 @@ public class UnitButton : MonoBehaviour, IDropHandler
                             }else{
                                 armyInformation.AddUnits(buttonToSwap.slotID, slotID);
                             }
-                        }else{
-                            armyInformation.SwapUnits(buttonToSwap.slotID, slotID);
                         }
-                    }else{
-                        armyInformation.SwapUnits(buttonToSwap.slotID, slotID);
                     }
                 }
             }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData){
+        if (!isSlotEmpty){
+            isMouseOver = true;
+            checkMouseOverCoroutine = CheckMouseOver();
+            StartCoroutine(checkMouseOverCoroutine);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData){
+        isMouseOver = false;
+        if (checkMouseOverCoroutine != null)
+        {
+            StopCoroutine(checkMouseOverCoroutine);
+        }
+    }
+
+    private IEnumerator CheckMouseOver()
+    {
+        yield return new WaitForSeconds(1f); // Wait for one and a half second
+        if (isMouseOver)
+        {
+            Debug.Log("Mouse is still over UI element");
+
         }
     }
 }

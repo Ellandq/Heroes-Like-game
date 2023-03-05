@@ -37,6 +37,7 @@ public class ArmyButton : MonoBehaviour
         connectedArmy = _army.transform.GetChild(0).gameObject;
         movementSlider.maxValue = connectedArmy.GetComponentInParent<Army>().maxMovementPoints;
         movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
+        movementSlider.transform.parent.gameObject.SetActive(true);
         armyIcon.sprite = _army.GetComponentInParent<Army>().unitsInformation.armyIcon;
         slotEmpty = false;
         connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
@@ -81,8 +82,8 @@ public class ArmyButton : MonoBehaviour
     public void ResetArmyButton ()
     {
         if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
-        if (movementSlider.gameObject.activeSelf){
-            movementSlider.gameObject.SetActive(false);
+        if (movementSlider.transform.parent.gameObject.activeSelf){
+            movementSlider.transform.parent.gameObject.SetActive(true);
             slotFrame.sprite = defaultFrame;
             armyIcon.sprite = defaultBackground;
             slotSelected = false;

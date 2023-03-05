@@ -27,7 +27,7 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             selectedUnitObject.GetComponent<Image>().sprite = this.gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
             selectedUnitObject.SetActive(true);
             rectTransform.position = transform.GetChild(0).GetComponent<RectTransform>().position;
-            startingPosition = rectTransform.position;
+            startingPosition = InputManager.Instance.mouseInput.GetMouseScreenPosition();
             canvasGroup.blocksRaycasts = false;
         }
     }

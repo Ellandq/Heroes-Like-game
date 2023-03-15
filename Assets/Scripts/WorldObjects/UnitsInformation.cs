@@ -96,7 +96,7 @@ public class UnitsInformation : MonoBehaviour
         otherArmyUnit.GetComponent<UnitSlot>().RemoveUnits(); 
         unitSlots[a].GetComponent<UnitSlot>().ChangeSlotStatus(id02, unitCount02, mPoints02);
         otherArmyUnit.GetComponent<UnitSlot>().ChangeSlotStatus(id01, unitCount01, mPoints01);
-        UpdateArmyInformation();
+        UpdateArmyInformation(otherArmyUnit);
     }
 
     public void AddUnits (short a, short b)
@@ -110,19 +110,19 @@ public class UnitsInformation : MonoBehaviour
     {
         otherArmyUnit.GetComponent<UnitSlot>().howManyUnits += unitSlots[a].GetComponent<UnitSlot>().howManyUnits;
         unitSlots[a].GetComponent<UnitSlot>().RemoveUnits();
-        UpdateArmyInformation();
+        UpdateArmyInformation(otherArmyUnit);
     }
 
     public void SplitUnits (short a, short b) // Spliting with itself
     {
-        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), this, a, b);
+        UIManager.Instance.OpenUnitSplitWindow(unitSlots[a].GetComponent<UnitSlot>(), unitSlots[b].GetComponent<UnitSlot>(), this, a, b);
         UpdateArmyInformation();
     }
 
     public void SplitUnits (short a, short b, UnitsInformation otherArmy, GameObject otherArmyUnit) // Spliting with another army
     {
-        UnitSplitWindow.Instance.PrepareUnitsToSwap(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
-        UpdateArmyInformation();
+        UIManager.Instance.OpenUnitSplitWindow(unitSlots[a].GetComponent<UnitSlot>(), otherArmy.unitSlots[b].GetComponent<UnitSlot>(), this, otherArmy, a, b);
+        UpdateArmyInformation(otherArmyUnit);
     }
 
     public bool AreUnitSlotsSameType (short a, short b)
@@ -137,7 +137,26 @@ public class UnitsInformation : MonoBehaviour
         else return false;
     }
 
-    private void AdjustUnitPosition() {
+    public void AdjustUnitPosition() {
+        // Move any non-empty slots to the first available empty slot
+        for (short i = 0; i < unitSlots.Count; i++) {
+            if (unitSlots[i] == null) continue;
+            if (unitSlots[i].GetComponent<UnitSlot>().slotEmpty) continue;
+            if (i == 0) continue;
+            for (short j = 0; j < i; j++) {
+                if (unitSlots[j] == null) {
+                    SwapUnitsPosition(i, j);
+                    break;
+                }
+                if (unitSlots[j].GetComponent<UnitSlot>().slotEmpty) {
+                    SwapUnitsPosition(i, j);
+                    break;
+                }
+            }
+        }
+
+        // Sort the units based on their level, tier, and quantity
+
         for (short i = 0; i < unitSlots.Count; i++) {
             if (unitSlots[i] == null) continue;
             if (unitSlots[i].GetComponent<UnitSlot>().slotEmpty) continue;
@@ -179,6 +198,17 @@ public class UnitsInformation : MonoBehaviour
 
     private void UpdateArmyInformation ()
     {
+        AdjustUnitPosition();
+        if (unitSlots[0].GetComponent<UnitSlot>().isSlotHero){
+            armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+        }else{
+            armyIcon = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unitSlots[0].GetComponent<UnitSlot>().unitID));
+        }
+    }
+
+    private void UpdateArmyInformation (GameObject otherArmy)
+    {
+        otherArmy.GetComponentInParent<UnitsInformation>().UpdateArmyInformation();
         AdjustUnitPosition();
         if (unitSlots[0].GetComponent<UnitSlot>().isSlotHero){
             armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));

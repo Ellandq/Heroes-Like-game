@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class KeyboardInput : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class KeyboardInput : MonoBehaviour
     internal bool isEscapePressed;
     internal bool isTabPressed;
     internal bool isSpacePressed;
+
+    public UnityEvent onEscPressed;
 
     private void Update ()
     {
@@ -73,6 +76,7 @@ public class KeyboardInput : MonoBehaviour
         }
 
         if(Input.GetKey(KeyCode.Escape)){
+            if (!isEscapePressed) onEscPressed?.Invoke();
             isEscapePressed = true;
         }else{
             isEscapePressed = false;

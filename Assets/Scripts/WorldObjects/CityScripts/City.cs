@@ -164,16 +164,7 @@ public class City : MonoBehaviour
 
         CityGoldProductionCheck();
     }
-
-    // Finalizing the city
-    private void FinalizeCity ()
-    {
-        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
-        enteranceCells = new List<PathNode>();
-        cityReady = true;
-    }
-
+    
     // Add a player owner
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
@@ -183,6 +174,15 @@ public class City : MonoBehaviour
             flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
         }  
         if (!cityReady) FinalizeCity();
+    }
+
+    // Finalizing the city
+    private void FinalizeCity ()
+    {
+        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
+        enteranceCells = new List<PathNode>();
+        cityReady = true;
     }
 
     // Change the owning player
@@ -207,23 +207,6 @@ public class City : MonoBehaviour
     {
         ownedByPlayer = PlayerManager.Instance.neutralPlayer;
         flag.SetActive(false);
-    }
-
-    // Check the current city gold production
-    private void CityGoldProductionCheck()
-    {
-        if (cityBuildings[0] == CityBuildingState.Built){
-            cityGoldProduction = 500;
-            if (cityBuildings[1] == CityBuildingState.Built){
-                cityGoldProduction = 750;
-                if (cityBuildings[2] == CityBuildingState.Built){
-                    cityGoldProduction = 1000;
-                }
-            }
-        }else{
-            cityBuildings[0] = CityBuildingState.Built;
-            CityGoldProductionCheck();
-        }
     }
 
     // Check if the city can be selected by a given player (on new turn update)
@@ -390,5 +373,22 @@ public class City : MonoBehaviour
             cityBuildings[id] = CityBuildingState.Built;
         }
         CityGoldProductionCheck();
+    }
+
+    // Check the current city gold production
+    private void CityGoldProductionCheck()
+    {
+        if (cityBuildings[0] == CityBuildingState.Built){
+            cityGoldProduction = 500;
+            if (cityBuildings[1] == CityBuildingState.Built){
+                cityGoldProduction = 750;
+                if (cityBuildings[2] == CityBuildingState.Built){
+                    cityGoldProduction = 1000;
+                }
+            }
+        }else{
+            cityBuildings[0] = CityBuildingState.Built;
+            CityGoldProductionCheck();
+        }
     }
 }

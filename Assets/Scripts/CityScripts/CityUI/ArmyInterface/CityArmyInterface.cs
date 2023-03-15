@@ -76,7 +76,7 @@ public class CityArmyInterface : MonoBehaviour
         army = null;
         UpdateUnitDisplay();
         this.transform.GetChild(0).gameObject.SetActive(false);
-        UnitSplitWindow.Instance.DisableUnitSwapWindow();
+        UIManager.Instance.DisableUnitSplitWindow();
     }
 
     // Updates the displayed armies

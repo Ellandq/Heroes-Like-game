@@ -22,7 +22,7 @@ public class CityUnitButton : MonoBehaviour, IDropHandler
     private void Start ()
     {
         try{
-            ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload.AddListener(DeactivateHighlight);
+            //ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload.AddListener(DeactivateHighlight);
         }catch (NullReferenceException){
             Debug.Log("Army Information instance is missing");
         }
@@ -31,9 +31,9 @@ public class CityUnitButton : MonoBehaviour, IDropHandler
     // Activates this buttons highlight
     public void ActivateHighlight ()
     {
-        ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload?.Invoke();
+        //ArmyInterfaceArmyInformation.Instance.onArmyInterfaceReload?.Invoke();
         thisButton.gameObject.GetComponent<Image>().sprite = unitButtonHighlight;
-        ArmyInterfaceArmyInformation.Instance.ChangeSelectedUnit(slotID);
+        //ArmyInterfaceArmyInformation.Instance.ChangeSelectedUnit(slotID);
     }
 
     // Deactivates this buttons highlight

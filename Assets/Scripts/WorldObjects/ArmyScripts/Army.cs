@@ -126,7 +126,7 @@ public class Army : MonoBehaviour
     public void ArmyInteraction (GameObject interactingArmy)
     {
         if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            ArmyInterfaceArmyInformation.Instance.GetArmyUnits(interactingArmy, this.gameObject);
+            UIManager.Instance.UpdateArmyInterface(interactingArmy, this.gameObject);
         }else{
             Debug.Log("Do battle with: " + interactingArmy.name);
         }
@@ -135,7 +135,7 @@ public class Army : MonoBehaviour
     // Interaction with this army
     public void ArmyInteraction ()
     {
-        ArmyInterfaceArmyInformation.Instance.GetArmyUnits(this.gameObject);
+        UIManager.Instance.UpdateArmyInterface(this.gameObject);
     }
 
     // Check if army is empty

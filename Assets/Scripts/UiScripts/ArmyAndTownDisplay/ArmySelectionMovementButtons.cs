@@ -21,16 +21,16 @@ public class ArmySelectionMovementButtons : MonoBehaviour
     public void UpdateButtonStatus()
     {
         int minPosition = 0;
-        int maxPosition = armyDisplay.currentPlayer.ownedArmies.Count - 2;
+        int maxPosition = armyDisplay.currentPlayer.ownedArmies.Count - 3;
         if (maxPosition < 0) maxPosition = 0;
 
         if (armyDisplay.currentPosition == minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition - 2) <= minPosition){
+        }else if ((armyDisplay.currentPosition - 3) <= minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition - 2) > 0){
+        }else if ((armyDisplay.currentPosition - 3) > 0){
             fastBackwardsButton.interactable = true;
             backwardsButton.interactable = true;
         }
@@ -38,10 +38,10 @@ public class ArmySelectionMovementButtons : MonoBehaviour
         if (armyDisplay.currentPosition == maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition - 2) <= maxPosition){
+        }else if ((armyDisplay.currentPosition - 3) <= maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition) < (maxPosition - 2)){
+        }else if ((armyDisplay.currentPosition) < (maxPosition - 3)){
             fastForwardsButton.interactable = true;
             forwardsButton.interactable = true;
         }

@@ -60,10 +60,10 @@ public class ArmyButton : MonoBehaviour
     {
         if (connectedArmy != null){
             if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedArmy.name)){
-                slotFrame.sprite = defaultFrame;
+                slotFrame.sprite = frameHighlighted;
                 slotSelected = true;
             }else{
-                slotFrame.sprite = frameHighlighted;
+                slotFrame.sprite = defaultFrame;
                 slotSelected = false;
             }
         }else{

@@ -82,16 +82,23 @@ public class ArmyDisplay : MonoBehaviour
         int startingSlot;
         int endingSlot;
         int currentArmy;
+
+        // If movement is forward
         if (amount > 0){
             startingSlot = (currentPosition + 4);
             endingSlot = startingSlot + amount - 1;
             currentArmy = startingSlot;
 
+            // Ensure the slot numbers stay withing the range 0-11
             if (startingSlot > 11)startingSlot %= 12;
             if (endingSlot > 11) endingSlot %= 12;
             
+            // Iterate over slots that will be visable after the rotation
             for (int i = startingSlot; (i >= startingSlot || i <= endingSlot) && !(i > endingSlot && i < startingSlot); i++){
+                // Update the army displayed in this slot
                 armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[currentArmy]);
+
+                // If we've reached the end of the array, start over from the beginning
                 if (i == 11){
                     if (endingSlot == i) break;
                     i = 0;
@@ -115,7 +122,6 @@ public class ArmyDisplay : MonoBehaviour
                 currentArmy--;
             }
         }
-        
     }
 
     // Updates the rotation to the new position

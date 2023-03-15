@@ -7,17 +7,14 @@ using TMPro;
 
 public class UnitSplitWindow : MonoBehaviour
 {
-    public static UnitSplitWindow Instance;
-
-    [Header("Unit Icons")]
-    [SerializeField] private Image unitIcon01;
-    [SerializeField] private Image unitIcon02;
+    [Header ("Unit Icon")]
+    [SerializeField] private Image unitIcon;
 
     [Header("Unit Count Objects")]
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI unitCount01;
     [SerializeField] private TextMeshProUGUI unitCount02;
-    private int totalUnitCount;
+    [SerializeField] private int totalUnitCount;
     private UnitsInformation selectedArmy;
     private UnitsInformation interactedArmy;
     private City interactedCity;
@@ -27,15 +24,6 @@ public class UnitSplitWindow : MonoBehaviour
 
     private SplitWith splitWith;
 
-    private void Start ()
-    {
-        Instance = this;
-        totalUnitCount = 0;
-        selectedArmy = null;
-        interactedArmy = null;
-        selectedGarrison = null;
-    }
-
     // Unit Swap from Army to Itself
     public void PrepareUnitsToSwap (UnitSlot unit01, UnitSlot unit02, UnitsInformation connectedArmy, short id01, short id02)
     {
@@ -43,11 +31,10 @@ public class UnitSplitWindow : MonoBehaviour
         selectedArmy = connectedArmy;
         unitID_1 = id01;
         unitID_2 = id02;
-        transform.GetChild(0).gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         // Update Unit Sprites
-        unitIcon01.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
-        unitIcon02.sprite = unitIcon01.sprite;
+        unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
 
         // Update Slider Values
         totalUnitCount = unit01.howManyUnits + unit02.howManyUnits;
@@ -72,11 +59,10 @@ public class UnitSplitWindow : MonoBehaviour
         interactedArmy = armyInteractedWith;
         unitID_1 = id01;
         unitID_2 = id02;
-        transform.GetChild(0).gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         // Update Unit Sprites
-        unitIcon01.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
-        unitIcon02.sprite = unitIcon01.sprite;
+        unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
 
         // Update Slider Values
         totalUnitCount = unit01.howManyUnits + unit02.howManyUnits;
@@ -141,28 +127,28 @@ public class UnitSplitWindow : MonoBehaviour
             totalUnitCount = 0;
             selectedArmy = null;
             selectedGarrison = null;
-            transform.GetChild(0).gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }else{
+            selectedArmy.AdjustUnitPosition();
+            if (interactedArmy != null) interactedArmy.AdjustUnitPosition();
+            
             UIManager.Instance.RefreshCurrentArmyDisplay();
-            ArmyInterfaceArmyInformation.Instance.RefreshElement();
+            UIManager.Instance.RefreshArmyInterface();
             totalUnitCount = 0;
             selectedArmy = null;
             selectedGarrison = null;
-            transform.GetChild(0).gameObject.SetActive(false);
+            gameObject.SetActive(false);
+
+            
         }
     }
 
-    public void DisableUnitSwapWindow ()
+    public void DisableUnitSplitWindow ()
     {
         totalUnitCount = 0;
         selectedArmy = null;
         selectedGarrison = null;
-        transform.GetChild(0).gameObject.SetActive(false);
-    }
-
-    public void SetInstanceStatus ()
-    {
-        Instance = this;
+        gameObject.SetActive(false);
     }
 
     private enum SplitWith{

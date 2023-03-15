@@ -49,10 +49,11 @@ public class ArmyInterfaceUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IE
 
     public void OnEndDrag (PointerEventData eventData)
     {
+        // Hide the selectedObjectUnit game object
+        selectedObjectUnit.SetActive(false);
+
         // Only allow dragging if the connectedUnitButton is not empty
         if (!connectedUnitButton.isSlotEmpty){
-            // Hide the selectedObjectUnit game object
-            selectedObjectUnit.SetActive(false);
             // Re-enable raycasting for the canvasGroup
             canvasGroup.blocksRaycasts = true;
             // Set the position of the selectedObjectUnit game object to the starting position
@@ -62,10 +63,11 @@ public class ArmyInterfaceUnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IE
 
     public void OnDrop (PointerEventData eventData)
     {
+        // Hide the selectedObjectUnit game object
+        selectedObjectUnit.SetActive(false);
+
         // Only allow dropping if the connectedUnitButton is not empty
         if (!connectedUnitButton.isSlotEmpty){
-            // Hide the selectedObjectUnit game object
-            selectedObjectUnit.SetActive(false);
             // Re-enable raycasting for the canvasGroup
             canvasGroup.blocksRaycasts = true;
             // Set the position of the selectedObjectUnit game object to the starting position

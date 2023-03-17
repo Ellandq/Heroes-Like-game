@@ -54,10 +54,10 @@ public class TownButton : MonoBehaviour
     {
         if (connectedCity != null){
             if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedCity.name)){
-                slotFrame.sprite = defaultFrame;
+                slotFrame.sprite = frameHighlighted;
                 slotSelected = true;
             }else{
-                slotFrame.sprite = frameHighlighted;
+                slotFrame.sprite = defaultFrame;
                 slotSelected = false;
             }
         }else{

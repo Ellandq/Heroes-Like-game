@@ -83,7 +83,7 @@ public class ArmyButton : MonoBehaviour
     {
         if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
         if (movementSlider.transform.parent.gameObject.activeSelf){
-            movementSlider.transform.parent.gameObject.SetActive(true);
+            movementSlider.transform.parent.gameObject.SetActive(false);
             slotFrame.sprite = defaultFrame;
             armyIcon.sprite = defaultBackground;
             slotSelected = false;

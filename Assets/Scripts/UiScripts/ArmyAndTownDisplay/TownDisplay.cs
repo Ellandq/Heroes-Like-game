@@ -59,12 +59,20 @@ public class TownDisplay : MonoBehaviour
             {
                 targetRotation = Quaternion.Lerp(targetRotation, desiredRotation, Time.deltaTime * rotationSpeed);
                 rotationObject.localRotation = targetRotation;
+
+                for (int i = 0; i < citySlotsPosition.Count; i++){
+                    citySlotsPosition[i].localRotation = Quaternion.Inverse(targetRotation);
+                }
             }
             else if (distance > 0f)
             {
                 float maxAngle = Mathf.Min(Time.deltaTime * rotationSpeed, distance);
                 targetRotation = Quaternion.RotateTowards(currentRotation, desiredRotation, maxAngle);
                 rotationObject.localRotation = targetRotation;
+
+                for (int i = 0; i < citySlotsPosition.Count; i++){
+                    citySlotsPosition[i].localRotation = Quaternion.Inverse(targetRotation);
+                }
             }  
         }
     }
@@ -81,38 +89,49 @@ public class TownDisplay : MonoBehaviour
     private void UpdateNewSlot (int amount){
         int startingSlot;
         int endingSlot;
-        int currentArmy;
+        int currentCityIndex;
+
+        // If movement is forward
         if (amount > 0){
             startingSlot = (currentPosition + 4);
             endingSlot = startingSlot + amount - 1;
-            currentArmy = startingSlot;
+            currentCityIndex = startingSlot;
 
+            // Ensure the slot numbers stay withing the range 0-11
             if (startingSlot > 11)startingSlot %= 12;
             if (endingSlot > 11) endingSlot %= 12;
             
-            for (int i = startingSlot; (i >= startingSlot || i <= endingSlot) && !(i > endingSlot && i < startingSlot); i++){
-                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentArmy]);
+            // Iterate over slots that will be visable after the rotation
+            for (int i = startingSlot; (i >= startingSlot || i <= endingSlot) && !(i > endingSlot && i < startingSlot) && currentCityIndex < currentPlayer.ownedArmies.Count; i++){
+
+                // Update the city displayed in this slot
+                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentCityIndex]);
                 if (i == 11){
                     if (endingSlot == i) break;
                     i = 0;
                 }
-                currentArmy++;
+                currentCityIndex++;
             }
-        }else{
+        }else{  // If movement is backwards
             startingSlot = (currentPosition - 1);
             endingSlot = startingSlot + amount + 1;
-            currentArmy = startingSlot;
+            currentCityIndex = startingSlot;
 
+            // Ensure the slot numbers stay withing the range 0-11
             if (startingSlot > 11)startingSlot %= 12;
             if (endingSlot > 11) endingSlot %= 12;
             
-            for (int i = startingSlot; (i <= startingSlot || i >= endingSlot) && !(i < endingSlot && i > startingSlot); i--){
-                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentArmy]);
+            // Iterate over slots that will be visable after the rotation
+            for (int i = startingSlot; (i <= startingSlot || i >= endingSlot) && !(i < endingSlot && i > startingSlot) && currentCityIndex >= 0; i--){
+                // Update the army displayed in this slot
+                citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[currentCityIndex]);
+
+                // If we've reached the beggining of the array, start over from the end
                 if (i == 0){
                     if (endingSlot == i) break;
                     i = 11;
                 }
-                currentArmy--;
+                currentCityIndex--;
             }
         }
         

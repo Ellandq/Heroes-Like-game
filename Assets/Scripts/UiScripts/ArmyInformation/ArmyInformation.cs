@@ -71,7 +71,7 @@ public class ArmyInformation : MonoBehaviour
     private void GetCityGarrison(GameObject cityObject)
     {
         selectedArmy = cityObject;
-        units = new List<GameObject>(cityObject.GetComponent<City>().garrisonSlots);
+        units = new List<GameObject>(cityObject.GetComponentInParent<City>().garrisonSlots);
         UpdateUnitDisplay();
     }
 
@@ -117,7 +117,9 @@ public class ArmyInformation : MonoBehaviour
 
                 }else{
                     unitBanners[i].GetComponent<Image>().sprite = bannerClosed;
-                    unitInfoSlot[i].SetActive(false);
+                    if (i != 0){
+                        unitInfoSlot[i].SetActive(false);
+                    }
                     unitInfoButtons[i].interactable = false;
                     unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
                     unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = true;
@@ -126,7 +128,9 @@ public class ArmyInformation : MonoBehaviour
                 }
             }else{
                 unitBanners[i].GetComponent<Image>().sprite = bannerClosed;
-                unitInfoSlot[i].SetActive(false);
+                if (i != 0){
+                        unitInfoSlot[i].SetActive(false);
+                    }
                 unitInfoButtons[i].interactable = false;
                 unitInfoSlot[i].GetComponent<Image>().sprite = defaultBackground;
                 unitInfoSlot[i].GetComponentInParent<UnitButton>().isSlotEmpty = true;

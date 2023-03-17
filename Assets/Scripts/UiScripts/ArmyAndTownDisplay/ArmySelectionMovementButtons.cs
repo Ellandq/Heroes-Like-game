@@ -27,10 +27,10 @@ public class ArmySelectionMovementButtons : MonoBehaviour
         if (armyDisplay.currentPosition == minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition - 3) <= minPosition){
+        }else if ((armyDisplay.currentPosition - 2) <= minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition - 3) > 0){
+        }else if ((armyDisplay.currentPosition - 2) > 0){
             fastBackwardsButton.interactable = true;
             backwardsButton.interactable = true;
         }
@@ -38,10 +38,10 @@ public class ArmySelectionMovementButtons : MonoBehaviour
         if (armyDisplay.currentPosition == maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition - 3) <= maxPosition){
+        }else if ((armyDisplay.currentPosition + 2) >= maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition) < (maxPosition - 3)){
+        }else if ((armyDisplay.currentPosition) < (maxPosition - 2)){
             fastForwardsButton.interactable = true;
             forwardsButton.interactable = true;
         }

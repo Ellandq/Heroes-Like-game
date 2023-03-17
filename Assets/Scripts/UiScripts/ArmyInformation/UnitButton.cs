@@ -91,10 +91,8 @@ public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     private IEnumerator CheckMouseOver()
     {
         yield return new WaitForSeconds(1f); // Wait for one and a half second
-        if (isMouseOver)
-        {
+        if (isMouseOver){
             Debug.Log("Mouse is still over UI element");
-
         }
     }
 }

@@ -23,6 +23,16 @@ public class Army : MonoBehaviour
     [Header("Unit slots references")]
     public UnitsInformation unitsInformation;
 
+    // Initialize this army
+    public void ArmyInitialization (PlayerTag _ownedByPLayer, Vector2Int _gridPosition, float _armyOrientation, int [] _armyUnits)
+    {
+        gridPosition = _gridPosition;
+        rotation.y = _armyOrientation;
+        transform.localEulerAngles = rotation;
+
+        unitsInformation.SetUnitStatus(_armyUnits);
+    }
+    
     // Finalizes the army object
     private void FinalizeArmy ()
     {
@@ -56,16 +66,6 @@ public class Army : MonoBehaviour
     {
         ownedByPlayer = PlayerManager.Instance.neutralPlayer;
         flag.SetActive(false);
-    }
-
-    // Initialize this army
-    public void ArmyInitialization (PlayerTag _ownedByPLayer, Vector2Int _gridPosition, float _armyOrientation, int [] _armyUnits)
-    {
-        gridPosition = _gridPosition;
-        rotation.y = _armyOrientation;
-        transform.localEulerAngles = rotation;
-
-        unitsInformation.SetUnitStatus(_armyUnits);
     }
 
     // Updates if the army is owned by the current player

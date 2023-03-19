@@ -64,4 +64,16 @@ public class GridCell : MonoBehaviour
         pathNode.isOccupyingObjectInteratable = false;
         pathNode.occupyingObject = null;
     }
+
+    public void AddOccupyingObject (GameObject other){
+        objectInThisGridSpace = other.gameObject;
+        isOccupied = true;
+        if (objectInThisGridSpace.tag == "CityEnterance" | objectInThisGridSpace.tag == "Army" 
+            | objectInThisGridSpace.tag == "MineEnterance" | objectInThisGridSpace.tag == "Resource"){
+            isObjectInteractable = true;
+            pathNode.isWalkable = false;
+            pathNode.isOccupyingObjectInteratable = true;
+            pathNode.occupyingObject = objectInThisGridSpace;
+        }
+    }
 }

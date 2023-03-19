@@ -338,7 +338,7 @@ public class WorldObjectManager : MonoBehaviour
             chosenPlayer.NewArmy(armies[numberOfArmies]);
         }
 
-        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(armies[numberOfArmies]);
         numberOfArmies++;  
     }
 
@@ -351,6 +351,7 @@ public class WorldObjectManager : MonoBehaviour
                 armies.RemoveAt(i);
             }
         }
+
         numberOfArmies--;  
     }
     #endregion
@@ -373,7 +374,7 @@ public class WorldObjectManager : MonoBehaviour
         resources[numberOfResources].transform.parent = transform;
         resources[numberOfResources].gameObject.name = resourceType + ": " + (numberOfResources + 1);
 
-        GameGrid.Instance.GetGridCellInformation(gridPosition).isOccupied = true;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(resources[numberOfResources]);
         numberOfResources++;  
     }
     #endregion
@@ -400,4 +401,11 @@ public enum ResourceType{
 
 public enum CityBuildingState{
     NotBuilt = 0, Built = 1, Blocked = 2
+}
+
+public enum BuildingType{
+    OneByOne,
+    TwoByOne, OneByTwo, TwoByTwo,
+    ThreeByOne, ThreeByTwo, ThreeByThree,
+    FiveByFive
 }

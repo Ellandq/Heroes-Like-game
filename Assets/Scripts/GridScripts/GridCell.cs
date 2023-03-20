@@ -30,30 +30,6 @@ public class GridCell : MonoBehaviour
         return new Vector2Int(posX, posZ);
     }
 
-    // Checks what object entered it's trigger
-    void  OnTriggerEnter (Collider other)
-    {
-        if(other.gameObject.tag == "GridCell") return;
-        if (objectInThisGridSpace != null) return;
-        objectInThisGridSpace = other.gameObject;
-        isOccupied = true;
-        if (objectInThisGridSpace.tag == "CityEnterance" | objectInThisGridSpace.tag == "Army" 
-            | objectInThisGridSpace.tag == "MineEnterance" | objectInThisGridSpace.tag == "Resource"){
-            isObjectInteractable = true;
-            pathNode.isWalkable = false;
-            pathNode.isOccupyingObjectInteratable = true;
-            pathNode.occupyingObject = objectInThisGridSpace;
-        }
-    }
-
-    // Checks whether the leaving object is the same as the occupying one and changes GridCell status accordingly
-    void OnTriggerExit (Collider other)
-    {
-        if (other.gameObject.name == objectInThisGridSpace.name){
-            RemoveOccupyingObject();
-        }
-    }
-
     // Changes the status of this GridCell to an empty one
     public void RemoveOccupyingObject()
     {
@@ -65,8 +41,9 @@ public class GridCell : MonoBehaviour
         pathNode.occupyingObject = null;
     }
 
+    // Adds an object to this gridCell
     public void AddOccupyingObject (GameObject other){
-        objectInThisGridSpace = other.gameObject;
+        objectInThisGridSpace = other;
         isOccupied = true;
         if (objectInThisGridSpace.tag == "CityEnterance" | objectInThisGridSpace.tag == "Army" 
             | objectInThisGridSpace.tag == "MineEnterance" | objectInThisGridSpace.tag == "Resource"){

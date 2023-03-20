@@ -44,10 +44,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &267576068781087459
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,10 +490,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &2763146837062339831
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,10 +542,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &2767771019013949530
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,10 +594,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &3463128868085294678
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,10 +646,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &4626924050586917891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,10 +1339,10 @@ MonoBehaviour:
   ownedByPlayer: {fileID: 0}
   cityFraction: 0
   gridPosition: {x: 0, y: 0}
-  rotation: {x: 0, y: 0, z: 0}
   cityGoldProduction: 0
   canBeSelectedByCurrentPlayer: 0
   cityBuildingAlreadybuilt: 0
+  cityIcon: {fileID: 0}
   cityEnterance: {fileID: 267576068781087459}
   enteranceCells: []
   garrisonSlots:
@@ -1347,6 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325d0fe0380c5bb47957f25ff07fe021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armyIcon: {fileID: 0}
   unitSlots:
   - {fileID: 8850495592477780268}
   - {fileID: 1696032949476376270}
@@ -1368,6 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 7799780420752473731}
+  ownedByPlayer: {fileID: 0}
   cityDwellings:
   - {fileID: 0}
   - {fileID: 0}
@@ -1519,10 +1541,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &9164415858131203009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1593,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
   unitID: 0
-  howManyUnits: 0
   movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
+  howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0

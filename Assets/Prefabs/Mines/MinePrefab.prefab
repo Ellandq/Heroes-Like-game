@@ -997,8 +997,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &4550133501109898335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,11 +1052,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938a52b3108314f42be82a7d92a1e544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
-  gameGrid: {fileID: 0}
   flag: {fileID: 3052008605306928169}
   ownedByPlayer: {fileID: 0}
-  mineType: 
+  mineType: 0
   gridPosition: {x: 0, y: 0}
   mineEnterance: {fileID: 3789391451570202695}
   enteranceCells: []
@@ -1105,8 +1109,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &5538210224388949284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,8 +1161,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &6464143835787833891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,8 +1213,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &6990825138695872641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,8 +1265,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &7118837625997738119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,8 +1317,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0
 --- !u!1 &7967209896265289610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,5 +1369,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotEmpty: 1
-  unitName: Empty
+  isSlotHero: 0
+  unitID: 0
+  movementPoints: 0
+  unitObject: {fileID: 0}
+  unitName: 0
   howManyUnits: 0
+  heroObject: {fileID: 0}
+  heroTag: 0

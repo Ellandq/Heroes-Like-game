@@ -209,13 +209,13 @@ public class GameGrid : MonoBehaviour
                 Vector2Int rotatedPos = position;
                 switch ((int)rotation) {
                     case 90:
-                        rotatedPos += new Vector2Int(y, width - x - 1);
+                        rotatedPos += new Vector2Int(width - y - 1, x);
                         break;
                     case 180:
                         rotatedPos += new Vector2Int(width - x - 1, height - y - 1);
                         break;
                     case 270:
-                        rotatedPos += new Vector2Int(height - y - 1, x);
+                        rotatedPos += new Vector2Int(y, height - x - 1);
                         break;
                     default:
                         rotatedPos += new Vector2Int(x, y);
@@ -223,10 +223,7 @@ public class GameGrid : MonoBehaviour
                 }
 
                 // do something with the grid cell at the rotated position
-                Debug.Log("X: " + rotatedPos.x);
-                Debug.Log("Y: " + rotatedPos.y);
-
-                //gameGrid[rotatedPos.x, rotatedPos.y].GetComponent<GridCell>().AddOccupyingObject(building);
+                gameGrid[rotatedPos.x, rotatedPos.y].GetComponent<GridCell>().AddOccupyingObject(building);
             }
         }
     }

@@ -31,6 +31,7 @@ public class Mine : MonoBehaviour
     private void FinalizeMine ()
     {
         enteranceCells = new List<PathNode>();
+        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, rotation.y, this.gameObject);
         mineReady = true;
     }
 
@@ -69,6 +70,10 @@ public class Mine : MonoBehaviour
         mineType = _mineType;
         gridPosition = _gridPosition;
         rotation.y = _mineOrientation;
+        if (rotation.y < 0){
+            rotation.y %= 360f;
+            rotation.y += 360f;
+        }
         transform.localEulerAngles = rotation;
         
         mineGarrisonSlot1.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[0], _mineGarrisonUnits[1]);

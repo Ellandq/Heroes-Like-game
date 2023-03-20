@@ -81,7 +81,9 @@ public class Army : MonoBehaviour
     // Updates this army grid position
     public void UpdateArmyGridPosition ()
     {
+        GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
         gridPosition = GameGrid.Instance.GetGridPosFromWorld(this.gameObject.transform.position);
+        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(this.gameObject);
     }
 
     // Check this army movement points based on its units

@@ -41,6 +41,10 @@ public class City : MonoBehaviour
         cityBuildingAlreadybuilt = false;
         cityFraction = _cityFraction;
         gridPosition = _gridPosition;
+        if (rotation.y < 0){
+            rotation.y %= 360f;
+            rotation.y += 360f;
+        }
         rotation.y = _cityOrientation;
         transform.localEulerAngles = rotation;
         cityIcon = Resources.Load<Sprite>("CityIcons/Coalition/CoalitionCityIcon_PlaceHolder");
@@ -181,6 +185,7 @@ public class City : MonoBehaviour
     {
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
+        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, rotation.y, this.gameObject);
         enteranceCells = new List<PathNode>();
         cityReady = true;
     }

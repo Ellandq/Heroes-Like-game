@@ -48,8 +48,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
                 }else{
                     objectToInteractWith = null;
                 }
-            }
-            
+            }  
         } else{     // Sets a target position
             isReadyToMove = true;
             previousSelectedPosition = _targetPosition;

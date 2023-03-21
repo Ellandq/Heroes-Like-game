@@ -11,7 +11,6 @@ public class TurnManager : MonoBehaviour
     [Header("Object Referances")]
     [SerializeField] private PlayerTurn playerTurn;
     [SerializeField] private AiTurn aiTurn;
-    [SerializeField] private UIManager uiManager;
     private Player player;
 
     [Header("Turn Information")]

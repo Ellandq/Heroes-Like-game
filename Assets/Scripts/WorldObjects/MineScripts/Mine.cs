@@ -6,34 +6,61 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
     private bool mineReady = false;
-    [SerializeField] GameObject flag;
+    [SerializeField] private GameObject flag;
 
     [Header("Mine information")]
-    [SerializeField] GameObject ownedByPlayer;
-    public ResourceType mineType;
-    public Vector2Int gridPosition;
-    private Vector3 position;
-    private Vector3 rotation;
+    [SerializeField] private GameObject ownedByPlayer;
+    [SerializeField] private ResourceType mineType;
+    [SerializeField] private Vector2Int gridPosition;
+    [SerializeField] private Vector3 position;
+    [SerializeField] private Vector3 rotation;
 
     [Header("Mine Enterance Information")]
-    [SerializeField] GameObject mineEnterance;
-    [SerializeField] List<PathNode> enteranceCells;
+    [SerializeField] private GameObject mineEnterance;
+    [SerializeField] private List<PathNode> enteranceCells;
 
     [Header("Mine Garrison references")]
-    [SerializeField] GameObject mineGarrisonSlot1;
-    [SerializeField] GameObject mineGarrisonSlot2;
-    [SerializeField] GameObject mineGarrisonSlot3;
-    [SerializeField] GameObject mineGarrisonSlot4;
-    [SerializeField] GameObject mineGarrisonSlot5;
-    [SerializeField] GameObject mineGarrisonSlot6;
-    [SerializeField] GameObject mineGarrisonSlot7;
+    [SerializeField] private GameObject mineGarrisonSlot1;
+    [SerializeField] private GameObject mineGarrisonSlot2;
+    [SerializeField] private GameObject mineGarrisonSlot3;
+    [SerializeField] private GameObject mineGarrisonSlot4;
+    [SerializeField] private GameObject mineGarrisonSlot5;
+    [SerializeField] private GameObject mineGarrisonSlot6;
+    [SerializeField] private GameObject mineGarrisonSlot7;
+
+    #region Initialization
+
+    public void MineInitialization (PlayerTag _ownedByPLayer, ResourceType _mineType, Vector2Int _gridPosition, float _mineOrientation, int [] _mineGarrisonUnits)
+    {
+        mineType = _mineType;
+        gridPosition = _gridPosition;
+        rotation.y = _mineOrientation;
+        if (rotation.y < 0){
+            rotation.y %= 360f;
+            rotation.y += 360f;
+        }
+        transform.localEulerAngles = rotation;
+        
+        mineGarrisonSlot1.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[0], _mineGarrisonUnits[1]);
+        mineGarrisonSlot2.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[2], _mineGarrisonUnits[3]);
+        mineGarrisonSlot3.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[4], _mineGarrisonUnits[5]);
+        mineGarrisonSlot4.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[6], _mineGarrisonUnits[7]);
+        mineGarrisonSlot5.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[8], _mineGarrisonUnits[9]);
+        mineGarrisonSlot6.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[10], _mineGarrisonUnits[11]);
+        mineGarrisonSlot7.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[12], _mineGarrisonUnits[13]);  
+    }
 
     private void FinalizeMine ()
     {
         enteranceCells = new List<PathNode>();
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, rotation.y, this.gameObject);
+        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance);
         mineReady = true;
     }
+
+    #endregion
+
+    #region Player Management
 
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
@@ -65,25 +92,9 @@ public class Mine : MonoBehaviour
         flag.SetActive(false);
     }
 
-    public void MineInitialization (PlayerTag _ownedByPLayer, ResourceType _mineType, Vector2Int _gridPosition, float _mineOrientation, int [] _mineGarrisonUnits)
-    {
-        mineType = _mineType;
-        gridPosition = _gridPosition;
-        rotation.y = _mineOrientation;
-        if (rotation.y < 0){
-            rotation.y %= 360f;
-            rotation.y += 360f;
-        }
-        transform.localEulerAngles = rotation;
-        
-        mineGarrisonSlot1.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[0], _mineGarrisonUnits[1]);
-        mineGarrisonSlot2.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[2], _mineGarrisonUnits[3]);
-        mineGarrisonSlot3.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[4], _mineGarrisonUnits[5]);
-        mineGarrisonSlot4.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[6], _mineGarrisonUnits[7]);
-        mineGarrisonSlot5.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[8], _mineGarrisonUnits[9]);
-        mineGarrisonSlot6.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[10], _mineGarrisonUnits[11]);
-        mineGarrisonSlot7.GetComponent<UnitSlot>().SetSlotStatus(_mineGarrisonUnits[12], _mineGarrisonUnits[13]);  
-    }
+    #endregion
+
+    #region Interaction Manager
 
     public void MineInteraction (GameObject interactingArmy)
     {
@@ -100,16 +111,6 @@ public class Mine : MonoBehaviour
         }
     }
 
-    public void GetEnteranceInformation (List <PathNode> _enteranceList)
-    {
-        enteranceCells = _enteranceList;
-    }
-
-    public float GetMineRotation ()
-    {
-        return rotation.y;
-    }
-
     private bool IsMineEmpty ()
     {
         if (!mineGarrisonSlot1.GetComponent<UnitSlot>().slotEmpty) return false;
@@ -121,5 +122,21 @@ public class Mine : MonoBehaviour
         if (!mineGarrisonSlot7.GetComponent<UnitSlot>().slotEmpty) return false;
         return true;
 
+    }
+
+    public void GetEnteranceInformation (List <PathNode> _enteranceList)
+    {
+        enteranceCells = _enteranceList;
+    }
+
+    #endregion
+
+    public float GetMineRotation ()
+    {
+        return rotation.y;
+    }
+
+    public ResourceType GetMineType (){
+        return mineType;
     }
 }

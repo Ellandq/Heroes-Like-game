@@ -162,71 +162,92 @@ public class GameGrid : MonoBehaviour
 
     public void PlaceBuildingOnGrid(Vector2Int position, BuildingType type, float rotation, GameObject building) {
         int width, height;
+        Vector2Int startingOffset = new Vector2Int(0, 0);
         switch (type) {
             case BuildingType.OneByOne:
                 width = height = 1;
+                startingOffset.x = 0;
+                startingOffset.y = 0;
                 break;
             case BuildingType.TwoByOne:
                 width = 2;
                 height = 1;
+                startingOffset.x = 0;
+                startingOffset.y = 1;
                 break;
             case BuildingType.TwoByTwo:
                 width = height = 2;
+                startingOffset.x = 1;
+                startingOffset.y = 1;
                 break;
             case BuildingType.ThreeByOne:
                 width = 3;
                 height = 1;
+                startingOffset.x = -1;
+                startingOffset.y = 0;
                 break;
             case BuildingType.ThreeByTwo:
                 width = 3;
                 height = 2;
+                startingOffset.x = -1;
+                startingOffset.y = 1;
                 break;
             case BuildingType.ThreeByThree:
                 width = height = 3;
+                startingOffset.x = -1;
+                startingOffset.y = 1;
                 break;
             case BuildingType.FiveByFive:
                 width = height = 5;
+                startingOffset.x = -2;
+                startingOffset.y = 2;
                 break;
             default:
                 Debug.LogError("Invalid building type: " + type);
                 return;
-        }
+        }  
+        
+        if (type == BuildingType.TwoByTwo){
+            Vector2Int originPos = Vector2Int.zero;
+            switch ((int)rotation) {
+                case 90:
+                    originPos += new Vector2Int(position.x, position.y);
+                    break;
+                case 180:
+                    originPos += new Vector2Int(position.x - 1, position.y);
+                    break;
+                case 270:
+                    originPos += new Vector2Int(position.x - 1, position.y + 1);
+                    break;
+                default:
+                    originPos += new Vector2Int(position.x, position.y + 1);
+                    break;
+            } 
 
-        // adjust position to be centered on the building's origin
-        position -= new Vector2Int(width / 2, height / 2);
-
-        // calculate rotated width and height based on rotation
-        if (rotation == 90f || rotation == 270f) {
-            int temp = width;
-            width = height;
-            height = temp;
-        }
-
-        // iterate over the grid cells within the building's rotated footprint
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                // calculate the rotated position of the grid cell
-                Vector2Int rotatedPos = position;
-                switch ((int)rotation) {
-                    case 90:
-                        rotatedPos += new Vector2Int(width - y - 1, x);
-                        break;
-                    case 180:
-                        rotatedPos += new Vector2Int(width - x - 1, height - y - 1);
-                        break;
-                    case 270:
-                        rotatedPos += new Vector2Int(y, height - x - 1);
-                        break;
-                    default:
-                        rotatedPos += new Vector2Int(x, y);
-                        break;
+            // iterate over the grid cells within the building's rotated footprint
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    gameGrid[originPos.x + x, originPos.y - y].GetComponent<GridCell>().AddOccupyingObject(building);
                 }
-
-                // do something with the grid cell at the rotated position
-                gameGrid[rotatedPos.x, rotatedPos.y].GetComponent<GridCell>().AddOccupyingObject(building);
             }
-        }
+        }else{
+            // calculate rotated width and height based on rotation
+            if (rotation == 90f || rotation == 270f) {
+                int temp = width;
+                width = height;
+                height = temp;
+
+                temp = startingOffset.x;
+                startingOffset.x = (-startingOffset.y);
+                startingOffset.y = (-temp);
+            } 
+
+            // iterate over the grid cells within the building's rotated footprint
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    gameGrid[position.x + startingOffset.x + x, position.y + startingOffset.y - y].GetComponent<GridCell>().AddOccupyingObject(building);
+                }
+            }
+        }       
     }
-
-
 }

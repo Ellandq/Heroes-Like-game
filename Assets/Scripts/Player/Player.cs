@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < ownedMines.Count; i++)
         {
-            switch (ownedMines[i].GetComponent<Mine>().mineType)
+            switch (ownedMines[i].GetComponent<Mine>().GetMineType())
             {
                 case ResourceType.Gold:
                     goldProduction += 1000;

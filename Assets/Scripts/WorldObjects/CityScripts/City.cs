@@ -8,14 +8,14 @@ using System.Linq;
 public class City : MonoBehaviour
 {
     private bool cityReady = false;
-    [SerializeField] GameObject flag;
+    [SerializeField] private GameObject flag;
 
     [Header("Main city information")]
     [SerializeField] public GameObject ownedByPlayer;
-    public CityFraction cityFraction;
-    public Vector2Int gridPosition;
-    private Vector3 position;
-    private Vector3 rotation;
+    [SerializeField] public CityFraction cityFraction;
+    [SerializeField] public Vector2Int gridPosition;
+    [SerializeField] private Vector3 position;
+    [SerializeField] private Vector3 rotation;
     public int cityGoldProduction;
     public bool canBeSelectedByCurrentPlayer;
     public bool cityBuildingAlreadybuilt = false;
@@ -32,6 +32,8 @@ public class City : MonoBehaviour
     [Header ("City Buildings")]
     public List<CityBuildingState> cityBuildings;
     public CityDwellingInformation cityDwellingInformation;
+
+    #region Initialization
 
     // Initialize the City
     public void CityInitialization (PlayerTag _ownedByPlayer, 
@@ -168,7 +170,22 @@ public class City : MonoBehaviour
 
         CityGoldProductionCheck();
     }
-    
+
+    // Finalizing the city
+    private void FinalizeCity ()
+    {
+        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
+        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, rotation.y, this.gameObject);
+        GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(cityEnterance.transform.position)).AddOccupyingObject(cityEnterance);
+        enteranceCells = new List<PathNode>();
+        cityReady = true;
+    }
+
+    #endregion
+
+    #region Player Management
+
     // Add a player owner
     public void AddOwningPlayer(GameObject _ownedByPlayer)
     {
@@ -178,16 +195,6 @@ public class City : MonoBehaviour
             flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
         }  
         if (!cityReady) FinalizeCity();
-    }
-
-    // Finalizing the city
-    private void FinalizeCity ()
-    {
-        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
-        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, rotation.y, this.gameObject);
-        enteranceCells = new List<PathNode>();
-        cityReady = true;
     }
 
     // Change the owning player
@@ -214,6 +221,8 @@ public class City : MonoBehaviour
         flag.SetActive(false);
     }
 
+    #endregion
+    
     // Check if the city can be selected by a given player (on new turn update)
     private void UpdateCitySelectionAvailability(Player _player)
     {
@@ -230,6 +239,8 @@ public class City : MonoBehaviour
     {
         cityDwellingInformation.AddDailyUnits();
     }
+
+    #region Interaction Management
 
     // Interaction with a city by a given army
     public void CityInteraction (GameObject interactingArmy)
@@ -251,6 +262,8 @@ public class City : MonoBehaviour
     {
         GameManager.Instance.EnterCity(this.gameObject, cityFraction);
     }
+
+    #endregion
 
     // Return a list of city enterences nodes
     public void GetEnteranceInformation (List <PathNode> _enteranceList)

@@ -20,9 +20,9 @@ public class SceneStateManager
 
     public static void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
     {
-        SceneStateManager.displayedCity = cityToEnter;
+        displayedCity = cityToEnter;
         displayedCityFraction = _cityFraction;
-        GameManager.Instance.DisableWorldObjects();
+        GameManager.Instance.EnableWorldObjects(false);
         try{
             SceneManager.LoadScene(Enum.GetName(typeof (CityFraction), displayedCityFraction), LoadSceneMode.Additive);
         }catch (NullReferenceException){

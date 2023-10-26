@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region Load-And-Save
+
     private void NewGame ()
     {
         if (SceneStateManager.selectedMapName != null){
@@ -119,6 +121,10 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    #endregion
+
+    #region Game State
 
     private void GameSetup()
     {
@@ -185,15 +191,14 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
 
-    public void DisableWorldObjects ()
+    public void EnableWorldObjects (bool status = true)
     {
-        gameHandler.SetActive(false);
+        gameHandler.SetActive(status);
     }
 
-    public void EnableWorldObjects ()
-    {
-        gameHandler.SetActive(true);
-    }
+    #endregion
+
+    #region Scene Management
 
     public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
     {
@@ -213,14 +218,14 @@ public class GameManager : MonoBehaviour
         waitForSceneToDeload = StartCoroutine(WaitForSceneToDeload());
     }
 
-    public bool IsCityOpened ()
+    public bool IsSceneOpened ()
     {
         if (SceneManager.sceneCount > 1) return true;
         else return false;
     }
 
     private IEnumerator WaitForSceneToDeload (){
-        while (IsCityOpened()){
+        while (IsSceneOpened()){
             yield return null;
         }
         UpdateGameState(GameState.CityLeft);
@@ -233,14 +238,17 @@ public class GameManager : MonoBehaviour
         GameSetup();
         waitForGameToBeReady = null;
     }
+
+    #endregion
 }
 
 public enum GameState{
-    LoadGame,
-    SaveGame,
-    PlayerTurn,
-    FinishedTurn,
-    AiTurn,
-    CityEntered,
-    CityLeft
+    // Load and save
+    LoadGame, SaveGame,
+    // Turn
+    PlayerTurn, FinishedTurn, AiTurn,
+    // City
+    CityEntered, CityLeft,
+    // Battle
+    BattleStarted, BattleFinished
 }

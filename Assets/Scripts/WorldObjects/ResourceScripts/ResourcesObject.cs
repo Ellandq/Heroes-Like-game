@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourcesObj : MonoBehaviour
+public class ResourcesObject : MonoBehaviour
 {
     private ResourceType resourceType;
     private int count;

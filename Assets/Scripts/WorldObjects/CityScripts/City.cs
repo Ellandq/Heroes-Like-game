@@ -304,6 +304,8 @@ public class City : MonoBehaviour
         return emptySlots;
     }
 
+    public CityFraction GetFraction () { return cityFraction; }
+    
     // Return an id of the same unit type
     public int GetSameUnitSlotIndex (int id)
     {

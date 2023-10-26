@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private Coroutine waitForGameToBeReady;
     
     [Header ("Game State Information")]
-    public GameState State;
+    public GameState state;
     private bool mapLoaded;
 
     [Header ("Map information")]
@@ -152,32 +152,36 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameState (GameState newState)
     {
-        State = newState;
+        state = newState;
 
-        switch (newState){
+        switch (newState)
+        {
             case GameState.LoadGame:
                 PlayerManager.Instance.SetupPlayerManager();
                 TurnManager.Instance.SetupTurnManager();
                 WorldObjectManager.Instance.SetupWorldObjects();
-            break;
+                break;
 
             case GameState.PlayerTurn:
                 UIManager.Instance.RefreshCurrentArmyDisplay();
-            break;
+                break;
 
             case GameState.FinishedTurn:
-
-            break;
+                // Handle FinishedTurn
+                // Add your logic here
+                break;
 
             case GameState.AiTurn:
-
-            break;
+                // Handle AiTurn
+                // Add your logic here
+                break;
 
             case GameState.CityEntered:
-                if (CameraManager.Instance.cameraMovement.cameraFollowingObject){
+                if (CameraManager.Instance.cameraMovement.cameraFollowingObject)
+                {
                     CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
                 }
-            break;
+                break;
 
             case GameState.CityLeft:
                 EnableWorldObjects();
@@ -185,7 +189,28 @@ public class GameManager : MonoBehaviour
                 SceneStateManager.interactingArmy = null;
                 UIManager.Instance.UpdateResourceDisplay();
                 UpdateGameState(GameState.PlayerTurn);
-            break;
+                break;
+
+            case GameState.SaveGame:
+                // Handle SaveGame
+                // Add your logic here
+                break;
+
+            case GameState.BattleStarted:
+                if (CameraManager.Instance.cameraMovement.cameraFollowingObject)
+                {
+                    CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
+                }
+                break;
+
+            case GameState.BattleFinished:
+                // Handle BattleFinished
+                // Add your logic here
+                break;
+
+            default:
+                // Handle the default case (if needed)
+                break;
         }
 
         OnGameStateChanged?.Invoke(newState);
@@ -203,19 +228,27 @@ public class GameManager : MonoBehaviour
     public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
     {
         UpdateGameState(GameState.CityEntered);
-        SceneStateManager.EnterCity(cityToEnter, _cityFraction);
+        SceneStateManager.EnterCity(cityToEnter);
     }
 
     public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction, Army _interactingArmy)
     {
         UpdateGameState(GameState.CityEntered);
         SceneStateManager.interactingArmy = _interactingArmy;
-        SceneStateManager.EnterCity(cityToEnter, _cityFraction);
+        SceneStateManager.EnterCity(cityToEnter);
     }
 
     public void ExitCity ()
     {
         waitForSceneToDeload = StartCoroutine(WaitForSceneToDeload());
+    }
+
+    public void StartBattle (Army attackingArmy, Army defendingArmy){
+        UpdateGameState(GameState.BattleStarted);
+    }
+
+    public void EndBattle (){
+
     }
 
     public bool IsSceneOpened ()
@@ -224,11 +257,51 @@ public class GameManager : MonoBehaviour
         else return false;
     }
 
+    #endregion
+
+    #region Getters
+
+    private GameState GetNewGameState (){
+        switch (state)
+        {
+            case GameState.LoadGame:
+                return GameState.PlayerTurn;
+            case GameState.SaveGame:
+                return GameState.PlayerTurn;
+            case GameState.PlayerTurn:
+                // Handle PlayerTurn
+                break;
+            case GameState.FinishedTurn:
+                // Handle FinishedTurn
+                break;
+            case GameState.AiTurn:
+                // Handle AiTurn
+                break;
+            case GameState.CityEntered:
+                // Handle CityEntered
+                break;
+            case GameState.CityLeft:
+                return GameState.PlayerTurn;
+            case GameState.BattleStarted:
+                return GameState.BattleFinished;
+            case GameState.BattleFinished:
+                return GameState.PlayerTurn;
+            default:
+                // Handle the default case (if needed)
+                break;
+        }
+        return state;
+    }
+
+    #endregion
+
+    #region Enumerators
+
     private IEnumerator WaitForSceneToDeload (){
         while (IsSceneOpened()){
             yield return null;
         }
-        UpdateGameState(GameState.CityLeft);
+        UpdateGameState(GetNewGameState());
     }
 
     private IEnumerator WaitForGameToBeReady (){

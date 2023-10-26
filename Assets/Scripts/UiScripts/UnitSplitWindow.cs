@@ -122,7 +122,7 @@ public class UnitSplitWindow : MonoBehaviour
             throw new ArgumentOutOfRangeException(nameof(splitWith), splitWith, null);
         }
 
-        if (GameManager.Instance.IsCityOpened()){
+        if (GameManager.Instance.IsSceneOpened()){
             CityArmyInterface.Instance.RefreshElement();
             totalUnitCount = 0;
             selectedArmy = null;

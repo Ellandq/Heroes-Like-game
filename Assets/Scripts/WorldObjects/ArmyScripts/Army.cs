@@ -45,7 +45,7 @@ public class Army : MonoBehaviour
         GetComponentInChildren<ObjectInteraction>().ChangeObjectName(this.gameObject.name);
         armyReady = true;
 
-        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.State == GameState.PlayerTurn){
+        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.state == GameState.PlayerTurn){
             UIManager.Instance.UpdateCurrentArmyDisplay();
         }
     }

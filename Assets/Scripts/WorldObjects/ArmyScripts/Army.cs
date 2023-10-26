@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEditor.SceneManagement;
 
 public class Army : WorldObject, IObjectInteraction
 {
@@ -20,14 +21,14 @@ public class Army : WorldObject, IObjectInteraction
     [Header("Unit slots references")]
     public UnitsInformation unitsInformation;
 
-    // Initialize this army
+    #region Initialization
+
     public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, int [] _armyUnits)
     { 
         base.Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
         unitsInformation.SetUnitStatus(_armyUnits);
     }
     
-    // Finalizes the army object
     private void FinalizeArmy ()
     {
         // Sets the movement points 
@@ -43,27 +44,23 @@ public class Army : WorldObject, IObjectInteraction
         // }
     }
 
-    // Add an owning player
+    #endregion
+
     public override void ChangeOwningPlayer(PlayerTag playerTag)
     {
         if (playerTag != PlayerTag.None){
             flag.SetActive(true);
             flag.GetComponent<MeshRenderer>().material.color = PlayerManager.Instance.GetPlayerColour(playerTag);
+        }else{
+            flag.SetActive(false);
         }
         ownedByPlayer = playerTag;
     }
 
-    // Remove an owning player
-    public void RemoveOwningPlayer ()
-    {
-        ownedByPlayer = PlayerManager.Instance.neutralPlayer;
-        flag.SetActive(false);
-    }
-
     // Updates if the army is owned by the current player
-    private void UpdateArmySelectionAvailability(Player _player)
+    private void UpdateArmySelectionAvailability(Player player)
     {
-        if (_player.gameObject.name  == ownedByPlayer.name){
+        if (player.GetPlayerTag() == ownedByPlayer){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -79,7 +76,7 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Check this army movement points based on its units
-    private void CheckMovementPoints()
+    private void UpdateMaxMovementPoints()
     {
         maxMovementPoints = Convert.ToInt16(unitsInformation.CheckMovementPoints());
     }
@@ -117,28 +114,20 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Army interaction with another army
-    public void ArmyInteraction (GameObject interactingArmy)
+    public void Interact<T>(T other)
     {
-        if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
+        Army interactingArmy = other as Army;
+        if (interactingArmy.GetPlayerTag() == GetPlayerTag()){
             UIManager.Instance.UpdateArmyInterface(interactingArmy, this.gameObject);
         }else{
-            Debug.Log("Do battle with: " + interactingArmy.name);
+            // TODO
         }
     }
 
     // Interaction with this army
-    public void ArmyInteraction ()
-    {
-        UIManager.Instance.UpdateArmyInterface(this.gameObject);
-    }
+    public void Interact () { UIManager.Instance.UpdateArmyInterface(this.gameObject); }
 
-    // Check if army is empty
-    public bool IsArmyEmpty ()
-    {
-        return unitsInformation.IsArmyEmpty();
-    }
-
-    private void OnDestroy ()
+    protected override void OnDestroy ()
     {
         PlayerManager.Instance.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.RemoveListener(RestoreMovementPoints);
@@ -156,4 +145,14 @@ public class Army : WorldObject, IObjectInteraction
         }catch (NullReferenceException){}
         
     }
+
+    #region Getters
+
+    public bool IsArmyEmpty ()
+    {
+        return unitsInformation.IsArmyEmpty();
+    }
+
+    public override PlayerTag GetPlayerTag () { return base.GetPlayerTag(); }
+    #endregion
 }

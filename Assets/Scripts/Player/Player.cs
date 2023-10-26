@@ -342,4 +342,6 @@ public class Player : MonoBehaviour
             objectToDestroy = null;
         }
     }
+
+    public PlayerTag GetPlayerTag () { return playerTag; }
 }

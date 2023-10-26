@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IObjectInteraction
 {
     public void Interact<T>(T other);
+
+    public void Interact();
 }

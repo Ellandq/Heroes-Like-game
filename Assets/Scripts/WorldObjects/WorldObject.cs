@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WorldObject : MonoBehaviour
 {
-    protected Vector2Int gridPosition {get; set; }
-    protected float rotation { get; set; }
-    protected ObjectType objectType { get; set; } 
-    protected PlayerTag ownedByPlayer { get; set; }
+    private Vector2Int gridPosition {get; set; }
+    private float rotation { get; set; }
+    private ObjectType objectType { get; set; } 
+    private PlayerTag ownedByPlayer { get; set; }
     
     public void Initialize (Vector2Int gridPosition, float rotation, ObjectType objectType, PlayerTag ownedByPlayer = PlayerTag.None){
         this.objectType = objectType;
@@ -44,7 +44,7 @@ public class WorldObject : MonoBehaviour
 
     public ObjectType GetObjectType () { return objectType; }
 
-    public PlayerTag GetPlayerTag () { return ownedByPlayer; }
+    public virtual PlayerTag GetPlayerTag () { return ownedByPlayer; }
 
     public virtual List<UnitSlot> GetUnitSlots (){
         Debug.LogError("Invalid request of: List<UnitSlot> from: " + this.gameObject.name);

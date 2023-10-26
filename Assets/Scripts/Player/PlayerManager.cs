@@ -75,7 +75,7 @@ public class PlayerManager : MonoBehaviour
             players[i].transform.parent = transform;
             players[i].gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
             players[i].GetComponent<Player>().playerColor = GetPlayerColour(allPlayers[i]);
-            players[i].GetComponent<Player>().thisPlayerTag = allPlayers[i];
+            players[i].GetComponent<Player>().playerTag = allPlayers[i];
 
         }
         GameManager.Instance.StartGame();

@@ -140,9 +140,6 @@ public class GameManager : MonoBehaviour
             CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
             CameraManager.Instance.EnableCamera();
             mapLoaded = true;
-
-            // ScriptDependencyAnalyser.Instance.AnalyseDependencies();
-            // ScriptDependencyAnalyser.Instance.SaveDependencies();
         }
         else gameComponentsReady++;
     }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BattleGridCell : MonoBehaviour
 {
+    [Header ("GridCell Information")]
     private Vector2Int gridPosition;
+    private BattleGridCellStatus status;
 
     [Header ("GridCell Colours")]
     [SerializeField] private List<Color> gridCellColours;
@@ -12,6 +14,7 @@ public class BattleGridCell : MonoBehaviour
     public void SetCellPosition (int x, int y) { gridPosition = new Vector2Int(x, y); }
 
     public void ChangeCellStatus (BattleGridCellStatus status, bool unavailableCellVisability = true){
+        this.status = status; 
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null) {
             Material material = renderer.material;
@@ -28,9 +31,7 @@ public class BattleGridCell : MonoBehaviour
         }
     }
 
-    public void HighlightCell (){
-
-    }
-
     public Vector2Int GetPosition () { return gridPosition; }
+
+    public BattleGridCellStatus GetStatus () { return status; }
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WorldObject : MonoBehaviour
 {
-    private Vector2Int gridPosition {get; set; }
-    private Vector3 rotation { get; set; }
-    private ObjectType objectType { get; set; } 
-    private PlayerTag ownedByPlayer { get; set; }
+    protected Vector2Int gridPosition {get; set; }
+    protected float rotation { get; set; }
+    protected ObjectType objectType { get; set; } 
+    protected PlayerTag ownedByPlayer { get; set; }
     
-    public void Initialize (Vector2Int gridPosition, Vector3 rotation, ObjectType objectType, PlayerTag ownedByPlayer = PlayerTag.None){
+    public void Initialize (Vector2Int gridPosition, float rotation, ObjectType objectType, PlayerTag ownedByPlayer = PlayerTag.None){
         this.objectType = objectType;
         UpdateObjectPosition(GameGrid.Instance.GetWorldPosFromGridPos(gridPosition));
         UpdateObjectRotation(rotation);
@@ -40,7 +40,7 @@ public class WorldObject : MonoBehaviour
     // Getters
     public Vector2Int GetGridPosition () { return gridPosition; }
 
-    public float GetRotation () { return rotation.y; }
+    public float GetRotation () { return rotation; }
 
     public ObjectType GetObjectType () { return objectType; }
 

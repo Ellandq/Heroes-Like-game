@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WorldObject : MonoBehaviour
 {
-    private Vector2Int gridPosition {get; set; }
+    protected Vector2Int gridPosition {get; set; }
     private float rotation { get; set; }
     private ObjectType objectType { get; set; } 
     private PlayerTag ownedByPlayer { get; set; }
     
-    public void Initialize (Vector2Int gridPosition, float rotation, ObjectType objectType, PlayerTag ownedByPlayer = PlayerTag.None){
+    public void Initialize (Vector2Int gridPosition, float rotation = 0f, ObjectType objectType = ObjectType.None, PlayerTag ownedByPlayer = PlayerTag.None){
         this.objectType = objectType;
         UpdateObjectPosition(GameGrid.Instance.GetWorldPosFromGridPos(gridPosition));
         UpdateObjectRotation(rotation);

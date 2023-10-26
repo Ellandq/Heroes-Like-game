@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public GameObject neutralPlayer;
     [SerializeField] public Player currentPlayer;
-    public List<GameObject> players;
+    public List<Player> players;
     private Color currentPlayerColor;
 
     [Header ("All Players Information")]
@@ -62,18 +62,19 @@ public class PlayerManager : MonoBehaviour
     // Creates a new player
     private void CreatePlayers (int howManyPlayers)
     {
-        players = new List<GameObject>(howManyPlayers);
+        players = new List<Player>(howManyPlayers);
 
         if (playerPrefab == null)
         {
             Debug.LogError("Error: Player Prefab on the Player Manager is not assigned");
         }
 
-        for (int i = 0; i < howManyPlayers; i++)
-        {
-            players.Add(Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity));
-            players[i].transform.parent = transform;
-            players[i].gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
+        for (int i = 0; i < howManyPlayers; i++) 
+        {   
+            GameObject pl = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            players.Add(pl.GetComponent<Player>());
+            pl.transform.parent = transform;
+            pl.gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
             players[i].GetComponent<Player>().playerColor = GetPlayerColour(allPlayers[i]);
             players[i].GetComponent<Player>().playerTag = allPlayers[i];
 
@@ -109,6 +110,13 @@ public class PlayerManager : MonoBehaviour
     public Color GetPlayerColour (PlayerTag tag)
     {
         return playerColorList[(int)tag - 1];
+    }
+
+    public Player GetPlayer (PlayerTag tag){
+        foreach (Player pl in players){
+            if (pl.GetPlayerTag() == tag) return pl;
+        }
+        return null;
     }
 }
 

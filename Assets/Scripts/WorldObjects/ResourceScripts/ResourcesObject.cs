@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourcesObject : MonoBehaviour
+public class ResourcesObject : WorldObject
 {
     private ResourceType resourceType;
-    private int count;
-    private Vector2Int gridPosition;
+    private int resourceCount;
 
-    public void ResourceInitialization (ResourceType _resourceType, int _count, Vector2Int _gridPosition)
+    public void Initialize (ResourceType resourceType, int resourceCount, Vector2Int gridPosition)
     {
-        count = _count;
-        resourceType = _resourceType;
-        gridPosition = _gridPosition;
+        base.Initialize(gridPosition, 0f, ObjectType.Resource);
+        this.resourceType = resourceType;
+        this.resourceCount = resourceCount;
     }
 
-    public void ResourceInteraction (GameObject interactingArmy)
+    public void ResourceInteraction (Army interactingArmy)
     {
-        interactingArmy.GetComponent<Army>().ownedByPlayer.GetComponent<Player>().AddResources(resourceType, count);
+        PlayerManager.Instance.GetPlayer(interactingArmy.GetPlayerTag()).AddResources(resourceType, resourceCount);
         Destroy(this.gameObject);
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
         GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
     }

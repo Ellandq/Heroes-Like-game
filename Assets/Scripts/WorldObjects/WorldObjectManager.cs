@@ -392,7 +392,7 @@ public enum CityFraction{
 }
 
 public enum ObjectType{
-    City, Army, Mine, Dwelling, Building, Resource
+    City, Army, Mine, Dwelling, Building, Resource, None
 }
 
 public enum ResourceType{

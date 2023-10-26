@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using TMPro;
 using System.Linq;
 
-public class ArmyInformation : MonoBehaviour
+public class ArmyDisplayInformation : MonoBehaviour
 {
     [Header ("Units information")]
     [SerializeField] private List <GameObject> units;

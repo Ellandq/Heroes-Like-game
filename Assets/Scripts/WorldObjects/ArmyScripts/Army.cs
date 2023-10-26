@@ -12,12 +12,10 @@ public class Army : WorldObject, IObjectInteraction
     public UnityEvent onMovementPointsChanged;
 
     [Header("Army information")]
-    public int maxMovementPoints;
-    public int movementPoints;
-    public bool canBeSelectedByCurrentPlayer;
-
-    [Header("Unit slots references")]
-    public UnitsInformation unitsInformation;
+    private int maxMovementPoints;
+    private int movementPoints;
+    private bool canBeSelectedByCurrentPlayer;
+    private ArmyInformation unitsInformation;
 
     [Header ("Misc.")]
     [SerializeField] GameObject flag;
@@ -26,14 +24,14 @@ public class Army : WorldObject, IObjectInteraction
 
     public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, int [] _armyUnits)
     { 
-        base.Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
+        Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
         unitsInformation.SetUnitStatus(_armyUnits);
+        FinalizeArmy();
     }
     
     private void FinalizeArmy ()
     {
-        // Sets the movement points 
-        maxMovementPoints = Convert.ToInt16(unitsInformation.CheckMovementPoints());
+        maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
 
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
@@ -68,14 +66,14 @@ public class Army : WorldObject, IObjectInteraction
     // Check this army movement points based on its units
     private void UpdateMaxMovementPoints()
     {
-        maxMovementPoints = Convert.ToInt16(unitsInformation.CheckMovementPoints());
+        maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
     }
 
     // Restore this army movement points based on its units
     private void RestoreMovementPoints ()
     {
         unitsInformation.RestoreMovementPoints();
-        maxMovementPoints = Convert.ToInt16(unitsInformation.CheckMovementPoints());
+        maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
         onMovementPointsChanged?.Invoke();
     }
@@ -141,12 +139,18 @@ public class Army : WorldObject, IObjectInteraction
 
     #region Getters
 
-    public bool IsArmyEmpty ()
-    {
-        return unitsInformation.IsArmyEmpty();
-    }
+    public bool IsArmyEmpty () { return unitsInformation.IsArmyEmpty(); }
+
+    public bool IsSelectableByCurrentPlayer () { return canBeSelectedByCurrentPlayer;}
+
+    public int GetMovementPoints () { return movementPoints; }
+
+    public int GetMaxMovementPoints () { return maxMovementPoints; }
 
     public override PlayerTag GetPlayerTag () { return base.GetPlayerTag(); }
+
+    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
+    
     #endregion
 
     #region Misc

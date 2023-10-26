@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourcesObject : WorldObject
+public class ResourcesObject : WorldObject, IObjectInteraction
 {
     private ResourceType resourceType;
     private int resourceCount;
 
     public void Initialize (ResourceType resourceType, int resourceCount, Vector2Int gridPosition)
     {
-        base.Initialize(gridPosition, 0f, ObjectType.Resource);
+        Initialize(gridPosition, 0f, ObjectType.Resource);
         this.resourceType = resourceType;
         this.resourceCount = resourceCount;
     }
 
-    public void ResourceInteraction (Army interactingArmy)
+    public void Interact<T> (T other)
     {
+        Army interactingArmy = other as Army;
         PlayerManager.Instance.GetPlayer(interactingArmy.GetPlayerTag()).AddResources(resourceType, resourceCount);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
+    }
+
+    public void Interact (){
+        Destroy(gameObject);
     }
 
     protected override void OnDestroy()

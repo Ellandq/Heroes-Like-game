@@ -7,6 +7,8 @@ using System.Linq;
 
 public class UnitSlot : MonoBehaviour
 {
+    private UnitsInformation unitsInformation;
+
     [Header ("Slot Information")]
     public bool slotEmpty = true;
     public bool isSlotHero;
@@ -22,7 +24,10 @@ public class UnitSlot : MonoBehaviour
     [Header ("Hero Information")]
     public Hero heroObject;
     public HeroTag heroTag;
-    
+
+    public void Initialize (UnitsInformation unitsInformation){
+        this.unitsInformation = unitsInformation;
+    }    
 
     public void ChangeSlotStatus(int _unitId, int _howManyUnits, float _movementPoints)
     { 
@@ -146,4 +151,6 @@ public class UnitSlot : MonoBehaviour
     {
         return movementPoints;
     }
+
+    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
 }

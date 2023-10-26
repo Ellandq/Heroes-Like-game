@@ -43,5 +43,12 @@ public class SceneStateManager
         attackingArmy = _attackingArmy;
         defendingArmy = _defendingArmy;
         siegedCity = _siegedCity;
+
+        GameManager.Instance.EnableWorldObjects(false);
+        try{
+            SceneManager.LoadScene("Battleground", LoadSceneMode.Additive);
+        }catch (NullReferenceException){
+            Debug.Log("No Scene with name: " + "Battleground" + " exists.");
+        }
     }
 }

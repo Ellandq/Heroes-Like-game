@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     [Header("Player basic information")]
     [SerializeField] private PlayerState playerState;
-    public PlayerTag thisPlayerTag;
+    public PlayerTag playerTag;
     public Color playerColor;
     public bool isPlayerAi = true;
     // public bool turnDone = false;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     {
         ownedArmies.Add(newArmy);
         currentArmy = ownedArmies[ownedArmies.Count - 1].GetComponent<Army>();
-        currentArmy.AddOwningPlayer(this.gameObject);
+        currentArmy.ChangeOwningPlayer(playerTag);
         objectsToCreate++;
     }
 
@@ -277,7 +277,7 @@ public class Player : MonoBehaviour
                     playerLost = true;
                 }else{
                     if (daysToLoose == 0){
-                        PlayerLoose();
+                        PlayerLost();
                     }
                 }
                 if (!playerLost){
@@ -287,7 +287,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void PlayerLoose ()
+    private void PlayerLost ()
     {
         Debug.Log(this.gameObject.name + " has lost. ");
         int objectCount = ownedArmies.Count - 1;
@@ -342,4 +342,6 @@ public class Player : MonoBehaviour
             objectToDestroy = null;
         }
     }
+
+    public PlayerTag GetPlayerTag () { return playerTag; }
 }

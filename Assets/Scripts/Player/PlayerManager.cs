@@ -40,14 +40,6 @@ public class PlayerManager : MonoBehaviour
     public void Awake ()
     {
         Instance = this;
-        playerColorList.Add(blue);
-        playerColorList.Add(lightBlue);
-        playerColorList.Add(purple);
-        playerColorList.Add(red);
-        playerColorList.Add(orange);
-        playerColorList.Add(yellow);
-        playerColorList.Add(lightGreen);
-        playerColorList.Add(green);
     }
 
     public void SetupPlayerManager ()
@@ -82,7 +74,7 @@ public class PlayerManager : MonoBehaviour
             players.Add(Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity));
             players[i].transform.parent = transform;
             players[i].gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
-            players[i].GetComponent<Player>().playerColor = AssignPlayerColour(allPlayers[i]);
+            players[i].GetComponent<Player>().playerColor = GetPlayerColour(allPlayers[i]);
             players[i].GetComponent<Player>().thisPlayerTag = allPlayers[i];
 
         }
@@ -114,7 +106,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Sets the player color 
-    private Color AssignPlayerColour (PlayerTag tag)
+    public Color GetPlayerColour (PlayerTag tag)
     {
         return playerColorList[(int)tag - 1];
     }

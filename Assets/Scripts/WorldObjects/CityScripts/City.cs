@@ -5,29 +5,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class City : MonoBehaviour
+public class City : WorldObject
 {
-    private bool cityReady = false;
     [SerializeField] private GameObject flag;
 
     [Header("Main city information")]
-    [SerializeField] public GameObject ownedByPlayer;
-    [SerializeField] public CityFraction cityFraction;
-    [SerializeField] public Vector2Int gridPosition;
-    [SerializeField] private Vector3 position;
-    [SerializeField] private Vector3 rotation;
-    public int cityGoldProduction;
-    public bool canBeSelectedByCurrentPlayer;
-    public bool cityBuildingAlreadybuilt = false;
-    public Sprite cityIcon;
+    private CityFraction cityFraction;
+    private ResourceIncome resourceIncome;
+    private Sprite cityIcon;
+    private bool canBeSelectedByCurrentPlayer;
+    private bool cityBuildingAlreadybuilt = false;
 
     [Header("City Enterance Information")]
     [SerializeField] private GameObject cityEnterance;
-    [SerializeField] public List<PathNode> enteranceCells;
+    [SerializeField] private List<PathNode> enteranceCells;
 
     [Header("Garrison refrences")]
-    private bool cityEmpty;
-    [SerializeField] public List <GameObject> garrisonSlots;
+    [SerializeField] private UnitsInformation unitsInformation;
 
     [Header ("City Buildings")]
     public List<CityBuildingState> cityBuildings;

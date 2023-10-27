@@ -11,8 +11,8 @@ using System.Linq;
 public class ArmyDisplayInformation : MonoBehaviour
 {
     [Header ("Units information")]
-    [SerializeField] private List <GameObject> units;
-    [SerializeField] private UnitSlot selectedUnit;
+    private WorldObject unitsObject;
+    private UnitSlot selectedUnit;
 
     [Header ("UI Sprites")]
     [SerializeField] private Sprite defaultBackground;
@@ -28,7 +28,7 @@ public class ArmyDisplayInformation : MonoBehaviour
     [SerializeField] private List <GameObject> unitCountDisplayBackground;
     [SerializeField] private List <GameObject> unitBanners;
 
-    internal GameObject selectedArmy;
+    private Army selectedArmy;
     private string unitIconsFilePath;
 
     public UnityEvent onUnitDisplayReload;
@@ -60,7 +60,7 @@ public class ArmyDisplayInformation : MonoBehaviour
     }
 
     // Takes the unit list from an army GameObject
-    private void GetArmyUnits(GameObject armyObject)
+    private void GetArmyUnits(Army armyObject)
     {
         selectedArmy = armyObject;
         units = new List<GameObject>(armyObject.GetComponentInParent<UnitsInformation>().unitSlots);

@@ -65,6 +65,13 @@ public class ResourceIncome : MonoBehaviour
         }
     }
 
+    public ResourceIncome (ResourceIncome baseValues, List<ResourceType> resourceTypes)
+    {
+        foreach (ResourceType type in resourceTypes){
+            resources[(int)type] = baseValues.resources[(int)type];
+        }
+    }
+
     public static ResourceIncome operator +(ResourceIncome a, ResourceIncome b)
     {
         int[] result = new int[7];

@@ -8,7 +8,8 @@ public class Mine : WorldObject, IEnteranceInteraction
     [SerializeField] private GameObject flag;
 
     [Header("Mine information")]
-    [SerializeField] private ResourceType mineType;
+    [SerializeField] private List<ResourceType> mineType;
+    private ResourceIncome mineIncome;
 
     [Header("Mine Enterance Information")]
     [SerializeField] private GameObject mineEnterance;
@@ -21,6 +22,9 @@ public class Mine : WorldObject, IEnteranceInteraction
 
     private void Awake (){
         enteranceCells = new List<PathNode>();
+        mineIncome = new ResourceIncome(new int[]{
+            1000, 2, 2, 1, 1, 1, 1
+        });
         
     }
 
@@ -41,7 +45,7 @@ public class Mine : WorldObject, IEnteranceInteraction
 
     #region Player Management
 
-    public void AddOwningPlayer(GameObject _ownedByPlayer)
+    public void AddOwningPlayer(PlayerTag ownedByPlayer)
     {
         ownedByPlayer = _ownedByPlayer;
         if (_ownedByPlayer.name != "Neutral Player"){
@@ -90,27 +94,18 @@ public class Mine : WorldObject, IEnteranceInteraction
         }
     }
 
-    private bool IsMineEmpty ()
-    {
-        if (!mineGarrisonSlot1.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot2.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot3.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot4.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot5.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot6.GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!mineGarrisonSlot7.GetComponent<UnitSlot>().slotEmpty) return false;
-        return true;
-
+    private bool IsMineEmpty (){
+        return unitsInformation.IsArmyEmpty();
     }
 
-    public void GetEnteranceInformation (List <PathNode> _enteranceList)
+    public void SetEnteranceInformation (List <PathNode> enteranceList)
     {
-        enteranceCells = _enteranceList;
+        enteranceCells = enteranceList;
     }
 
     #endregion
 
-    public ResourceType GetMineType (){
-        return mineType;
+    public ResourceIncome GetIncome (){
+        return new ResourceIncome(mineIncome, mineType);
     }
 }

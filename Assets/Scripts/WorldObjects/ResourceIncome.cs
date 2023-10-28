@@ -6,45 +6,51 @@ using UnityEngine;
 
 public class ResourceIncome : MonoBehaviour
 {
-    public int gold;
-    public int wood;
-    public int ore;
-    public int gems;
-    public int mercury;
-    public int sulfur;
-    public int crystal;
+    private int[] resources = new int[7]; // Array to hold resource values
 
-    public ResourceIncome () { }
-    
-    public ResourceIncome (int amount, ResourceType resourceType){
-        switch (resourceType)
-        {
-            case ResourceType.Gold:
-                gold = amount;
-                break;
-            case ResourceType.Wood:
-                wood = amount;
-                break;
-            case ResourceType.Ore:
-                ore = amount;
-                break;
-            case ResourceType.Gems:
-                gems = amount;
-                break;
-            case ResourceType.Mercury:
-                mercury = amount;
-                break;
-            case ResourceType.Sulfur:
-                sulfur = amount;
-                break;
-            case ResourceType.Crystal:
-                crystal = amount;
-                break;
-            default:
-                // Handle any other resource types as needed.
-                break;
-        }
+    public int gold
+    {
+        get { return resources[0]; }
+        set { resources[0] = value; }
     }
+
+    public int wood
+    {
+        get { return resources[1]; }
+        set { resources[1] = value; }
+    }
+
+    public int ore
+    {
+        get { return resources[2]; }
+        set { resources[2] = value; }
+    }
+
+    public int gems
+    {
+        get { return resources[3]; }
+        set { resources[3] = value; }
+    }
+
+    public int mercury
+    {
+        get { return resources[4]; }
+        set { resources[4] = value; }
+    }
+
+    public int sulfur
+    {
+        get { return resources[5]; }
+        set { resources[5] = value; }
+    }
+
+    public int crystal
+    {
+        get { return resources[6]; }
+        set { resources[6] = value; }
+    }
+
+    public ResourceIncome() {}
 
     public ResourceIncome(int[] res)
     {
@@ -53,39 +59,32 @@ public class ResourceIncome : MonoBehaviour
             throw new ArgumentException("The input array must have exactly 7 elements.");
         }
 
-        // Assign the values from the input array to the fields
-        gold = res[0];
-        wood = res[1];
-        ore = res[2];
-        gems = res[3];
-        mercury = res[4];
-        sulfur = res[5];
-        crystal = res[6];
+        for (int i = 0; i < 7; i++)
+        {
+            resources[i] = res[i];
+        }
     }
 
-    public static ResourceIncome operator +(ResourceIncome a, ResourceIncome b){
-        return new ResourceIncome
+    public static ResourceIncome operator +(ResourceIncome a, ResourceIncome b)
+    {
+        int[] result = new int[7];
+        for (int i = 0; i < 7; i++)
         {
-            gold = a.gold + b.gold,
-            wood = a.wood + b.wood,
-            ore = a.ore + b.ore,
-            gems = a.gems + b.gems,
-            mercury = a.mercury + b.mercury,
-            sulfur = a.sulfur + b.sulfur,
-            crystal = a.crystal + b.crystal
-        };
+            result[i] = a.resources[i] + b.resources[i];
+        }
+
+        return new ResourceIncome(result);
     }
 
-    public static ResourceIncome operator -(ResourceIncome a, ResourceIncome b){
-        return new ResourceIncome
+    public static ResourceIncome operator -(ResourceIncome a, ResourceIncome b)
+    {
+        int[] result = new int[7];
+        for (int i = 0; i < 7; i++)
         {
-            gold = Mathf.Abs(a.gold - b.gold),
-            wood = Mathf.Abs(a.wood - b.wood),
-            ore = Mathf.Abs(a.ore - b.ore),
-            gems = Mathf.Abs(a.gems - b.gems),
-            mercury = Mathf.Abs(a.mercury - b.mercury),
-            sulfur = Mathf.Abs(a.sulfur - b.sulfur),
-            crystal = Mathf.Abs(a.crystal - b.crystal)
-        };
+            result[i] = Mathf.Abs(a.resources[i] - b.resources[i]);
+        }
+
+        return new ResourceIncome(result);
     }
 }
+

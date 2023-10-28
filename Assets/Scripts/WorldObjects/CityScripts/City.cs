@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class City : WorldObject
+public class City : WorldObject, IObjectInteraction
 {
     [SerializeField] private GameObject flag;
 
@@ -42,11 +42,9 @@ public class City : WorldObject
 
         unitsInformation.SetUnitStatus(cityGarrison);
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
-
-        FinalizeCity();
     }
 
-    private void FinalizeCity ()
+    public override void FinalizeObject ()
     {
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
@@ -203,6 +201,10 @@ public class City : WorldObject
         }else{
             garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().AddUnits(unitCount);
         }
+    }
+
+    public ResourceIncome GetIncome (){
+        return buildingHandler.GetCityIncome();
     }
 
 }

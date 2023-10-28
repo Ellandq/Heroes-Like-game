@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,131 +6,87 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    [Header ("Events and coroutines")]
     private Coroutine waitForObjectToBeDestroyed;
     public UnityEvent onArmyAdded;
     public UnityEvent onCityAdded;
-    internal short objectsToCreate = 0;
-    internal short objectsCreated = 0;
-    private short daysToLoose = 4;
-    private GameObject lastObjectSelectedByPlayer;
-    private bool playerLost;
-
-    private GameObject objectToDestroy;
 
     [Header("Player basic information")]
-    [SerializeField] private PlayerState playerState;
-    public PlayerTag playerTag;
-    public Color playerColor;
-    public bool isPlayerAi = true;
-    // public bool turnDone = false;
-
-    private City currentCity;
-    private Army currentArmy;
-    private Mine currentMine;
+    private WorldObject objectToDestroy;
+    private WorldObject lastObjectSelectedByPlayer;
+    private PlayerState playerState;
+    private PlayerTag playerTag;
+    private Color playerColor;
+    private bool isPlayerAi;
+    private bool playerLost;
+    private short daysToLoose = 4;
 
     [Header("Player structures and armies: ")]
-    public List<GameObject> ownedArmies;
-    public List<GameObject> ownedCities;
-    public List<GameObject> ownedMines;
+    private List<Army> ownedArmies;
+    private List<City> ownedCities;
+    private List<Mine> ownedMines;
 
     [Header("Player resources")]
-    public int gold;
-    public int wood;
-    public int ore;
-    public int gems;
-    public int mercury;
-    public int sulfur;
-    public int crystals;
+    private ResourceIncome playerResources;
 
     [Header("Player daily production")]
-    [SerializeField] private int goldProduction;
-    [SerializeField] private int woodProduction;
-    [SerializeField] private int oreProduction;
-    [SerializeField] private int gemProduction;
-    [SerializeField] private int mercuryProduction;
-    [SerializeField] private int sulfurProduction;
-    [SerializeField] private int crystalProduction;
+    private ResourceIncome resourceIncome;
 
-    private void Start ()
-    {
+    private void Start (){
         playerLost = false;
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
-        
-        gold = 10000;
-        wood = 20;
-        ore = 20;
-        gems = 5;
-        mercury = 5;
-        sulfur = 5;
-        crystals = 5;
-
+        playerResources = PlayerManager.Instance.GetStartingResources();
         PlayerManager.Instance.PlayerManagerReady();
     }
 
-    // Adds a new army for the player
-    public void NewArmy(GameObject newArmy)
-    {
-        ownedArmies.Add(newArmy);
-        currentArmy = ownedArmies[ownedArmies.Count - 1].GetComponent<Army>();
-        currentArmy.ChangeOwningPlayer(playerTag);
-        objectsToCreate++;
-    }
-
-    // Removes a given army from the player
-    public void RemoveArmy (GameObject armyToRemove)
-    {  
-        if (GameManager.Instance.gameHandler.activeSelf){
-            
-            for (int i = 0; i < ownedArmies.Count; i++){
-                if (ownedArmies[i].name == armyToRemove.name){
-                    ownedArmies.RemoveAt(i);
-                    Destroy(armyToRemove);
-                }
-            }
-            if (waitForObjectToBeDestroyed == null)
-            {
-                waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(armyToRemove));
-            }
-        }else{
-            objectToDestroy = armyToRemove;
+    public void AddObject (WorldObject obj){
+        if (obj is Army){
+            Army army = obj as Army;
+            ownedArmies.Add(army);
+            army.ChangeOwningPlayer(playerTag);
+        }else if (obj is City){
+            City city = obj as City;
+            ownedCities.Add(city);
+            city.ChangeOwningPlayer(playerTag);
+        }else if (obj is Mine){
+            Mine mine = obj as Mine;
+            ownedMines.Add(mine);
+            mine.ChangeOwningPlayer(playerTag);
         }
     }
 
-    // Adds a new City for the player
-    public void NewCity(GameObject newCity)
-    {
-        ownedCities.Add(newCity);
-        currentCity = ownedCities[ownedCities.Count - 1].GetComponent<City>();
-        currentCity.AddOwningPlayer(this.gameObject);
-        UpdateResourceGain();
-        objectsToCreate++;
-    }
+    public void RemoveObject (WorldObject obj){
+        if (GameManager.Instance.gameHandler.activeSelf){
+            if (obj is Army){
+                Army army = obj as Army;
+                int index = ownedArmies.FindIndex(a => a == army);
+                if (index >= 0) ownedArmies.RemoveAt(index); 
 
-    // Adds a new mine for the player
-    public void NewMine(GameObject newMine)
-    {
-        ownedMines.Add(newMine);
-        currentMine = ownedMines[ownedMines.Count - 1].GetComponent<Mine>();
-        currentMine.AddOwningPlayer(this.gameObject);
-        UpdateResourceGain();
-        objectsToCreate++;
+            }else if (obj is City){
+                City city = obj as City;
+                int index = ownedCities.FindIndex(c => c == city);
+                if (index >= 0) ownedCities.RemoveAt(index); 
+
+            }else if (obj is Mine){
+                Mine mine = obj as Mine;
+                int index = ownedMines.FindIndex(m => m == mine);
+                if (index >= 0) ownedMines.RemoveAt(index); 
+            }
+            if (waitForObjectToBeDestroyed == null){
+                waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(obj));
+            }
+        }else{
+            objectToDestroy = obj;
+        }
     }
     
     // Resets and checks the player resource gain
     public void UpdateResourceGain()
     {
-        goldProduction = 0;
-        woodProduction = 0;
-        oreProduction = 0;
-        gemProduction = 0;
-        mercuryProduction = 0;
-        sulfurProduction = 0;
-        crystalProduction = 0;
-
-        for (int i = 0; i < ownedCities.Count; i++)
-        {
-            goldProduction += ownedCities[i].GetComponent<City>().cityGoldProduction;
+        ResourceIncome income = new ResourceIncome();
+        foreach (City city in ownedCities){
+            income += city.Get
         }
 
         for (int i = 0; i < ownedMines.Count; i++)
@@ -173,63 +129,14 @@ public class Player : MonoBehaviour
     private void DailyResourceGain()
     {
         UpdateResourceGain();
-        gold += goldProduction;
-        wood += woodProduction;
-        ore += oreProduction;
-        gems += gemProduction;
-        mercury += mercuryProduction;
-        sulfur += sulfurProduction;
-        crystals += crystalProduction;
+        playerResources += resourceIncome;
     }
 
     // Adds a given resource to the player
-    public void AddResources (ResourceType _resourceType, int _resourceCount)
-    {
-        switch (_resourceType)
-            {
-            case ResourceType.Gold:
-                gold += _resourceCount;
-            break;
-
-            case ResourceType.Wood:
-                wood += _resourceCount;
-            break;
-            
-            case ResourceType.Ore:
-                ore += _resourceCount;
-            break;
-            
-            case ResourceType.Gems:
-                gems += _resourceCount;
-            break;
-            
-            case ResourceType.Mercury:
-                mercury += _resourceCount;
-            break;
-            
-            case ResourceType.Sulfur:
-                sulfur += _resourceCount;
-            break;
-            
-            case ResourceType.Crystal:
-                crystals += _resourceCount;
-            break;
-           
-        }
-        PlayerManager.Instance.UpdatePlayerUI(this);
-    }
+    public void AddResources (ResourceIncome resource){ playerResources += resource; }
 
     // Removes a set amount of resources
-    public void RemoveResources (int[] resourceList)
-    {
-        gold -= resourceList[0];
-        wood -= resourceList[1];
-        ore -= resourceList[2];
-        gems -= resourceList[3];
-        mercury -= resourceList[4];
-        sulfur -= resourceList[5];
-        crystals -= resourceList[6];
-    }
+    public void RemoveResources (ResourceIncome cost){ playerResources -= cost; }
     
     // A daily player update
     private void PlayerDailyUpdate ()
@@ -257,23 +164,10 @@ public class Player : MonoBehaviour
     // Checks if any loose conditions are met
     private void CheckPlayerLooseCondition ()
     {
-        if (this.gameObject.name != "Neutral Player" && !playerLost){
+        if (GetPlayerTag() !=  PlayerTag.None){
             if (ownedCities.Count == 0){
                 daysToLoose--;
                 if (ownedArmies.Count == 0){
-                    Debug.Log(this.gameObject.name + " has lost. ");
-                    int objectCount = ownedArmies.Count - 1;
-                    for (int i = objectCount; i >= 0; i--){
-                        WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
-                    }
-                    objectCount = ownedCities.Count - 1;
-                    for (int i = objectCount; i >= 0; i--){
-                        ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
-                    }
-                    objectCount = ownedMines.Count - 1;
-                    for (int i = objectCount; i >= 0; i--){
-                        ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
-                    }
                     playerLost = true;
                 }else{
                     if (daysToLoose == 0){
@@ -289,18 +183,16 @@ public class Player : MonoBehaviour
 
     private void PlayerLost ()
     {
-        Debug.Log(this.gameObject.name + " has lost. ");
-        int objectCount = ownedArmies.Count - 1;
-        for (int i = objectCount; i >= 0; i--){
-            WorldObjectManager.Instance.RemoveArmy(ownedArmies[i]);
+        Debug.Log(gameObject.name + " has lost. ");
+        
+        foreach (Army army in ownedArmies){
+            Destroy(army.gameObject);
         }
-        objectCount = ownedCities.Count - 1;
-        for (int i = objectCount; i >= 0; i--){
-            ownedCities[i].GetComponent<City>().RemoveOwningPlayer();
+        foreach (City city in ownedCities){
+            city.ChangeOwningPlayer(PlayerTag.None);
         }
-        objectCount = ownedMines.Count - 1;
-        for (int i = objectCount; i >= 0; i--){
-            ownedMines[i].GetComponent<Mine>().RemoveOwningPlayer();
+        foreach (Mine mine in ownedMines){
+            mine.ChangeOwningPlayer(PlayerTag.None);
         }
         playerLost = true;
     }
@@ -317,15 +209,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // What to do when the player GameObject is destroyed
-    private void OnDestroy()
-    {
-        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
-    }
-
-    // Enumerator to wait for the selected object to be destroyed so correct updates can be run
-    private IEnumerator WaitForObjectToBeDestroyed (GameObject objectToDestroy){
+    private IEnumerator WaitForObjectToBeDestroyed (WorldObject objectToDestroy){
         while (objectToDestroy != null){
             yield return null;
         }
@@ -335,13 +219,19 @@ public class Player : MonoBehaviour
         waitForObjectToBeDestroyed = null;
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable(){
         if (objectToDestroy != null){
-            RemoveArmy(objectToDestroy);
+            RemoveObject(objectToDestroy);
             objectToDestroy = null;
         }
     }
 
+    private void OnDestroy(){
+        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
+        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
+    }
+
     public PlayerTag GetPlayerTag () { return playerTag; }
+
+    public ResourceIncome GetAvailableResources () { return playerResources; }
 }

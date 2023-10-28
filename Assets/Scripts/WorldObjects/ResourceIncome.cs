@@ -97,5 +97,27 @@ public class ResourceIncome : MonoBehaviour
 
         return new ResourceIncome(result);
     }
+
+    public static bool operator >(ResourceIncome a, ResourceIncome b){
+        for (int i = 0; i < 7; i++){
+            if (b.resources[i] > a.resources[i]) return false;
+        }
+        return true;
+    }
+
+    public static bool operator <(ResourceIncome a, ResourceIncome b){
+        for (int i = 0; i < 7; i++){
+            if (a.resources[i] > b.resources[i]) return false;
+        }
+        return true;
+    }
+
+    public static int operator /(ResourceIncome a, ResourceIncome b){
+        int value = int.MaxValue;
+        for (int i = 0; i < 7; i++){
+            value = Mathf.Min(Mathf.FloorToInt(a.resources[i] / b.resources[i]), value);
+        }
+        return value;
+    }
 }
 

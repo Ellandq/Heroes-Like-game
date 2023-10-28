@@ -12,14 +12,13 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Player information")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] public GameObject neutralPlayer;
-    [SerializeField] public Player currentPlayer;
-    public List<Player> players;
-    private Color currentPlayerColor;
+    [SerializeField] private Player neutralPlayer;
+    [SerializeField] private Player currentPlayer;
+    private List<Player> players;
 
     [Header ("All Players Information")]
-    [SerializeField] public List<PlayerTag> allPlayers;
-    [SerializeField] public List<PlayerTag> humanPlayers;
+    [SerializeField] private List<PlayerTag> allPlayers;
+    [SerializeField] private List<PlayerTag> humanPlayers;
 
     [Header("Player colors")]
     [SerializeField] private List<Color> playerColorList;
@@ -37,8 +36,7 @@ public class PlayerManager : MonoBehaviour
     public UnityEvent OnNewDayPlayerUpdate;
     public static event Action OnCurrentPlayerResourcesGained;
 
-    public void Awake ()
-    {
+    public void Awake (){
         Instance = this;
     }
 
@@ -118,8 +116,15 @@ public class PlayerManager : MonoBehaviour
         }
         return null;
     }
-}
 
+    public Player GetCurrentPlayer (){
+        return currentPlayer;
+    }
+
+    public ResourceIncome GetStartingResources (){
+        return new ResourceIncome(new int[7] { 10000, 10, 10, 5, 5, 5, 5 });
+    }
+}
 public enum PlayerTag{
     None, Blue, LightBlue, Purple, Red, Orange, Yellow, LightGreen, Green
 }

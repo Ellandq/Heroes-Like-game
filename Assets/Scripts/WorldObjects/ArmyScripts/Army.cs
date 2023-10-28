@@ -36,7 +36,7 @@ public class Army : WorldObject, IObjectInteraction
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
 
-        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.state == GameState.PlayerTurn){
+        if (PlayerManager.Instance.GetCurrentPlayer() == PlayerManager.Instance.GetPlayer(GetPlayerTag()) && GameManager.Instance.state == GameState.PlayerTurn){
             UIManager.Instance.UpdateCurrentArmyDisplay();
         }
     }
@@ -109,7 +109,7 @@ public class Army : WorldObject, IObjectInteraction
     {
         Army interactingArmy = other as Army;
         if (interactingArmy.GetPlayerTag() == GetPlayerTag()){
-            UIManager.Instance.UpdateArmyInterface(interactingArmy, this.gameObject);
+            UIManager.Instance.UpdateArmyInterface(interactingArmy, this);
         }else{
         }
     }

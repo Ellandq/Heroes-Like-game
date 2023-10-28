@@ -52,6 +52,10 @@ public class ResourceIncome : MonoBehaviour
 
     public ResourceIncome() {}
 
+    public ResourceIncome(int value, ResourceType type){
+        resources[(int)type] = value;
+    }
+
     public ResourceIncome(int[] res)
     {
         if (res.Length != 7)

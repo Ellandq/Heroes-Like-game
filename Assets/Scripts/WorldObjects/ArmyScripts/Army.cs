@@ -26,10 +26,9 @@ public class Army : WorldObject, IObjectInteraction
     { 
         Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
         unitsInformation.SetUnitStatus(armyUnits);
-        FinalizeArmy();
     }
     
-    private void FinalizeArmy ()
+    public override void FinalizeObject ()
     {
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;

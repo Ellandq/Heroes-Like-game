@@ -28,9 +28,9 @@ public class Mine : WorldObject, IEnteranceInteraction
         
     }
 
-    public void Initialize (Vector2Int gridPosition, float rotation, PlayerTag playerTag, ResourceType mineType, int [] garrisonUnits)
+    public void Initialize (Vector2Int gridPosition, float rotation, PlayerTag playerTag, List<ResourceType> mineType, int [] garrisonUnits)
     {
-        Initialize(gridPosition, rotation, ObjectType.Mine, playerTag);
+        Initialize(gridPosition, rotation, ObjectType.Mine);
         unitsInformation = new UnitsInformation(garrisonUnits);
         this.mineType = mineType;
     }
@@ -45,53 +45,39 @@ public class Mine : WorldObject, IEnteranceInteraction
 
     #region Player Management
 
-    public void AddOwningPlayer(PlayerTag ownedByPlayer)
+    public override void ChangeOwningPlayer(PlayerTag ownedByPlayer)
     {
-        ownedByPlayer = _ownedByPlayer;
-        if (_ownedByPlayer.name != "Neutral Player"){
+        PlayerManager.Instance.GetPlayer(GetPlayerTag()).RemoveObject(this);
+        base.ChangeOwningPlayer(ownedByPlayer);
+        if (ownedByPlayer != PlayerTag.None){
             flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }
-        
-    }
-
-    private void ChangeOwningPlayer (GameObject _ownedByPlayer)
-    {
-        ownedByPlayer.GetComponent<Player>().ownedMines.Remove(this.gameObject);
-        if (ownedByPlayer.name == "Neutral Player"){
-            ownedByPlayer = _ownedByPlayer;
-            flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+            flag.GetComponent<MeshRenderer>().material.color = PlayerManager.Instance.GetPlayerColour(GetPlayerTag());
         }else{
-            ownedByPlayer = _ownedByPlayer;
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
+            flag.SetActive(false);
         }
-        ownedByPlayer.GetComponent<Player>().ownedMines.Add(this.gameObject);
-    }
-
-    public void RemoveOwningPlayer ()
-    {
-        ownedByPlayer = PlayerManager.Instance.neutralPlayer;
-        flag.SetActive(false);
+        PlayerManager.Instance.GetPlayer(GetPlayerTag()).AddObject(this);
+        
     }
 
     #endregion
 
     #region Interaction Manager
 
-    public void MineInteraction (GameObject interactingArmy)
-    {
-        Debug.Log("Interacting army, with army: " + interactingArmy.name);
-        if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            //do sth with friendly army
+    public void Interact<T> (T other){
+        Army army = other as Army;
+        if (army.GetPlayerTag() == GetPlayerTag()){
+            // Do something with friendly army
         }else{
             if (IsMineEmpty()){
-                ChangeOwningPlayer(interactingArmy.GetComponent<Army>().ownedByPlayer);
+                ChangeOwningPlayer(army.GetPlayerTag());
             }else{
                 Debug.Log("Do battle");
             }
-            
         }
+    }
+
+    public void Interact (){
+
     }
 
     private bool IsMineEmpty (){

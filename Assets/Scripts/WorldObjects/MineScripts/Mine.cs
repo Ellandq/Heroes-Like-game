@@ -8,34 +8,30 @@ public class Mine : WorldObject, IEnteranceInteraction
     [SerializeField] private GameObject flag;
 
     [Header("Mine information")]
-    [SerializeField] private GameObject ownedByPlayer;
     [SerializeField] private ResourceType mineType;
 
     [Header("Mine Enterance Information")]
     [SerializeField] private GameObject mineEnterance;
-    [SerializeField] private List<PathNode> enteranceCells;
+    private List<PathNode> enteranceCells;
 
     [Header("Mine Garrison references")]
-    [SerializeField] private List<UnitSlot> mineGarrison;
+    private UnitsInformation unitsInformation;
 
     #region Initialization
 
     private void Awake (){
         enteranceCells = new List<PathNode>();
-        mineGarrison = new List<UnitSlot>();
+        
     }
 
     public void Initialize (Vector2Int gridPosition, float rotation, PlayerTag playerTag, ResourceType mineType, int [] garrisonUnits)
     {
         Initialize(gridPosition, rotation, ObjectType.Mine, playerTag);
+        unitsInformation = new UnitsInformation(garrisonUnits);
         this.mineType = mineType;
-
-        for (int i = 0; i < 7; i++){
-            mineGarrison[i].SetSlotStatus(garrisonUnits[i * 2], garrisonUnits[i * 2 + 1]);
-        }
     }
 
-    private void FinalizeMine ()
+    public override void FinalizeObject()
     {
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, GetRotation(), gameObject);
         GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance);

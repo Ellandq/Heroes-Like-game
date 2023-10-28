@@ -12,20 +12,20 @@ public class Army : WorldObject, IObjectInteraction
     public UnityEvent onMovementPointsChanged;
 
     [Header("Army information")]
+    [SerializeField] private ArmyInformation unitsInformation;
     private int maxMovementPoints;
     private int movementPoints;
     private bool canBeSelectedByCurrentPlayer;
-    private ArmyInformation unitsInformation;
 
     [Header ("Misc.")]
-    [SerializeField] GameObject flag;
+    [SerializeField] private GameObject flag;
 
     #region Initialization
 
-    public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, int [] _armyUnits)
+    public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, int [] armyUnits)
     { 
         Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
-        unitsInformation.SetUnitStatus(_armyUnits);
+        unitsInformation.SetUnitStatus(armyUnits);
         FinalizeArmy();
     }
     
@@ -37,9 +37,9 @@ public class Army : WorldObject, IObjectInteraction
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
 
-        // if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.state == GameState.PlayerTurn){
-        //     UIManager.Instance.UpdateCurrentArmyDisplay();
-        // }
+        if (PlayerManager.Instance.currentPlayer == ownedByPlayer.GetComponent<Player>() && GameManager.Instance.state == GameState.PlayerTurn){
+            UIManager.Instance.UpdateCurrentArmyDisplay();
+        }
     }
 
     #endregion
@@ -110,10 +110,8 @@ public class Army : WorldObject, IObjectInteraction
     {
         Army interactingArmy = other as Army;
         if (interactingArmy.GetPlayerTag() == GetPlayerTag()){
-            // TODO
-            //UIManager.Instance.UpdateArmyInterface(interactingArmy, this.gameObject);
+            UIManager.Instance.UpdateArmyInterface(interactingArmy, this.gameObject);
         }else{
-            // TODO
         }
     }
 

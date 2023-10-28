@@ -12,10 +12,40 @@ public class ResourceIncome : MonoBehaviour
     public int gems;
     public int mercury;
     public int sulfur;
-    public int crystals;
+    public int crystal;
 
     public ResourceIncome () { }
     
+    public ResourceIncome (int amount, ResourceType resourceType){
+        switch (resourceType)
+        {
+            case ResourceType.Gold:
+                gold = amount;
+                break;
+            case ResourceType.Wood:
+                wood = amount;
+                break;
+            case ResourceType.Ore:
+                ore = amount;
+                break;
+            case ResourceType.Gems:
+                gems = amount;
+                break;
+            case ResourceType.Mercury:
+                mercury = amount;
+                break;
+            case ResourceType.Sulfur:
+                sulfur = amount;
+                break;
+            case ResourceType.Crystal:
+                crystal = amount;
+                break;
+            default:
+                // Handle any other resource types as needed.
+                break;
+        }
+    }
+
     public ResourceIncome(int[] res)
     {
         if (res.Length != 7)
@@ -30,7 +60,7 @@ public class ResourceIncome : MonoBehaviour
         gems = res[3];
         mercury = res[4];
         sulfur = res[5];
-        crystals = res[6];
+        crystal = res[6];
     }
 
     public static ResourceIncome operator +(ResourceIncome a, ResourceIncome b){
@@ -42,7 +72,7 @@ public class ResourceIncome : MonoBehaviour
             gems = a.gems + b.gems,
             mercury = a.mercury + b.mercury,
             sulfur = a.sulfur + b.sulfur,
-            crystals = a.crystals + b.crystals
+            crystal = a.crystal + b.crystal
         };
     }
 
@@ -55,7 +85,7 @@ public class ResourceIncome : MonoBehaviour
             gems = Mathf.Abs(a.gems - b.gems),
             mercury = Mathf.Abs(a.mercury - b.mercury),
             sulfur = Mathf.Abs(a.sulfur - b.sulfur),
-            crystals = Mathf.Abs(a.crystals - b.crystals)
+            crystal = Mathf.Abs(a.crystal - b.crystal)
         };
     }
 }

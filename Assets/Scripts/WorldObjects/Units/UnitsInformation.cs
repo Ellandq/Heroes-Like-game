@@ -9,12 +9,13 @@ public class UnitsInformation : MonoBehaviour, IUnit
     private WorldObject connectedObject;
     protected List <UnitSlot> unitSlots;
 
-    private void Awake () { 
+    public UnitsInformation (int[] unitInfo){
         unitSlots = new List<UnitSlot>(); 
         for (int i = 0; i < 7; i++){
             unitSlots.Add(new UnitSlot());
             unitSlots[i].Initialize(this);
         }
+        SetUnitStatus(unitInfo);
     }
 
     #region Movement points manipulation

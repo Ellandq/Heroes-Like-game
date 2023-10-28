@@ -16,6 +16,14 @@ public class WorldObject : MonoBehaviour
         ChangeOwningPlayer(ownedByPlayer);
     }
 
+    public void Initialize (Vector2Int gridPosition, float rotation = 0f, ObjectType objectType = ObjectType.None){
+        this.objectType = objectType;
+        UpdateObjectPosition(GameGrid.Instance.GetWorldPosFromGridPos(gridPosition));
+        UpdateObjectRotation(rotation);
+    }
+
+    public virtual void FinalizeObject (){}
+
     public virtual void ChangeOwningPlayer (PlayerTag ownedByPlayer = PlayerTag.None){
         this.ownedByPlayer = ownedByPlayer;
     }
@@ -30,6 +38,10 @@ public class WorldObject : MonoBehaviour
     }
 
     public virtual void UpdateObjectRotation (Vector3 rotation){
+        if (rotation.y < 0){
+            rotation.y %= 360f;
+            rotation.y += 360f;
+        }
         transform.localEulerAngles = rotation;
     }
 

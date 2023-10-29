@@ -9,9 +9,9 @@ public class UnitsInformation : MonoBehaviour, IUnit
     private WorldObject connectedObject;
     protected List <UnitSlot> unitSlots;
 
-    public UnitsInformation (int[] unitInfo){
+    public UnitsInformation (short[] unitInfo){
         unitSlots = new List<UnitSlot>(); 
-        for (int i = 0; i < 7; i++){
+        for (short i = 0; i < 7; i++){
             unitSlots.Add(new UnitSlot());
             unitSlots[i].Initialize(this);
         }
@@ -21,8 +21,8 @@ public class UnitsInformation : MonoBehaviour, IUnit
     #region Movement points manipulation
 
     public void RestoreMovementPoints() {
-        for (int i = 0; i < 7; i++){
-            if (!unitSlots[i].slotEmpty){
+        for (short i = 0; i < 7; i++){
+            if (!unitSlots[i].IsEmpty()){
                 unitSlots[i].RestoreMovementPoints();
             }
         }
@@ -34,12 +34,12 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public virtual void SwapUnitsPosition(short a, short b)
     {
-        int id01 = unitSlots[a].unitID;
-        int id02 = unitSlots[b].unitID;
-        int unitCount01 = unitSlots[a].howManyUnits;
-        int unitCount02 = unitSlots[b].howManyUnits;
-        float mPoints01 = unitSlots[a].movementPoints;
-        float mPoints02 = unitSlots[b].movementPoints;
+        short id01 = unitSlots[a].GetId();
+        short id02 = unitSlots[b].GetId();
+        short unitCount01 = unitSlots[a].GetUnitCount();
+        short unitCount02 = unitSlots[b].GetUnitCount();
+        float mPoints01 = unitSlots[a].GetMovementPoints();
+        float mPoints02 = unitSlots[b].GetMovementPoints();
 
         unitSlots[a].RemoveUnits();
         unitSlots[b].RemoveUnits();
@@ -50,12 +50,12 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public virtual void SwapUnitsPosition (short a, UnitSlot otherArmyUnit)
     {
-        int id01 = unitSlots[a].unitID;
-        int id02 = otherArmyUnit.unitID;
-        int unitCount01 = unitSlots[a].howManyUnits;
-        int unitCount02 = otherArmyUnit.howManyUnits;
-        float mPoints01 = unitSlots[a].movementPoints;
-        float mPoints02 = otherArmyUnit.movementPoints;
+        short id01 = unitSlots[a].GetId();
+        short id02 = otherArmyUnit.GetId();
+        short unitCount01 = unitSlots[a].GetUnitCount();
+        short unitCount02 = otherArmyUnit.GetUnitCount();
+        float mPoints01 = unitSlots[a].GetMovementPoints();
+        float mPoints02 = otherArmyUnit.GetMovementPoints();
 
         unitSlots[a].RemoveUnits();
         otherArmyUnit.RemoveUnits(); 
@@ -66,13 +66,21 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public virtual void AddUnits (short a, short b)
     {
-        unitSlots[b].howManyUnits += unitSlots[a].howManyUnits;
+        unitSlots[b].AddUnits(unitSlots[a].GetUnitCount());
         unitSlots[a].RemoveUnits();
+    }
+
+    public void AddUnits (short index, short count, short id){
+        if (unitSlots[index].IsEmpty()){
+            unitSlots[index].SetSlotStatus(id, count);
+        }else{
+            unitSlots[index].AddUnits(count);
+        }
     }
 
     public virtual void AddUnits (short a, UnitSlot otherArmyUnit)
     {
-        otherArmyUnit.howManyUnits += unitSlots[a].howManyUnits;
+        otherArmyUnit.AddUnits(unitSlots[a].GetUnitCount());
         unitSlots[a].RemoveUnits();
     }
 
@@ -94,14 +102,14 @@ public class UnitsInformation : MonoBehaviour, IUnit
         // Move any non-empty slots to the first available empty slot
         for (short i = 0; i < unitSlots.Count; i++) {
             if (unitSlots[i] == null) continue;
-            if (unitSlots[i].slotEmpty) continue;
+            if (unitSlots[i].IsEmpty()) continue;
             if (i == 0) continue;
             for (short j = 0; j < i; j++) {
                 if (unitSlots[j] == null) {
                     SwapUnitsPosition(i, j);
                     break;
                 }
-                if (unitSlots[j].slotEmpty) {
+                if (unitSlots[j].IsEmpty()) {
                     SwapUnitsPosition(i, j);
                     break;
                 }
@@ -112,7 +120,7 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
         for (short i = 0; i < unitSlots.Count; i++) {
             if (unitSlots[i] == null) continue;
-            if (unitSlots[i].slotEmpty) continue;
+            if (unitSlots[i].IsEmpty()) continue;
             for (short j = 0; j < unitSlots.Count; j++) {
                 if (i == j) continue;
                 if (unitSlots[j] == null) {
@@ -121,10 +129,10 @@ public class UnitsInformation : MonoBehaviour, IUnit
                     }
                     continue;
                 }
-                if (unitSlots[j].slotEmpty) continue;
-                if (unitSlots[i].isSlotHero) {
+                if (unitSlots[j].IsEmpty()) continue;
+                if (unitSlots[i].IsHero()) {
                     if (i < j) {
-                        if (unitSlots[j].isSlotHero) {
+                        if (unitSlots[j].IsHero()) {
                             if (unitSlots[j].heroObject.heroLevel > unitSlots[i].heroObject.heroLevel) {
                                 SwapUnitsPosition(i, j);
                             }
@@ -132,13 +140,13 @@ public class UnitsInformation : MonoBehaviour, IUnit
                     }
                 } else {
                     if (i < j) {
-                        if (unitSlots[j].isSlotHero) {
+                        if (unitSlots[j].IsHero()) {
                             SwapUnitsPosition(i, j);
                         } else {
-                            if (unitSlots[j].unitObject.unitTier > unitSlots[i].unitObject.unitTier) {
+                            if (unitSlots[j].GetUnitTier() > unitSlots[i].GetUnitTier()) {
                                 SwapUnitsPosition(i, j);
-                            } else if (unitSlots[j].unitObject.unitTier == unitSlots[i].unitObject.unitTier) {
-                                if (unitSlots[j].howManyUnits > unitSlots[i].howManyUnits) {
+                            } else if (unitSlots[j].GetUnitTier() == unitSlots[i].GetUnitTier()) {
+                                if (unitSlots[j].GetUnitCount() > unitSlots[i].GetUnitCount()) {
                                     SwapUnitsPosition(i, j);
                                 }
                             }
@@ -153,10 +161,14 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     #region Setters
 
-    public virtual void SetUnitStatus (int[] unitInfo){
-        for (int i = 0; i < 7; i++){
+    public virtual void SetUnitStatus (short[] unitInfo){
+        for (short i = 0; i < 7; i++){
             unitSlots[i].SetSlotStatus(unitInfo[i * 2], unitInfo[i * 2 + 1]);
         }
+    }
+
+    public virtual void SetSlotStatus (short index, short count, short id){
+
     }
 
     #endregion
@@ -167,10 +179,27 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public List<UnitSlot> GetUnits () { return unitSlots; }
 
-    public float GetMovementPoints (){
+    public short GetSameUnitSlotIndex (short id){
+        short emptySlotIndex = 7;
+        for (short i = 0; i < unitSlots.Count; i++){
+            if (unitSlots[i].GetId() == id) return i;
+            else if (unitSlots[i].IsEmpty()) emptySlotIndex = i;
+        }
+        return emptySlotIndex;
+    }
+
+    public List<short> GetEmptySlots(){
+        List<short> list = new List<short>();
+        for (short i = 0; i < 7; i++){
+            if (unitSlots[i].IsEmpty()) list.Add(i);
+        }
+        return list;
+    }
+
+    public float GetMovementPoints(){
         float movement = 10000f;
-        for (int i = 0; i < 7; i++){
-            if (!unitSlots[i].slotEmpty){
+        for (short i = 0; i < 7; i++){
+            if (!unitSlots[i].IsEmpty()){
                 if (unitSlots[i].GetMovementPoints() < movement){
                     movement = unitSlots[i].GetMovementPoints();
                 }
@@ -181,7 +210,7 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public bool IsArmyEmpty (){
         foreach (UnitSlot unit in unitSlots){
-            if (!unit.slotEmpty) return false;
+            if (!unit.IsEmpty()) return false;
             else continue;
         }
         return true;
@@ -189,13 +218,13 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public bool AreUnitSlotsSameType (short a, short b)
     {
-        if (unitSlots[a].unitID == unitSlots[b].unitID) return true;
+        if (unitSlots[a].GetId() == unitSlots[b].GetId()) return true;
         else return false;
     }
 
     public bool AreUnitSlotsSameType (short a, UnitSlot otherArmyUnit)
     {
-        if (unitSlots[a].unitID == otherArmyUnit.unitID) return true;
+        if (unitSlots[a].GetId() == otherArmyUnit.GetId()) return true;
         else return false;
     }
 

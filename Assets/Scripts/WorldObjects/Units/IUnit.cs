@@ -21,7 +21,7 @@ public interface IUnit
 
     // Setters
 
-    public void SetUnitStatus (int[] unitInfo);
+    public void SetUnitStatus (short[] unitInfo);
 
     // Getters
 

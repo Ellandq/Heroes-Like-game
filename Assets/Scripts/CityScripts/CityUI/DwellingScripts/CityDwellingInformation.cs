@@ -19,7 +19,7 @@ public class CityDwellingInformation : MonoBehaviour
             if (cityDwellings.Count > 0){
                 for (int i = 0; i < cityDwellings.Count; i++){
                     if (cityDwellings[i] != null){
-                        cityDwellingUnitCount[i] += (cityDwellings[i].unitWeeklyGain / 7);
+                        cityDwellingUnitCount[i] += cityDwellings[i].unitWeeklyGain / 7;
                     }
                 }
             }

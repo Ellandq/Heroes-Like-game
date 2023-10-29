@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class SceneStateManager
 {
     [Header ("City scene information")]
-    public static GameObject displayedCity;
+    public static City displayedCity;
     public static Army interactingArmy;
 
     [Header ("Battle Scene Information")]
-    public static GameObject siegedCity;
+    public static City siegedCity;
     public static Army attackingArmy;
     public static Army defendingArmy;
 
@@ -22,7 +22,7 @@ public class SceneStateManager
     [Header ("Player Information")]
     public static List<PlayerTag> humanPlayers;
 
-    public static void EnterCity (GameObject cityToEnter)
+    public static void EnterCity (City cityToEnter)
     {
         displayedCity = cityToEnter;
         CityFraction displayedCityFraction = displayedCity.GetComponent<City>().GetFraction();
@@ -39,7 +39,7 @@ public class SceneStateManager
         GameManager.Instance.ExitCity();
     }
 
-    public static void StartBattle (Army _attackingArmy, Army _defendingArmy, GameObject _siegedCity = null){
+    public static void StartBattle (Army _attackingArmy, Army _defendingArmy, City _siegedCity = null){
         attackingArmy = _attackingArmy;
         defendingArmy = _defendingArmy;
         siegedCity = _siegedCity;

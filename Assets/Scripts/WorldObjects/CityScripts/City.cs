@@ -10,11 +10,8 @@ public class City : WorldObject, IObjectInteraction
     [SerializeField] private GameObject flag;
 
     [Header("Main city information")]
-    private Player player;
     private CityFraction cityFraction;
-    private Sprite cityIcon;
     private bool canBeSelectedByCurrentPlayer;
-    private bool cityBuildingAlreadybuilt;
 
     [Header("City Enterance Information")]
     [SerializeField] private GameObject cityEnterance;
@@ -30,15 +27,11 @@ public class City : WorldObject, IObjectInteraction
 
     public void Initialize (Vector2Int gridPosition, float rotation, 
         PlayerTag ownedByPlayer, CityFraction cityFraction, 
-        int [] cityBuildingStatus, int [] cityGarrison)
+        int [] cityBuildingStatus, short [] cityGarrison)
     {
         Initialize(gridPosition, rotation, ObjectType.City);
         ChangeOwningPlayer(ownedByPlayer);
         this.cityFraction = cityFraction;
-        
-        cityIcon = GetCitySprite();
-        cityBuildingAlreadybuilt = false;
-
 
         unitsInformation.SetUnitStatus(cityGarrison);
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
@@ -53,56 +46,34 @@ public class City : WorldObject, IObjectInteraction
         enteranceCells = new List<PathNode>();
     }
 
-    private Sprite GetCitySprite (){
-        return Resources.Load<Sprite>("CityIcons/" + cityFraction.ToString() + "/" + cityFraction.ToString() + "CityIcon_PlaceHolder");
-    }
+    #endregion
 
     #region Player Management
 
-    public override void ChangeOwningPlayer(PlayerTag playerTag)
+    public override void ChangeOwningPlayer(PlayerTag ownedByPlayer)
     {
-        if (player != null){
-            player
-        }
-        if (playerTag != PlayerTag.None){
+        PlayerManager.Instance.GetPlayer(GetPlayerTag()).RemoveObject(this);
+        base.ChangeOwningPlayer(ownedByPlayer);
+        if (ownedByPlayer != PlayerTag.None){
             flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = PlayerManager.Instance.GetPlayerColour(playerTag);
+            flag.GetComponent<MeshRenderer>().material.color = PlayerManager.Instance.GetPlayerColour(GetPlayerTag());
         }else{
             flag.SetActive(false);
         }
-        base.ChangeOwningPlayer(playerTag);
-    }
-
-    private void ChangeOwningPlayer (PlayerTag playerTag)
-    {
-        ownedByPlayer.GetComponent<Player>().ownedCities.Remove(this.gameObject);
-        if (playerTag == PlayerTag.None){
-            ownedByPlayer = _ownedByPlayer;
-            flag.SetActive(true);
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }else{
-            ownedByPlayer = _ownedByPlayer;
-            flag.GetComponent<MeshRenderer>().material.color = _ownedByPlayer.GetComponent<Player>().playerColor;
-        }
-        cityDwellingInformation.ChangeOwningPlayer(ownedByPlayer.GetComponent<Player>());
-        ownedByPlayer.GetComponent<Player>().ownedCities.Add(this.gameObject);
-        ownedByPlayer.GetComponent<Player>().onCityAdded?.Invoke();
-    }
-
-    // Remove the owning player
-    public void RemoveOwningPlayer ()
-    {
-        ownedByPlayer = PlayerManager.Instance.neutralPlayer;
-        flag.SetActive(false);
+        Player player = PlayerManager.Instance.GetPlayer(GetPlayerTag());
+        player.AddObject(this);
+        buildingHandler.ChangeOwningPlayer(player);
+        player.onCityAdded?.Invoke();
     }
 
     #endregion
     
+    #region Updates
+
     // Check if the city can be selected by a given player (on new turn update)
-    private void UpdateCitySelectionAvailability(Player _player)
+    private void UpdateCitySelectionAvailability(PlayerTag tag)
     {
-        if (_player.gameObject.name  == ownedByPlayer.name){
-            cityBuildingAlreadybuilt = false;
+        if (tag == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -110,101 +81,72 @@ public class City : WorldObject, IObjectInteraction
     }
 
     // The daily update for a city
-    private void CityDailyUpdate ()
-    {
-        cityDwellingInformation.AddDailyUnits();
+    private void CityDailyUpdate (){
+        buildingHandler.DailyUpdate();
     }
+
+    #endregion
 
     #region Interaction Management
 
-    // Interaction with a city by a given army
-    public void CityInteraction (GameObject interactingArmy)
-    {
-        Debug.Log("Interacting army with city: " + interactingArmy.name);
-        if (interactingArmy.GetComponent<Army>().ownedByPlayer == ownedByPlayer){
-            GameManager.Instance.EnterCity(this.gameObject, cityFraction, interactingArmy.GetComponentInParent<Army>());
+    public void Interact<T> (T other){
+        Army army = other as Army;
+        Debug.Log("Interacting army with city: " + army.gameObject.name);
+        if (army.GetPlayerTag() == GetPlayerTag()){
+            GameManager.Instance.EnterCity(this, cityFraction, army);
         }else{
             if (IsCityEmpty()){
-                ChangeOwningPlayer(interactingArmy.GetComponent<Army>().ownedByPlayer);
+                ChangeOwningPlayer(army.GetPlayerTag());
             }else{
                 Debug.Log("Do battle");
             }
         }
     }
 
-    // Interaction with a city
-    public void CityInteraction ()
-    {
-        GameManager.Instance.EnterCity(this.gameObject, cityFraction);
+    public void Interact (){
+        GameManager.Instance.EnterCity(this, cityFraction);
     }
 
     #endregion
 
-    // Return a list of city enterences nodes
-    public void GetEnteranceInformation (List <PathNode> _enteranceList)
-    {
+    #region Setters
+    
+    public void SetEnteranceInformation (List <PathNode> _enteranceList){
         enteranceCells = _enteranceList;
     }
 
-    // Return the current city rotation
-    public float GetCityRotation ()
-    {
-        return rotation.y;
+    public void AddUnits (short unitID, short unitCount, short garrisonIndex){
+        unitsInformation.AddUnits(unitID, unitCount, garrisonIndex);
     }
 
-    // Check if City is empty
-    private bool IsCityEmpty ()
-    {
-        if (!garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) return false;
-        if (!garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) return false;
-        return true;
-    }
+    #endregion
 
-    // Return a list of id's of empty garrison slots
-    public List<int> GetEmptyGarrisonSlotCount ()
-    {
-        List<int> emptySlots = new List<int>();
-        if (garrisonSlots[0].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(0);
-        if (garrisonSlots[1].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(1);
-        if (garrisonSlots[2].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(2);
-        if (garrisonSlots[3].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(3);
-        if (garrisonSlots[4].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(4);
-        if (garrisonSlots[5].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(5);
-        if (garrisonSlots[6].GetComponent<UnitSlot>().slotEmpty) emptySlots.Add(6);
-        return emptySlots;
+    #region Getters
+
+    private Sprite GetCitySprite (){
+        return Resources.Load<Sprite>("CityIcons/" + cityFraction.ToString() + "/" + cityFraction.ToString() + "CityIcon_PlaceHolder");
     }
 
     public CityFraction GetFraction () { return cityFraction; }
-    
-    // Return an id of the same unit type
-    public int GetSameUnitSlotIndex (int id)
-    {
-        if (garrisonSlots[0].GetComponent<UnitSlot>().unitID == id) return 0;
-        if (garrisonSlots[1].GetComponent<UnitSlot>().unitID == id) return 1;
-        if (garrisonSlots[2].GetComponent<UnitSlot>().unitID == id) return 2;
-        if (garrisonSlots[3].GetComponent<UnitSlot>().unitID == id) return 3;
-        if (garrisonSlots[4].GetComponent<UnitSlot>().unitID == id) return 4;
-        if (garrisonSlots[5].GetComponent<UnitSlot>().unitID == id) return 5;
-        if (garrisonSlots[6].GetComponent<UnitSlot>().unitID == id) return 6;
-        return 7;
-    }
-
-    // Add units to a selected garrison slot
-    public void AddUnits (int unitID, int unitCount, int garrisonIndex){
-        if (garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().slotEmpty){
-            garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().SetSlotStatus(unitID, unitCount);
-        }else{
-            garrisonSlots[garrisonIndex].GetComponent<UnitSlot>().AddUnits(unitCount);
-        }
-    }
 
     public ResourceIncome GetIncome (){
         return buildingHandler.GetCityIncome();
     }
+
+    public List<short> GetEmptyGarrisonSlotCount (){
+        return unitsInformation.GetEmptySlots();
+    }
+
+    public int GetSameUnitSlotIndex (short id){
+        return unitsInformation.GetSameUnitSlotIndex(id);
+    }
+
+    private bool IsCityEmpty (){
+        return unitsInformation.IsArmyEmpty();
+    }
+
+    public bool IsSelectableByCurrentPlayer () { return canBeSelectedByCurrentPlayer; }
+
+    #endregion
 
 }

@@ -69,6 +69,13 @@ public class CityBuildingHandler : MonoBehaviour
         }
     }
 
+    public void ChangeOwningPlayer (Player player) { cityDwellingInformation.ChangeOwningPlayer(player); }
+
+    public void DailyUpdate(){
+        buildingAlreadybuilt = false;
+        cityDwellingInformation.AddDailyUnits();
+    }
+
     public ResourceIncome GetCityIncome (){
         int cityGoldProduction;
         if (cityBuildings[0] == CityBuildingState.Built){

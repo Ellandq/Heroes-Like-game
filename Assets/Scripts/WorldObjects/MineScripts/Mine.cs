@@ -41,6 +41,10 @@ public class Mine : WorldObject, IEnteranceInteraction
         GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance);
     }
 
+    public void SetEnteranceInformation (List <PathNode> enteranceList){
+        enteranceCells = enteranceList;
+    }
+
     #endregion
 
     #region Player Management
@@ -76,22 +80,15 @@ public class Mine : WorldObject, IEnteranceInteraction
         }
     }
 
-    public void Interact (){
-
-    }
-
-    private bool IsMineEmpty (){
-        return unitsInformation.IsArmyEmpty();
-    }
-
-    public void SetEnteranceInformation (List <PathNode> enteranceList)
-    {
-        enteranceCells = enteranceList;
-    }
+    public void Interact (){ } 
 
     #endregion
 
     public ResourceIncome GetIncome (){
         return new ResourceIncome(mineIncome, mineType);
+    }
+
+    private bool IsMineEmpty (){
+        return unitsInformation.IsArmyEmpty();
     }
 }

@@ -225,13 +225,13 @@ public class GameManager : MonoBehaviour
 
     #region Scene Management
 
-    public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction)
+    public void EnterCity (City cityToEnter, CityFraction _cityFraction)
     {
         UpdateGameState(GameState.CityEntered);
         SceneStateManager.EnterCity(cityToEnter);
     }
 
-    public void EnterCity (GameObject cityToEnter, CityFraction _cityFraction, Army _interactingArmy)
+    public void EnterCity (City cityToEnter, CityFraction _cityFraction, Army _interactingArmy)
     {
         UpdateGameState(GameState.CityEntered);
         SceneStateManager.interactingArmy = _interactingArmy;

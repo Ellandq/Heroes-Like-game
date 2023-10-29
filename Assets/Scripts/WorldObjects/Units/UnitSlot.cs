@@ -10,15 +10,15 @@ public class UnitSlot : MonoBehaviour
     private UnitsInformation unitsInformation;
 
     [Header ("Slot Information")]
-    public bool slotEmpty = true;
-    public bool isSlotHero;
-    public int unitID;
-    public float movementPoints;
+    private bool isEmpty = true;
+    private bool isHero;
+    private short unitId;
+    private float movementPoints;
 
     [Header ("Unit Information")]  
-    public UnitObject unitObject;
-    public UnitName unitName;
-    public int howManyUnits;
+    private UnitObject unitObject;
+    private UnitName unitName;
+    private short unitCount;
 
 
     [Header ("Hero Information")]
@@ -29,29 +29,29 @@ public class UnitSlot : MonoBehaviour
         this.unitsInformation = unitsInformation;
     }    
 
-    public void ChangeSlotStatus(int _unitId, int _howManyUnits, float _movementPoints)
+    public void ChangeSlotStatus(short unitId, short unitCount, float movementPoints)
     { 
-        if (_unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
+        if (unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
         {
-            isSlotHero = true;
-            slotEmpty = false;
-            unitID = _unitId;
-            howManyUnits = 1;
-            movementPoints = _movementPoints;
+            isHero = true;
+            isEmpty = false;
+            this.unitId = unitId;
+            this.unitCount = 1;
+            this.movementPoints = movementPoints;
 
             unitName = UnitName.Empty;
             unitObject = null;
 
-            heroTag = (HeroTag)(unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
+            heroTag = (HeroTag)(unitId - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
             heroObject = HeroesManager.Instance.GetHeroObject(heroTag);
         }
-        else if (_howManyUnits == 0 | _unitId == 0)
+        else if (unitCount == 0 | unitId == 0)
         {
-            isSlotHero = false;
-            slotEmpty = true;
-            unitID = 0;
-            howManyUnits = 0;
-            movementPoints = 0f;
+            isHero = false;
+            isEmpty = true;
+            this.unitId = 0;
+            this.unitCount = 0;
+            this.movementPoints = 0f;
 
             unitName = UnitName.Empty;
             unitObject = null;
@@ -61,14 +61,14 @@ public class UnitSlot : MonoBehaviour
 
             return;
         }else{
-            isSlotHero = false;
-            slotEmpty = false;
-            unitID = _unitId;
-            howManyUnits = _howManyUnits;
-            movementPoints = _movementPoints;
+            isHero = false;
+            isEmpty = false;
+            this.unitId = unitId;
+            this.unitCount = unitCount;
+            this.movementPoints = movementPoints;
 
-            unitName = (UnitName)unitID;
-            unitObject = UnitManager.Instance.GetUnitObject(unitID);
+            unitName = (UnitName)unitId;
+            unitObject = UnitManager.Instance.GetUnitObject(unitId);
 
             heroTag = HeroTag.Empty;
             heroObject = null;
@@ -76,32 +76,32 @@ public class UnitSlot : MonoBehaviour
         
     }
 
-    public void SetSlotStatus(int _unitId, int _howManyUnits)
+    public void SetSlotStatus(short unitId, short unitCount)
     {       
-        if (_howManyUnits == 0){
+        if (unitCount == 0){
             return;
         }
-        if (_unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
+        if (unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
         {
-            isSlotHero = true;
-            slotEmpty = false;
-            unitID = _unitId;
-            _howManyUnits = 1;
+            isHero = true;
+            isEmpty = false;
+            this.unitId = unitId;
+            this.unitCount = 1;
 
             unitName = UnitName.Empty;
             unitObject = null;
 
-            heroTag = (HeroTag)(unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
+            heroTag = (HeroTag)(unitId - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
             heroObject = HeroesManager.Instance.GetHeroObject(heroTag);
 
             movementPoints = heroObject.mapMovement * 100; 
         }else{
-            slotEmpty = false;
-            unitID = _unitId; 
-            howManyUnits = _howManyUnits;
+            isEmpty = false;
+            this.unitId = unitId; 
+            this.unitCount = unitCount;
 
-            unitName = (UnitName)unitID;
-            unitObject = UnitManager.Instance.GetUnitObject(unitID);
+            unitName = (UnitName)unitId;
+            unitObject = UnitManager.Instance.GetUnitObject(unitId);
 
             heroTag = HeroTag.Empty;
             heroObject = null;
@@ -112,8 +112,8 @@ public class UnitSlot : MonoBehaviour
 
     public void RemoveUnits()
     {
-        slotEmpty = true;
-        isSlotHero = false;
+        isEmpty = true;
+        isHero = false;
 
         unitName = UnitName.Empty;
         unitObject = null;
@@ -121,14 +121,14 @@ public class UnitSlot : MonoBehaviour
         heroTag = HeroTag.Empty;
         heroObject = null;
 
-        unitID = 0;
-        howManyUnits = 0;
+        unitId = 0;
+        unitCount = 0;
         movementPoints = 0f;
     }
 
-    public void AddUnits (int _unitCount)
+    public void AddUnits (short _unitCount)
     {
-        howManyUnits += _unitCount;
+        unitCount += _unitCount;
     }
 
     public void RestoreMovementPoints ()
@@ -140,17 +140,29 @@ public class UnitSlot : MonoBehaviour
         }
     }
 
-    public void RemoveMovementPoints (int movmentPointsToRemove)
+    public void RemoveMovementPoints (short movmentPointsToRemove)
     {
-        if (!slotEmpty){
+        if (!isEmpty){
             movementPoints -= movmentPointsToRemove;
         }
     }
 
+    public short GetUnitTier () { return unitObject.unitTier; }
+
+    public short GetId() { return unitId; }
+
+    public short GetUnitCount () { return unitCount; }
+    
     public float GetMovementPoints ()
     {
         return movementPoints;
     }
+
+    public bool IsHero () { return isHero; }
+
+    public bool IsEmpty () { return isEmpty; }
+
+    public UnitName GetUnitName () { return unitName; }
 
     public UnitsInformation GetUnitsInformation () { return unitsInformation; }
 }

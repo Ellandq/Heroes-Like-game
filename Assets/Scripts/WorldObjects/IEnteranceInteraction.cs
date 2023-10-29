@@ -4,5 +4,9 @@ using UnityEngine;
 
 public interface IEnteranceInteraction
 {
-    
+    public void SetEnteranceCells();
+
+    public List<PathNode> GetEnteranceList ();
+
+    public T GetConnectedObject <T> ();
 }

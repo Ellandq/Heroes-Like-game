@@ -73,7 +73,7 @@ public class PlayerManager : MonoBehaviour
             players.Add(pl.GetComponent<Player>());
             pl.transform.parent = transform;
             pl.gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
-            players[i].GetComponent<Player>().playerColor = GetPlayerColour(allPlayers[i]);
+            players[i].playerColor = GetPlayerColour(allPlayers[i]);
             players[i].GetComponent<Player>().playerTag = allPlayers[i];
 
         }
@@ -134,4 +134,4 @@ public enum PlayerState{
 }
 
 [System.Serializable]
-public class UnityPlayerEvent : UnityEvent<Player> { }
+public class UnityPlayerEvent : UnityEvent<PlayerTag> { }

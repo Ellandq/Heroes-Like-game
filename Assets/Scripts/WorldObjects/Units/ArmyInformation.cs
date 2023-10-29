@@ -8,9 +8,11 @@ public class ArmyInformation : UnitsInformation
 {
     [SerializeField] private Sprite armyIcon;
 
+    public ArmyInformation(short[] unitInfo) : base(unitInfo){}
+
     #region Movement points manipulation
 
-    public void RemoveMovementPoints(int movementCost) {
+    public void RemoveMovementPoints(short movementCost) {
         for (int i = 0; i < 7; i++){
             unitSlots[i].RemoveMovementPoints(movementCost);
         }
@@ -63,10 +65,10 @@ public class ArmyInformation : UnitsInformation
     private void UpdateArmyInformation ()
     {
         AdjustUnitPosition();
-        if (unitSlots[0].isSlotHero){
-            armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+        if (unitSlots[0].IsHero()){
+            armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].GetId() - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
         }else{
-            armyIcon = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unitSlots[0].unitID));
+            armyIcon = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unitSlots[0].GetId()));
         }
     }
 
@@ -74,10 +76,10 @@ public class ArmyInformation : UnitsInformation
     {
         otherArmy.UpdateArmyInformation();
         AdjustUnitPosition();
-        if (unitSlots[0].isSlotHero){
-            armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+        if (unitSlots[0].IsHero()){
+            armyIcon = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unitSlots[0].GetId() - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
         }else{
-            armyIcon = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unitSlots[0].unitID));
+            armyIcon = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unitSlots[0].GetId()));
         }
     }
     
@@ -85,7 +87,7 @@ public class ArmyInformation : UnitsInformation
 
     #region Setters
 
-    public override void SetUnitStatus (int[] unitInfo){
+    public override void SetUnitStatus (short[] unitInfo){
         base.SetUnitStatus(unitInfo);
         UpdateArmyInformation();
     }

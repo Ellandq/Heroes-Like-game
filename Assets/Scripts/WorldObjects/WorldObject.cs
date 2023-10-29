@@ -58,11 +58,6 @@ public class WorldObject : MonoBehaviour
 
     public virtual PlayerTag GetPlayerTag () { return ownedByPlayer; }
 
-    public virtual List<UnitSlot> GetUnitSlots (){
-        Debug.LogError("Invalid request of: List<UnitSlot> from: " + this.gameObject.name);
-        return null;
-    }
-
     public virtual List<int> GetConvertedObjectInformation (){
         return new List<int>();
     }

@@ -12,7 +12,8 @@ public class Army : WorldObject, IObjectInteraction
     public UnityEvent onMovementPointsChanged;
 
     [Header("Army information")]
-    [SerializeField] private ArmyInformation unitsInformation;
+    [SerializeField] private ArmyHighlight armyHighlight;
+    private ArmyInformation unitsInformation;
     private int maxMovementPoints;
     private int movementPoints;
     private bool canBeSelectedByCurrentPlayer;
@@ -22,10 +23,10 @@ public class Army : WorldObject, IObjectInteraction
 
     #region Initialization
 
-    public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, int [] armyUnits)
+    public void Initialize(Vector2Int gridPosition, float rotation, PlayerTag ownedByPlayer, short [] armyUnits)
     { 
         Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
-        unitsInformation.SetUnitStatus(armyUnits);
+        unitsInformation = new ArmyInformation(armyUnits);
     }
     
     public override void FinalizeObject ()
@@ -45,9 +46,9 @@ public class Army : WorldObject, IObjectInteraction
 
     #region Movement-and-Selection
 
-    private void UpdateArmySelectionAvailability(Player player)
+    private void UpdateArmySelectionAvailability(PlayerTag tag)
     {
-        if (player.GetPlayerTag() == GetPlayerTag()){
+        if (tag == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -55,22 +56,19 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Updates this army grid position
-    public void UpdateArmyGridPosition ()
-    {
+    public void UpdateArmyGridPosition (){
         GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
         gridPosition = GameGrid.Instance.GetGridPosFromWorld(this.gameObject.transform.position);
         GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(this.gameObject);
     }
 
     // Check this army movement points based on its units
-    private void UpdateMaxMovementPoints()
-    {
+    private void UpdateMaxMovementPoints(){
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
     }
 
     // Restore this army movement points based on its units
-    private void RestoreMovementPoints ()
-    {
+    private void RestoreMovementPoints (){
         unitsInformation.RestoreMovementPoints();
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
@@ -78,24 +76,21 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Add a selected numbber of movement points
-    public void AddMovementPoints(int pointsToAdd)
-    {
+    public void AddMovementPoints(int pointsToAdd){
         movementPoints += pointsToAdd;
         if (movementPoints > maxMovementPoints) movementPoints = maxMovementPoints;
         onMovementPointsChanged?.Invoke();
     }
 
     // Remove a selected number of movement points
-    public void RemoveMovementPoints(int _pathCost)
-    {
-        unitsInformation.RemoveMovementPoints(_pathCost);
-        movementPoints -= _pathCost;
+    public void RemoveMovementPoints(short pathCost){
+        unitsInformation.RemoveMovementPoints(pathCost);
+        movementPoints -= pathCost;
         onMovementPointsChanged?.Invoke();
     }
 
     // Check if army can move to on a selected path
-    public bool CanArmyMoveToPathNode (int _nextPathCost)
-    {
+    public bool CanArmyMoveToPathNode (int _nextPathCost){
         if (movementPoints >= _nextPathCost) return true;
         else return false;
     }
@@ -111,6 +106,7 @@ public class Army : WorldObject, IObjectInteraction
         if (interactingArmy.GetPlayerTag() == GetPlayerTag()){
             UIManager.Instance.UpdateArmyInterface(interactingArmy, this);
         }else{
+            
         }
     }
 

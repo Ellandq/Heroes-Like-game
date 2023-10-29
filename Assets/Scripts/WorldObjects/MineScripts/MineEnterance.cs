@@ -3,24 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MineEnterance : MonoBehaviour
+public class MineEnterance : MonoBehaviour, IEnteranceInteraction
 {
-    [SerializeField] Mine mine;
+    [SerializeField] private Mine mine;
     private List <PathNode> enteranceList;
-    private Vector2Int gridPosition;
-    private float mineRotation;
 
-    private void Start ()
-    {
-        gridPosition = GameGrid.Instance.GetGridPosFromWorld(transform.TransformPoint(Vector3.zero));
-        mineRotation = mine.GetMineRotation();
+
+    private void Start (){
         enteranceList = new List<PathNode>();
-        GetEnteranceCells();
+        SetEnteranceCells();
     }
     
-    private void GetEnteranceCells()
+    public void SetEnteranceCells()
     {
-        if (mineRotation == 0){
+        Vector2Int gridPosition = GameGrid.Instance.GetGridPosFromWorld(transform.TransformPoint(Vector3.zero));
+        if (mine.GetRotation() == 0){
             try{
                 enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
@@ -36,7 +33,7 @@ public class MineEnterance : MonoBehaviour
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (mineRotation == 90){
+        }else if (mine.GetRotation() == 90){
             try{
                 enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
@@ -52,7 +49,7 @@ public class MineEnterance : MonoBehaviour
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (mineRotation == 180){
+        }else if (mine.GetRotation() == 180){
             try{
                 enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
@@ -68,7 +65,7 @@ public class MineEnterance : MonoBehaviour
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (mineRotation == 270){
+        }else if (mine.GetRotation() == 270){
             try{
                 enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
@@ -88,7 +85,11 @@ public class MineEnterance : MonoBehaviour
             Debug.Log("Enterance list of object: " + this.transform.parent.gameObject.name + " is empty.");
             return;
         }
-        this.gameObject.GetComponent<ObjectEnterance>().enteranceNodes = enteranceList;
-        mine.GetEnteranceInformation(enteranceList);
+    }
+
+    public List<PathNode> GetEnteranceList () { return enteranceList; }
+
+    public T GetConnectedObject<T>(){
+        return (T)(object)mine;
     }
 }

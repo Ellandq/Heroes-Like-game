@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : WorldObject, IEnteranceInteraction
+public class Mine : WorldObject
 {
     [SerializeField] private GameObject flag;
 
@@ -12,8 +12,7 @@ public class Mine : WorldObject, IEnteranceInteraction
     private ResourceIncome mineIncome;
 
     [Header("Mine Enterance Information")]
-    [SerializeField] private GameObject mineEnterance;
-    private List<PathNode> enteranceCells;
+    [SerializeField] private MineEnterance mineEnterance;
 
     [Header("Mine Garrison references")]
     private UnitsInformation unitsInformation;
@@ -21,14 +20,13 @@ public class Mine : WorldObject, IEnteranceInteraction
     #region Initialization
 
     private void Awake (){
-        enteranceCells = new List<PathNode>();
         mineIncome = new ResourceIncome(new int[]{
             1000, 2, 2, 1, 1, 1, 1
         });
         
     }
 
-    public void Initialize (Vector2Int gridPosition, float rotation, PlayerTag playerTag, List<ResourceType> mineType, int [] garrisonUnits)
+    public void Initialize (Vector2Int gridPosition, float rotation, PlayerTag playerTag, List<ResourceType> mineType, short [] garrisonUnits)
     {
         Initialize(gridPosition, rotation, ObjectType.Mine);
         unitsInformation = new UnitsInformation(garrisonUnits);
@@ -38,11 +36,7 @@ public class Mine : WorldObject, IEnteranceInteraction
     public override void FinalizeObject()
     {
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, GetRotation(), gameObject);
-        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance);
-    }
-
-    public void SetEnteranceInformation (List <PathNode> enteranceList){
-        enteranceCells = enteranceList;
+        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance.gameObject);
     }
 
     #endregion
@@ -84,6 +78,10 @@ public class Mine : WorldObject, IEnteranceInteraction
 
     #endregion
 
+    #region Getters
+
+    public List<PathNode> GetEnteranceList () { return mineEnterance.GetEnteranceList(); }
+    
     public ResourceIncome GetIncome (){
         return new ResourceIncome(mineIncome, mineType);
     }
@@ -91,4 +89,6 @@ public class Mine : WorldObject, IEnteranceInteraction
     private bool IsMineEmpty (){
         return unitsInformation.IsArmyEmpty();
     }
+
+    #endregion
 }

@@ -7,22 +7,25 @@ using UnityEngine.Events;
 public class ObjectSelector : MonoBehaviour
 {
     public static ObjectSelector Instance;
+
+    [Header ("Events")]
     public UnityEvent onSelectedObjectChange;
-    [SerializeField] private GameObject armyHighlight;
 
     [Header ("Camera referances: ")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Camera uiCamera;
 
     [Header("Raycast layers: ")]
-    [SerializeField] LayerMask layersToHit;
-    [SerializeField] LayerMask uiLayers;
+    [SerializeField] private LayerMask layersToHit;
+    [SerializeField] private LayerMask uiLayers;
     
     [Header("Object selection information")]
-    [SerializeField] public GameObject lastObjectSelected;
-    [SerializeField] public bool objectSelected = false;
-    [SerializeField] public GameObject selectedObject;
-    [SerializeField] public string selectedObjectTag;
+    private GameObject lastObjectSelected;
+    private bool objectSelected = false;
+    private GameObject selectedObject;
+    private string selectedObjectTag;
+
+    private bool isSelectorActive;
 
     private void Awake () { Instance = this; }
 
@@ -64,53 +67,16 @@ public class ObjectSelector : MonoBehaviour
             // Uses different logic depending on the selected object 
             switch (selectedObjectTag)
             {
-                case "Army":
-                    ArmySelectionLogic();
-                break;
-
-                case "City":
-                    CitySelectionLogic();
-                    
-                break;
-
-                case "CityEnterance":
-                    CityEnteranceSelectionLogic();
-                break;
-
-                case "Mine":
-                    MineSelectionLogic();
-                break;
-
-                case "MineEnterance":
-                    MineEnteranceSelectionLogic();
-                break;
-
-                case "Building":
-                    BuildingSelectionLogic();
-                break;
-
-                case "BuildingEnterance":
-                    BuildingEnteranceSelectionLogic();
-                break;
-
-                case "Dwelling":
-                    DwellingSelectionLogic();
-                break;
-
-                case "DwellingEnterance":
-                    DwellingEnteranceSelectionLogic();
-                break;
-
-                case "Resource":
-                    ResourceSelectionLogic();
-                break;
-
-                case "Artifact":
-                    ArtifactSelectionLogic();
+                case "WorldObject":
+                    //HandleWorldObjects();
                 break;
 
                 case "GridCell":
-                    GridCellSelectionLogic();
+
+                break;
+
+                case "Enterance":
+
                 break;
 
                 default:
@@ -121,10 +87,27 @@ public class ObjectSelector : MonoBehaviour
         }  
     }
 
+    private void HandleWorldObjects (WorldObject obj){
+        if (obj is City){} // TODO
+        else if (obj is Army){} // TODO
+        else if (obj is Mine){} // TODO
+        else if (obj is ResourcesObject){} // TODO
+    }
+
+    private void HandleEnterance (WorldObject obj){
+        if (obj is City){} // TODO
+        else if (obj is Mine){} // TODO
+    }
+
+    private void HandleGridCells (GridCell cell){
+        // TODO
+    }
+
+
     // Adds the selected object
-    public void AddSelectedObject (GameObject _selectedObject)
+    public void AddSelectedObject (WorldObject selectedObject)
     {
-        lastObjectSelected = _selectedObject;
+        lastObjectSelected = selectedObject;
         objectSelected = true;
         CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(_selectedObject);
         if (lastObjectSelected.tag == "Army"){

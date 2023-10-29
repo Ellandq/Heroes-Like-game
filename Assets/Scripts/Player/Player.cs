@@ -81,63 +81,34 @@ public class Player : MonoBehaviour
         }
     }
     
-    // Resets and checks the player resource gain
-    public void UpdateResourceGain()
-    {
+    #region Resource Manipulation
+
+    public void UpdateResourceGain(){
         ResourceIncome income = new ResourceIncome();
+
         foreach (City city in ownedCities){
-            income += city.Get
+            income += city.GetIncome();
         }
 
-        for (int i = 0; i < ownedMines.Count; i++)
-        {
-            switch (ownedMines[i].GetComponent<Mine>().GetMineType())
-            {
-                case ResourceType.Gold:
-                    goldProduction += 1000;
-                break;
-
-                case ResourceType.Wood:
-                    woodProduction += 2;
-                break;
-                
-                case ResourceType.Ore:
-                    oreProduction += 2;
-                break;
-                
-                case ResourceType.Gems:
-                    gemProduction += 1;
-                break;
-                
-                case ResourceType.Mercury:
-                    mercuryProduction += 1;
-                break;
-                
-                case ResourceType.Sulfur:
-                    sulfurProduction += 1;
-                break;
-                
-                case ResourceType.Crystal:
-                    crystalProduction += 1;
-                break;
-                
-            }
-        }  
+        foreach (Mine mine in ownedMines){
+            income += mine.GetIncome();
+        }
     }
 
-    // Gives an approprieate amount of resources to the player on a new day
     private void DailyResourceGain()
     {
         UpdateResourceGain();
         playerResources += resourceIncome;
     }
 
-    // Adds a given resource to the player
     public void AddResources (ResourceIncome resource){ playerResources += resource; }
 
-    // Removes a set amount of resources
     public void RemoveResources (ResourceIncome cost){ playerResources -= cost; }
     
+    #endregion
+
+    #region Update
+
     // A daily player update
     private void PlayerDailyUpdate ()
     {
@@ -155,11 +126,24 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Checks what object is currently selected
+    #endregion
+
     public void GetSelectedObject ()
     {
         lastObjectSelectedByPlayer =  ObjectSelector.Instance.lastObjectSelected;
     }
+
+    private void AddFirstObjectToFollow ()
+    {
+        if (ownedArmies.Count > 0){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedArmies[0].transform.GetChild(0).gameObject);
+            ObjectSelector.Instance.AddSelectedObject(ownedArmies[0].transform.GetChild(0).gameObject);
+        }else if (ownedCities.Count > 0){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0]);
+            ObjectSelector.Instance.AddSelectedObject(ownedCities[0]);
+        }
+    }
+
 
     // Checks if any loose conditions are met
     private void CheckPlayerLooseCondition ()
@@ -195,18 +179,6 @@ public class Player : MonoBehaviour
             mine.ChangeOwningPlayer(PlayerTag.None);
         }
         playerLost = true;
-    }
-
-    // Ads an object to follow on the start of the turn
-    private void AddFirstObjectToFollow ()
-    {
-        if (ownedArmies.Count > 0){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedArmies[0].transform.GetChild(0).gameObject);
-            ObjectSelector.Instance.AddSelectedObject(ownedArmies[0].transform.GetChild(0).gameObject);
-        }else if (ownedCities.Count > 0){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0]);
-            ObjectSelector.Instance.AddSelectedObject(ownedCities[0]);
-        }
     }
 
     private IEnumerator WaitForObjectToBeDestroyed (WorldObject objectToDestroy){

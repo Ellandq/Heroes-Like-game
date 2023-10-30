@@ -113,6 +113,9 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void HandleMine (Mine mine){
+        if (IsSelectedObjectArmy() && (selectedObject as Army).IsMoving()){
+            (selectedObject as Army).Stop();
+        }
         mine.ObjectSelected();
     }
 
@@ -148,176 +151,12 @@ public class ObjectSelector : MonoBehaviour
     private void SetUpSelectorForNewPlayer (PlayerTag tag){
         playerObjectDictionary[currentPlayer] = selectedObject;
         if (playerObjectDictionary[tag] == null){
-            SelectObject()
+            playerObjectDictionary[tag] = PlayerManager.Instance.GetPlayer(tag).GetObjectToSelect();
         }
+        HandleWorldObjects(playerObjectDictionary[tag]);
     }
 
     private bool IsSelectedObjectArmy (){
         return selectedObject != null && selectedObject is Army;
-    }
-
-    // FROM THIS POINT THE METHODS ARE OBSOLETE AND NEED TO BE CHANGED TO WORK WITH THE NEW SYSTEM
-
-
-    // Clears the selection and refreshes UI components on every new turn
-    private void ClearSelection (Player _player)
-    {
-        lastObjectSelected = null;
-        objectSelected = false;
-        if (armyHighlight.activeSelf){
-            armyHighlight.SetActive(false);
-        }
-        onSelectedObjectChange.Invoke();
-    }
-
-    private void ArmySelectionLogic()
-    {
-        if (selectedObject.GetComponentInParent<Army>().canBeSelectedByCurrentPlayer)
-        {
-            if (lastObjectSelected == null || lastObjectSelected.tag != "Army"){
-                AddSelectedObject(selectedObject);
-
-                if (!armyHighlight.activeSelf){
-                    armyHighlight.SetActive(true);
-                }
-                armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
-            }else{
-                if (lastObjectSelected == selectedObject){
-                    lastObjectSelected.GetComponentInParent<Army>().ArmyInteraction();
-                    CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
-                }else {
-                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
-                }
-            }     
-        }   
-        else if(lastObjectSelected != null && lastObjectSelected.tag == "Army")
-        {   
-            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
-        }
-    }
-
-    public void ArmySelectionLogic(GameObject army)
-    {
-        selectedObject = army;
-        if (selectedObject.GetComponentInParent<Army>().canBeSelectedByCurrentPlayer)
-        {
-            if (lastObjectSelected == null){
-                AddSelectedObject(selectedObject);
-
-                if (!armyHighlight.activeSelf){
-                    armyHighlight.SetActive(true);
-                }
-                armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(selectedObject);
-            }else{
-                if (lastObjectSelected == selectedObject){
-                    Debug.Log("Do stuff with this army.");
-                    CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
-                }else {
-                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
-                }
-            }     
-        }   
-        else if(lastObjectSelected != null && lastObjectSelected.tag == "Army")
-        {   
-            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
-        }
-    }
-
-    private void CitySelectionLogic()
-    {
-        if (!objectSelected){
-            if (selectedObject.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
-                AddSelectedObject(selectedObject);
-            }else{
-                armyHighlight.SetActive(false);
-                RemoveSelectedObject();
-            }
-        }else if (lastObjectSelected == selectedObject && lastObjectSelected.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
-            lastObjectSelected.GetComponent<City>().CityInteraction();
-        }
-    }
-
-    private void CityEnteranceSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-        if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
-            }
-        }else {
-            if (selectedObject.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
-                AddSelectedObject(selectedObject);
-            }else{
-                RemoveSelectedObject();
-            }
-            armyHighlight.SetActive(false);
-        }
-    }
-
-    private void MineSelectionLogic()
-    {
-        
-    }
-
-    private void MineEnteranceSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-            if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
-            }
-        }
-    }
-
-    private void BuildingSelectionLogic()
-    {
-        
-    }
-
-    private void BuildingEnteranceSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-            if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
-            }
-        }
-    }
-
-    private void DwellingSelectionLogic()
-    {
-        
-    }
-
-    private void DwellingEnteranceSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-            if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
-            }
-        }
-    }
-
-    private void ResourceSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-            if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
-            }
-        }
-    }
-
-    private void ArtifactSelectionLogic()
-    {
-
-    }
-
-    private void GridCellSelectionLogic()
-    {
-        if (lastObjectSelected != null){
-            if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
-            }
-        }else {
-            RemoveSelectedObject();
-            armyHighlight.SetActive(false);
-        }
     }
 }

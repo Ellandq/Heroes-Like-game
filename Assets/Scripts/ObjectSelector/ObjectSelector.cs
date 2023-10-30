@@ -20,118 +20,144 @@ public class ObjectSelector : MonoBehaviour
     [SerializeField] private LayerMask uiLayers;
     
     [Header("Object selection information")]
-    private GameObject lastObjectSelected;
-    private bool objectSelected = false;
-    private GameObject selectedObject;
-    private string selectedObjectTag;
+    private Dictionary<PlayerTag, WorldObject> playerObjectDictionary;
+    private WorldObject selectedObject;
+    private PlayerTag currentPlayer;
 
     private bool isSelectorActive;
 
     private void Awake () { Instance = this; }
 
     private void Start () {
-        TurnManager.OnNewPlayerTurn += ClearSelection;
+        playerObjectDictionary = InitializePlayerObjectDictionary();
+        TurnManager.OnNewPlayerTurn += SetUpSelectorForNewPlayer;
+        InputManager.Instance.mouseInput.OnLeftMouseButtonDown += CheckForObject;
         GameManager.Instance.StartGame();
     }
 
-    // Checks each frame if the mouse is over an interactible object
-    private void Update ()
+    private Dictionary<PlayerTag, WorldObject> InitializePlayerObjectDictionary()
     {
-        // Checks if the mouse is over UI
-        if (InputManager.Instance.mouseInput.IsMouseOverUI()) return;
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        // Checks if the mouse is over an object
-        if (Physics.Raycast(ray, out hit, 200, layersToHit)){
-            selectedObject = hit.transform.gameObject;
-            selectedObjectTag = selectedObject.tag;
-        }else{
-            selectedObject = null;
-            selectedObjectTag = null;
+        var dictionary = new Dictionary<PlayerTag, WorldObject>();
+        
+        foreach (PlayerTag tag in Enum.GetValues(typeof(PlayerTag))){
+            dictionary[tag] = null;
         }
+        
+        return dictionary;
+    }
 
-        // Checks if the mouse button 0 is pressed
-        if (InputManager.Instance.mouseInput.mouseButtonPressed_0)
+    private void CheckForObject (){
+        if (InputManager.Instance.mouseInput.IsMouseOverUI()) return;
+        GameObject obj = InputManager.Instance.mouseInput.GetMouseOverWorldObject(layersToHit);
+        if (obj != null) SelectObject(obj);
+        else{
+            selectedObject = null;
+        }
+    }
+
+    private void SelectObject (GameObject obj)
+    {
+        switch (obj.tag)
         {
-            if (objectSelected){
-                if(lastObjectSelected.tag == "Army")    // If the last object selected is an army moves towards the selected point or object
-                {
-                    if (lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().isMoving){
-                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().StopMoving();
-                    return;
-                    }
-                }
-            }
+            case "WorldObject":
+                HandleWorldObjects(obj.GetComponentInParent<WorldObject>());
+            break;
 
-            // Uses different logic depending on the selected object 
-            switch (selectedObjectTag)
-            {
-                case "WorldObject":
-                    //HandleWorldObjects();
-                break;
+            case "Enterance":
+                HandleEnterance(obj.GetComponent<ObjectEnterance>());
+            break;
 
-                case "GridCell":
+            case "GridCell":
+                HandleGridCells(obj.GetComponent<GridCell>());
+            break;
 
-                break;
-
-                case "Enterance":
-
-                break;
-
-                default:
-                    selectedObject = null;
-                    selectedObjectTag = null;
-                break;
-            }
-        }  
+            default:
+                selectedObject = null;
+            break;
+        }
+         
     }
 
-    private void HandleWorldObjects (WorldObject obj){
-        if (obj is City){} // TODO
-        else if (obj is Army){} // TODO
-        else if (obj is Mine){} // TODO
-        else if (obj is ResourcesObject){} // TODO
+    public void HandleWorldObjects (WorldObject obj){
+        if (obj is City){
+            HandleCity(obj as City);
+        }
+        else if (obj is Army){
+            HandleArmy(obj as Army);
+        }
+        else if (obj is Mine){
+            HandleMine(obj as Mine);
+        }
+        else if (obj is ResourcesObject){
+            HandleResourceObject(obj as ResourcesObject);
+        }
     }
 
-    private void HandleEnterance (WorldObject obj){
-        if (obj is City){} // TODO
-        else if (obj is Mine){} // TODO
+    private void HandleCity (City city){
+        if (selectedObject == null){
+            city.ObjectSelected();
+            HandleSelectionChange(city);
+        }
+    }
+
+    private void HandleArmy (Army army){
+        if (IsSelectedObjectArmy()){
+            if (selectedObject == army) army.ObjectSelected();
+            else {
+                if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
+                (selectedObject as Army).Move(army.transform.position);
+            }
+        }else {
+            HandleSelectionChange(army);
+        }
+    }
+
+    private void HandleMine (Mine mine){
+        mine.ObjectSelected();
+    }
+
+    private void HandleResourceObject(ResourcesObject rObj){
+        if (IsSelectedObjectArmy()){
+            if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
+            (selectedObject as Army).Move(rObj.transform.position);
+        }
+    }
+
+    private void HandleEnterance (ObjectEnterance enterance){
+        if (IsSelectedObjectArmy()){
+            if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
+            (selectedObject as Army).Move(enterance.transform.position);
+        }
     }
 
     private void HandleGridCells (GridCell cell){
-        // TODO
+        if (IsSelectedObjectArmy()){
+            if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
+            (selectedObject as Army).Move(cell.transform.position);
+        }
     }
 
-
-    // Adds the selected object
-    public void AddSelectedObject (WorldObject selectedObject)
-    {
-        lastObjectSelected = selectedObject;
-        objectSelected = true;
-        CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(_selectedObject);
-        if (lastObjectSelected.tag == "Army"){
-            if (!armyHighlight.activeSelf) armyHighlight.SetActive(true);
-            armyHighlight.GetComponent<ArmyHighlight>().SetHighlitedObject(lastObjectSelected);
+    private void HandleSelectionChange (WorldObject obj){
+        if (selectedObject != null){
+            obj.ObjectDeselected();
         }
+        selectedObject = obj;
         onSelectedObjectChange.Invoke();
     }
 
-    // Removes the selected object
-    public void RemoveSelectedObject ()
-    {
-        if (lastObjectSelected != null && lastObjectSelected.tag == "Army"){
-            try{
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().StopMoving();
-            }catch(NullReferenceException){} 
+    private void SetUpSelectorForNewPlayer (PlayerTag tag){
+        playerObjectDictionary[currentPlayer] = selectedObject;
+        if (playerObjectDictionary[tag] == null){
+            SelectObject()
         }
-        if (armyHighlight.activeSelf){
-            armyHighlight.SetActive(false);
-        }
-        lastObjectSelected = null;
-        objectSelected = false;
-        onSelectedObjectChange.Invoke();
     }
+
+    private bool IsSelectedObjectArmy (){
+        return selectedObject != null && selectedObject is Army;
+    }
+
+    // FROM THIS POINT THE METHODS ARE OBSOLETE AND NEED TO BE CHANGED TO WORK WITH THE NEW SYSTEM
+
 
     // Clears the selection and refreshes UI components on every new turn
     private void ClearSelection (Player _player)
@@ -160,13 +186,13 @@ public class ObjectSelector : MonoBehaviour
                     lastObjectSelected.GetComponentInParent<Army>().ArmyInteraction();
                     CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
                 }else {
-                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
                 }
             }     
         }   
         else if(lastObjectSelected != null && lastObjectSelected.tag == "Army")
         {   
-            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
         }
     }
 
@@ -187,13 +213,13 @@ public class ObjectSelector : MonoBehaviour
                     Debug.Log("Do stuff with this army.");
                     CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(selectedObject);
                 }else {
-                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+                    lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
                 }
             }     
         }   
         else if(lastObjectSelected != null && lastObjectSelected.tag == "Army")
         {   
-            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+            lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
         }
     }
 
@@ -215,7 +241,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
         if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.TransformPoint(Vector3.zero));
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
             }
         }else {
             if (selectedObject.GetComponentInParent<City>().canBeSelectedByCurrentPlayer){
@@ -236,7 +262,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
             if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.TransformPoint(Vector3.zero));
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
             }
         }
     }
@@ -250,7 +276,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
             if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.TransformPoint(Vector3.zero));
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
             }
         }
     }
@@ -264,7 +290,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
             if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.TransformPoint(Vector3.zero));
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
             }
         }
     }
@@ -273,7 +299,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
             if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.TransformPoint(Vector3.zero));
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.TransformPoint(Vector3.zero));
             }
         }
     }
@@ -287,7 +313,7 @@ public class ObjectSelector : MonoBehaviour
     {
         if (lastObjectSelected != null){
             if (lastObjectSelected.tag == "Army"){
-                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().HandleMovement(selectedObject.transform.position);
+                lastObjectSelected.GetComponentInParent<CharacterPathFindingMovementHandler>().Move(selectedObject.transform.position);
             }
         }else {
             RemoveSelectedObject();

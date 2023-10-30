@@ -20,6 +20,7 @@ public class Army : WorldObject, IObjectInteraction
 
     [Header ("Misc.")]
     [SerializeField] private GameObject flag;
+    [SerializeField] private CharacterPathFindingMovementHandler movementHandle;
 
     #region Initialization
 
@@ -46,7 +47,7 @@ public class Army : WorldObject, IObjectInteraction
 
     #region Movement-and-Selection
 
-    private void UpdateArmySelectionAvailability(PlayerTag tag)
+    public void UpdateArmySelectionAvailability(PlayerTag tag)
     {
         if (tag == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
@@ -110,8 +111,35 @@ public class Army : WorldObject, IObjectInteraction
         }
     }
 
-    // Interaction with this army
-    public void Interact () { UIManager.Instance.UpdateArmyInterface(this.gameObject); }
+    public void Interact () { UIManager.Instance.UpdateArmyInterface(this); }
+
+    public override void ObjectSelected(){
+        if (armyHighlight.IsHighlightActive()){
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(gameObject);
+            Interact();
+        }
+        else {
+            armyHighlight.EnableHighlight(true);
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(gameObject);
+        }
+    }
+
+    public override void ObjectDeselected (){
+        armyHighlight.EnableHighlight(false);
+        movementHandle.StopMoving();
+    }
+
+    public void Move (Vector3 pos){
+        movementHandle.HandleMovement(pos);
+    }
+
+    public void Stop (){
+        movementHandle.StopMoving();
+    }
+
+    public bool IsMoving (){
+        return movementHandle.isMoving;
+    }
 
     #endregion
 

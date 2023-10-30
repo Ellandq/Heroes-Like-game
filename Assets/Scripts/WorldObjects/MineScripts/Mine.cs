@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : WorldObject
+public class Mine : WorldObject, IObjectInteraction
 {
     [SerializeField] private GameObject flag;
 
@@ -76,6 +76,10 @@ public class Mine : WorldObject
 
     public void Interact (){ } 
 
+    public override void ObjectSelected(){
+        // TODO
+    }
+    
     #endregion
 
     #region Getters

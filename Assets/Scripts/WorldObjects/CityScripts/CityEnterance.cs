@@ -3,23 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityEnterance : MonoBehaviour
+public class CityEnterance : ObjectEnterance
 {
-    [SerializeField] City city;
-    private List <PathNode> enteranceList;
-    private Vector2Int gridPosition;
-    private float cityRotation;
+    [SerializeField] private City city;
 
-    private void Start ()
-    {
-        gridPosition = GameGrid.Instance.GetGridPosFromWorld(transform.TransformPoint(Vector3.zero));
-        cityRotation = city.GetCityRotation();
-        enteranceList = new List<PathNode>();
-        GetEnteranceCells();
+    private void Start (){
+        SetEnteranceCells();
+        GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(transform.position)).AddOccupyingObject(gameObject);
     }
 
-    private void GetEnteranceCells()
+    private void SetEnteranceCells()
     {
+        List <PathNode> enteranceList = new List<PathNode>();
+        Vector2Int gridPosition = GameGrid.Instance.GetGridPosFromWorld(transform.TransformPoint(Vector3.zero));
+        float cityRotation = city.GetRotation();
+
         if (cityRotation == 0){
             try{
                 enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
@@ -89,7 +87,6 @@ public class CityEnterance : MonoBehaviour
             return;
         }
 
-        this.gameObject.GetComponent<ObjectEnterance>().enteranceNodes = enteranceList;
-        city.GetEnteranceInformation(enteranceList);
+        SetEnteranceList(enteranceList);
     }
 }

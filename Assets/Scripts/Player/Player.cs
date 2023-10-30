@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
 
     [Header("Player basic information")]
     private WorldObject objectToDestroy;
-    private WorldObject lastObjectSelectedByPlayer;
     private PlayerState playerState;
     private PlayerTag playerTag;
     private Color playerColor;
@@ -113,35 +112,35 @@ public class Player : MonoBehaviour
     private void PlayerDailyUpdate ()
     {
         CheckPlayerLooseCondition();
+
+        foreach (City city in ownedCities){
+            city.CityDailyUpdate();
+        }
+
+        DailyResourceGain();
     }
 
     // A player update on a new turn
     public void NewTurnUpdate ()
     {
-        if (lastObjectSelectedByPlayer != null){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(lastObjectSelectedByPlayer);
-            ObjectSelector.Instance.AddSelectedObject(lastObjectSelectedByPlayer);
-        }else{
-            AddFirstObjectToFollow();
+        foreach (City city in ownedCities){
+            city.UpdateCitySelectionAvailability(playerTag);
+        }
+
+        foreach (Army army in ownedArmies){
+            army.UpdateArmySelectionAvailability(playerTag);
         }
     }
 
     #endregion
 
-    public void GetSelectedObject ()
-    {
-        lastObjectSelectedByPlayer =  ObjectSelector.Instance.lastObjectSelected;
-    }
-
-    private void AddFirstObjectToFollow ()
-    {
+    public WorldObject GetObjectToSelect (){
         if (ownedArmies.Count > 0){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedArmies[0].transform.GetChild(0).gameObject);
-            ObjectSelector.Instance.AddSelectedObject(ownedArmies[0].transform.GetChild(0).gameObject);
+            return ownedArmies[0];
         }else if (ownedCities.Count > 0){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(ownedCities[0]);
-            ObjectSelector.Instance.AddSelectedObject(ownedCities[0]);
+            return ownedCities[0];
         }
+        return null;
     }
 
 

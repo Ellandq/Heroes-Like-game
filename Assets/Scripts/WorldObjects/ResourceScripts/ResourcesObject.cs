@@ -25,6 +25,10 @@ public class ResourcesObject : WorldObject, IObjectInteraction
         Destroy(gameObject);
     }
 
+    public override void ObjectSelected(){
+        // TODO
+    }
+
     protected override void OnDestroy()
     {
         GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();

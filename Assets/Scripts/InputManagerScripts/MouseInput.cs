@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,22 @@ using UnityEngine.EventSystems;
 
 public class MouseInput : MonoBehaviour
 {
-    [SerializeField] InputManager inputManager;
+    [SerializeField] private InputManager inputManager;
+
+    [Header("Values")]
     [SerializeField] internal Vector3 screenPosition;
     [SerializeField] internal Vector3 worldPosition;
-    [SerializeField] LayerMask pointerLayersToHit;
-    internal float mouseScrollStatus;
-    LayerMask layersToHit;
 
-    public bool mouseButtonPressed_0;
-    public bool mouseButtonPressed_1;
-    public bool mouseButtonPressed_2;
+    [Header ("States")]
+    internal float mouseScrollStatus;
+    internal bool mouseButtonPressed_0;
+    internal bool mouseButtonPressed_1;
+    internal bool mouseButtonPressed_2;
+
+    [Header ("Events")]
+    public Action OnLeftMouseButtonDown;
+    public Action OnRightMouseButtonDown;
+    public Action OnMiddleMouseButtonDown;
 
     private void Update ()
     {
@@ -29,18 +36,21 @@ public class MouseInput : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseButtonPressed_0 = true;
+            OnLeftMouseButtonDown?.Invoke();
         }else{
             mouseButtonPressed_0 = false;
         }
         if (Input.GetMouseButtonDown(1))
         {
             mouseButtonPressed_1 = true;
+            OnRightMouseButtonDown?.Invoke();
         }else{
             mouseButtonPressed_1 = false;
         }
         if (Input.GetMouseButton(2))
         {
             mouseButtonPressed_2 = true;
+            OnMiddleMouseButtonDown?.Invoke();
         }else{
             mouseButtonPressed_2 = false;
         }
@@ -66,14 +76,12 @@ public class MouseInput : MonoBehaviour
     }
 
     // Returns the object that the mouse is over
-    public GameObject MouseOverWorldObject()
+    public GameObject GetMouseOverWorldObject(LayerMask layersToHit)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         
-        if(Physics.Raycast(ray, out RaycastHit hitData, 100, pointerLayersToHit))
-        {
-            Collider gridCellCollider = hitData.collider;
-            return gridCellCollider.gameObject;
+        if(Physics.Raycast(ray, out RaycastHit hitData, 100, layersToHit)){
+            return hitData.transform.gameObject;
         }
         return null;
     }

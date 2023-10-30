@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class ObjectEnterance : MonoBehaviour
 {
-    public List <PathNode> enteranceNodes; 
-    short enteranceNodeCount = 0;
+    private List <PathNode> enteranceNodes; 
 
-    void Start ()
-    {
-        enteranceNodes = new List<PathNode>();
-    }
+    public List<PathNode> GetEnteranceList() { return enteranceNodes; }
 
-    public List<PathNode> GetEnteranceList()
-    {
-    return enteranceNodes;
-    }
+    public void SetEnteranceList (List<PathNode> list){ enteranceNodes = list; }
 }
 
 

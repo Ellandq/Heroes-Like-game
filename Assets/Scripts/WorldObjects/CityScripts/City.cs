@@ -14,8 +14,7 @@ public class City : WorldObject, IObjectInteraction
     private bool canBeSelectedByCurrentPlayer;
 
     [Header("City Enterance Information")]
-    [SerializeField] private GameObject cityEnterance;
-    private List<PathNode> enteranceCells;
+    [SerializeField] private ObjectEnterance cityEnterance;
 
     [Header("Garrison refrences")]
     [SerializeField] private UnitsInformation unitsInformation;
@@ -42,8 +41,6 @@ public class City : WorldObject, IObjectInteraction
         PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, GetRotation(), gameObject);
-        GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(cityEnterance.transform.position)).AddOccupyingObject(cityEnterance);
-        enteranceCells = new List<PathNode>();
     }
 
     #endregion
@@ -71,7 +68,7 @@ public class City : WorldObject, IObjectInteraction
     #region Updates
 
     // Check if the city can be selected by a given player (on new turn update)
-    private void UpdateCitySelectionAvailability(PlayerTag tag)
+    public void UpdateCitySelectionAvailability(PlayerTag tag)
     {
         if (tag == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
@@ -81,7 +78,7 @@ public class City : WorldObject, IObjectInteraction
     }
 
     // The daily update for a city
-    private void CityDailyUpdate (){
+    public void CityDailyUpdate (){
         buildingHandler.DailyUpdate();
     }
 
@@ -107,13 +104,13 @@ public class City : WorldObject, IObjectInteraction
         GameManager.Instance.EnterCity(this, cityFraction);
     }
 
+    public override void ObjectSelected(){
+        // TODO
+    }
+
     #endregion
 
     #region Setters
-    
-    public void SetEnteranceInformation (List <PathNode> _enteranceList){
-        enteranceCells = _enteranceList;
-    }
 
     public void AddUnits (short unitID, short unitCount, short garrisonIndex){
         unitsInformation.AddUnits(unitID, unitCount, garrisonIndex);

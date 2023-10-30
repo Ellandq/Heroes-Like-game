@@ -72,6 +72,14 @@ public class WorldObject : MonoBehaviour
         Debug.Log("Interacting with object: " + this.gameObject.name + " , Interaction started by: " + other.gameObject.name);
     }
 
+    public virtual void ObjectSelected (){
+        Debug.Log("Object selected: " + gameObject.name);
+    }
+
+    public virtual void ObjectDeselected(){
+        Debug.Log("Object deselected: " + gameObject.name);
+    }
+
     // On Destroy
 
     protected virtual void OnDestroy (){

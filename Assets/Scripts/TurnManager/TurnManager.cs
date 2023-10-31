@@ -22,8 +22,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] short currentPlayerTurn;
     [SerializeField] short playerCount;
 
-    public static event Action<Player> OnNewPlayerTurn;
-    public UnityEvent OnNewDay;
+    public event Action<PlayerTag> OnNewPlayerTurn;
+    public Action OnNewDay;
 
     private void Awake()
     {
@@ -36,22 +36,21 @@ public class TurnManager : MonoBehaviour
 
     public void SetupTurnManager ()
     {
-        playerCount = Convert.ToInt16(PlayerManager.Instance.players.Count);
-        player = PlayerManager.Instance.players[currentPlayerTurn].GetComponent<Player>();
+        playerCount = Convert.ToInt16(PlayerManager.Instance.GetPlayerCount());
+        player = PlayerManager.Instance.GetCurrentPlayer();
         GameManager.Instance.StartGame();
     }
 
     // Starts the game
     public void StartGame ()
     {
-        OnNewPlayerTurn?.Invoke(player);
+        OnNewPlayerTurn?.Invoke(player.GetPlayerTag());
         player.NewTurnUpdate();  
     }
 
     // Starts a new turn
     public void NextTurn ()
     {
-        player.GetSelectedObject();
         if (currentPlayerTurn < playerCount - 1)
         {
             currentPlayerTurn++;
@@ -59,8 +58,8 @@ public class TurnManager : MonoBehaviour
             OnNewDay.Invoke();
             currentPlayerTurn = 0;
         } 
-        player = PlayerManager.Instance.players[currentPlayerTurn].GetComponent<Player>();
-        OnNewPlayerTurn.Invoke(player);
+        player = PlayerManager.Instance.GetCurrentPlayer();
+        OnNewPlayerTurn.Invoke(player.GetPlayerTag());
         player.NewTurnUpdate();  
     }
 

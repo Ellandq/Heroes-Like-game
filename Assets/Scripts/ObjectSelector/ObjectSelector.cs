@@ -47,7 +47,7 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void CheckForObject (){
-        if (InputManager.Instance.mouseInput.IsMouseOverUI()) return;
+        if (InputManager.Instance.mouseInput.IsMouseOverUI() || !isSelectorActive) return;
         GameObject obj = InputManager.Instance.mouseInput.GetMouseOverWorldObject(layersToHit);
         if (obj != null) SelectObject(obj);
         else{
@@ -146,6 +146,12 @@ public class ObjectSelector : MonoBehaviour
         }
         selectedObject = obj;
         onSelectedObjectChange.Invoke();
+    }
+
+    public void CancelSelection (WorldObject obj){
+        if (obj != null && obj == selectedObject){
+            HandleSelectionChange(null);
+        }
     }
 
     private void SetUpSelectorForNewPlayer (PlayerTag tag){

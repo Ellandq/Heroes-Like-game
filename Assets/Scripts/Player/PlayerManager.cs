@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
+
     private string defaultPlayerName = "Player";
-    private short playersReady = 0;
 
     [Header("Player information")]
     [SerializeField] private GameObject playerPrefab;
@@ -34,7 +34,6 @@ public class PlayerManager : MonoBehaviour
     [Header("Events")]
     public UnityPlayerEvent OnNextPlayerTurn;
     public UnityEvent OnNewDayPlayerUpdate;
-    public static event Action OnCurrentPlayerResourcesGained;
 
     public void Awake (){
         Instance = this;
@@ -45,16 +44,8 @@ public class PlayerManager : MonoBehaviour
         allPlayers = GameManager.Instance.playerTags;
         humanPlayers = GameManager.Instance.humanPlayerTags;
         CreatePlayers(GameManager.Instance.numberOfPlayers);
-        TurnManager.OnNewPlayerTurn += NextPlayerTurn;
-        TurnManager.OnNewPlayerTurn += UpdateCurrentPlayer;
-    }
-
-    public void PlayerManagerReady ()
-    {
-        playersReady++;
-        if (playersReady == players.Count){
-            GameManager.Instance.StartGame();
-        }
+        TurnManager.Instance.OnNewPlayerTurn += NewTurnUpdate;
+        TurnManager.Instance.OnNewDay += NewDayUpdate;
     }
 
     // Creates a new player
@@ -71,19 +62,21 @@ public class PlayerManager : MonoBehaviour
         {   
             GameObject pl = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             players.Add(pl.GetComponent<Player>());
+            players[i].SetUpPlayer(allPlayers[i]);
             pl.transform.parent = transform;
             pl.gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
-            players[i].playerColor = GetPlayerColour(allPlayers[i]);
-            players[i].GetComponent<Player>().playerTag = allPlayers[i];
 
         }
         GameManager.Instance.StartGame();
     }
 
-    // An update to run on each new day
     public void NewDayUpdate ()
     {
         OnNewDayPlayerUpdate?.Invoke();
+    }
+
+    private void NewTurnUpdate (PlayerTag tag){
+
     }
 
     // An update to run on each new turn
@@ -93,16 +86,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Updates the current player 
-    private void UpdateCurrentPlayer (Player _player)
+    private void UpdateCurrentPlayer (Player player)
     {
-        currentPlayer = _player;
+        currentPlayer = player;
     }
 
-    // Updates the player UI
-    public void UpdatePlayerUI (Player _player)
-    {
-        if (_player == currentPlayer) OnCurrentPlayerResourcesGained?.Invoke();
-    }
+    public int GetPlayerCount (){ return players.Count; }
 
     // Sets the player color 
     public Color GetPlayerColour (PlayerTag tag)

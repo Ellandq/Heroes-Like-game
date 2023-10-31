@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
     private void GameSetup()
     {
-        GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);//Creates the game grid
+        GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);
 
         numberOfPlayers = selectedMapInformation.numberOfPlayers;
         playerTags = selectedMapInformation.players;

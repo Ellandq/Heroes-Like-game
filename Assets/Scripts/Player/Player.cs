@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     private WorldObject objectToDestroy;
     private PlayerState playerState;
     private PlayerTag playerTag;
-    private Color playerColor;
     private bool isPlayerAi;
     private bool playerLost;
     private short daysToLoose = 4;
@@ -31,12 +30,12 @@ public class Player : MonoBehaviour
     [Header("Player daily production")]
     private ResourceIncome resourceIncome;
 
-    private void Start (){
+    public void SetUpPlayer (PlayerTag tag){
         playerLost = false;
+        playerTag = tag;
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
         PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         playerResources = PlayerManager.Instance.GetStartingResources();
-        PlayerManager.Instance.PlayerManagerReady();
     }
 
     public void AddObject (WorldObject obj){
@@ -181,11 +180,12 @@ public class Player : MonoBehaviour
     }
 
     private IEnumerator WaitForObjectToBeDestroyed (WorldObject objectToDestroy){
+        ObjectSelector.Instance.CancelSelection(objectToDestroy);
         while (objectToDestroy != null){
             yield return null;
         }
-        ObjectSelector.Instance.RemoveSelectedObject();
-        if (PlayerManager.Instance.currentPlayer == this) UIManager.Instance.UpdatePlayerDisplay(this); 
+        
+        if (PlayerManager.Instance.GetCurrentPlayer() == this) UIManager.Instance.UpdatePlayerDisplay(this); 
 
         waitForObjectToBeDestroyed = null;
     }

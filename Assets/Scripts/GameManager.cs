@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.PlayerLoop;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,12 +14,12 @@ public class GameManager : MonoBehaviour
     public static Action <GameState> OnGameStateChanged;
 
     [Header ("Object References")]
-    [SerializeField] public GameObject gameHandler;
+    [SerializeField] public GameObject worldObjects;
     [SerializeField] private UnitSplitWindow unitSplitWindow;
     [SerializeField] private ResourceDisplay resourceDisplay;
 
     private Coroutine waitForSceneToDeload;
-    private Coroutine waitForGameToBeReady;
+    private Coroutine gameSetup;
     
     [Header ("Game State Information")]
     public GameState state;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     [Header ("Map information")]
     [SerializeField] private MapScriptableObject selectedMapInformation;
-    [SerializeField] public MapWorldObjects selectedMapWorldObjects;
+    [SerializeField] private MapWorldObjects selectedMapWorldObjects;
     [SerializeField] private MapWorldObjects tmpMapWorldObjects;
     [SerializeField] private SaveFileScriptableObject saveFileScriptableObject;
 
@@ -53,7 +54,9 @@ public class GameManager : MonoBehaviour
                 NewGame();
             }
         }else{
-            Destroy(this);
+            mapLoaded = false;
+            NewGame();
+            Destroy(gameObject);
         }
     }
 
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
         }else{
             Debug.LogError("The Map folder does not exist");
         }
-        waitForGameToBeReady = StartCoroutine(WaitForGameToBeReady());
+        gameSetup = StartCoroutine(WaitForManagers());
     }
 
     public void LoadGame (string _saveFileName)
@@ -113,8 +116,9 @@ public class GameManager : MonoBehaviour
                 file.Close();
                 
             }
-        
-        }   
+        }else{
+            Debug.LogError("Map couldn't be loaded. ");
+        }  
     }
 
     public void SaveGame (string _saveFileName)
@@ -126,28 +130,13 @@ public class GameManager : MonoBehaviour
 
     #region Game State
 
-    private void GameSetup()
-    {
-        GameGrid.Instance.CreateGrid(selectedMapInformation.mapSize);
-
-        numberOfPlayers = selectedMapInformation.numberOfPlayers;
-        playerTags = selectedMapInformation.players;
-        numberOfHumanPlayers = selectedMapInformation.numberOfPossibleHumanPlayers;
-        humanPlayerTags = selectedMapInformation.possibleHumanPlayers;
-
-        UpdateGameState(GameState.LoadGame);
-    }
-
     public void StartGame()
     {
-        if (gameComponentsReady == 7 && !mapLoaded)
-        {
-            TurnManager.Instance.GetComponent<TurnManager>().StartGame();
-            CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
-            CameraManager.Instance.EnableCamera();
-            mapLoaded = true;
-        }
-        else gameComponentsReady++;
+        PlayerManager.Instance.StartGame();
+        CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
+        CameraManager.Instance.EnableCamera();
+        mapLoaded = true;
+        UpdateGameState(GetNewGameState());
     }
 
     public void UpdateGameState (GameState newState)
@@ -157,9 +146,7 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.LoadGame:
-                PlayerManager.Instance.SetupPlayerManager();
-                TurnManager.Instance.SetupTurnManager();
-                WorldObjectManager.Instance.SetupWorldObjects();
+                gameSetup = StartCoroutine(LoadWorldAsync());
                 break;
 
             case GameState.PlayerTurn:
@@ -216,26 +203,19 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
 
-    public void EnableWorldObjects (bool status = true)
-    {
-        gameHandler.SetActive(status);
-    }
-
     #endregion
 
     #region Scene Management
 
-    public void EnterCity (City cityToEnter, CityFraction _cityFraction)
+    public void EnableWorldObjects (bool status = true)
     {
-        UpdateGameState(GameState.CityEntered);
-        SceneStateManager.EnterCity(cityToEnter);
+        worldObjects.SetActive(status);
     }
 
-    public void EnterCity (City cityToEnter, CityFraction _cityFraction, Army _interactingArmy)
+    public void EnterCity (City cityToEnter, Army interactingArmy = null)
     {
         UpdateGameState(GameState.CityEntered);
-        SceneStateManager.interactingArmy = _interactingArmy;
-        SceneStateManager.EnterCity(cityToEnter);
+        SceneStateManager.EnterCity(cityToEnter, interactingArmy);
     }
 
     public void ExitCity ()
@@ -245,10 +225,11 @@ public class GameManager : MonoBehaviour
 
     public void StartBattle (Army attackingArmy, Army defendingArmy){
         UpdateGameState(GameState.BattleStarted);
+        // TODO
     }
 
     public void EndBattle (){
-
+        // TODO
     }
 
     public bool IsSceneOpened ()
@@ -260,6 +241,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Getters
+
+    public bool AreWorldObjectsActive () { return worldObjects.activeSelf; }
 
     private GameState GetNewGameState (){
         switch (state)
@@ -295,7 +278,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Enumerators
+    #region Coroutines
 
     private IEnumerator WaitForSceneToDeload (){
         while (IsSceneOpened()){
@@ -304,13 +287,64 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GetNewGameState());
     }
 
-    private IEnumerator WaitForGameToBeReady (){
-        while (PlayerManager.Instance == null){
+    private IEnumerator WaitForManagers (){
+        while (PlayerManager.Instance == null && TurnManager.Instance == null 
+        && WorldObjectManager.Instance == null && UIManager.Instance == null){
             yield return null;
         }
-        GameSetup();
-        waitForGameToBeReady = null;
+        UpdateGameState(GameState.LoadGame);
+        gameSetup = null;
     }
+
+    private IEnumerator LoadWorldAsync()
+    {
+        float status = 0f;
+        numberOfPlayers = selectedMapInformation.numberOfPlayers;
+        playerTags = selectedMapInformation.players;
+        numberOfHumanPlayers = selectedMapInformation.numberOfPossibleHumanPlayers;
+        humanPlayerTags = selectedMapInformation.possibleHumanPlayers;
+
+        // Step 1: Game Grid Setup
+        GameGrid.Instance.GameGridSetUp(selectedMapInformation.mapSize);
+
+        while (GameGrid.Instance.GetSetUpProgress() < 1f)
+        {
+            // Continue to check progress until it reaches 1
+            yield return null;
+        }
+        status += 0.25f; // Adjust progress
+
+        // Step 2: Turn Manager Setup
+        TurnManager.Instance.SetupTurnManager();
+        status += 0.1f; // Adjust progress
+
+        // Step 3: Player Manager Setup
+        PlayerManager.Instance.SetupPlayerManager();
+
+        while (PlayerManager.Instance.GetSetUpProgress() < 1f)
+        {
+            // Continue to check progress
+            yield return null;
+        }
+        status += 0.25f; // Adjust progress
+
+        // Step 4: World Object Manager Setup
+        WorldObjectManager.Instance.SetupWorldObjects(selectedMapWorldObjects);
+
+        while (WorldObjectManager.Instance.GetSetUpProgress() < 1f)
+        {
+            // Continue to check progress
+            yield return null;
+        }
+        status += 0.4f; // Adjust progress
+
+        // Use 'status' to track overall progress and report it as needed
+        Debug.Log("Overall progress: " + (status * 100f) + "%");
+
+        StartGame();
+        gameSetup = null;
+    }
+
 
     #endregion
 }

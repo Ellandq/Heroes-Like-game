@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArmyDisplay : MonoBehaviour
+public class OwnedArmiesDisplay : MonoBehaviour
 {
     [SerializeField] private ArmySelectionMovementButtons movementButtons;
-    [SerializeField] public Player currentPlayer;
 
     [Header ("Army Buttons Information")]
     [SerializeField] private List <RectTransform> armySlotsPosition;
@@ -20,13 +19,7 @@ public class ArmyDisplay : MonoBehaviour
     private Quaternion targetRotation;
     [SerializeField] private bool manualMovementEnabled;
 
-    // Add a flag variable to track whether the rotation is in progress
     private bool rotationInProgress = false;
-
-    private void Start ()
-    {
-        UIManager.Instance.UIManagerReady();
-    }
 
     private void Update ()
     {
@@ -76,7 +69,7 @@ public class ArmyDisplay : MonoBehaviour
     // Updates the rotation to the new position
     public void RotateDisplay (int movementValue){
         UpdateNewSlot(movementValue);
-        rotation.z += (30f * movementValue);
+        rotation.z += 30f * movementValue;
         currentPosition += movementValue;
         movementButtons.UpdateButtonStatus();
     }
@@ -94,22 +87,15 @@ public class ArmyDisplay : MonoBehaviour
     }
 
     // Updates the army display
-    internal void UpdateArmyDisplay (Player player)
+    public void UpdateArmyDisplay (bool resetPosition = true)
     {
-        currentPlayer = player;
+        Player player = PlayerManager.Instance.GetCurrentPlayer();
         ResetArmyDisplay();
-        ResetDisplayPosition();
-        for (int i = 0; i < currentPlayer.ownedArmies.Count && i < 4; i++){
-            armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[i]);
-        }
-        movementButtons.UpdateButtonStatus();
-    }
-
-    internal void UpdateArmyDisplay ()
-    {
-        ResetArmyDisplay();
-        for (int i = 0; i < currentPlayer.ownedArmies.Count && i < 4; i++){
-            armySlots[i].UpdateConnectedArmy(currentPlayer.ownedArmies[i]);
+        if (resetPosition) ResetDisplayPosition();
+        int i = 0;
+        foreach (Army army in player.GetOwnedArmies()){
+            armySlots[i].UpdateConnectedArmy(army);
+            i++;
         }
         movementButtons.UpdateButtonStatus();
     }
@@ -129,12 +115,14 @@ public class ArmyDisplay : MonoBehaviour
         int endingSlot;
         int currentArmyIndex;
 
+        List<Army> armies = PlayerManager.Instance.GetCurrentPlayer().GetOwnedArmies();
+
         // If the rotation is forward
         if (amount > 0)
         {
             // Calculate starting and ending slots, as well as the current army index
             startingSlot = currentPosition + 4;
-            endingSlot = Mathf.Min(startingSlot + amount - 1, currentPlayer.ownedArmies.Count - 1);
+            endingSlot = Mathf.Min(startingSlot + amount - 1, armies.Count - 1);
             currentArmyIndex = startingSlot;
 
             // Iterate over the visible slots and update them with the corresponding army
@@ -144,13 +132,13 @@ public class ArmyDisplay : MonoBehaviour
                 int slotIndex = i % 12;
 
                 // Update the army displayed in this slot
-                armySlots[slotIndex].UpdateConnectedArmy(currentPlayer.ownedArmies[currentArmyIndex]);
+                armySlots[slotIndex].UpdateConnectedArmy(armies[currentArmyIndex]);
 
                 // Move to the next army in the list
                 currentArmyIndex++;
 
                 // If we've reached the end of the list, start over from the beginning
-                if (currentArmyIndex >= currentPlayer.ownedArmies.Count)
+                if (currentArmyIndex >= armies.Count)
                 {
                     currentArmyIndex = 0;
                 }
@@ -180,7 +168,7 @@ public class ArmyDisplay : MonoBehaviour
                 int slotIndex = i % 12;
 
                 // Update the army displayed in this slot
-                armySlots[slotIndex].UpdateConnectedArmy(currentPlayer.ownedArmies[currentArmyIndex]);
+                armySlots[slotIndex].UpdateConnectedArmy(armies[currentArmyIndex]);
 
                 // Move to the next army in the list
                 currentArmyIndex--;
@@ -188,7 +176,7 @@ public class ArmyDisplay : MonoBehaviour
                 // If we've reached the beginning of the list, start over from the end
                 if (currentArmyIndex < 0)
                 {
-                    currentArmyIndex = currentPlayer.ownedArmies.Count - 1;
+                    currentArmyIndex = armies.Count - 1;
                 }
             }
 

@@ -7,8 +7,6 @@ using UnityEngine.Events;
 public class UIManager : MonoBehaviour
 {   
     public static UIManager Instance;
-    private int uiComponentsReady;
-    private Player currentPlayer;
 
     [Header ("Resources UI")]
     [SerializeField] private ResourceDisplay resourceDisplay;
@@ -20,55 +18,62 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ArmyInterfaceArmyInformation armyInterface;
 
     [Header ("Army and Town Display UI")]
-    [SerializeField] private TownDisplay townDisplay;
-    [SerializeField] private ArmyDisplay armyDisplay;
+    [SerializeField] private OwnedTownsDisplay townDisplay;
+    [SerializeField] private OwnedArmiesDisplay armyDisplay;
 
     [Header ("Unit Split Window")]
     [SerializeField] private UnitSplitWindow unitSplitWindow;
 
     [Header ("Other UI Elements")]
-    [SerializeField] GameObject backgroundDim;
+    [SerializeField] private GameObject backgroundDim;
 
-    public void Awake ()
+    private void Awake ()
     {
         Instance = this;
-        TurnManager.Instance.OnNewDay += ActivePlayerChangeUpdate;
-        uiComponentsReady = 0;
+        TurnManager.Instance.OnNewDay += NewDayUpdate;
+        TurnManager.Instance.OnNewTurn += NewTurnUpdate;
     }
 
-    private void ActivePlayerChangeUpdate (){
-        currentPlayer = PlayerManager.Instance.GetPlayer(PlayerManager.Instance.GetCurrentPlayer());
-        UpdatePlayerDisplay(currentPlayer);
-        resourceDisplay.UpdateDisplay(currentPlayer);
+    private void NewTurnUpdate (){
+        UpdateResourceDisplay();
     }
+
+    private void NewDayUpdate (){
+
+    }
+
+    public void UpdateResourceDisplay (){
+        resourceDisplay.UpdateDisplay();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #region TownAndArmyDisplay
 
     // Updates the Player display
-    public void UpdatePlayerDisplay (Player _player)
+    public void UpdatePlayerDisplay ()
     {
-        Debug.Log("Player display updated.");
-        if (currentPlayer != null){
-            currentPlayer.onArmyAdded.RemoveAllListeners();
-            currentPlayer.onCityAdded.RemoveAllListeners();
-        }
-        currentPlayer = _player;
-        currentPlayer.onArmyAdded.AddListener(UpdateCurrentArmyDisplay);
-        currentPlayer.onCityAdded.AddListener(UpdateCurrentCityDisplay);
-        townDisplay.UpdateCityDisplay(currentPlayer);
-        armyDisplay.UpdateArmyDisplay(currentPlayer);
+        townDisplay.UpdateCityDisplay();
+        armyDisplay.UpdateArmyDisplay();
     }
 
-    // Updates the army display
-    public void UpdateCurrentArmyDisplay ()
-    {
+    public void UpdateCurrentArmyDisplay (){
         Debug.Log("Current army display updated.");
         armyDisplay.UpdateArmyDisplay(currentPlayer);
     }
 
-    // Updates the city display
-    public void UpdateCurrentCityDisplay ()
-    {
+    public void UpdateCurrentCityDisplay (){
         Debug.Log("Current city display updated.");
         townDisplay.UpdateCityDisplay(currentPlayer);
     }
@@ -77,18 +82,8 @@ public class UIManager : MonoBehaviour
 
     #region CurrentArmyDisplay
 
-    public void RefreshCurrentArmyDisplay ()
-    {
+    public void RefreshCurrentArmyDisplay (){
         armyInformation.RefreshElement();
-    }
-
-    #endregion
-
-    #region ResourcesDisplay
-
-    public void UpdateResourceDisplay ()
-    {
-        resourceDisplay.UpdateDisplay();
     }
 
     #endregion

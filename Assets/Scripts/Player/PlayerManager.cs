@@ -7,9 +7,9 @@ using UnityEngine.Events;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
+
     private Coroutine coroutine;
     private float setUpProgress;
-
     private string defaultPlayerName = "Player";
 
     [Header("Player information")]
@@ -72,9 +72,9 @@ public class PlayerManager : MonoBehaviour
 
     public Player GetNeutralPlayer () { return neutralPlayer; }
 
-    public PlayerTag GetCurrentPlayer (){
-        return currentPlayer;
-    }
+    public PlayerTag GetCurrentPlayerTag (){ return currentPlayer; }
+
+    public Player GetCurrentPlayer () { return players[currentPlayer]; }
 
     public PlayerTag GetNextPlayer (){
         return allPlayers[(allPlayers.FindIndex(a => a == currentPlayer) + 1) % allPlayers.Count];

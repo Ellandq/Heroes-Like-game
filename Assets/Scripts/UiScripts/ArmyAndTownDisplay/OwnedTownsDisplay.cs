@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TownDisplay : MonoBehaviour
+public class OwnedTownsDisplay : MonoBehaviour
 {
     [SerializeField] private TownSelectionMovementButtons movementButtons;
     [SerializeField] public Player currentPlayer;
@@ -179,7 +179,7 @@ public class TownDisplay : MonoBehaviour
     }
 
     // Updates the town display
-    internal void UpdateCityDisplay (Player player)
+    public void UpdateCityDisplay (Player player)
     {
         currentPlayer = player;
         ResetTownDisplay();
@@ -190,7 +190,7 @@ public class TownDisplay : MonoBehaviour
         movementButtons.UpdateButtonStatus();
     }
 
-    internal void UpdateTownDisplay ()
+    public void UpdateTownDisplay ()
     {
         ResetTownDisplay();
         for (int i = 0; i < currentPlayer.ownedCities.Count && i < 4; i++){

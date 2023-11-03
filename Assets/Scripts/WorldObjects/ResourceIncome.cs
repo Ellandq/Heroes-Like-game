@@ -50,6 +50,8 @@ public class ResourceIncome : MonoBehaviour
         set { resources[6] = value; }
     }
 
+    public int[] GetResources () { return resources; }
+
     public ResourceIncome() {}
 
     public ResourceIncome(int value, ResourceType type){

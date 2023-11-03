@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
 {
     [Header ("Events and coroutines")]
     private Coroutine waitForObjectToBeDestroyed;
-    public UnityEvent onArmyAdded;
-    public UnityEvent onCityAdded;
 
     [Header("Player basic information")]
     private WorldObject objectToDestroy;
@@ -209,4 +207,8 @@ public class Player : MonoBehaviour
     public PlayerTag GetPlayerTag () { return playerTag; }
 
     public ResourceIncome GetAvailableResources () { return playerResources; }
+
+    public List<Army> GetOwnedArmies () { return ownedArmies; }
+
+    public List<City> GetOwnedCities () { return ownedCities; }
 }

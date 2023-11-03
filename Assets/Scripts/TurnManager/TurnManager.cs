@@ -11,19 +11,19 @@ public class TurnManager : MonoBehaviour
     [Header("Object Referances")]
     [SerializeField] private PlayerTurn playerTurn;
     [SerializeField] private AiTurn aiTurn;
-    private Player player;
 
     [Header("Turn Information")]
-    [SerializeField] internal short dayCounter;
-    [SerializeField] internal short weekCounter;
-    [SerializeField] internal short monthCounter;
+    [SerializeField] private short dayCounter;
+    [SerializeField] private short weekCounter;
+    [SerializeField] private short monthCounter;
 
     [Header("Game Information")]
     [SerializeField] short currentPlayerTurn;
     [SerializeField] short playerCount;
 
-    public event Action<PlayerTag> OnNewPlayerTurn;
+    [Header ("Events")]
     public Action OnNewDay;
+    public Action OnNewTurn;
 
     private void Awake()
     {
@@ -34,18 +34,8 @@ public class TurnManager : MonoBehaviour
         currentPlayerTurn = 0;
     }
 
-    public void SetupTurnManager ()
-    {
-        playerCount = Convert.ToInt16(PlayerManager.Instance.GetPlayerCount());
-        player = PlayerManager.Instance.GetCurrentPlayer();
-        GameManager.Instance.StartGame();
-    }
-
-    // Starts the game
-    public void StartGame ()
-    {
-        OnNewPlayerTurn?.Invoke(player.GetPlayerTag());
-        player.NewTurnUpdate();  
+    public void SetupTurnManager (){
+        playerCount = PlayerManager.Instance.GetPlayerCount();
     }
 
     // Starts a new turn
@@ -58,9 +48,6 @@ public class TurnManager : MonoBehaviour
             OnNewDay.Invoke();
             currentPlayerTurn = 0;
         } 
-        player = PlayerManager.Instance.GetCurrentPlayer();
-        OnNewPlayerTurn.Invoke(player.GetPlayerTag());
-        player.NewTurnUpdate();  
     }
 
     // Updates the turn counter

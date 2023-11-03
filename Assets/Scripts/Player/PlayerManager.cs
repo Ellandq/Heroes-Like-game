@@ -7,33 +7,23 @@ using UnityEngine.Events;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
+    private Coroutine coroutine;
+    private float setUpProgress;
 
     private string defaultPlayerName = "Player";
 
     [Header("Player information")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Player neutralPlayer;
-    [SerializeField] private Player currentPlayer;
-    private List<Player> players;
+    private PlayerTag currentPlayer;
 
     [Header ("All Players Information")]
-    [SerializeField] private List<PlayerTag> allPlayers;
-    [SerializeField] private List<PlayerTag> humanPlayers;
+    private Dictionary<PlayerTag, Player> players;
+    private List<PlayerTag> allPlayers;
+    private List<PlayerTag> humanPlayers;
 
     [Header("Player colors")]
     [SerializeField] private List<Color> playerColorList;
-    [SerializeField] private Color blue;
-    [SerializeField] private Color lightBlue;
-    [SerializeField] private Color purple;
-    [SerializeField] private Color red;
-    [SerializeField] private Color orange;
-    [SerializeField] private Color yellow;
-    [SerializeField] private Color lightGreen;
-    [SerializeField] private Color green;
-
-    [Header("Events")]
-    public UnityPlayerEvent OnNextPlayerTurn;
-    public UnityEvent OnNewDayPlayerUpdate;
 
     public void Awake (){
         Instance = this;
@@ -43,75 +33,95 @@ public class PlayerManager : MonoBehaviour
     {
         allPlayers = GameManager.Instance.playerTags;
         humanPlayers = GameManager.Instance.humanPlayerTags;
-        CreatePlayers(GameManager.Instance.numberOfPlayers);
-        TurnManager.Instance.OnNewPlayerTurn += NewTurnUpdate;
-        TurnManager.Instance.OnNewDay += NewDayUpdate;
+        setUpProgress = 0f;
+        coroutine = StartCoroutine(CreatePlayers(GameManager.Instance.numberOfPlayers));
     }
 
-    // Creates a new player
-    private void CreatePlayers (int howManyPlayers)
-    {
-        players = new List<Player>(howManyPlayers);
-
-        if (playerPrefab == null)
-        {
-            Debug.LogError("Error: Player Prefab on the Player Manager is not assigned");
+    public void StartGame (){
+        foreach (var pl in players){
+            pl.Value.TurnUpdate();
         }
+    }
 
-        for (int i = 0; i < howManyPlayers; i++) 
-        {   
-            GameObject pl = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            players.Add(pl.GetComponent<Player>());
-            players[i].SetUpPlayer(allPlayers[i]);
-            pl.transform.parent = transform;
-            pl.gameObject.name = Enum.GetName(typeof (PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
-
+    public void NewDayUpdate (){
+        foreach (PlayerTag tag in allPlayers){
+            players[tag].DailyUpdate();
         }
-        GameManager.Instance.StartGame();
     }
 
-    public void NewDayUpdate ()
-    {
-        OnNewDayPlayerUpdate?.Invoke();
+    public void NewTurnUpdate (){
+        currentPlayer = GetNextPlayer();
+        foreach (var pl in players){
+            pl.Value.TurnUpdate();
+        }
     }
 
-    private void NewTurnUpdate (PlayerTag tag){
+    public void RemovePlayer (PlayerTag tag) { players.Remove(tag); }
 
-    }
-
-    // An update to run on each new turn
-    public void NextPlayerTurn (Player _player)
-    {
-        OnNextPlayerTurn?.Invoke(_player);
-    }
-
-    // Updates the current player 
-    private void UpdateCurrentPlayer (Player player)
-    {
-        currentPlayer = player;
-    }
-
-    public int GetPlayerCount (){ return players.Count; }
+    public short GetPlayerCount (){ return Convert.ToInt16(players.Count); }
 
     // Sets the player color 
     public Color GetPlayerColour (PlayerTag tag)
     {
-        return playerColorList[(int)tag - 1];
+        return playerColorList[(int)tag];
     }
 
     public Player GetPlayer (PlayerTag tag){
-        foreach (Player pl in players){
-            if (pl.GetPlayerTag() == tag) return pl;
-        }
-        return null;
+        return players[tag];
     }
 
-    public Player GetCurrentPlayer (){
+    public Player GetNeutralPlayer () { return neutralPlayer; }
+
+    public PlayerTag GetCurrentPlayer (){
         return currentPlayer;
+    }
+
+    public PlayerTag GetNextPlayer (){
+        return allPlayers[(allPlayers.FindIndex(a => a == currentPlayer) + 1) % allPlayers.Count];
     }
 
     public ResourceIncome GetStartingResources (){
         return new ResourceIncome(new int[7] { 10000, 10, 10, 5, 5, 5, 5 });
+    }
+
+    public bool IsPlayerAi (PlayerTag player){
+        foreach (PlayerTag tag in humanPlayers){
+            if (tag == player) return false;
+        }
+        return true;
+    }
+
+    public float GetSetUpProgress (){ return setUpProgress; }
+
+    private IEnumerator CreatePlayers(int howManyPlayers)
+    {
+        players = new Dictionary<PlayerTag, Player>(howManyPlayers);
+
+        if (playerPrefab == null)
+        {
+            Debug.LogError("Error: Player Prefab on the Player Manager is not assigned");
+            yield break; // Exit the coroutine if playerPrefab is not assigned.
+        }
+
+        for (int i = 0; i < howManyPlayers; i++)
+        {
+            GameObject pl = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            players[allPlayers[i]] = pl.GetComponent<Player>();
+            players[allPlayers[i]].SetUpPlayer(allPlayers[i], IsPlayerAi(allPlayers[i]));
+            pl.transform.parent = transform;
+            pl.gameObject.name = Enum.GetName(typeof(PlayerTag), allPlayers[i]) + " " + defaultPlayerName;
+
+            setUpProgress = (float)(i + 1) / howManyPlayers;
+
+            // Check elapsed time since the last frame
+            if (Time.deltaTime < 1f / 144f)
+            {
+                // Yield a frame if the frame time is less than 1/144 of a second
+                yield return null;
+            }
+        }
+
+        currentPlayer = allPlayers[0];
     }
 }
 public enum PlayerTag{
@@ -121,6 +131,3 @@ public enum PlayerTag{
 public enum PlayerState{
     TurnCompleted, TurnWaiting, TurnCurrent, PlayerDefeated, PlayerWon,
 }
-
-[System.Serializable]
-public class UnityPlayerEvent : UnityEvent<PlayerTag> { }

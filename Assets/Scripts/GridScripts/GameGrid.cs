@@ -5,13 +5,15 @@ using UnityEngine;
 public class GameGrid : MonoBehaviour
 {
     public static GameGrid Instance;
-    public Pathfinding pathfinding;
-    public int gridLength;
-    public int gridWidth;
-    public float gridSpaceSize = 5f;
+    private Coroutine coroutine;
+    private float setUpProgress;
+    private Pathfinding pathfinding;
+    private int gridLength;
+    private int gridWidth;
+    private float gridSpaceSize = 5f;
 
     [SerializeField] private GameObject gridCellPrefab;
-    public GameObject[,] gameGrid;
+    public GridCell[,] gameGrid;
     public PathNode [,] pathNodeArray;
 
     void Start ()
@@ -19,35 +21,11 @@ public class GameGrid : MonoBehaviour
         Instance = this;
     }
 
-    // Creates the grid when the game starts
-    public void CreateGrid(Vector2Int gridSize)
-    {
-        gridLength = gridSize.x;
-        gridWidth = gridSize.y;
-        gameGrid = new GameObject[gridLength, gridWidth];
-        pathNodeArray = new PathNode[gridLength, gridWidth];
-
-        if (gridCellPrefab == null )
-        {
-            Debug.LogError("Error: Grid Cell Prefab on the Game grid is not assigned");
-        }
-
-        // Create the grid
-        for (int z = 0; z < gridLength; z++)
-        {
-            for (int x = 0; x < gridWidth; x++)
-            {
-                // Create a new GridSpace object for each cell
-                gameGrid[x, z] = Instantiate(gridCellPrefab, new Vector3(x * gridSpaceSize, 0, z * gridSpaceSize), Quaternion.identity);
-                gameGrid[x, z].GetComponent<GridCell>().SetPosition(x, z);
-                gameGrid[x, z].transform.parent = transform;
-                gameGrid[x, z].gameObject.name = "Grid Space ( X: " + x.ToString() + " , Z: " + z.ToString() + ")";
-                pathNodeArray[x, z] = (gameGrid[x, z].GetComponent<PathNode>());
-            }
-        }
-        pathfinding = new Pathfinding();
+    public void GameGridSetUp (Vector2Int gridSize){
+        setUpProgress = 0f;
+        coroutine = StartCoroutine(CreateGrid(gridSize));
     }
-
+    
     // Gets the grid position from world position
     public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
     {
@@ -70,13 +48,13 @@ public class GameGrid : MonoBehaviour
     }
     
     // Returns a selected GridCell
-    public GridCell GetGridCellInformation (Vector2Int _gridPos)
+    public GridCell GetCell (Vector2Int _gridPos)
     {
         return gameGrid[_gridPos.x, _gridPos.y].gameObject.GetComponent<GridCell>();    //Grid Space ( X: 0 , Z: 0)
     }
     
     // Returns a selected PathNode
-    public PathNode GetPathNodeInformation (Vector2Int _gridPos)
+    public PathNode GetNode (Vector2Int _gridPos)
     {
         return gameGrid[_gridPos.x, _gridPos.y].gameObject.GetComponent<PathNode>();    //Grid Space ( X: 0 , Z: 0)
     }
@@ -100,65 +78,59 @@ public class GameGrid : MonoBehaviour
 
         if (gridPosition.x - 1 >= 0){
             // Left
-            if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)).isOccupied){
-                neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
+            if (!GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y)).isOccupied){
+                neighbourList.Add(GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
             }
             // Left Down
             if (gridPosition.y - 1 >= 0) {
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)).isOccupied){
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
+                if (!GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)).isOccupied){
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
                 }
             }
             // Left Up
             if (gridPosition.y + 1 < GetGridLength()) {
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)).isOccupied){
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
+                if (!GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
                 }
             }
         }
         if (gridPosition.x + 1 < GetGridWidth()){
             // Right
             if (gridPosition.y - 1 >= 0) {
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)).isOccupied){ 
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
+                if (!GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y)).isOccupied){ 
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
                 }
             }
             // Right Down
             if (gridPosition.y - 1 >= 0){ 
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)).isOccupied){ 
-                neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
+                if (!GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)).isOccupied){ 
+                neighbourList.Add(GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
                 }
             }
             // Right Up
                 if (gridPosition.y + 1 < GetGridLength()) {
-                    if (!GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)).isOccupied){
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
+                    if (!GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
                 }
             }
         }
         if (gridPosition.x - 1 >= 0){
             // Down
             if (gridPosition.y - 1 >= 0){
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)).isOccupied){
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
+                if (!GetCell(new Vector2Int(gridPosition.x, gridPosition.y - 1)).isOccupied){
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
                 }
             }
             
             // Up
             if (gridPosition.y + 1 < GetGridLength()) {
-                if (!GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)).isOccupied){
-                    neighbourList.Add(GetGridCellInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
+                if (!GetCell(new Vector2Int(gridPosition.x, gridPosition.y + 1)).isOccupied){
+                    neighbourList.Add(GetCell(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
                 }
             }
         }
         return neighbourList;
     }
-
-
-    // public List<GridCell> GetSurroundingCells (Vector2Int gridPosition, float rotation, Vector2Int size)
-    // {
-        
-    // }
 
     public void PlaceBuildingOnGrid(Vector2Int position, BuildingType type, float rotation, GameObject building) {
         int width, height;
@@ -227,7 +199,7 @@ public class GameGrid : MonoBehaviour
             // iterate over the grid cells within the building's rotated footprint
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
-                    gameGrid[originPos.x + x, originPos.y - y].GetComponent<GridCell>().AddOccupyingObject(building);
+                    gameGrid[originPos.x + x, originPos.y - y].AddOccupyingObject(building);
                 }
             }
         }else{
@@ -238,8 +210,8 @@ public class GameGrid : MonoBehaviour
                 height = temp;
 
                 temp = startingOffset.x;
-                startingOffset.x = (-startingOffset.y);
-                startingOffset.y = (-temp);
+                startingOffset.x = -startingOffset.y;
+                startingOffset.y = -temp;
             } 
 
             // iterate over the grid cells within the building's rotated footprint
@@ -250,4 +222,46 @@ public class GameGrid : MonoBehaviour
             }
         }       
     }
+
+    private IEnumerator CreateGrid(Vector2Int gridSize)
+    {
+        gridLength = gridSize.x;
+        gridWidth = gridSize.y;
+        gameGrid = new GridCell[gridLength, gridWidth];
+        pathNodeArray = new PathNode[gridLength, gridWidth];
+
+        if (gridCellPrefab == null)
+        {
+            Debug.LogError("Error: Grid Cell Prefab on the Game grid is not assigned");
+            yield break; // Exit the coroutine if gridCellPrefab is not assigned.
+        }
+
+        for (int z = 0; z < gridLength; z++)
+        {
+            for (int x = 0; x < gridWidth; x++)
+            {
+                // Calculate progress as a percentage
+                setUpProgress = (float)(x + z * gridWidth) / (gridLength * gridWidth);
+                
+                // Check elapsed time since the last frame
+                if (Time.deltaTime < 1f / 144f)
+                {
+                    // Yield a frame if the frame time is less than 1/144 of a second
+                    yield return null;
+                }
+
+                // Create a new GridSpace object for each cell
+                GameObject obj = Instantiate(gridCellPrefab, new Vector3(x * gridSpaceSize, 0, z * gridSpaceSize), Quaternion.identity);
+                obj.transform.parent = transform;
+                obj.name = "Grid Space (X: " + x + ", Z: " + z + ")";
+                gameGrid[x, z] = obj.GetComponent<GridCell>();
+                gameGrid[x, z].SetPosition(x, z);
+                pathNodeArray[x, z] = obj.GetComponent<PathNode>();
+            }
+        }
+
+        pathfinding = new Pathfinding();
+    }
+
+    public float GetSetUpProgress (){ return setUpProgress; }
 }

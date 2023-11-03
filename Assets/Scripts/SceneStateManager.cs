@@ -22,7 +22,7 @@ public class SceneStateManager
     [Header ("Player Information")]
     public static List<PlayerTag> humanPlayers;
 
-    public static void EnterCity (City cityToEnter)
+    public static void EnterCity (City cityToEnter, Army army = null)
     {
         displayedCity = cityToEnter;
         CityFraction displayedCityFraction = displayedCity.GetComponent<City>().GetFraction();

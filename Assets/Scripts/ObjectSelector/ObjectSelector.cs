@@ -30,7 +30,7 @@ public class ObjectSelector : MonoBehaviour
 
     private void Start () {
         playerObjectDictionary = InitializePlayerObjectDictionary();
-        TurnManager.OnNewPlayerTurn += SetUpSelectorForNewPlayer;
+        TurnManager.Instance.OnNewDay += SetUpSelectorForNewPlayer;
         InputManager.Instance.mouseInput.OnLeftMouseButtonDown += CheckForObject;
         GameManager.Instance.StartGame();
     }
@@ -154,7 +154,8 @@ public class ObjectSelector : MonoBehaviour
         }
     }
 
-    private void SetUpSelectorForNewPlayer (PlayerTag tag){
+    private void SetUpSelectorForNewPlayer (){
+        PlayerTag tag = PlayerManager.Instance.GetCurrentPlayer();
         playerObjectDictionary[currentPlayer] = selectedObject;
         if (playerObjectDictionary[tag] == null){
             playerObjectDictionary[tag] = PlayerManager.Instance.GetPlayer(tag).GetObjectToSelect();

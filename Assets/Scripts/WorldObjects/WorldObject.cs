@@ -22,8 +22,6 @@ public class WorldObject : MonoBehaviour
         UpdateObjectRotation(rotation);
     }
 
-    public virtual void FinalizeObject (){}
-
     public virtual void ChangeOwningPlayer (PlayerTag ownedByPlayer = PlayerTag.None){
         this.ownedByPlayer = ownedByPlayer;
     }
@@ -84,6 +82,7 @@ public class WorldObject : MonoBehaviour
     // On Destroy
 
     protected virtual void OnDestroy (){
+        PlayerManager.Instance.GetPlayer(GetPlayerTag()).RemoveObject(this);
         Debug.Log("Object destroyed (" + this.gameObject.name + ")");
     }
 }

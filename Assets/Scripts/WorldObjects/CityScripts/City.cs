@@ -28,19 +28,13 @@ public class City : WorldObject, IObjectInteraction
         PlayerTag ownedByPlayer, CityFraction cityFraction, 
         byte [] cityBuildingStatus, short [] cityGarrison)
     {
-        //GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, )
         Initialize(gridPosition, rotation, ObjectType.City);
         ChangeOwningPlayer(ownedByPlayer);
         this.cityFraction = cityFraction;
 
         unitsInformation.SetUnitStatus(cityGarrison);
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
-    }
 
-    public override void FinalizeObject ()
-    {
-        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateCitySelectionAvailability);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(CityDailyUpdate);
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, GetRotation(), gameObject);
     }
 
@@ -78,6 +72,10 @@ public class City : WorldObject, IObjectInteraction
         }
     }
 
+    public void CityTurnUpdate (){
+        UpdateCitySelectionAvailability();
+    }
+
     // The daily update for a city
     public void CityDailyUpdate (){
         buildingHandler.DailyUpdate();
@@ -91,7 +89,7 @@ public class City : WorldObject, IObjectInteraction
         Army army = other as Army;
         Debug.Log("Interacting army with city: " + army.gameObject.name);
         if (army.GetPlayerTag() == GetPlayerTag()){
-            GameManager.Instance.EnterCity(this, cityFraction, army);
+            GameManager.Instance.EnterCity(this, army);
         }else{
             if (IsCityEmpty()){
                 ChangeOwningPlayer(army.GetPlayerTag());
@@ -102,7 +100,7 @@ public class City : WorldObject, IObjectInteraction
     }
 
     public void Interact (){
-        GameManager.Instance.EnterCity(this, cityFraction);
+        GameManager.Instance.EnterCity(this);
     }
 
     public override void ObjectSelected(){
@@ -146,5 +144,11 @@ public class City : WorldObject, IObjectInteraction
     public bool IsSelectableByCurrentPlayer () { return canBeSelectedByCurrentPlayer; }
 
     #endregion
+
+    protected override void OnDestroy()
+    {
+        ObjectSelector.Instance.CancelSelection(this);
+        base.OnDestroy();
+    }
 
 }

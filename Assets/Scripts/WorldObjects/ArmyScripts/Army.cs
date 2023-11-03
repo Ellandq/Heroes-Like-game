@@ -28,20 +28,15 @@ public class Army : WorldObject, IObjectInteraction
     { 
         Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
         unitsInformation = new ArmyInformation(armyUnits);
-    }
-    
-    public override void FinalizeObject ()
-    {
+
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
 
-        PlayerManager.Instance.OnNextPlayerTurn.AddListener(UpdateArmySelectionAvailability);
-        TurnManager.Instance.OnNewDay.AddListener(RestoreMovementPoints);
-
-        if (PlayerManager.Instance.GetCurrentPlayer() == PlayerManager.Instance.GetPlayer(GetPlayerTag()) && GameManager.Instance.state == GameState.PlayerTurn){
+        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag() && GameManager.Instance.state == GameState.PlayerTurn){
             UIManager.Instance.UpdateCurrentArmyDisplay();
         }
     }
+
 
     #endregion
 
@@ -69,7 +64,7 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Restore this army movement points based on its units
-    private void RestoreMovementPoints (){
+    public void RestoreMovementPoints (){
         unitsInformation.RestoreMovementPoints();
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
@@ -178,21 +173,16 @@ public class Army : WorldObject, IObjectInteraction
 
     protected override void OnDestroy ()
     {
-        PlayerManager.Instance.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
-        TurnManager.Instance.OnNewDay.RemoveListener(RestoreMovementPoints);
         onMovementPointsChanged.RemoveAllListeners();
         GameGrid.Instance.GetCell(gridPosition).RemoveOccupyingObject();
 
-        if (ObjectSelector.Instance.lastObjectSelected != null){
-            if (ObjectSelector.Instance.lastObjectSelected == transform.GetChild(0)){
-                ObjectSelector.Instance.RemoveSelectedObject();
-            }
-        }
+        ObjectSelector.Instance.CancelSelection(this);
         
         try{
             if (CameraManager.Instance.cameraMovement.cameraFollowingObject) CameraManager.Instance.cameraMovement.CameraRemoveObjectToFollow();
         }catch (NullReferenceException){}
-        
+
+        base.OnDestroy();
     }
 
     #endregion

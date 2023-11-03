@@ -11,7 +11,7 @@ public class MineEnterance : ObjectEnterance
 
     private void Start (){
         SetEnteranceCells();
-        GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(transform.position)).AddOccupyingObject(gameObject);
+        GameGrid.Instance.GetCell(GameGrid.Instance.GetGridPosFromWorld(transform.position)).AddOccupyingObject(gameObject);
 
     }
     
@@ -23,65 +23,65 @@ public class MineEnterance : ObjectEnterance
 
         if (mineRotation == 0){
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
         }else if (mineRotation == 90){
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
         }else if (mineRotation == 180){
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
         }else if (mineRotation == 270){
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetPathNodeInformation(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }

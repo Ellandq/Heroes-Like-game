@@ -117,6 +117,10 @@ public class Player : MonoBehaviour
             city.CityDailyUpdate();
         }
 
+        foreach (Army army in ownedArmies){
+            army.RestoreMovementPoints();
+        }
+
         DailyResourceGain();
     }
 

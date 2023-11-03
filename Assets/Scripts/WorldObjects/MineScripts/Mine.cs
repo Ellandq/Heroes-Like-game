@@ -31,12 +31,8 @@ public class Mine : WorldObject, IObjectInteraction
         Initialize(gridPosition, rotation, ObjectType.Mine);
         unitsInformation = new UnitsInformation(garrisonUnits);
         this.mineType = mineType;
-    }
-
-    public override void FinalizeObject()
-    {
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, GetRotation(), gameObject);
-        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(mineEnterance.gameObject);
+        GameGrid.Instance.GetCell(gridPosition).AddOccupyingObject(mineEnterance.gameObject);
     }
 
     #endregion

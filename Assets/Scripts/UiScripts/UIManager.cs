@@ -8,15 +8,13 @@ public class UIManager : MonoBehaviour
 {   
     public static UIManager Instance;
     private int uiComponentsReady;
-
-    [Header ("Current Player Information")]
-    [SerializeField] private Player currentPlayer;
+    private Player currentPlayer;
 
     [Header ("Resources UI")]
     [SerializeField] private ResourceDisplay resourceDisplay;
 
     [Header ("Current Army Information UI")]
-    [SerializeField] private ArmyInformation armyInformation;
+    [SerializeField] private ArmyDisplayInformation armyInformation;
 
     [Header ("Army Interface UI")]
     [SerializeField] private ArmyInterfaceArmyInformation armyInterface;
@@ -34,22 +32,12 @@ public class UIManager : MonoBehaviour
     public void Awake ()
     {
         Instance = this;
-        TurnManager.OnNewPlayerTurn += ActivePlayerChangeUpdate;
-        GameManager.Instance.StartGame();
+        TurnManager.Instance.OnNewDay += ActivePlayerChangeUpdate;
         uiComponentsReady = 0;
     }
 
-    public void UIManagerReady ()
-    {
-        if (uiComponentsReady == 3)
-        {
-            GameManager.Instance.StartGame();
-        }
-        else uiComponentsReady++;
-    }
-
-    // Function to be called every time a new player is selected
-    private void ActivePlayerChangeUpdate (Player currentPlayer){
+    private void ActivePlayerChangeUpdate (){
+        currentPlayer = PlayerManager.Instance.GetPlayer(PlayerManager.Instance.GetCurrentPlayer());
         UpdatePlayerDisplay(currentPlayer);
         resourceDisplay.UpdateDisplay(currentPlayer);
     }
@@ -141,7 +129,7 @@ public class UIManager : MonoBehaviour
 
     #region UnitSplitWindow
 
-    public void OpenUnitSplitWindow (UnitSlot unit01, UnitSlot unit02, UnitsInformation connectedArmy, short id01, short id02)
+    public void OpenUnitSplitWindow (UnitSlot unit01, UnitSlot unit02, ArmyInformation connectedArmy, short id01, short id02)
     {
         unitSplitWindow.PrepareUnitsToSwap(unit01, unit02, connectedArmy, id01, id02);
     }

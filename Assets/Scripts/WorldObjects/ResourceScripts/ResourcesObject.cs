@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class ResourcesObject : WorldObject, IObjectInteraction
 {
-    private ResourceType resourceType;
-    private int resourceCount;
+    private ResourceIncome resource;
 
     public void Initialize (ResourceType resourceType, int resourceCount, Vector2Int gridPosition)
     {
         Initialize(gridPosition, 0f, ObjectType.Resource);
-        this.resourceType = resourceType;
-        this.resourceCount = resourceCount;
+        resource = new ResourceIncome(resourceCount, resourceType);
     }
 
     public void Interact<T> (T other)
     {
         Army interactingArmy = other as Army;
-        PlayerManager.Instance.GetPlayer(interactingArmy.GetPlayerTag()).AddResources(resourceType, resourceCount);
+        PlayerManager.Instance.GetPlayer(interactingArmy.GetPlayerTag()).AddResources(resource);
         Destroy(gameObject);
     }
 
@@ -31,6 +29,6 @@ public class ResourcesObject : WorldObject, IObjectInteraction
 
     protected override void OnDestroy()
     {
-        GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
+        GameGrid.Instance.GetCell(gridPosition).RemoveOccupyingObject();
     }
 }

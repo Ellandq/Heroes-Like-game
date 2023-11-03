@@ -30,13 +30,13 @@ public class Player : MonoBehaviour
     [Header("Player daily production")]
     private ResourceIncome resourceIncome;
 
-    public void SetUpPlayer (PlayerTag tag){
+    public void SetUpPlayer (PlayerTag tag, bool isAi){
         playerLost = false;
         playerTag = tag;
-        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(DailyResourceGain);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.AddListener(PlayerDailyUpdate);
         playerResources = PlayerManager.Instance.GetStartingResources();
     }
+
+    #region Object Manipulation 
 
     public void AddObject (WorldObject obj){
         if (obj is Army){
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     }
 
     public void RemoveObject (WorldObject obj){
-        if (GameManager.Instance.gameHandler.activeSelf){
+        if (GameManager.Instance.AreWorldObjectsActive()){
             if (obj is Army){
                 Army army = obj as Army;
                 int index = ownedArmies.FindIndex(a => a == army);
@@ -78,10 +78,12 @@ public class Player : MonoBehaviour
             objectToDestroy = obj;
         }
     }
+
+    #endregion
     
     #region Resource Manipulation
 
-    public void UpdateResourceGain(){
+    private void UpdateResourceGain(){
         ResourceIncome income = new ResourceIncome();
 
         foreach (City city in ownedCities){
@@ -107,8 +109,7 @@ public class Player : MonoBehaviour
 
     #region Update
 
-    // A daily player update
-    private void PlayerDailyUpdate ()
+    public void DailyUpdate ()
     {
         CheckPlayerLooseCondition();
 
@@ -120,14 +121,14 @@ public class Player : MonoBehaviour
     }
 
     // A player update on a new turn
-    public void NewTurnUpdate ()
+    public void TurnUpdate ()
     {
         foreach (City city in ownedCities){
-            city.UpdateCitySelectionAvailability(playerTag);
+            city.UpdateCitySelectionAvailability();
         }
 
         foreach (Army army in ownedArmies){
-            army.UpdateArmySelectionAvailability(playerTag);
+            army.UpdateArmySelectionAvailability();
         }
     }
 
@@ -157,7 +158,7 @@ public class Player : MonoBehaviour
                     }
                 }
                 if (!playerLost){
-                    Debug.Log(this.gameObject.name + " has " + daysToLoose + " turns to regain a city.");
+                    Debug.Log(gameObject.name + " has " + daysToLoose + " turns to regain a city.");
                 }
             }
         }
@@ -185,7 +186,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
         
-        if (PlayerManager.Instance.GetCurrentPlayer() == this) UIManager.Instance.UpdatePlayerDisplay(this); 
+        if (PlayerManager.Instance.GetCurrentPlayer() == playerTag) UIManager.Instance.UpdatePlayerDisplay(this); 
 
         waitForObjectToBeDestroyed = null;
     }
@@ -198,8 +199,7 @@ public class Player : MonoBehaviour
     }
 
     private void OnDestroy(){
-        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(DailyResourceGain);
-        PlayerManager.Instance.OnNewDayPlayerUpdate.RemoveListener(PlayerDailyUpdate);
+        
     }
 
     public PlayerTag GetPlayerTag () { return playerTag; }

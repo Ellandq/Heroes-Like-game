@@ -26,8 +26,9 @@ public class City : WorldObject, IObjectInteraction
 
     public void Initialize (Vector2Int gridPosition, float rotation, 
         PlayerTag ownedByPlayer, CityFraction cityFraction, 
-        int [] cityBuildingStatus, short [] cityGarrison)
+        byte [] cityBuildingStatus, short [] cityGarrison)
     {
+        //GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, )
         Initialize(gridPosition, rotation, ObjectType.City);
         ChangeOwningPlayer(ownedByPlayer);
         this.cityFraction = cityFraction;
@@ -68,9 +69,9 @@ public class City : WorldObject, IObjectInteraction
     #region Updates
 
     // Check if the city can be selected by a given player (on new turn update)
-    public void UpdateCitySelectionAvailability(PlayerTag tag)
+    public void UpdateCitySelectionAvailability()
     {
-        if (tag == GetPlayerTag()){
+        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;

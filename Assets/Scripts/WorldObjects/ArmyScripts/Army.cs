@@ -47,9 +47,9 @@ public class Army : WorldObject, IObjectInteraction
 
     #region Movement-and-Selection
 
-    public void UpdateArmySelectionAvailability(PlayerTag tag)
+    public void UpdateArmySelectionAvailability()
     {
-        if (tag == GetPlayerTag()){
+        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -58,9 +58,9 @@ public class Army : WorldObject, IObjectInteraction
 
     // Updates this army grid position
     public void UpdateArmyGridPosition (){
-        GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
+        GameGrid.Instance.GetCell(gridPosition).RemoveOccupyingObject();
         gridPosition = GameGrid.Instance.GetGridPosFromWorld(this.gameObject.transform.position);
-        GameGrid.Instance.GetGridCellInformation(gridPosition).AddOccupyingObject(this.gameObject);
+        GameGrid.Instance.GetCell(gridPosition).AddOccupyingObject(this.gameObject);
     }
 
     // Check this army movement points based on its units
@@ -181,7 +181,7 @@ public class Army : WorldObject, IObjectInteraction
         PlayerManager.Instance.OnNextPlayerTurn.RemoveListener(UpdateArmySelectionAvailability);
         TurnManager.Instance.OnNewDay.RemoveListener(RestoreMovementPoints);
         onMovementPointsChanged.RemoveAllListeners();
-        GameGrid.Instance.GetGridCellInformation(gridPosition).RemoveOccupyingObject();
+        GameGrid.Instance.GetCell(gridPosition).RemoveOccupyingObject();
 
         if (ObjectSelector.Instance.lastObjectSelected != null){
             if (ObjectSelector.Instance.lastObjectSelected == transform.GetChild(0)){

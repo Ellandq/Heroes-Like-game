@@ -50,6 +50,7 @@ public class WorldObject : MonoBehaviour
     }
 
     // Getters
+
     public Vector2Int GetGridPosition () { return gridPosition; }
 
     public float GetRotation () { return rotation; }

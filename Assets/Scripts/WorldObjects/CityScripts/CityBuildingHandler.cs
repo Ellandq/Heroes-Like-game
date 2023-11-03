@@ -9,7 +9,7 @@ public class CityBuildingHandler : MonoBehaviour
     private CityDwellingInformation cityDwellingInformation;
     private bool buildingAlreadybuilt;
 
-    public void InitializeBuildings (int[] cityBuildingStatus, City city){
+    public void InitializeBuildings (byte[] cityBuildingStatus, City city){
         CityBuildingState[] cityBuildings = new CityBuildingState[34];
         cityDwellingInformation = new CityDwellingInformation();
         this.city = city;

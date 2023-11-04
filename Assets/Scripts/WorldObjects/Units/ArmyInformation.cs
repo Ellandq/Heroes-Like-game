@@ -85,6 +85,11 @@ public class ArmyInformation : UnitsInformation
     
     #endregion
 
+    public Sprite GetArmyIcon () { 
+        UpdateArmyInformation();
+        return armyIcon;
+    }
+
     #region Setters
 
     public override void SetUnitStatus (short[] unitInfo){

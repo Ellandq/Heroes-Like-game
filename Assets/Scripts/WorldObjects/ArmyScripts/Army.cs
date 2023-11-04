@@ -165,7 +165,7 @@ public class Army : WorldObject, IObjectInteraction
 
     public override PlayerTag GetPlayerTag () { return base.GetPlayerTag(); }
 
-    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
+    public ArmyInformation GetUnitsInformation () { return unitsInformation; }
     
     #endregion
 

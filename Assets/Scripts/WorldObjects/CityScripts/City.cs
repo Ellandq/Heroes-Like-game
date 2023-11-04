@@ -55,7 +55,6 @@ public class City : WorldObject, IObjectInteraction
         Player player = PlayerManager.Instance.GetPlayer(GetPlayerTag());
         player.AddObject(this);
         buildingHandler.ChangeOwningPlayer(player);
-        player.onCityAdded?.Invoke();
     }
 
     #endregion
@@ -65,7 +64,7 @@ public class City : WorldObject, IObjectInteraction
     // Check if the city can be selected by a given player (on new turn update)
     public void UpdateCitySelectionAvailability()
     {
-        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag()){
+        if (PlayerManager.Instance.GetCurrentPlayerTag() == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -119,11 +118,13 @@ public class City : WorldObject, IObjectInteraction
 
     #region Getters
 
-    private Sprite GetCitySprite (){
+    public Sprite GetCitySprite (){
         return Resources.Load<Sprite>("CityIcons/" + cityFraction.ToString() + "/" + cityFraction.ToString() + "CityIcon_PlaceHolder");
     }
 
     public CityFraction GetFraction () { return cityFraction; }
+
+    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
 
     public ResourceIncome GetIncome (){
         return buildingHandler.GetCityIncome();

@@ -7,9 +7,7 @@ using UnityEngine.UI;
 public class TownButton : MonoBehaviour
 {
     [Header ("Slot Information")]
-    [SerializeField] private GameObject connectedCity;
-    [SerializeField] private bool slotSelected;
-    [SerializeField] public bool slotEmpty;
+    [SerializeField] private City connectedCity;
 
     [Header ("UI References")]
     [SerializeField] private Image slotFrame;
@@ -20,8 +18,7 @@ public class TownButton : MonoBehaviour
     [SerializeField] private Sprite defaultFrame;
     [SerializeField] private Sprite frameHighlighted;
 
-    void Start ()
-    {
+    private void Start (){
         try{
             ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlightLogic);
         }catch (NullReferenceException){
@@ -30,39 +27,23 @@ public class TownButton : MonoBehaviour
     }
 
     // Updates the connected town
-    internal void UpdateConnectedCity(GameObject _city)
-    {
-        connectedCity = _city.transform.GetChild(0).gameObject;
-        CityIcon.sprite = _city.GetComponentInParent<City>().cityIcon;
-        slotEmpty = false;
+    public void UpdateConnectedCity(City city){
+        connectedCity = city;
+        CityIcon.sprite = city.GetCitySprite();
         HighlightLogic();
     }
 
     // Selects an City if the button is pressed
-    public void SelectCity ()
-    {
-        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedCity){
-            connectedCity.GetComponentInParent<City>().CityInteraction();
-        }else{
-            ObjectSelector.Instance.RemoveSelectedObject();
-            ObjectSelector.Instance.AddSelectedObject(connectedCity);
-        }
+    public void SelectCity (){
+        ObjectSelector.Instance.HandleWorldObjects(connectedCity);
     }
 
     // Checks if the highlight should be activated
-    private void HighlightLogic ()
-    {
-        if (connectedCity != null){
-            if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedCity.name)){
-                slotFrame.sprite = frameHighlighted;
-                slotSelected = true;
-            }else{
-                slotFrame.sprite = defaultFrame;
-                slotSelected = false;
-            }
+    private void HighlightLogic (){
+        if (connectedCity != null && ObjectSelector.Instance.GetSelectedCity() == connectedCity){
+            slotFrame.sprite = frameHighlighted;
         }else{
             slotFrame.sprite = defaultFrame;
-            slotSelected = false;
         }
     }
 
@@ -71,8 +52,6 @@ public class TownButton : MonoBehaviour
     {
         slotFrame.sprite = defaultFrame;
         CityIcon.sprite = defaultBackground;
-        slotSelected = false;
-        slotEmpty = true;
         connectedCity = null;
         HighlightLogic();
     }

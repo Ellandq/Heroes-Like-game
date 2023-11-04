@@ -7,12 +7,10 @@ using UnityEngine.UI;
 public class ArmyButton : MonoBehaviour
 {
     [Header ("Slot Information")]
-    [SerializeField] private GameObject connectedArmy;
-    [SerializeField] private bool slotSelected;
-    [SerializeField] public bool slotEmpty;
+    [SerializeField] private Army connectedArmy;
 
     [Header ("UI References")]
-    [SerializeField] internal Slider movementSlider;
+    [SerializeField] private Slider movementSlider;
     [SerializeField] private Image slotFrame;
     [SerializeField] private Image armyIcon;
 
@@ -21,7 +19,7 @@ public class ArmyButton : MonoBehaviour
     [SerializeField] private Sprite defaultFrame;
     [SerializeField] private Sprite frameHighlighted;
 
-    void Start ()
+    private void Start ()
     {
         try{
             ObjectSelector.Instance.onSelectedObjectChange.AddListener(HighlightLogic);
@@ -31,64 +29,46 @@ public class ArmyButton : MonoBehaviour
     }
 
     // Updates the connected army
-    internal void UpdateConnectedArmy(GameObject _army)
+    public void UpdateConnectedArmy(Army army)
     {
-        if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
-        connectedArmy = _army.transform.GetChild(0).gameObject;
-        movementSlider.maxValue = connectedArmy.GetComponentInParent<Army>().maxMovementPoints;
-        movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
+        if (connectedArmy != null)  connectedArmy.onMovementPointsChanged.RemoveAllListeners();
+        connectedArmy = army;
+        movementSlider.maxValue = connectedArmy.GetMaxMovementPoints();
+        movementSlider.value = connectedArmy.GetMovementPoints();
         movementSlider.transform.parent.gameObject.SetActive(true);
-        armyIcon.sprite = _army.GetComponentInParent<Army>().unitsInformation.armyIcon;
-        slotEmpty = false;
-        connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
+        armyIcon.sprite = army.GetUnitsInformation().GetArmyIcon();
+        connectedArmy.onMovementPointsChanged.AddListener(ChangeMovementPointSliderStatus);
         HighlightLogic();
     }
 
     // Selects an army if the button is pressed
-    public void SelectArmy ()
-    {
-        if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected == connectedArmy){
-            connectedArmy.GetComponentInParent<Army>().ArmyInteraction();
-        }else{
-            ObjectSelector.Instance.RemoveSelectedObject();
-            ObjectSelector.Instance.AddSelectedObject(connectedArmy);
-        }
+    public void SelectArmy (){
+        ObjectSelector.Instance.HandleWorldObjects(connectedArmy);
     }
 
     // Checks if the highlight should be activated
-    private void HighlightLogic ()
-    {
-        if (connectedArmy != null){
-            if (ObjectSelector.Instance.objectSelected && ObjectSelector.Instance.lastObjectSelected.name == (connectedArmy.name)){
-                slotFrame.sprite = frameHighlighted;
-                slotSelected = true;
-            }else{
-                slotFrame.sprite = defaultFrame;
-                slotSelected = false;
-            }
+    private void HighlightLogic (){
+        if (connectedArmy != null && ObjectSelector.Instance.GetSelectedArmy() == connectedArmy){
+            slotFrame.sprite = frameHighlighted;
         }else{
             slotFrame.sprite = defaultFrame;
-            slotSelected = false;
         }
     }
 
     // Changes the movement point slider value
-    private void ChangeMovementPointSliderStatus()
-    {
-        movementSlider.value = connectedArmy.GetComponentInParent<Army>().movementPoints;
+    private void ChangeMovementPointSliderStatus(){
+        movementSlider.value = connectedArmy.GetMovementPoints();
     }
 
     // Resets the button status
     public void ResetArmyButton ()
     {
-        if (connectedArmy != null)  connectedArmy.GetComponentInParent<Army>().onMovementPointsChanged.RemoveAllListeners();
+        if (connectedArmy != null)  connectedArmy.onMovementPointsChanged.RemoveAllListeners();
         if (movementSlider.transform.parent.gameObject.activeSelf){
             movementSlider.transform.parent.gameObject.SetActive(false);
             slotFrame.sprite = defaultFrame;
             armyIcon.sprite = defaultBackground;
-            slotSelected = false;
         }
-        slotEmpty = true;
         connectedArmy = null;
         HighlightLogic();
     }

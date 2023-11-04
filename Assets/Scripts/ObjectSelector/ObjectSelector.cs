@@ -155,7 +155,7 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void SetUpSelectorForNewPlayer (){
-        PlayerTag tag = PlayerManager.Instance.GetCurrentPlayer();
+        PlayerTag tag = PlayerManager.Instance.GetCurrentPlayerTag();
         playerObjectDictionary[currentPlayer] = selectedObject;
         if (playerObjectDictionary[tag] == null){
             playerObjectDictionary[tag] = PlayerManager.Instance.GetPlayer(tag).GetObjectToSelect();
@@ -166,4 +166,14 @@ public class ObjectSelector : MonoBehaviour
     private bool IsSelectedObjectArmy (){
         return selectedObject != null && selectedObject is Army;
     }
+
+    private bool IsSelectedObjectCity (){
+        return selectedObject != null && selectedObject is City;
+    }
+
+    public Army GetSelectedArmy (){ return IsSelectedObjectArmy() ? null : selectedObject as Army; }
+
+    public City GetSelectedCity (){ return IsSelectedObjectCity() ? null : selectedObject as City; }
+
+    public UnitsInformation GetSelectedObjectUnits () { return GetSelectedArmy() ? (GetSelectedCity() ? null : (selectedObject as City).GetUnitsInformation()) : (selectedObject as Army).GetUnitsInformation(); }
 }

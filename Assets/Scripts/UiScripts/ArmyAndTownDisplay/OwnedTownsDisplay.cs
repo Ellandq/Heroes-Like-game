@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class OwnedTownsDisplay : MonoBehaviour
 {
     [SerializeField] private TownSelectionMovementButtons movementButtons;
-    [SerializeField] public Player currentPlayer;
 
     [Header ("Town Buttons Information")]
     [SerializeField] private List <RectTransform> citySlotsPosition;
@@ -14,19 +13,14 @@ public class OwnedTownsDisplay : MonoBehaviour
 
     [Header ("Town Display Positional Information")]
     [SerializeField] private RectTransform rotationObject;
-    [SerializeField] private Vector3 rotation;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] public int currentPosition;
     private Quaternion targetRotation;
-    [SerializeField] private bool manualMovementEnabled;
+    private Vector3 rotation;
+    private float rotationSpeed;
+    private int currentPosition;
+    private bool manualMovementEnabled;
 
     // Add a flag variable to track whether the rotation is in progress
     private bool rotationInProgress = false;
-
-    private void Start ()
-    {
-        UIManager.Instance.UIManagerReady();
-    }
 
     private void Update ()
     {
@@ -76,21 +70,33 @@ public class OwnedTownsDisplay : MonoBehaviour
     // Updates the rotation to the new position
     public void RotateDisplay (int movementValue){
         UpdateNewSlot(movementValue);
-        rotation.z += (30f * movementValue);
+        rotation.z += 30f * movementValue;
         currentPosition += movementValue;
     }
 
     // Resets the position to the starting value
-    private void ResetDisplayPosition ()
-    {
+    private void ResetDisplayPosition (){
         rotation.z = 0f;
         currentPosition = 0;
         transform.localEulerAngles = rotation;
     }
 
-    // Resets the town display
-    private void ResetTownDisplay ()
+    // Updates the town display
+    public void UpdateCityDisplay (bool resetPosition = true)
     {
+        Player player = PlayerManager.Instance.GetCurrentPlayer();
+        ResetTownDisplay();
+        if (resetPosition) ResetDisplayPosition();
+        int i = 0;
+        foreach (City city in player.GetOwnedCities()){
+            citySlots[i].UpdateConnectedCity(city);
+            i++;
+        }
+        movementButtons.UpdateButtonStatus();
+    }
+
+    // Resets the town display
+    private void ResetTownDisplay (){
         for (int i = 0; i < 12; i++){
             citySlots[i].ResetCityButton();
         }
@@ -103,12 +109,14 @@ public class OwnedTownsDisplay : MonoBehaviour
         int endingSlot;
         int currentCityIndex;
 
+        List<City> cities = PlayerManager.Instance.GetCurrentPlayer().GetOwnedCities();
+
         // If the rotation is forward
         if (amount > 0)
         {
             // Calculate starting and ending slots, as well as the current City index
             startingSlot = currentPosition + 4;
-            endingSlot = Mathf.Min(startingSlot + amount - 1, currentPlayer.ownedArmies.Count - 1);
+            endingSlot = Mathf.Min(startingSlot + amount - 1, cities.Count - 1);
             currentCityIndex = startingSlot;
 
             // Iterate over the visible slots and update them with the corresponding City
@@ -118,13 +126,13 @@ public class OwnedTownsDisplay : MonoBehaviour
                 int slotIndex = i % 12;
 
                 // Update the City displayed in this slot
-                citySlots[slotIndex].UpdateConnectedCity(currentPlayer.ownedArmies[currentCityIndex]);
+                citySlots[slotIndex].UpdateConnectedCity(cities[currentCityIndex]);
 
                 // Move to the next City in the list
                 currentCityIndex++;
 
                 // If we've reached the end of the list, start over from the beginning
-                if (currentCityIndex >= currentPlayer.ownedArmies.Count)
+                if (currentCityIndex >= cities.Count)
                 {
                     currentCityIndex = 0;
                 }
@@ -154,7 +162,7 @@ public class OwnedTownsDisplay : MonoBehaviour
                 int slotIndex = i % 12;
 
                 // Update the City displayed in this slot
-                citySlots[slotIndex].UpdateConnectedCity(currentPlayer.ownedArmies[currentCityIndex]);
+                citySlots[slotIndex].UpdateConnectedCity(cities[currentCityIndex]);
 
                 // Move to the next City in the list
                 currentCityIndex--;
@@ -162,7 +170,7 @@ public class OwnedTownsDisplay : MonoBehaviour
                 // If we've reached the beginning of the list, start over from the end
                 if (currentCityIndex < 0)
                 {
-                    currentCityIndex = currentPlayer.ownedArmies.Count - 1;
+                    currentCityIndex = cities.Count - 1;
                 }
             }
 
@@ -178,24 +186,5 @@ public class OwnedTownsDisplay : MonoBehaviour
         }
     }
 
-    // Updates the town display
-    public void UpdateCityDisplay (Player player)
-    {
-        currentPlayer = player;
-        ResetTownDisplay();
-        ResetDisplayPosition();
-        for (int i = 0; i < currentPlayer.ownedCities.Count && i < 4; i++){
-            citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[i]);
-        }
-        movementButtons.UpdateButtonStatus();
-    }
-
-    public void UpdateTownDisplay ()
-    {
-        ResetTownDisplay();
-        for (int i = 0; i < currentPlayer.ownedCities.Count && i < 4; i++){
-            citySlots[i].UpdateConnectedCity(currentPlayer.ownedCities[i]);
-        }
-        movementButtons.UpdateButtonStatus();
-    }
+    public int GetCurrentPosition () { return currentPosition; }
 }

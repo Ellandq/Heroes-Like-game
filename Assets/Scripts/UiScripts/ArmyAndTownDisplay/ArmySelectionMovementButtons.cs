@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ArmySelectionMovementButtons : MonoBehaviour
 {
-    [SerializeField] private ArmyDisplay armyDisplay;
+    [SerializeField] private OwnedArmiesDisplay armyDisplay;
 
     [Header ("Button References")]
     [SerializeField] private Button fastBackwardsButton;
@@ -21,27 +21,28 @@ public class ArmySelectionMovementButtons : MonoBehaviour
     public void UpdateButtonStatus()
     {
         int minPosition = 0;
-        int maxPosition = armyDisplay.currentPlayer.ownedArmies.Count - 3;
+        int pos = armyDisplay.GetCurrentPosition();
+        int maxPosition = PlayerManager.Instance.GetCurrentPlayer().GetOwnedArmies().Count - 3;
         if (maxPosition < 0) maxPosition = 0;
-
-        if (armyDisplay.currentPosition == minPosition){
+        
+        if (pos == minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition - 2) <= minPosition){
+        }else if ((pos - 2) <= minPosition){
             fastBackwardsButton.interactable = false;
             backwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition - 2) > 0){
+        }else if ((pos - 2) > 0){
             fastBackwardsButton.interactable = true;
             backwardsButton.interactable = true;
         }
 
-        if (armyDisplay.currentPosition == maxPosition){
+        if (pos == maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = false;
-        }else if ((armyDisplay.currentPosition + 2) >= maxPosition){
+        }else if ((pos + 2) >= maxPosition){
             fastForwardsButton.interactable = false;
             forwardsButton.interactable = true;
-        }else if ((armyDisplay.currentPosition) < (maxPosition - 2)){
+        }else if ((pos) < (maxPosition - 2)){
             fastForwardsButton.interactable = true;
             forwardsButton.interactable = true;
         }

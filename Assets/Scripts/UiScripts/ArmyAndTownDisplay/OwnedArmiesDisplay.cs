@@ -13,12 +13,11 @@ public class OwnedArmiesDisplay : MonoBehaviour
 
     [Header ("Army Display Positional Information")]
     [SerializeField] private RectTransform rotationObject;
-    [SerializeField] private Vector3 rotation;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] public int currentPosition;
     private Quaternion targetRotation;
-    [SerializeField] private bool manualMovementEnabled;
-
+    private Vector3 rotation;
+    private float rotationSpeed;
+    private int currentPosition;
+    private bool manualMovementEnabled;
     private bool rotationInProgress = false;
 
     private void Update ()
@@ -191,4 +190,6 @@ public class OwnedArmiesDisplay : MonoBehaviour
             }
         }
     }
+
+    public int GetCurrentPosition () { return currentPosition; }
 }

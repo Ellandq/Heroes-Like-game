@@ -8,38 +8,22 @@ using UnityEngine.EventSystems;
 
 public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private ArmyInformation armyInformation;
     private bool isMouseOver = false;
     private IEnumerator checkMouseOverCoroutine;
 
-    [Header ("Unit button sprites")]
-    [SerializeField] private Sprite unitFrameDefault; 
-    [SerializeField] private Sprite unitFrameHighlight;  
-
     [Header ("Slot information")]
-    [SerializeField] private Button thisButton;  
-    [SerializeField] private short slotID;
+    [SerializeField] private Button button;  
+    [SerializeField] private byte slotID;
     [SerializeField] public bool isSlotEmpty;
 
-    [SerializeField] private UnitButton buttonToSwap;
-
-    private void Start ()
-    {
-        armyInformation.onUnitDisplayReload.AddListener(DeactivateHighlight); 
-    }
-
     // Activates a unit highlight
-    public void ActivateHighlight ()
-    {
-        armyInformation.onUnitDisplayReload?.Invoke();
-        thisButton.gameObject.GetComponent<Image>().sprite = unitFrameHighlight;
-        armyInformation.ChangeSelectedUnit(slotID);
+    public void ActivateHighlight (){
+        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitDisplay/IconFrameHighlight");
     }
 
     // Deactivates the highlight
-    private void DeactivateHighlight ()
-    {
-        thisButton.gameObject.GetComponent<Image>().sprite = unitFrameDefault;
+    public void DeactivateHighlight (){
+        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitDisplay/IconFrame");
     }
 
     // When a dragged object is dropped on this one, it runs a few checks to determine what it should do
@@ -50,23 +34,11 @@ public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             // Checks if the dropped object isn't this object
             if (eventData.pointerDrag != this.gameObject)
             {
-                buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitButton>();
-                if (isSlotEmpty){   // Logic for when this slot is empty
-                    if (!armyInformation.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
-                        if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                            armyInformation.SplitUnits(buttonToSwap.slotID, slotID);
-                        }
-                    }
-                }else{ 
-                    if (!armyInformation.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
-                        if (armyInformation.AreUnitsSameType(buttonToSwap.slotID, slotID)){
-                            if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                                armyInformation.SplitUnits(buttonToSwap.slotID, slotID);
-                            }else{
-                                armyInformation.AddUnits(buttonToSwap.slotID, slotID);
-                            }
-                        }
-                    }
+                UnitButton buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitButton>();
+                if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
+                    ArmyDisplayInformation.Instance.SwapUnits(buttonToSwap.slotID, slotID);
+                }else{
+                    ArmyDisplayInformation.Instance.SplitUnits(buttonToSwap.slotID, slotID);
                 }
             }
         }
@@ -90,9 +62,11 @@ public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
 
     private IEnumerator CheckMouseOver()
     {
-        yield return new WaitForSeconds(1f); // Wait for one and a half second
+        yield return new WaitForSeconds(1f);
         if (isMouseOver){
             Debug.Log("Mouse is still over UI element");
         }
     }
+
+    public byte GetId () { return slotID; }
 }

@@ -368,18 +368,38 @@ public class WorldObjectManager : MonoBehaviour
         numberOfArmies++;  
     }
 
-    public void RemoveArmy (GameObject selectedArmy)
+    public void RemoveObject (WorldObject obj)
     {
-        for (int i = 0; i < armies.Count; i++){
-            if (armies[i].name == selectedArmy.name){
-                armies.RemoveAt(i);
+        if (obj is Army){
+            int indexToRemove = armies.FindIndex(army => army == obj.gameObject);
+
+            if (indexToRemove != -1){
+                armies.RemoveAt(indexToRemove);
             }
+            numberOfArmies--;  
+        }else if (obj is City){
+            int indexToRemove = cities.FindIndex(city => city == obj.gameObject);
+
+            if (indexToRemove != -1){
+                cities.RemoveAt(indexToRemove);
+            }
+            numberOfCities--;  
+        }else if (obj is Mine){
+            int indexToRemove = mines.FindIndex(mine => mine == obj.gameObject);
+
+            if (indexToRemove != -1){
+                mines.RemoveAt(indexToRemove);
+            }
+            numberOfMines--;  
         }
-        numberOfArmies--;  
+        Destroy(obj.gameObject);
+    
     }
+
     #endregion
 
     #region Resources
+
     private void InitialResourceSetup (List<int> resourceInfo)
     {
         Vector2Int gridPosition = new Vector2Int(resourceInfo[0], resourceInfo[1]);

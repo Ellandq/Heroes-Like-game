@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerDisplay : MonoBehaviour
 {
-    [SerializeField] UIManager uiManager;
-    [SerializeField] GameObject playerDisplay;
+    [SerializeField] private GameObject playerDisplay;
     private Text displayedPlayer;
 
     void Awake()

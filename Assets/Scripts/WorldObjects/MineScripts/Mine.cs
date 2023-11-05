@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : WorldObject, IObjectInteraction
+public class Mine : WorldObject
 {
     [SerializeField] private GameObject flag;
 
@@ -57,7 +57,7 @@ public class Mine : WorldObject, IObjectInteraction
 
     #region Interaction Manager
 
-    public void Interact<T> (T other){
+    public override void Interact<T> (T other){
         Army army = other as Army;
         if (army.GetPlayerTag() == GetPlayerTag()){
             // Do something with friendly army
@@ -68,12 +68,6 @@ public class Mine : WorldObject, IObjectInteraction
                 Debug.Log("Do battle");
             }
         }
-    }
-
-    public void Interact (){ } 
-
-    public override void ObjectSelected(){
-        // TODO
     }
     
     #endregion

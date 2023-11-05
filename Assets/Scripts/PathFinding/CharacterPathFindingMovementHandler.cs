@@ -22,8 +22,8 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     {
         visablePath = FindObjectOfType<VisablePath>();
         isMoving = false;
-        thisArmy = this.gameObject.GetComponentInParent<Army>();
-        TurnManager.OnNewPlayerTurn += StopMoving;
+        thisArmy = gameObject.GetComponentInParent<Army>();
+        TurnManager.Instance.OnNewTurn += StopMoving;
     }
 
     // Sets the target position and if the given position is close to the already set position starts moving
@@ -68,7 +68,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     {
         // Checks if the movement is done and stops moving if it is
         if (currentPathIndex >= pathVectorList.Count) { 
-            if (objectToInteractWith != null) objectToInteractWith.GetComponent<ObjectInteraction>().ObjectInteractionEvent(this.gameObject);
+            if (objectToInteractWith != null) objectToInteractWith.GetComponent<WorldObject>().Interact();
             StopMoving();
             isReadyToMove = false;
             objectToInteractWith = null;
@@ -118,8 +118,8 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
             pathVectorList.RemoveAt(0);
         }
 
-        if (GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).isObjectInteractable){
-            objectToInteractWith = GameGrid.Instance.GetGridCellInformation(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).objectInThisGridSpace;
+        if (GameGrid.Instance.GetCell(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).isObjectInteractable){
+            objectToInteractWith = GameGrid.Instance.GetCell(GameGrid.Instance.GetGridPosFromWorld(targetPosition)).objectInThisGridSpace;
         }
     }
 

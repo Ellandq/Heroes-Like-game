@@ -39,7 +39,7 @@ public class Pathfinding
             List<Vector3> vectorPath = new List<Vector3>();
             // Convert the path to a list of Vector3 objects
             foreach (PathNode pathNode in path){
-                vectorPath.Add(new Vector3(pathNode.gridPosX, .5f, pathNode.gridPosZ) * GameGrid.Instance.gridSpaceSize);
+                vectorPath.Add(new Vector3(pathNode.gridPosX, .5f, pathNode.gridPosZ) * GameGrid.GRID_SPACE_SIZE);
             }
             return vectorPath;
         }
@@ -49,12 +49,12 @@ public class Pathfinding
     public List<PathNode> FindPath(Vector2Int startGridPosition, Vector2Int endGridPosition)
     {
         // Initialize the node grid, open list, and closed list
-        nodeGrid = new PathNode[GameGrid.Instance.gridLength, GameGrid.Instance.gridWidth];
+        nodeGrid = new PathNode[GameGrid.Instance.GetGridLength(), GameGrid.Instance.GetGridWidth()];
         nodeGrid = GameGrid.Instance.pathNodeArray;
 
         // Get the start and end nodes
-        PathNode startNode = GameGrid.Instance.GetPathNodeInformation(startGridPosition);
-        PathNode endNode = GameGrid.Instance.GetPathNodeInformation(endGridPosition);
+        PathNode startNode = GameGrid.Instance.GetNode(startGridPosition);
+        PathNode endNode = GameGrid.Instance.GetNode(endGridPosition);
         openList = new List<PathNode> { startNode };
         closedList = new List<PathNode>();
         targetEnterances = new List<PathNode>();
@@ -102,7 +102,7 @@ public class Pathfinding
         {
             for (int z = 0; z < GameGrid.Instance.GetGridLength(); z++)
             {
-                PathNode pathNode = GameGrid.Instance.GetPathNodeInformation(new Vector2Int(x, z));
+                PathNode pathNode = GameGrid.Instance.GetNode(new Vector2Int(x, z));
                 pathNode.gCost = 99999;
                 pathNode.CalculateFCost();
                 pathNode.cameFromCell = null;

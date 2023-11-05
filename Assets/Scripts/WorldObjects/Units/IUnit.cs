@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public interface IUnit
@@ -10,12 +11,11 @@ public interface IUnit
 
     // Unit manipulation
 
-    public void SwapUnitsPosition (short a, short b);
-    public void SwapUnitsPosition (short a, UnitSlot other);
-    public void AddUnits (short a, short b);
-    public void AddUnits (short a, UnitSlot other);
-    public void SplitUnits (short a, short b);
-    public void SplitUnits (short a, short b, UnitsInformation other);
+    public void SwapUnits (byte a, byte b);
+    public void SwapUnits (byte a, UnitSlot other);
+    public void AddUnits (byte a, byte b);
+    public void AddUnits (byte a, UnitSlot other);
+    public void SplitUnits (byte a, byte b, UnitsInformation other);
 
     // UnitSorting
 
@@ -32,6 +32,6 @@ public interface IUnit
     public float GetMovementPoints ();
 
     public bool IsArmyEmpty ();
-    public bool AreUnitSlotsSameType (short a, short b);
-    public bool AreUnitSlotsSameType (short a, UnitSlot other);
+    public bool AreUnitSlotsSameType (byte a, byte b);
+    public bool AreUnitSlotsSameType (byte a, UnitSlot other);
 }

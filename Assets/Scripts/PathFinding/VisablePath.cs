@@ -15,7 +15,7 @@ public class VisablePath : MonoBehaviour
     // Creates a visable path for the player
     public void CreateVisablePath (List<Vector3> vectorPathList, List <int> _pathCost, Army _selectedArmy)
     {
-        int simulatedMovementPoints = _selectedArmy.movementPoints;
+        int simulatedMovementPoints = _selectedArmy.GetMovementPoints();
         for (int i = 0; i < vectorPathList.Count; i++)
         {
             pathList.Add(Instantiate(movementPathDisplayPrefab, vectorPathList[i], Quaternion.identity, transform.parent));

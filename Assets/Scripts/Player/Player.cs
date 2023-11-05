@@ -188,7 +188,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
         
-        if (PlayerManager.Instance.GetCurrentPlayer() == playerTag) UIManager.Instance.UpdatePlayerDisplay(this); 
+        if (PlayerManager.Instance.GetCurrentPlayerTag() == playerTag) UIManager.Instance.UpdatePlayerDisplay(); 
 
         waitForObjectToBeDestroyed = null;
     }

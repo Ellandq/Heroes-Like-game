@@ -10,12 +10,10 @@ public class TurnDisplay : MonoBehaviour
     [SerializeField] TextMeshProUGUI weekDisplay;
     [SerializeField] TextMeshProUGUI monthDisplay;
     [SerializeField] TextMeshProUGUI turnDisplay;
-    private int turnCount;
 
     void Start ()
     {
-        TurnManager.Instance.OnNewDay.AddListener(UpdateTurnDisplay);
-        turnCount = 1;
+        TurnManager.Instance.OnNewDay += UpdateTurnDisplay;
         turnDisplay.text = "1";
         dayDisplay.text = "1";
         weekDisplay.text = "1";
@@ -25,10 +23,9 @@ public class TurnDisplay : MonoBehaviour
 
     private void UpdateTurnDisplay ()
     {
-        dayDisplay.text = Convert.ToString(TurnManager.Instance.dayCounter);
-        weekDisplay.text = Convert.ToString(TurnManager.Instance.weekCounter);
-        monthDisplay.text = Convert.ToString(TurnManager.Instance.monthCounter);
-        turnCount++;
-        turnDisplay.text = Convert.ToString(turnCount);
+        dayDisplay.text = Convert.ToString(TurnManager.Instance.GetDay());
+        weekDisplay.text = Convert.ToString(TurnManager.Instance.GetWeek());
+        monthDisplay.text = Convert.ToString(TurnManager.Instance.GetMonth());
+        turnDisplay.text = Convert.ToString(TurnManager.Instance.GetTurn());
     }
 }

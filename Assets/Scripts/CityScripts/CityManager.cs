@@ -6,14 +6,10 @@ using UnityEngine.Events;
 
 public class CityManager : MonoBehaviour
 {
-    [SerializeField] private CityInteractibleObjects cityInteractibleObjects;
     public static CityManager Instance;
-    Coroutine waitForArmyToBeCreated;
 
     [Header("Interactable objects")]
     public City currentCity;
-    public UnitsInformation currentCityGarrison;
-    public Player owningPlayer;
     public bool armyCreationStatus;
 
     [Header("City Information")]
@@ -26,6 +22,11 @@ public class CityManager : MonoBehaviour
 
     [Header ("Object referances")]
     [SerializeField] public CityResourceDisplay cityResourceDisplay;
+    [SerializeField] private CityInteractibleObjects cityInteractibleObjects;
+    [SerializeField] private CityArmyInterface cityArmyInterface;
+
+    [Header ("Events")]
+    Coroutine waitForArmyToBeCreated;
 
     private void Awake ()
     {
@@ -33,8 +34,6 @@ public class CityManager : MonoBehaviour
         armyCreationStatus = false;
         try{
             currentCity = SceneStateManager.displayedCity.GetComponent<City>();
-            currentCityGarrison = SceneStateManager.displayedCity.GetComponent<UnitsInformation>();
-            owningPlayer = currentCity.ownedByPlayer.GetComponent<Player>();
         }catch (NullReferenceException){
             Debug.Log("City object has not been selected");
         }
@@ -47,12 +46,13 @@ public class CityManager : MonoBehaviour
         armiesNearCity = new List<Army>();
         availableEnteranceCells = new List<GridCell>();
 
-        foreach (PathNode enteranceNode in currentCity.enteranceCells){
+        foreach (PathNode enteranceNode in currentCity.GetEnteranceList()){
             if (enteranceNode.gridCell.isOccupied && enteranceNode.gridCell.isObjectInteractable){
-                if (enteranceNode.gridCell.objectInThisGridSpace.tag == "Army"){
-                    Debug.Log(enteranceNode.gridCell.objectInThisGridSpace);
-                    if (enteranceNode.gridCell.objectInThisGridSpace.GetComponent<ObjectInteraction>().relatedArmy.canBeSelectedByCurrentPlayer){
-                        armiesNearCity.Add(enteranceNode.gridCell.objectInThisGridSpace.GetComponent<ObjectInteraction>().relatedArmy);
+                WorldObject obj = enteranceNode.gridCell.objectInThisGridSpace.GetComponent<WorldObject>();
+                if (obj.GetObjectType() == ObjectType.Army){
+                    Debug.Log("Object found near enterance: " + obj.gameObject.name);
+                    if ((obj as Army).IsSelectableByCurrentPlayer()){
+                        armiesNearCity.Add(obj as Army);
                     }
                 }
             }else{

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class City : WorldObject, IObjectInteraction
+public class City : WorldObject
 {
     [SerializeField] private GameObject flag;
 
@@ -14,7 +14,7 @@ public class City : WorldObject, IObjectInteraction
     private bool canBeSelectedByCurrentPlayer;
 
     [Header("City Enterance Information")]
-    [SerializeField] private ObjectEnterance cityEnterance;
+    [SerializeField] private CityEnterance cityEnterance;
 
     [Header("Garrison refrences")]
     [SerializeField] private UnitsInformation unitsInformation;
@@ -31,7 +31,7 @@ public class City : WorldObject, IObjectInteraction
         Initialize(gridPosition, rotation, ObjectType.City);
         ChangeOwningPlayer(ownedByPlayer);
         this.cityFraction = cityFraction;
-
+        cityEnterance.SetEnteranceCells(GetRotation());
         unitsInformation.SetUnitStatus(cityGarrison);
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
 
@@ -84,7 +84,7 @@ public class City : WorldObject, IObjectInteraction
 
     #region Interaction Management
 
-    public void Interact<T> (T other){
+    public override void Interact<T> (T other){
         Army army = other as Army;
         Debug.Log("Interacting army with city: " + army.gameObject.name);
         if (army.GetPlayerTag() == GetPlayerTag()){
@@ -98,20 +98,12 @@ public class City : WorldObject, IObjectInteraction
         }
     }
 
-    public void Interact (){
+    public override void Interact (){
         GameManager.Instance.EnterCity(this);
     }
 
     public override void ObjectSelected(){
         // TODO
-    }
-
-    #endregion
-
-    #region Setters
-
-    public void AddUnits (short unitID, short unitCount, short garrisonIndex){
-        unitsInformation.AddUnits(unitID, unitCount, garrisonIndex);
     }
 
     #endregion
@@ -129,6 +121,8 @@ public class City : WorldObject, IObjectInteraction
     public ResourceIncome GetIncome (){
         return buildingHandler.GetCityIncome();
     }
+
+    public List<PathNode> GetEnteranceList (){ return cityEnterance.GetEnteranceList(); }
 
     public List<short> GetEmptyGarrisonSlotCount (){
         return unitsInformation.GetEmptySlots();

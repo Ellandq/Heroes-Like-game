@@ -1,36 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using System.IO;
 using UnityEngine;
 using System.Linq;
 
 public class UnitSlot : MonoBehaviour
 {
-    private UnitsInformation unitsInformation;
-
-    [Header ("Slot Information")]
+    [Header("Slot Information")]
     private bool isEmpty = true;
     private bool isHero;
     private short unitId;
     private float movementPoints;
 
-    [Header ("Unit Information")]  
+    [Header("Unit Information")]
     private UnitObject unitObject;
     private UnitName unitName;
-    private short unitCount;
+    private int unitCount;
 
-
-    [Header ("Hero Information")]
+    [Header("Hero Information")]
     public Hero heroObject;
     public HeroTag heroTag;
 
-    public void Initialize (UnitsInformation unitsInformation){
-        this.unitsInformation = unitsInformation;
-    }    
+    private UnitsInformation unitsInformation;
 
-    public void ChangeSlotStatus(short unitId, short unitCount, float movementPoints)
-    { 
+    public void Initialize(UnitsInformation unitsInformation)
+    {
+        this.unitsInformation = unitsInformation;
+    }
+
+    public void ChangeSlotStatus(short unitId, int unitCount, float movementPoints)
+    {
         if (unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
         {
             isHero = true;
@@ -45,7 +42,7 @@ public class UnitSlot : MonoBehaviour
             heroTag = (HeroTag)(unitId - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
             heroObject = HeroesManager.Instance.GetHeroObject(heroTag);
         }
-        else if (unitCount == 0 | unitId == 0)
+        else if (unitCount == 0 || unitId == 0)
         {
             isHero = false;
             isEmpty = true;
@@ -60,7 +57,9 @@ public class UnitSlot : MonoBehaviour
             heroObject = null;
 
             return;
-        }else{
+        }
+        else
+        {
             isHero = false;
             isEmpty = false;
             this.unitId = unitId;
@@ -73,12 +72,12 @@ public class UnitSlot : MonoBehaviour
             heroTag = HeroTag.Empty;
             heroObject = null;
         }
-        
     }
 
-    public void SetSlotStatus(short unitId, short unitCount)
-    {       
-        if (unitCount == 0){
+    public void SetSlotStatus(short unitId, int unitCount)
+    {
+        if (unitCount == 0)
+        {
             return;
         }
         if (unitId > Enum.GetValues(typeof(UnitName)).Cast<int>().Max())
@@ -94,10 +93,12 @@ public class UnitSlot : MonoBehaviour
             heroTag = (HeroTag)(unitId - Enum.GetValues(typeof(UnitName)).Cast<int>().Max());
             heroObject = HeroesManager.Instance.GetHeroObject(heroTag);
 
-            movementPoints = heroObject.mapMovement * 100; 
-        }else{
+            movementPoints = heroObject.mapMovement * 100;
+        }
+        else
+        {
             isEmpty = false;
-            this.unitId = unitId; 
+            this.unitId = unitId;
             this.unitCount = unitCount;
 
             unitName = (UnitName)unitId;
@@ -105,9 +106,15 @@ public class UnitSlot : MonoBehaviour
 
             heroTag = HeroTag.Empty;
             heroObject = null;
-            
-            movementPoints = unitObject.mapMovement * 100; 
+
+            movementPoints = unitObject.mapMovement * 100;
         }
+    }
+
+    public void SetUnitCount(int count)
+    {
+        if (count == 0) RemoveUnits();
+        else unitCount = count;
     }
 
     public void RemoveUnits()
@@ -126,43 +133,46 @@ public class UnitSlot : MonoBehaviour
         movementPoints = 0f;
     }
 
-    public void AddUnits (short _unitCount)
+    public void AddUnits(int unitCount, float movementPoints = -1)
     {
-        unitCount += _unitCount;
+        this.unitCount += unitCount;
+        if (movementPoints > -1) this.movementPoints = Mathf.Min(this.movementPoints, movementPoints);
+        
     }
 
-    public void RestoreMovementPoints ()
+    public void RestoreMovementPoints()
     {
-        if (unitObject != null){
+        if (unitObject != null)
+        {
             movementPoints = unitObject.mapMovement * 100;
-        }else if (heroObject != null){
+        }
+        else if (heroObject != null)
+        {
             movementPoints = heroObject.mapMovement * 100;
         }
     }
 
-    public void RemoveMovementPoints (short movmentPointsToRemove)
+    public void RemoveMovementPoints(int movementPointsToRemove)
     {
-        if (!isEmpty){
-            movementPoints -= movmentPointsToRemove;
+        if (!isEmpty)
+        {
+            movementPoints -= movementPointsToRemove;
         }
     }
 
-    public short GetUnitTier () { return unitObject.unitTier; }
+    public short GetUnitTier() { return unitObject.unitTier; }
 
     public short GetId() { return unitId; }
 
-    public short GetUnitCount () { return unitCount; }
-    
-    public float GetMovementPoints ()
-    {
-        return movementPoints;
-    }
+    public int GetUnitCount() { return unitCount; }
 
-    public bool IsHero () { return isHero; }
+    public float GetMovementPoints(){ return movementPoints; }
 
-    public bool IsEmpty () { return isEmpty; }
+    public bool IsHero() { return isHero; }
 
-    public UnitName GetUnitName () { return unitName; }
+    public bool IsEmpty() { return isEmpty; }
 
-    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
+    public UnitName GetUnitName() { return unitName; }
+
+    public UnitsInformation GetUnitsInformation() { return unitsInformation; }
 }

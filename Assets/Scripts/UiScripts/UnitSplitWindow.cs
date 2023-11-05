@@ -7,43 +7,42 @@ using TMPro;
 
 public class UnitSplitWindow : MonoBehaviour
 {
-    [Header ("Unit Icon")]
-    [SerializeField] private Image unitIcon;
+    [Header ("Split Information")]
+    private UnitsInformation uInfo01;
+    private UnitsInformation uInfo02;
+    private byte id01;
+    private byte id02;
+    private int totalUnitCount;
 
-    [Header("Unit Count Objects")]
+    [Header("UI References")]
+    [SerializeField] private Image unitIcon;
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI unitCount01;
     [SerializeField] private TextMeshProUGUI unitCount02;
-    [SerializeField] private int totalUnitCount;
-    private UnitsInformation selectedArmy;
-    private UnitsInformation interactedArmy;
-    private City interactedCity;
-    private City selectedGarrison;
-    private short unitID_1;
-    private short unitID_2;
+    
 
-    private SplitWith splitWith;
+    public void PrepareUnitsToSwap (UnitsInformation uInfo01, byte id01, byte id02, UnitsInformation uInfo02 = null){
+        this.uInfo01 = uInfo01;
+        this.uInfo02 = uInfo02;
+        this.id01 = id01;
+        this.id02 = id02;
 
-    // Unit Swap from Army to Itself
-    public void PrepareUnitsToSwap (UnitSlot unit01, UnitSlot unit02, UnitsInformation connectedArmy, short id01, short id02)
-    {
-        splitWith = SplitWith.sameArmy;
-        selectedArmy = connectedArmy;
-        unitID_1 = id01;
-        unitID_2 = id02;
         gameObject.SetActive(true);
 
-        // Update Unit Sprites
-        unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
+        // Update Sprite
+        unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), uInfo01.GetUnit(id01).GetId()));
 
-        // Update Slider Values
-        totalUnitCount = unit01.howManyUnits + unit02.howManyUnits;
-        slider.maxValue = totalUnitCount;
-        slider.minValue = 1;
-        slider.value = unit01.howManyUnits;
-
-        if (slider.value == totalUnitCount){
-            slider.value -= 1;
+        // Update Slider
+        if (uInfo02 == null){
+            totalUnitCount = uInfo01.GetUnit(id01).GetUnitCount();
+            slider.maxValue = totalUnitCount;
+            slider.minValue = 1;
+            slider.value = totalUnitCount - 1;
+        }else{
+            totalUnitCount = uInfo01.GetUnit(id01).GetUnitCount() + uInfo02.GetUnit(id02).GetUnitCount();
+            slider.maxValue = totalUnitCount;
+            slider.minValue = 1;
+            slider.value = uInfo01.GetUnit(id01).GetUnitCount();
         }
 
         // Update displayed unit count
@@ -51,36 +50,7 @@ public class UnitSplitWindow : MonoBehaviour
         unitCount02.text = Convert.ToString(totalUnitCount - slider.value);
     }
 
-    // Unit Swap with another army
-    public void PrepareUnitsToSwap (UnitSlot unit01, UnitSlot unit02, UnitsInformation connectedArmy, UnitsInformation armyInteractedWith, short id01, short id02)
-    {
-        splitWith = SplitWith.otherArmy;
-        selectedArmy = connectedArmy;
-        interactedArmy = armyInteractedWith;
-        unitID_1 = id01;
-        unitID_2 = id02;
-        gameObject.SetActive(true);
-
-        // Update Unit Sprites
-        unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit01.unitID));
-
-        // Update Slider Values
-        totalUnitCount = unit01.howManyUnits + unit02.howManyUnits;
-        slider.maxValue = totalUnitCount;
-        slider.minValue = 1;
-        slider.value = unit01.howManyUnits;
-
-        if (slider.value == totalUnitCount){
-            slider.value -= 1;
-        }
-
-        // Update displayed unit count
-        unitCount01.text = Convert.ToString(slider.value);
-        unitCount02.text = Convert.ToString(totalUnitCount - slider.value);
-    }
-
-    public void UpdateDisplayedValues ()
-    {
+    public void UpdateDisplayedValues (){
         unitCount01.text = Convert.ToString(slider.value);
         unitCount02.text = Convert.ToString(totalUnitCount - slider.value);
     }
@@ -88,71 +58,29 @@ public class UnitSplitWindow : MonoBehaviour
     // Finalize the unit split depending on the interacting objects
     public void ActualizeUnitSplit ()
     {
-        switch (splitWith){
-
-            case SplitWith.sameArmy:
-                selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().howManyUnits = Convert.ToInt32(slider.value);
-                if (totalUnitCount > slider.value){
-                    if (selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().slotEmpty){
-                        selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().ChangeSlotStatus(selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().unitID, 
-                        Convert.ToInt32(totalUnitCount - slider.value), selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().movementPoints);
-                    }else{
-                        selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().howManyUnits = Convert.ToInt32(totalUnitCount - slider.value);
-                    }
-                }else{
-                    selectedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().RemoveUnits();
-                }
-            break;
-
-            case SplitWith.otherArmy:
-                selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().howManyUnits = Convert.ToInt32(slider.value);
-                if (totalUnitCount > slider.value){
-                    if (interactedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().slotEmpty){
-                        interactedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().ChangeSlotStatus(selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().unitID, 
-                        Convert.ToInt32(totalUnitCount - slider.value), selectedArmy.unitSlots[unitID_1].GetComponent<UnitSlot>().movementPoints);
-                    }else{
-                        interactedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().howManyUnits = Convert.ToInt32(totalUnitCount - slider.value);
-                    }
-                }else{
-                    interactedArmy.unitSlots[unitID_2].GetComponent<UnitSlot>().RemoveUnits();
-                }
-            break;
-
-            default:
-            throw new ArgumentOutOfRangeException(nameof(splitWith), splitWith, null);
-        }
-
-        if (GameManager.Instance.IsSceneOpened()){
-            CityArmyInterface.Instance.RefreshElement();
-            totalUnitCount = 0;
-            selectedArmy = null;
-            selectedGarrison = null;
-            gameObject.SetActive(false);
+        uInfo01.SetUnitCount(id01, Convert.ToInt32(slider.value));
+        if (uInfo02 == null){
+            if (uInfo01.GetUnit(id02).IsEmpty()){
+                uInfo01.SetSlotStatus(id02, Convert.ToInt32(totalUnitCount - slider.value), uInfo01.GetUnit(id01).GetId());
+            }else{
+                uInfo01.SetUnitCount(id02, Convert.ToInt32(totalUnitCount - slider.value));
+            }
         }else{
-            selectedArmy.AdjustUnitPosition();
-            if (interactedArmy != null) interactedArmy.AdjustUnitPosition();
-            
-            UIManager.Instance.RefreshCurrentArmyDisplay();
-            UIManager.Instance.RefreshArmyInterface();
-            totalUnitCount = 0;
-            selectedArmy = null;
-            selectedGarrison = null;
-            gameObject.SetActive(false);
-
-            
+            if (uInfo02.GetUnit(id02).IsEmpty()){
+                uInfo02.SetSlotStatus(id02, Convert.ToInt32(totalUnitCount - slider.value), uInfo01.GetUnit(id01).GetId());
+            }else{
+                uInfo02.SetUnitCount(id02, Convert.ToInt32(totalUnitCount - slider.value));
+            }
         }
+        DisableUnitSplitWindow();
     }
 
     public void DisableUnitSplitWindow ()
     {
+        UIManager.Instance.FinalizeUnitSplit();
         totalUnitCount = 0;
-        selectedArmy = null;
-        selectedGarrison = null;
+        uInfo01 = null;
+        uInfo02 = null;
         gameObject.SetActive(false);
-    }
-
-    private enum SplitWith{
-        sameArmy,
-        otherArmy,
     }
 }

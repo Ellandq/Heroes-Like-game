@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using System.Linq;
 using UnityEditor.SceneManagement;
 
-public class Army : WorldObject, IObjectInteraction
+public class Army : WorldObject
 {
     [Header ("Events")]
     public UnityEvent onMovementPointsChanged;
@@ -32,7 +32,7 @@ public class Army : WorldObject, IObjectInteraction
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
 
-        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag() && GameManager.Instance.state == GameState.PlayerTurn){
+        if (PlayerManager.Instance.GetCurrentPlayerTag() == GetPlayerTag() && GameManager.Instance.state == GameState.PlayerTurn){
             UIManager.Instance.UpdateCurrentArmyDisplay();
         }
     }
@@ -44,7 +44,7 @@ public class Army : WorldObject, IObjectInteraction
 
     public void UpdateArmySelectionAvailability()
     {
-        if (PlayerManager.Instance.GetCurrentPlayer() == GetPlayerTag()){
+        if (PlayerManager.Instance.GetCurrentPlayerTag() == GetPlayerTag()){
             canBeSelectedByCurrentPlayer = true;
         }else{
             canBeSelectedByCurrentPlayer = false;
@@ -79,7 +79,7 @@ public class Army : WorldObject, IObjectInteraction
     }
 
     // Remove a selected number of movement points
-    public void RemoveMovementPoints(short pathCost){
+    public void RemoveMovementPoints(int pathCost){
         unitsInformation.RemoveMovementPoints(pathCost);
         movementPoints -= pathCost;
         onMovementPointsChanged?.Invoke();
@@ -96,7 +96,7 @@ public class Army : WorldObject, IObjectInteraction
     #region Interactions
 
     // Army interaction with another army
-    public void Interact<T>(T other)
+    public override void Interact<T>(T other)
     {
         Army interactingArmy = other as Army;
         if (interactingArmy.GetPlayerTag() == GetPlayerTag()){
@@ -106,7 +106,7 @@ public class Army : WorldObject, IObjectInteraction
         }
     }
 
-    public void Interact () { UIManager.Instance.UpdateArmyInterface(this); }
+    public override void Interact () { UIManager.Instance.UpdateArmyInterface(this); }
 
     public override void ObjectSelected(){
         if (armyHighlight.IsHighlightActive()){

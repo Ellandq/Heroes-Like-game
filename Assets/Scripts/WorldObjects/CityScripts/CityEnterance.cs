@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class CityEnterance : ObjectEnterance
 {
-    [SerializeField] private City city;
-
     private void Start (){
-        SetEnteranceCells();
         GameGrid.Instance.GetCell(GameGrid.Instance.GetGridPosFromWorld(transform.position)).AddOccupyingObject(gameObject);
     }
 
-    private void SetEnteranceCells()
+    public void SetEnteranceCells(float rotation)
     {
         List <PathNode> enteranceList = new List<PathNode>();
         Vector2Int gridPosition = GameGrid.Instance.GetGridPosFromWorld(transform.TransformPoint(Vector3.zero));
-        float cityRotation = city.GetRotation();
 
-        if (cityRotation == 0){
+        if (rotation == 0){
             try{
                 enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
             }catch (NullReferenceException){
@@ -34,7 +30,7 @@ public class CityEnterance : ObjectEnterance
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (cityRotation == 90){
+        }else if (rotation == 90){
             try{
                 enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
             }catch (NullReferenceException){
@@ -50,7 +46,7 @@ public class CityEnterance : ObjectEnterance
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (cityRotation == 180){
+        }else if (rotation == 180){
             try{
                 enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
             }catch (NullReferenceException){
@@ -66,7 +62,7 @@ public class CityEnterance : ObjectEnterance
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
-        }else if (cityRotation == 270){
+        }else if (rotation == 270){
             try{
                 enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
             }catch (NullReferenceException){

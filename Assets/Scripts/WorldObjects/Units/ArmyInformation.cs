@@ -12,8 +12,8 @@ public class ArmyInformation : UnitsInformation
 
     #region Movement points manipulation
 
-    public void RemoveMovementPoints(short movementCost) {
-        for (int i = 0; i < 7; i++){
+    public void RemoveMovementPoints(int movementCost) {
+        for (short i = 0; i < 7; i++){
             unitSlots[i].RemoveMovementPoints(movementCost);
         }
     }
@@ -22,40 +22,34 @@ public class ArmyInformation : UnitsInformation
 
     #region Unit Manipulation
 
-    public override void SwapUnitsPosition(short a, short b)
+    public override void SwapUnits(byte a, byte b)
     {
-        base.SwapUnitsPosition(a, b);
+        base.SwapUnits(a, b);
         UpdateArmyInformation();
     }
 
-    public override void SwapUnitsPosition (short a, UnitSlot otherArmyUnit)
+    public override void SwapUnits (byte a, UnitSlot otherArmyUnit)
     {
-        base.SwapUnitsPosition(a, otherArmyUnit);
+        base.SwapUnits(a, otherArmyUnit);
         UpdateArmyInformation(otherArmyUnit.GetUnitsInformation() as ArmyInformation);
     }
 
-    public override void AddUnits (short a, short b)
+    public override void AddUnits (byte a, byte b)
     {
         base.AddUnits(a, b);
         UpdateArmyInformation();
     }
 
-    public override void AddUnits (short a, UnitSlot otherArmyUnit)
+    public override void AddUnits (byte a, UnitSlot otherArmyUnit)
     {
         base.AddUnits(a, otherArmyUnit);
         UpdateArmyInformation(otherArmyUnit.GetUnitsInformation() as ArmyInformation);
     }
 
-    public override void SplitUnits (short a, short b)
-    {
-        base.SplitUnits(a, b);
-        UpdateArmyInformation();
-    }
-
-    public override void SplitUnits (short a, short b, UnitsInformation other)
+    public override void SplitUnits (byte a, byte b, UnitsInformation other = null)
     {
         base.SplitUnits(a, b, other);
-        UpdateArmyInformation(other as ArmyInformation);
+        UpdateArmyInformation();
     }
 
     #endregion

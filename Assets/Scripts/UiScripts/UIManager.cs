@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ArmyDisplayInformation armyInformation;
 
     [Header ("Army Interface UI")]
-    [SerializeField] private ArmyInterfaceArmyInformation armyInterface;
+    [SerializeField] private ArmyInterface armyInterface;
 
     [Header ("Army and Town Display UI")]
     [SerializeField] private OwnedTownsDisplay townDisplay;
@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
 
     private void NewTurnUpdate (){
         UpdateResourceDisplay();
+        UpdateCurrentArmyDisplay();
+        UpdateCurrentCityDisplay();
     }
 
     private void NewDayUpdate (){
@@ -46,41 +48,26 @@ public class UIManager : MonoBehaviour
         resourceDisplay.UpdateDisplay();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public void UpdatePlayerDisplay (){
+        UpdateCurrentArmyDisplay();
+        UpdateCurrentCityDisplay();
+    }
 
     #region TownAndArmyDisplay
 
-    // Updates the Player display
-    public void UpdatePlayerDisplay ()
-    {
-        townDisplay.UpdateCityDisplay();
-        armyDisplay.UpdateArmyDisplay();
-    }
-
     public void UpdateCurrentArmyDisplay (){
         Debug.Log("Current army display updated.");
-        armyDisplay.UpdateArmyDisplay(currentPlayer);
+        armyDisplay.UpdateArmyDisplay();
     }
 
     public void UpdateCurrentCityDisplay (){
         Debug.Log("Current city display updated.");
-        townDisplay.UpdateCityDisplay(currentPlayer);
+        townDisplay.UpdateCityDisplay();
     }
 
     #endregion
 
-    #region CurrentArmyDisplay
+    #region ArmyDisplay
 
     public void RefreshCurrentArmyDisplay (){
         armyInformation.RefreshElement();
@@ -90,13 +77,10 @@ public class UIManager : MonoBehaviour
 
     #region ArmyInterface
     
-    public void UpdateArmyInterface (GameObject armyObject, GameObject interactedArmy = null){
+    public void UpdateArmyInterface (Army armyObject, Army interactedArmy = null){
         armyInterface.gameObject.SetActive(true);
-        if (interactedArmy == null){
-            armyInterface.ArmyInterfaceSetup(armyObject);
-        }else{
-            armyInterface.ArmyInterfaceSetup(armyObject, interactedArmy);
-        }
+        armyInterface.ArmyInterfaceSetup(armyObject, interactedArmy);
+        
         ChangeBackgroundDimStatus(true);
 
         CameraManager.Instance.DisableCamera();
@@ -124,14 +108,18 @@ public class UIManager : MonoBehaviour
 
     #region UnitSplitWindow
 
-    public void OpenUnitSplitWindow (UnitSlot unit01, UnitSlot unit02, ArmyInformation connectedArmy, short id01, short id02)
+    public void OpenUnitSplitWindow (UnitsInformation uInfo01, byte id01, byte id02, UnitsInformation uInfo02 = null)
     {
-        unitSplitWindow.PrepareUnitsToSwap(unit01, unit02, connectedArmy, id01, id02);
+        unitSplitWindow.PrepareUnitsToSwap(uInfo01, id01, id02, uInfo02);
     }
 
-    public void OpenUnitSplitWindow (UnitSlot unit01, UnitSlot unit02, UnitsInformation connectedArmy, UnitsInformation armyInteractedWith, short id01, short id02)
-    {
-        unitSplitWindow.PrepareUnitsToSwap(unit01, unit02, connectedArmy, armyInteractedWith, id01, id02);
+    public void EndUnitSplit (){
+        if (GameManager.Instance.IsSceneOpened()){
+            CityArmyInterface.Instance.RefreshElement();
+        }else{  
+            RefreshCurrentArmyDisplay();
+            RefreshArmyInterface();
+        }
     }
 
     public void DisableUnitSplitWindow ()

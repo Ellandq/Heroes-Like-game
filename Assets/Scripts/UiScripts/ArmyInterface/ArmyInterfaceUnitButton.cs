@@ -9,29 +9,27 @@ using TMPro;
 
 public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] ArmyInterfaceArmyInformation armyInterface;
-    private bool isMouseOver = false;
-    private IEnumerator checkMouseOverCoroutine;
-
     [Header ("Sprites")]
     [SerializeField] private Sprite unitButtonDefault; 
     [SerializeField] private Sprite unitButtonHighlight;  
     [SerializeField] private Sprite unitBackgroundDefault;
 
     [Header ("UI References")]
+    [SerializeField] private ArmyInterface armyInterface;
     [SerializeField] private Button unitButton;  
     [SerializeField] private GameObject unitCountDisplay;
     [SerializeField] private Image unitIcon;
 
     [Header ("Button Information")]
-    [SerializeField] private short slotID;
-    [SerializeField] public bool isSlotEmpty;
+    private byte slotID;
+    public bool isSlotEmpty;
+    private bool isMouseOver = false;
 
-    [SerializeField] private ArmyInterfaceUnitButton buttonToSwap;
+    private IEnumerator checkMouseOverCoroutine;
 
     private void Start ()
     { 
-        armyInterface.onArmyInterfaceReload.AddListener(DeactivateHighlight);  
+        armyInterface.onArmyInterfaceReload += DeactivateHighlight;  
     }
 
     public void ActivateHighlight ()
@@ -51,50 +49,24 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler, IPointerEnte
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "ArmyInterfaceUnitIcons"){
             if (eventData.pointerDrag != this.gameObject)
             {
-                buttonToSwap = eventData.pointerDrag.GetComponentInParent<ArmyInterfaceUnitButton>();
-                if (isSlotEmpty){
-                    if (!armyInterface.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
-                        if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                            armyInterface.SplitUnits(buttonToSwap.slotID, slotID);
-                        }else{
-                            armyInterface.SwapUnits(buttonToSwap.slotID, slotID);
-                        }
-                    }else{
-                        armyInterface.SwapUnits(buttonToSwap.slotID, slotID);
-                    }
-                }else{
-                    if (!armyInterface.AreUnitsHeroes(buttonToSwap.slotID, slotID)){
-                        if (armyInterface.AreUnitsSameType(buttonToSwap.slotID, slotID)){
-                            if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                                armyInterface.SplitUnits(buttonToSwap.slotID, slotID);
-                            }else{
-                                armyInterface.AddUnits(buttonToSwap.slotID, slotID);
-                            }
-                        }else{
-                            armyInterface.SwapUnits(buttonToSwap.slotID, slotID);
-                        }
-                    }else{
-                        armyInterface.SwapUnits(buttonToSwap.slotID, slotID);
-                    }
-                }
+                armyInterface.HandleUnitInteraction(slotID, eventData.pointerDrag.GetComponentInParent<ArmyInterfaceUnitButton>().GetId());
             }
         }
     }
 
-    public void UpdateButton(GameObject unit){
+    public void UpdateButton(UnitSlot unit){
         if (unit != null){
-            if (!unit.GetComponent<UnitSlot>().slotEmpty){
+            if (!unit.IsEmpty()){
                 unitButton.interactable = true;
-                // Check if the selected unit is a hero
-                if (unit.GetComponent<UnitSlot>().isSlotHero){
-                    unitIcon.sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unit.GetComponent<UnitSlot>().unitID - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
+                if (unit.IsHero()){
+                    unitIcon.sprite = Resources.Load<Sprite>("HeroIcons/" + Enum.GetName(typeof(HeroTag), unit.GetId() - Enum.GetValues(typeof(UnitName)).Cast<int>().Max()));
                     isSlotEmpty = false;
                     unitCountDisplay.SetActive(false);
                 }else{
-                    unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit.GetComponent<UnitSlot>().unitID));
+                    unitIcon.sprite = Resources.Load<Sprite>("UnitIcons/" + Enum.GetName(typeof(UnitName), unit.GetId()));
                     isSlotEmpty = false;
                     unitCountDisplay.SetActive(true);
-                    unitCountDisplay.GetComponentInChildren<TMP_Text>().text = Convert.ToString(unit.GetComponent<UnitSlot>().howManyUnits);                       
+                    unitCountDisplay.GetComponentInChildren<TMP_Text>().text = Convert.ToString(unit.GetUnitCount());                       
                 }
             }else{
                 unitButton.interactable = false;
@@ -135,4 +107,6 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler, IPointerEnte
 
         }
     }
+
+    public byte GetId(){ return slotID; }
 }

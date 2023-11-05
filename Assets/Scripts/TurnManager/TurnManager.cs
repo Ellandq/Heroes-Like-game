@@ -66,5 +66,13 @@ public class TurnManager : MonoBehaviour
         }
         currentPlayerTurn++;
     }
+
+    public short GetDay (){ return dayCounter; }
+
+    public short GetWeek (){ return weekCounter; }
+
+    public short GetMonth (){ return monthCounter; }
+
+    public short GetTurn () { return currentPlayerTurn; }  
 }   
 

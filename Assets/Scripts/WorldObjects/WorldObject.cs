@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldObject : MonoBehaviour
+public class WorldObject : MonoBehaviour, IObjectInteraction
 {
     protected Vector2Int gridPosition {get; set; }
     private float rotation { get; set; }
@@ -63,12 +63,12 @@ public class WorldObject : MonoBehaviour
 
     // Object Interactions
 
-    public virtual void InteractWithObject (){
+    public virtual void Interact (){
         Debug.Log("Interacting with object: " + this.gameObject.name);
     }
 
-    public virtual void InteractWithObject (WorldObject other){
-        Debug.Log("Interacting with object: " + this.gameObject.name + " , Interaction started by: " + other.gameObject.name);
+    public virtual void Interact<T> (T other){
+        Debug.Log("Interacting with object: " + this.gameObject.name + " , Interaction started by: " + (other as WorldObject).gameObject.name);
     }
 
     public virtual void ObjectSelected (){

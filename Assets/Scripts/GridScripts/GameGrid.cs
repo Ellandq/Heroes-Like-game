@@ -7,10 +7,10 @@ public class GameGrid : MonoBehaviour
     public static GameGrid Instance;
     private Coroutine coroutine;
     private float setUpProgress;
-    private Pathfinding pathfinding;
+    public Pathfinding pathfinding;
     private int gridLength;
     private int gridWidth;
-    private float gridSpaceSize = 5f;
+    public const float GRID_SPACE_SIZE = 5f;
 
     [SerializeField] private GameObject gridCellPrefab;
     public GridCell[,] gameGrid;
@@ -29,8 +29,8 @@ public class GameGrid : MonoBehaviour
     // Gets the grid position from world position
     public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
     {
-        int x = Mathf.FloorToInt(worldPosition.x / gridSpaceSize);
-        int z = Mathf.FloorToInt(worldPosition.z / gridSpaceSize);
+        int x = Mathf.FloorToInt(worldPosition.x / GRID_SPACE_SIZE);
+        int z = Mathf.FloorToInt(worldPosition.z / GRID_SPACE_SIZE);
 
         x = Mathf.Clamp(x, 0, gridWidth);
         z = Mathf.Clamp(z, 0, gridLength);
@@ -41,8 +41,8 @@ public class GameGrid : MonoBehaviour
     // Gets the world position of a grid position
     public Vector3 GetWorldPosFromGridPos(Vector2Int gridPos)
     {
-        float x = gridPos.x * gridSpaceSize;
-        float z = gridPos.y * gridSpaceSize;
+        float x = gridPos.x * GRID_SPACE_SIZE;
+        float z = gridPos.y * GRID_SPACE_SIZE;
 
         return new Vector3(x, 0, z);
     }
@@ -251,7 +251,7 @@ public class GameGrid : MonoBehaviour
                 }
 
                 // Create a new GridSpace object for each cell
-                GameObject obj = Instantiate(gridCellPrefab, new Vector3(x * gridSpaceSize, 0, z * gridSpaceSize), Quaternion.identity);
+                GameObject obj = Instantiate(gridCellPrefab, new Vector3(x * GRID_SPACE_SIZE, 0, z * GRID_SPACE_SIZE), Quaternion.identity);
                 obj.transform.parent = transform;
                 obj.name = "Grid Space (X: " + x + ", Z: " + z + ")";
                 gameGrid[x, z] = obj.GetComponent<GridCell>();

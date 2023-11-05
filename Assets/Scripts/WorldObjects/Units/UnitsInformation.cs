@@ -7,6 +7,16 @@ public class UnitsInformation : MonoBehaviour, IUnit
     private WorldObject connectedObject;
     protected List<UnitSlot> unitSlots;
 
+    public UnitsInformation(){
+        unitSlots = new List<UnitSlot>();
+        for (short i = 0; i < 7; i++)
+        {
+            unitSlots.Add(new UnitSlot());
+            unitSlots[i].Initialize(this);
+        }
+        SetUnitStatus(new short[14]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    }
+
     public UnitsInformation(short[] unitInfo)
     {
         unitSlots = new List<UnitSlot>();

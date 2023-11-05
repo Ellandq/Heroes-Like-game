@@ -14,7 +14,6 @@ public class ArmyInterface: MonoBehaviour
     [SerializeField] List <ArmyInterfaceUnitButton> unitButtons;
 
     [Header ("Intefrace Information")]
-    [SerializeField] private GameObject placeholder;
     private UnitsInformation uInfo01;
     private UnitsInformation uInfo02;
     private List <GridCell> neighbourCells;
@@ -29,7 +28,7 @@ public class ArmyInterface: MonoBehaviour
         uInfo01 = army.GetUnitsInformation();
         if (other == null){
             interactingWithPlaceholder = true;
-            uInfo02 = placeholder.GetComponent<Army>().GetUnitsInformation();
+            uInfo02 = new UnitsInformation();
         }else{
             interactingWithPlaceholder = false;
             uInfo02 = other.GetUnitsInformation();
@@ -50,7 +49,6 @@ public class ArmyInterface: MonoBehaviour
     {
         uInfo01 = null;
         uInfo02 = null;
-        placeholder.GetComponent<Army>().GetUnitsInformation().ClearArmy();
     }
 
     private void UpdateUnitDisplay()

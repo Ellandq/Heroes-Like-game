@@ -24,13 +24,13 @@ public class CityDwellingButton : MonoBehaviour
         DwellingUI.Instance.onDwellingUpdate.AddListener(DeactivateHighlight);
     }
 
-    public void UpdateButton (Sprite _unitIcon, string currentUnitCount, short _unitID)
+    public void UpdateButton (Sprite unitIcon, string currentUnitCount, short unitID)
     {
-        unitIcon.sprite = _unitIcon;
+        this.unitIcon.sprite = unitIcon;
         thisButton.interactable = true;
         dwellingUnitCountDisplay.SetActive(true);
         dwellingUnitCountDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentUnitCount;
-        unitBuyButton.UpdateButton(_unitIcon, currentUnitCount, _unitID);
+        unitBuyButton.UpdateButton(unitIcon, currentUnitCount, unitID);
     }
 
     public void DisableButton ()

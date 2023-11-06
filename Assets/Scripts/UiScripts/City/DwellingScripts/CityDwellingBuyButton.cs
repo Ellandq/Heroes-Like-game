@@ -16,17 +16,17 @@ public class CityDwellingBuyButton : MonoBehaviour
     private short unitID;
     public short unitsAvailableToBuy;
     public bool objectSelected;
-    private int availableSlotIndex;
+    private byte availableSlotIndex;
 
     private void Start ()
     {
         objectSelected = false;
     }
 
-    public void UpdateButton (Sprite _unitIcon, string currentUnitCount, short _unitID)
+    public void UpdateButton (Sprite unitIcon, string currentUnitCount, short unitID)
     {
-        unitID = _unitID;
-        unitIcon.sprite = _unitIcon;
+        this.unitID = unitID;
+        this.unitIcon.sprite = unitIcon;
         dwellingUnitCountDisplay.SetActive(true);
         dwellingUnitCountDisplay.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentUnitCount;
         UpdateAvailableUnits();
@@ -61,10 +61,10 @@ public class CityDwellingBuyButton : MonoBehaviour
 
     private void CheckAvailableSlots ()
     {
-        availableSlotIndex = CityManager.Instance.currentCity.GetSameUnitSlotIndex(unitID);
+        availableSlotIndex = CityManager.Instance.GetCity().GetSameUnitSlotIndex(unitID);
         if (availableSlotIndex == 7){
             if (DwellingUI.Instance.emptyCitySlots.Count > 0){
-                availableSlotIndex = DwellingUI.Instance.emptyCitySlots[0];
+                availableSlotIndex = CityManager.Instance.GetCity().GetEmptyGarrisonSlotCount()[0];
                 thisButton.interactable = true;
             }else{
                 thisButton.interactable = false;
@@ -76,16 +76,16 @@ public class CityDwellingBuyButton : MonoBehaviour
 
     private void UpdateAvailableUnits()
     {
-        unitsAvailableToBuy = CityManager.Instance.currentCity.cityDwellingInformation.CalculateUnitsAvailableToBuy(buttonIndex);
+        unitsAvailableToBuy = CityManager.Instance.GetCity().GetBuildingHandler().GetCityDwellingInformation().CalculateUnitsAvailableToBuy(buttonIndex);
     }
 
-    public void BuyUnits (int _unitCount)
+    public void BuyUnits (int unitCount)
     {
-        if (_unitCount > 0){
-            CityManager.Instance.currentCity.cityDwellingInformation.BuyUnits(buttonIndex, _unitCount);
+        if (unitCount > 0){
+            CityManager.Instance.GetCity().GetBuildingHandler().GetCityDwellingInformation().BuyUnits(buttonIndex, unitCount);
             DwellingUI.Instance.UpdateDwellingDisplay();
-            CityManager.Instance.cityResourceDisplay.UpdateDisplay();
-            CityManager.Instance.currentCity.AddUnits(unitID, _unitCount, availableSlotIndex);
+            CityManager.Instance.UpdateResourceDisplay();
+            CityManager.Instance.GetCity().GetUnitsInformation().AddUnits(availableSlotIndex, unitCount, unitID);
         }else{
             Debug.Log("No units are available");
         }

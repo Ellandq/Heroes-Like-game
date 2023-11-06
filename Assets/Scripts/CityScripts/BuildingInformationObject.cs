@@ -11,13 +11,7 @@ public class BuildingInformationObject : ScriptableObject
     public string buildingName;
 
     [Header("Building requirements")]
-    public int goldCost;
-    public int woodCost;
-    public int oreCost;
-    public int gemCost;
-    public int mercuryCost;
-    public int sulfurCost;
-    public int crystalCost;
+    public ResourceIncome cost;
     public List<BuildingID> additionalRequirements;
 
     [Header("Building Icon")]

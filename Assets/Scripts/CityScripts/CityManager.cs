@@ -18,10 +18,10 @@ public class CityManager : MonoBehaviour
 
     [Header("Events")]
     public UnityEvent onResourcesChanged;
-    public UnityEvent<int> onNewBuildingCreated;
+    public UnityEvent<BuildingID> onNewBuildingCreated;
 
     [Header ("Object referances")]
-    [SerializeField] public CityResourceDisplay cityResourceDisplay;
+    [SerializeField] private CityResourceDisplay cityResourceDisplay;
     [SerializeField] private CityInteractibleObjects cityInteractibleObjects;
     [SerializeField] private CityArmyInterface cityArmyInterface;
 
@@ -60,22 +60,22 @@ public class CityManager : MonoBehaviour
             }
         }
         
-        if (SceneStateManager.interactingArmy != null){
-            CityArmyInterface.Instance.GetArmyUnits(SceneStateManager.interactingArmy);
-        }else{
-            if (armiesNearCity.Count > 0){
-                CityArmyInterface.Instance.GetArmyUnits(armiesNearCity[0]);
-            }else{
-                CityArmyInterface.Instance.GetArmyUnits();
-            }
-        }
+        cityArmyInterface.CityInterfaceSetup();
         
         DwellingUI.Instance.UpdateDwellingDisplay();
     }
 
+    public void UpdateResourceDisplay(){
+        cityResourceDisplay.UpdateDisplay();
+    }
+
+    public void RefreshArmyInterface (){
+        cityArmyInterface.RefreshElement();
+    }
+
     public void ExitCityScene ()
     {
-        CityArmyInterface.Instance.ResetElement();
+        cityArmyInterface.ResetElement();
         if (!armyCreationStatus){
             waitForArmyToBeCreated = StartCoroutine(WaitForArmyToBeCreated());
         }else{

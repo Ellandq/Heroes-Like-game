@@ -83,7 +83,7 @@ public class UnitsInformation : MonoBehaviour, IUnit
         unitSlots[a].RemoveUnits();
     }
 
-    public void AddUnits(byte index, short count, short id)
+    public void AddUnits(byte index, int count, short id)
     {
         if (unitSlots[index].IsEmpty())
         {
@@ -244,10 +244,10 @@ public class UnitsInformation : MonoBehaviour, IUnit
 
     public UnitSlot GetUnit(byte id) { return unitSlots[id]; }
 
-    public short GetSameUnitSlotIndex(short id)
+    public byte GetSameUnitSlotIndex(short id)
     {
-        short emptySlotIndex = 7;
-        for (short i = 0; i < unitSlots.Count; i++)
+        byte emptySlotIndex = 7;
+        for (byte i = 0; i < unitSlots.Count; i++)
         {
             if (unitSlots[i].GetId() == id) return i;
             else if (unitSlots[i].IsEmpty()) emptySlotIndex = i;
@@ -255,10 +255,10 @@ public class UnitsInformation : MonoBehaviour, IUnit
         return emptySlotIndex;
     }
 
-    public List<short> GetEmptySlots()
+    public List<byte> GetEmptySlots()
     {
-        List<short> list = new List<short>();
-        for (short i = 0; i < 7; i++)
+        List<byte> list = new List<byte>();
+        for (byte i = 0; i < 7; i++)
         {
             if (unitSlots[i].IsEmpty()) list.Add(i);
         }

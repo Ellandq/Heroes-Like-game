@@ -69,24 +69,24 @@ public class ArmyDisplayInformation : MonoBehaviour
     public void SwapUnits (byte a, byte b){
         if (units != null){
             if (AreUnitsSameType(a, b)) AddUnits(a, b);
-            else units.SwapUnitsPosition(a, b);
+            else units.SwapUnits(a, b);
         }
         RefreshElement();
     }
 
     // Adds one unit to another
-    public void AddUnits (short a, short b){
+    public void AddUnits (byte a, byte b){
         units.AddUnits(a, b);
         RefreshElement();
     }
 
     // Splits two given units and or a unit with an empty cell
-    public void SplitUnits (short a, short b){
+    public void SplitUnits (byte a, byte b){
         units.SplitUnits(a, b);
     }
 
     // Checks if the given units are of the same type
-    public bool AreUnitsSameType (short a, short b){
+    public bool AreUnitsSameType (byte a, byte b){
         return units.AreUnitSlotsSameType(a, b);
     }
 

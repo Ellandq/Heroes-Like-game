@@ -7,70 +7,30 @@ using TMPro;
 
 public class BuildingCostDisplay : MonoBehaviour
 {
-    [SerializeField] CityResourceDisplay cityResourceDisplay;
-    int currentBuildingID;
-    int[] currentBuildingResourceCost;
-    [SerializeField] Button cancelButton;
-    [SerializeField] Button confirmButton;
+    [SerializeField] private CityResourceDisplay cityResourceDisplay;
+    private BuildingInformationObject buildingInformation;
 
-    [SerializeField] Image currentBuildingImage;
-    [SerializeField] TextMeshProUGUI currentBuildingName;
+    [Header ("UI References")]
+    [SerializeField] private Button cancelButton;
+    [SerializeField] private Button confirmButton;
+    [SerializeField] private Image currentBuildingImage;
+    [SerializeField] private TextMeshProUGUI currentBuildingName;
+    [SerializeField] private List<TextMeshProUGUI> buildingCost; 
 
-    [SerializeField] GameObject goldCounter;
-    [SerializeField] GameObject woodCounter;
-    [SerializeField] GameObject oreCounter;
-    [SerializeField] GameObject gemCounter;
-    [SerializeField] GameObject mercuryCounter;
-    [SerializeField] GameObject sulfurCounter;
-    [SerializeField] GameObject crystalCounter;
-
-    private TextMeshProUGUI displayedGold;
-    private TextMeshProUGUI displayedWood;
-    private TextMeshProUGUI displayedOre;
-    private TextMeshProUGUI displayedGems;
-    private TextMeshProUGUI displayedMercury;
-    private TextMeshProUGUI displayedSulfur;
-    private TextMeshProUGUI displayedCrystals;
-
-    private bool isResourceDisplayReady = false;
-
-    public void SetupResourceDisplay ()
+    public void UpdateDisplay (BuildingInformationObject buildingInformation, bool buildingRequirementsMet)
     {
-        displayedGold = goldCounter.GetComponent<TextMeshProUGUI>();
-        displayedWood = woodCounter.GetComponent<TextMeshProUGUI>();
-        displayedOre = oreCounter.GetComponent<TextMeshProUGUI>();
-        displayedGems = gemCounter.GetComponent<TextMeshProUGUI>();
-        displayedMercury = mercuryCounter.GetComponent<TextMeshProUGUI>();
-        displayedSulfur = sulfurCounter.GetComponent<TextMeshProUGUI>();
-        displayedCrystals = crystalCounter.GetComponent<TextMeshProUGUI>();
-    }
-
-    public void UpdateDisplay (int buildingID, BuildingInformationObject buildingInformation, bool buildingRequirementsMet)
-    {
+        this.buildingInformation = buildingInformation;
         currentBuildingImage.sprite = buildingInformation.buildingIcon;
         currentBuildingName.text = buildingInformation.buildingName;
-        currentBuildingID = buildingID;
         
         if (buildingRequirementsMet) confirmButton.interactable = true;
         else confirmButton.interactable = false;
-        if (!isResourceDisplayReady) SetupResourceDisplay();
-        this.transform.parent.gameObject.SetActive(true);
-        displayedGold.text = Convert.ToString(buildingInformation.goldCost);
-        displayedWood.text = Convert.ToString(buildingInformation.woodCost);
-        displayedOre.text = Convert.ToString(buildingInformation.oreCost);
-        displayedGems.text = Convert.ToString(buildingInformation.gemCost);
-        displayedMercury.text = Convert.ToString(buildingInformation.mercuryCost);
-        displayedSulfur.text = Convert.ToString(buildingInformation.sulfurCost);
-        displayedCrystals.text = Convert.ToString(buildingInformation.crystalCost);  
 
-        Array.Resize(ref currentBuildingResourceCost, 7);
-        currentBuildingResourceCost[0] = buildingInformation.goldCost;
-        currentBuildingResourceCost[1] = buildingInformation.woodCost;
-        currentBuildingResourceCost[2] = buildingInformation.oreCost;
-        currentBuildingResourceCost[3] = buildingInformation.gemCost;
-        currentBuildingResourceCost[4] = buildingInformation.mercuryCost;
-        currentBuildingResourceCost[5] = buildingInformation.sulfurCost;
-        currentBuildingResourceCost[6] = buildingInformation.crystalCost;     
+        transform.parent.gameObject.SetActive(true);
+
+        for (int i = 0; i < 7; i++){
+            buildingCost[i].text = Convert.ToString(buildingInformation.cost[i]);
+        } 
     }
 
     public void DisableElement ()
@@ -80,12 +40,12 @@ public class BuildingCostDisplay : MonoBehaviour
 
     public void CreateBuilding ()
     {
-        CityManager.Instance.currentCity.CreateNewBuilding(currentBuildingID, currentBuildingResourceCost);
-        CityManager.Instance.owningPlayer.RemoveResources(currentBuildingResourceCost);
+        CityManager.Instance.GetCity().GetBuildingHandler().CreateNewBuilding(buildingInformation.buildingID);
+        PlayerManager.Instance.GetCurrentPlayer().RemoveResources(buildingInformation.cost);
         DisableElement();
         transform.parent.parent.gameObject.SetActive(false);
         cityResourceDisplay.UpdateDisplay();
-        CityManager.Instance.onNewBuildingCreated.Invoke(currentBuildingID);
+        CityManager.Instance.onNewBuildingCreated.Invoke(buildingInformation.buildingID);
         DwellingUI.Instance.UpdateDwellingDisplay();
     }
 }

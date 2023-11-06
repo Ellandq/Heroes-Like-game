@@ -49,9 +49,9 @@ public class CityBuildingHandler : MonoBehaviour
         cityBuildings[34] = CityBuildingState.Built;  // Or any appropriate initialization for the last building
     }
 
-    public void CreateNewBuilding(int id, int[] resourceCost) {
+    public void CreateNewBuilding(BuildingID buildingId) {
         buildingAlreadybuilt = true;
-
+        int id = (int)buildingId;
         if (id > 21 && id < 30) {
             int dwellingIndex = id - 22;
             cityBuildings[id] = CityBuildingState.Built;

@@ -9,7 +9,6 @@ public class CityDwellingInformation : MonoBehaviour
     private Player player;
     private List<DwellingObject> cityDwellings;
     private List<float> cityDwellingUnitCount;
-    private List<int> unitCalculatedCost;
 
     public void ChangeOwningPlayer (Player player) { this.player = player; }
 
@@ -58,4 +57,8 @@ public class CityDwellingInformation : MonoBehaviour
         if (cityDwellings[index].unitCost > player.GetAvailableResources()) return 0;
         return Convert.ToInt16(Math.Min(player.GetAvailableResources() / cityDwellings[index].unitCost, Mathf.FloorToInt(cityDwellingUnitCount[index])));
     }
+
+    public List<DwellingObject> GetDwellings () { return cityDwellings; }
+
+    public float GetUnitCount (int index) { return cityDwellingUnitCount[index]; }
 }

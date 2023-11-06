@@ -115,7 +115,7 @@ public class UIManager : MonoBehaviour
 
     public void EndUnitSplit (){
         if (GameManager.Instance.IsSceneOpened()){
-            CityArmyInterface.Instance.RefreshElement();
+            CityManager.Instance.RefreshArmyInterface();
         }else{  
             RefreshCurrentArmyDisplay();
             RefreshArmyInterface();

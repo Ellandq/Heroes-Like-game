@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class ResourceIncome : MonoBehaviour
+public class ResourceIncome : MonoBehaviour, IEnumerable<int>
 {
     private int[] resources = new int[7]; // Array to hold resource values
 
@@ -120,6 +120,39 @@ public class ResourceIncome : MonoBehaviour
             value = Mathf.Min(Mathf.FloorToInt(a.resources[i] / b.resources[i]), value);
         }
         return value;
+    }
+
+    public int this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < resources.Length)
+            {
+                return resources[index];
+            }
+            throw new IndexOutOfRangeException("Index out of range.");
+        }
+        set
+        {
+            if (index >= 0 && index < resources.Length)
+            {
+                resources[index] = value;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Index out of range.");
+            }
+        }
+    }
+
+    public IEnumerator<int> GetEnumerator()
+    {
+        return ((IEnumerable<int>)resources).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
 

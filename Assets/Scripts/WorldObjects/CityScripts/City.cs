@@ -126,11 +126,11 @@ public class City : WorldObject
 
     public List<PathNode> GetEnteranceList (){ return cityEnterance.GetEnteranceList(); }
 
-    public List<short> GetEmptyGarrisonSlotCount (){
+    public List<byte> GetEmptyGarrisonSlotCount (){
         return unitsInformation.GetEmptySlots();
     }
 
-    public int GetSameUnitSlotIndex (short id){
+    public byte GetSameUnitSlotIndex (short id){
         return unitsInformation.GetSameUnitSlotIndex(id);
     }
 
@@ -139,6 +139,8 @@ public class City : WorldObject
     }
 
     public bool IsSelectableByCurrentPlayer () { return canBeSelectedByCurrentPlayer; }
+
+    public bool isBuildingAlreadyBuilt (){ return buildingHandler.IsBuildingAlreadyBuilt(); }
 
     #endregion
 

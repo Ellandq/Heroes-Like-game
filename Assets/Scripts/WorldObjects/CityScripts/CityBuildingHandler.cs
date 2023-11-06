@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CityBuildingHandler : MonoBehaviour
@@ -12,41 +13,26 @@ public class CityBuildingHandler : MonoBehaviour
     public void InitializeBuildings (byte[] cityBuildingStatus, City city){
         CityBuildingState[] cityBuildings = new CityBuildingState[34];
         cityDwellingInformation = new CityDwellingInformation();
+        cityDwellingInformation.Initialize();
         this.city = city;
         buildingAlreadybuilt = false;
-
-        // Initialize basic buildings
-        for (int i = 0; i < 22; i++) {
+        
+        for (int i = 0; i < cityBuildingStatus.Length; i++){
             cityBuildings[i] = (CityBuildingState)cityBuildingStatus[i];
         }
 
-        // Initialize tier 1 dwellings
-        for (int i = 22; i <= 23; i++) {
-            cityBuildings[i] = CityBuildingState.Built;
-            cityBuildings[30] = CityBuildingState.Built;
-            cityDwellingInformation.AddDwelling(city.GetFraction(), i - 21);
+        if (cityBuildings[(byte)BuildingID.Tier1_1] == CityBuildingState.Built || cityBuildings[(byte)BuildingID.Tier1_2] == CityBuildingState.Built){
+            cityBuildings[(byte)BuildingID.Tier_1] = CityBuildingState.Built;
         }
-
-        // Initialize tier 2, 3, 4 dwellings based on the 24th index
-        int tierStartIndex = 24;
-        int tierDwellingIndex = 3;  // The tier 2 dwelling corresponds to the 24th index, tier 3 to the 26th, and tier 4 to the 28th.
-        for (int i = tierStartIndex; i < tierStartIndex + 6; i++) {
-            cityBuildings[i] = CityBuildingState.Built;
-            cityBuildings[i + 7] = CityBuildingState.Blocked;
-            cityBuildings[31 + tierDwellingIndex] = CityBuildingState.Built;
-            cityDwellingInformation.AddDwelling(city.GetFraction(), tierDwellingIndex + 3);
-            tierDwellingIndex++;
+        if (cityBuildings[(byte)BuildingID.Tier2_1] == CityBuildingState.Built || cityBuildings[(byte)BuildingID.Tier2_2] == CityBuildingState.Built){
+            cityBuildings[(byte)BuildingID.Tier_2] = CityBuildingState.Built;
         }
-
-        // The remaining buildings are initialized in a similar fashion
-
-        // Initialize bonus, magic, and unit buildings
-        for (int i = 10; i <= 34; i++) {
-            cityBuildings[i] = (CityBuildingState)cityBuildingStatus[i];
+        if (cityBuildings[(byte)BuildingID.Tier3_1] == CityBuildingState.Built || cityBuildings[(byte)BuildingID.Tier3_2] == CityBuildingState.Built){
+            cityBuildings[(byte)BuildingID.Tier_3] = CityBuildingState.Built;
         }
-
-        // Initialize the last entry
-        cityBuildings[34] = CityBuildingState.Built;  // Or any appropriate initialization for the last building
+        if (cityBuildings[(byte)BuildingID.Tier4_1] == CityBuildingState.Built || cityBuildings[(byte)BuildingID.Tier4_2] == CityBuildingState.Built){
+            cityBuildings[(byte)BuildingID.Tier_4] = CityBuildingState.Built;
+        }
     }
 
     public void CreateNewBuilding(BuildingID buildingId) {

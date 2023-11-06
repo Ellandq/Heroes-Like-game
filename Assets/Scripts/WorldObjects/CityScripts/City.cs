@@ -17,7 +17,7 @@ public class City : WorldObject
     [SerializeField] private CityEnterance cityEnterance;
 
     [Header("Garrison refrences")]
-    [SerializeField] private UnitsInformation unitsInformation;
+    private UnitsInformation unitsInformation;
 
     [Header ("City Buildings")]
     [SerializeField] private CityBuildingHandler buildingHandler;
@@ -29,11 +29,13 @@ public class City : WorldObject
         byte [] cityBuildingStatus, short [] cityGarrison)
     {
         Initialize(gridPosition, rotation, ObjectType.City);
-        ChangeOwningPlayer(ownedByPlayer);
         this.cityFraction = cityFraction;
-        cityEnterance.SetEnteranceCells(GetRotation());
-        unitsInformation.SetUnitStatus(cityGarrison);
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
+        ChangeOwningPlayer(ownedByPlayer);
+        
+        cityEnterance.SetEnteranceCells(GetRotation());
+        unitsInformation = new UnitsInformation(cityGarrison);
+        
 
         GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.FiveByFive, GetRotation(), gameObject);
     }
@@ -46,6 +48,7 @@ public class City : WorldObject
     {
         PlayerManager.Instance.GetPlayer(GetPlayerTag()).RemoveObject(this);
         base.ChangeOwningPlayer(ownedByPlayer);
+        
         if (ownedByPlayer != PlayerTag.None){
             flag.SetActive(true);
             flag.GetComponent<MeshRenderer>().material.color = PlayerManager.Instance.GetPlayerColour(GetPlayerTag());

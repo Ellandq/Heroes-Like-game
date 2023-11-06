@@ -43,7 +43,17 @@ public class WorldObjectManager : MonoBehaviour
     public void SetupWorldObjects (MapWorldObjects worldObjects)
     {
         mapWorldObjects = worldObjects;
+        cities = new List<GameObject>();
+        armies = new List<GameObject>();
+        mines = new List<GameObject>();
+        resources = new List<GameObject>();
         coroutine = StartCoroutine(CreateWorldObjects());
+    }
+
+    private void EndSetup (){
+        status = 1f;
+        StopCoroutine(coroutine);
+        coroutine = null;
     }
 
     private IEnumerator CreateWorldObjects()
@@ -188,8 +198,7 @@ public class WorldObjectManager : MonoBehaviour
             status += 0.15f; // Adjust progress
         }
 
-        // Use 'status' to track overall progress and report it as needed
-        Debug.Log("Overall progress: " + (status * 100f) + "%");
+        EndSetup();
     }
 
     #region Enviroment

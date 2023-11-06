@@ -23,6 +23,11 @@ public class DwellingObjectEditor : Editor
             dwellingObject.unitCost.mercury = EditorGUILayout.IntField("Mercury", dwellingObject.unitCost.mercury);
             dwellingObject.unitCost.sulfur = EditorGUILayout.IntField("Sulfur", dwellingObject.unitCost.sulfur);
             dwellingObject.unitCost.crystal = EditorGUILayout.IntField("Crystal", dwellingObject.unitCost.crystal);
+
+            if (GUILayout.Button("Initialize Unit Cost"))
+            {
+                dwellingObject.unitCost = new ResourceIncome();
+            }
         }
     }
 }

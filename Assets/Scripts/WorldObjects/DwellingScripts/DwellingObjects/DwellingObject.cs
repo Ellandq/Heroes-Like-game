@@ -12,5 +12,5 @@ public class DwellingObject : ScriptableObject
     public Sprite unitIcon;
 
     [Header ("Single Unit Cost")]
-    public ResourceIncome unitCost;
+    public ResourceIncome unitCost = new ResourceIncome();
 }

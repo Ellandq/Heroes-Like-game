@@ -28,11 +28,10 @@ public class ObjectSelector : MonoBehaviour
 
     private void Awake () { Instance = this; }
 
-    private void Start () {
+    public void SetupObjectSelector () {
         playerObjectDictionary = InitializePlayerObjectDictionary();
         TurnManager.Instance.OnNewDay += SetUpSelectorForNewPlayer;
         InputManager.Instance.mouseInput.OnLeftMouseButtonDown += CheckForObject;
-        GameManager.Instance.StartGame();
     }
 
     private Dictionary<PlayerTag, WorldObject> InitializePlayerObjectDictionary()

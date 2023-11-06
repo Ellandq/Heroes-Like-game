@@ -15,11 +15,6 @@ public class GameManager : MonoBehaviour
 
     [Header ("Object References")]
     [SerializeField] public GameObject worldObjects;
-    [SerializeField] private UnitSplitWindow unitSplitWindow;
-    [SerializeField] private ResourceDisplay resourceDisplay;
-
-    private Coroutine waitForSceneToDeload;
-    private Coroutine gameSetup;
     
     [Header ("Game State Information")]
     public GameState state;
@@ -39,9 +34,11 @@ public class GameManager : MonoBehaviour
 
     [Header ("Save information")]
     [SerializeField] private string saveFileName, saveFilePath;
-
     private string mapFilePath, mapName;
-    private short gameComponentsReady = 0;
+
+    [Header ("Coroutines")]
+    private Coroutine waitForSceneToDeload;
+    private Coroutine gameSetup;
 
     private void Awake()
     {
@@ -132,6 +129,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        StopCoroutine(gameSetup);
+        gameSetup = null;
         PlayerManager.Instance.StartGame();
         CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
         CameraManager.Instance.EnableCamera();
@@ -309,42 +308,44 @@ public class GameManager : MonoBehaviour
 
         while (GameGrid.Instance.GetSetUpProgress() < 1f)
         {
-            // Continue to check progress until it reaches 1
+            Debug.Log("Step 1 progress: " + (GameGrid.Instance.GetSetUpProgress() * 100f) + "%");
             yield return null;
         }
         status += 0.25f; // Adjust progress
 
-        // Step 2: Turn Manager Setup
+        // Step 2: Player Manager Setup
+        PlayerManager.Instance.SetupPlayerManager();
+        Debug.Log("Step 2 progress: 25%");
+        status += 0.15f; // Adjust progress
+
+        // Step 3: Turn Manager Setup
         TurnManager.Instance.SetupTurnManager();
+        Debug.Log("Step 3 progress: 40%");
         status += 0.1f; // Adjust progress
 
-        // Step 3: Player Manager Setup
-        PlayerManager.Instance.SetupPlayerManager();
-
-        while (PlayerManager.Instance.GetSetUpProgress() < 1f)
-        {
-            // Continue to check progress
-            yield return null;
-        }
-        status += 0.25f; // Adjust progress
+        UIManager.Instance.SetupUIManager();
+        Debug.Log("Step 4 progress: 50%");
+        status += 0.1f; // Adjust progress
 
         // Step 4: World Object Manager Setup
         WorldObjectManager.Instance.SetupWorldObjects(selectedMapWorldObjects);
 
         while (WorldObjectManager.Instance.GetSetUpProgress() < 1f)
         {
-            // Continue to check progress
+            Debug.Log("Step 5 progress: " + (WorldObjectManager.Instance.GetSetUpProgress() * 100f) + "%");
             yield return null;
         }
-        status += 0.4f; // Adjust progress
+        status += 0.35f; // Adjust progress
+
+        ObjectSelector.Instance.SetupObjectSelector();
+        Debug.Log("Step 6 progress: 85%");
+        status += .05f;
 
         // Use 'status' to track overall progress and report it as needed
         Debug.Log("Overall progress: " + (status * 100f) + "%");
 
         StartGame();
-        gameSetup = null;
     }
-
 
     #endregion
 }

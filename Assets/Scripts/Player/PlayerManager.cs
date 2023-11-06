@@ -33,6 +33,8 @@ public class PlayerManager : MonoBehaviour
     {
         allPlayers = GameManager.Instance.playerTags;
         humanPlayers = GameManager.Instance.humanPlayerTags;
+        neutralPlayer.SetUpPlayer(PlayerTag.None, true);
+
         setUpProgress = 0f;
         coroutine = StartCoroutine(CreatePlayers(GameManager.Instance.numberOfPlayers));
     }
@@ -61,13 +63,12 @@ public class PlayerManager : MonoBehaviour
     public short GetPlayerCount (){ return Convert.ToInt16(players.Count); }
 
     // Sets the player color 
-    public Color GetPlayerColour (PlayerTag tag)
-    {
-        return playerColorList[(int)tag];
-    }
+    public Color GetPlayerColour (PlayerTag tag){ return playerColorList[(int)tag]; }
 
-    public Player GetPlayer (PlayerTag tag){
-        return players[tag];
+    public Player GetPlayer (PlayerTag tag){ 
+        if (tag == PlayerTag.None){
+            return neutralPlayer;
+        }else return players[tag];
     }
 
     public Player GetNeutralPlayer () { return neutralPlayer; }

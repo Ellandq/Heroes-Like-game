@@ -261,6 +261,8 @@ public class GameGrid : MonoBehaviour
         }
 
         pathfinding = new Pathfinding();
+
+        setUpProgress = 1f;
     }
 
     public float GetSetUpProgress (){ return setUpProgress; }

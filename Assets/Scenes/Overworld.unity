@@ -242,8 +242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 613334726}
   slotFrame: {fileID: 214275579}
   armyIcon: {fileID: 17066102}
@@ -545,8 +543,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 481491565}
   CityIcon: {fileID: 650131241}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -1698,8 +1694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 579588422}
   slotFrame: {fileID: 2144629519}
   armyIcon: {fileID: 1430133659}
@@ -2867,7 +2861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5df288ef0c699440bec96aa1d6d931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayer: {fileID: 0}
   resourceDisplay: {fileID: 1291231128}
   armyInformation: {fileID: 919283848}
   armyInterface: {fileID: 1675402987}
@@ -2928,8 +2921,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 986660120}
   slotFrame: {fileID: 2069374204}
   armyIcon: {fileID: 190792068}
@@ -3467,15 +3458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &190792066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3618,16 +3600,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 2106231618}
   unitCountDisplay: {fileID: 305599150}
   unitIcon: {fileID: 1739367665}
-  slotID: 9
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &214275577
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,8 +3772,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1872604765}
   slotFrame: {fileID: 1485497845}
   armyIcon: {fileID: 878925482}
@@ -4135,9 +4113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d932740196d44469490b9f4c522d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridLength: 40
-  gridWidth: 40
-  gridSpaceSize: 5
   gridCellPrefab: {fileID: 5944367092838529944, guid: 1c9969dda7290f849960b79d91b288a4, type: 3}
 --- !u!4 &258225770
 Transform:
@@ -6673,19 +6648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b836a81ad67d95b4fa1d8a7f1455e165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 1264792663}
   cityPrefab: {fileID: 5068778115147324785, guid: 33cd4597e7ab4044d9c0067b5ca09134, type: 3}
   armyPrefab: {fileID: 4644565787811614284, guid: ec4c9fd15e1390c4eab1fa9d4dcefe5f, type: 3}
   minePrefab: {fileID: 4550133501109898335, guid: f52e05d6b2524cc46add8c6d5b5b2b55, type: 3}
   resourcePrefab: {fileID: 1565423184103051000, guid: b6688b6fe2f9dec42801d2226d703e55, type: 3}
-  cities: []
-  numberOfCities: 0
-  armies: []
-  numberOfArmies: 0
-  mines: []
-  numberOfMines: 0
-  resources: []
-  numberOfResources: 0
 --- !u!114 &381926981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7038,7 +7004,6 @@ MonoBehaviour:
   onSelectedObjectChange:
     m_PersistentCalls:
       m_Calls: []
-  armyHighlight: {fileID: 2087747420056670594}
   playerCamera: {fileID: 963194227}
   uiCamera: {fileID: 0}
   layersToHit:
@@ -7047,10 +7012,6 @@ MonoBehaviour:
   uiLayers:
     serializedVersion: 2
     m_Bits: 32
-  lastObjectSelected: {fileID: 0}
-  objectSelected: 0
-  selectedObject: {fileID: 0}
-  selectedObjectTag: 
 --- !u!4 &405139689
 Transform:
   m_ObjectHideFlags: 0
@@ -7269,8 +7230,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 368393204}
   slotFrame: {fileID: 579257310}
   armyIcon: {fileID: 1351993402}
@@ -7893,16 +7852,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 662998413}
   unitCountDisplay: {fileID: 49076046}
   unitIcon: {fileID: 1689741797}
-  slotID: 4
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &479003385
 GameObject:
   m_ObjectHideFlags: 0
@@ -8196,16 +8153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 129897355}
   unitCountDisplay: {fileID: 987801859}
   unitIcon: {fileID: 463483030}
-  slotID: 10
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &493441032
 GameObject:
   m_ObjectHideFlags: 0
@@ -9208,12 +9163,6 @@ MonoBehaviour:
   inputManager: {fileID: 523101613}
   screenPosition: {x: 0, y: 0, z: 0}
   worldPosition: {x: 0, y: 0, z: 0}
-  pointerLayersToHit:
-    serializedVersion: 2
-    m_Bits: 1073749888
-  mouseButtonPressed_0: 0
-  mouseButtonPressed_1: 0
-  mouseButtonPressed_2: 0
 --- !u!114 &523101615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9448,16 +9397,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 798388182}
   unitCountDisplay: {fileID: 40712659}
   unitIcon: {fileID: 276241974}
-  slotID: 2
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &547006959
 GameObject:
   m_ObjectHideFlags: 0
@@ -10295,8 +10242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 2090123983}
   CityIcon: {fileID: 1960942433}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -10540,13 +10485,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 1978825569}
+  button: {fileID: 0}
   slotID: 1
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &593273772
 GameObject:
   m_ObjectHideFlags: 0
@@ -10761,16 +10702,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 505963673}
   unitCountDisplay: {fileID: 479003385}
   unitIcon: {fileID: 1022617951}
-  slotID: 5
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &613334724
 GameObject:
   m_ObjectHideFlags: 0
@@ -11076,7 +11015,6 @@ MonoBehaviour:
   slider: {fileID: 2018834311}
   unitCount01: {fileID: 31721524}
   unitCount02: {fileID: 585712677}
-  totalUnitCount: 0
 --- !u!1 &623176002
 GameObject:
   m_ObjectHideFlags: 0
@@ -11519,7 +11457,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementButtons: {fileID: 1128607003}
-  currentPlayer: {fileID: 0}
   armySlotsPosition:
   - {fileID: 1586672576}
   - {fileID: 431106875}
@@ -11547,10 +11484,6 @@ MonoBehaviour:
   - {fileID: 1930861362}
   - {fileID: 1457263355}
   rotationObject: {fileID: 646710756}
-  rotation: {x: 0, y: 0, z: 0}
-  rotationSpeed: 5
-  currentPosition: 0
-  manualMovementEnabled: 0
 --- !u!1 &647981098
 GameObject:
   m_ObjectHideFlags: 0
@@ -11805,16 +11738,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 2070991475}
   unitCountDisplay: {fileID: 316098945}
   unitIcon: {fileID: 274647012}
-  slotID: 7
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &655685130
 GameObject:
   m_ObjectHideFlags: 0
@@ -12480,13 +12411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 1901597573}
+  button: {fileID: 0}
   slotID: 0
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &678939769
 GameObject:
   m_ObjectHideFlags: 0
@@ -12530,15 +12457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &680563777
 GameObject:
   m_ObjectHideFlags: 0
@@ -12858,8 +12776,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1557583176}
   slotFrame: {fileID: 528839644}
   armyIcon: {fileID: 1046097340}
@@ -13131,16 +13047,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 1636432934}
   unitCountDisplay: {fileID: 5883401}
   unitIcon: {fileID: 1527600752}
-  slotID: 13
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &728128063
 GameObject:
   m_ObjectHideFlags: 0
@@ -13193,8 +13107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 363280704}
   CityIcon: {fileID: 2008117685}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -13325,15 +13237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325d0fe0380c5bb47957f25ff07fe021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyIcon: {fileID: 0}
-  unitSlots:
-  - {fileID: 1414690121}
-  - {fileID: 1383760124}
-  - {fileID: 960042750}
-  - {fileID: 2117929172}
-  - {fileID: 678939769}
-  - {fileID: 181154029}
-  - {fileID: 897050764}
 --- !u!1 &743700928
 GameObject:
   m_ObjectHideFlags: 0
@@ -14008,16 +13911,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 1300659787}
   unitCountDisplay: {fileID: 2114942996}
   unitIcon: {fileID: 419473692}
-  slotID: 0
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &776132431
 GameObject:
   m_ObjectHideFlags: 0
@@ -14830,13 +14731,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 1585921047}
+  button: {fileID: 0}
   slotID: 2
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &832162662
 GameObject:
   m_ObjectHideFlags: 0
@@ -15439,15 +15336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &899190313
 GameObject:
   m_ObjectHideFlags: 0
@@ -15731,63 +15619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f38422ef642e5e438480fc22e86e3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  units:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  selectedUnit: {fileID: 0}
-  defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
-  iconFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
-  iconFrameBackground: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
-  bannerOpen: {fileID: 21300000, guid: b19ac6e06bef7224eb9c885587a8e664, type: 3}
-  bannerClosed: {fileID: 21300000, guid: f9a932d8bd2b63549bb91f4e017c5de3, type: 3}
-  unitInfoSlot:
-  - {fileID: 2115233629}
-  - {fileID: 1669912309}
-  - {fileID: 1682899964}
-  - {fileID: 1171287001}
-  - {fileID: 1343242423}
-  - {fileID: 1155569253}
-  - {fileID: 1836016635}
-  unitInfoButtons:
-  - {fileID: 1901597573}
-  - {fileID: 1978825569}
-  - {fileID: 1585921047}
-  - {fileID: 56726013}
-  - {fileID: 573377497}
-  - {fileID: 1945055791}
-  - {fileID: 1955216907}
-  unitCountDisplay:
-  - {fileID: 747851175}
-  - {fileID: 1436079024}
-  - {fileID: 1662182635}
-  - {fileID: 680563777}
-  - {fileID: 265695159}
-  - {fileID: 1684070070}
-  - {fileID: 743700928}
-  unitCountDisplayBackground:
-  - {fileID: 167037636}
-  - {fileID: 113599776}
-  - {fileID: 988529429}
-  - {fileID: 1065902800}
-  - {fileID: 1376839822}
-  - {fileID: 609766409}
-  - {fileID: 173351825}
-  unitBanners:
-  - {fileID: 1016736438}
-  - {fileID: 982003229}
-  - {fileID: 1279100980}
-  - {fileID: 376966687}
-  - {fileID: 2136772225}
-  - {fileID: 1792695670}
-  - {fileID: 1392909915}
-  onUnitDisplayReload:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &935468453
 GameObject:
   m_ObjectHideFlags: 0
@@ -16051,15 +15882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -16369,33 +16191,6 @@ MonoBehaviour:
   monthCounter: 0
   currentPlayerTurn: 0
   playerCount: 0
-  OnNewDay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 985370014}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: TurnCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1264792663}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: NewDayUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!4 &985370015
 Transform:
   m_ObjectHideFlags: 0
@@ -17371,13 +17166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 1945055791}
+  button: {fileID: 0}
   slotID: 5
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1026378176
 GameObject:
   m_ObjectHideFlags: 0
@@ -18537,13 +18328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 573377497}
+  button: {fileID: 0}
   slotID: 4
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1115340114
 GameObject:
   m_ObjectHideFlags: 0
@@ -19123,8 +18910,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 2029179720}
   CityIcon: {fileID: 751505073}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -20145,26 +19930,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8928521277174213271, guid: 02c40828b3f2f3245bd3e3f1ab37d20d, type: 3}
   neutralPlayer: {fileID: 1687944377}
-  currentPlayer: {fileID: 0}
-  players:
-  - {fileID: 0}
-  allPlayers: 
-  humanPlayers: 
-  playerColorList: []
-  blue: {r: 0, g: 0.27058825, b: 1, a: 0}
-  lightBlue: {r: 0.049750824, g: 0.71849185, b: 0.8113208, a: 0}
-  purple: {r: 0.47355205, g: 0.022027409, b: 0.9339623, a: 0}
-  red: {r: 0.8207547, g: 0, b: 0, a: 0}
-  orange: {r: 0.9150943, g: 0.41857213, b: 0, a: 0}
-  yellow: {r: 0.9811321, g: 0.87702733, b: 0.023139905, a: 0}
-  lightGreen: {r: 0.5033481, g: 0.8490566, b: 0.01201493, a: 0}
-  green: {r: 0.098962344, g: 0.509434, b: 0, a: 0}
-  OnNextPlayerTurn:
-    m_PersistentCalls:
-      m_Calls: []
-  OnNewDayPlayerUpdate:
-    m_PersistentCalls:
-      m_Calls: []
+  playerColorList:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.13679248, g: 0.179222, b: 1, a: 1}
+  - {r: 0.071110725, g: 0.718195, b: 0.8867924, a: 1}
+  - {r: 0.35230207, g: 0, b: 1, a: 1}
+  - {r: 0.990566, g: 0.1728818, b: 0.1728818, a: 1}
+  - {r: 0.9622642, g: 0.4663872, b: 0, a: 1}
+  - {r: 0.8962264, g: 0.86418945, b: 0.04650232, a: 1}
+  - {r: 0.38812745, g: 0.9245283, b: 0.47577468, a: 1}
+  - {r: 0.13826324, g: 0.46226418, b: 0, a: 1}
 --- !u!1 &1267286006
 GameObject:
   m_ObjectHideFlags: 0
@@ -20232,13 +20007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 56726013}
+  button: {fileID: 0}
   slotID: 3
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1279100980
 GameObject:
   m_ObjectHideFlags: 0
@@ -20590,16 +20361,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 1514778973}
   unitCountDisplay: {fileID: 565452525}
   unitIcon: {fileID: 1548975974}
-  slotID: 11
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1289116527
 GameObject:
   m_ObjectHideFlags: 0
@@ -20692,13 +20461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fd065d40ddd974e90649bce2331a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayedGold: {fileID: 823326675}
-  displayedWood: {fileID: 1713009778}
-  displayedOre: {fileID: 935468455}
-  displayedGems: {fileID: 1095550141}
-  displayedMercury: {fileID: 516988324}
-  displayedSulfur: {fileID: 177039977}
-  displayedCrystals: {fileID: 1979690388}
+  resourceDisplay: []
 --- !u!1 &1300659785
 GameObject:
   m_ObjectHideFlags: 0
@@ -22034,15 +21797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &1388920791
 GameObject:
   m_ObjectHideFlags: 0
@@ -22266,15 +22020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &1419797635
 GameObject:
   m_ObjectHideFlags: 0
@@ -23384,8 +23129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 523064261}
   slotFrame: {fileID: 1232229349}
   armyIcon: {fileID: 2097304556}
@@ -23639,8 +23382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1203506429}
   CityIcon: {fileID: 1108826969}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -24112,16 +23853,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 471755457}
   unitCountDisplay: {fileID: 541601087}
   unitIcon: {fileID: 708487274}
-  slotID: 6
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1520581951
 GameObject:
   m_ObjectHideFlags: 0
@@ -24860,8 +24599,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1661019671}
   slotFrame: {fileID: 1665219789}
   armyIcon: {fileID: 2102588156}
@@ -25296,8 +25033,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1446627319}
   slotFrame: {fileID: 176258213}
   armyIcon: {fileID: 729526049}
@@ -25357,8 +25092,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1666739136}
   slotFrame: {fileID: 1157220492}
   armyIcon: {fileID: 1974932270}
@@ -25628,13 +25361,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb145e9c94fc364893b84a27b4e5396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInformation: {fileID: 919283848}
-  unitFrameDefault: {fileID: 0}
-  unitFrameHighlight: {fileID: 0}
-  thisButton: {fileID: 1955216907}
+  button: {fileID: 0}
   slotID: 6
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1608805180
 GameObject:
   m_ObjectHideFlags: 0
@@ -25762,8 +25491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 661458606}
   CityIcon: {fileID: 361629658}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -26873,7 +26600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3330bd51bcea50745858b97bde0fe66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedUnit: {fileID: 0}
   unitButtons:
   - {fileID: 772474440}
   - {fileID: 1907316296}
@@ -26889,10 +26615,6 @@ MonoBehaviour:
   - {fileID: 1282843665}
   - {fileID: 1823393264}
   - {fileID: 717789985}
-  placeHolderArmy: {fileID: 739799882}
-  onArmyInterfaceReload:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1676761912
 GameObject:
   m_ObjectHideFlags: 0
@@ -27545,33 +27267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2337d4e95086014aa45ce787b264824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onArmyAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  onCityAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  playerState: 0
-  thisPlayerTag: 0
-  playerColor: {r: 0, g: 0, b: 0, a: 0}
-  isPlayerAi: 1
-  ownedArmies: []
-  ownedCities: []
-  ownedMines: []
-  gold: 0
-  wood: 0
-  ore: 0
-  gems: 0
-  mercury: 0
-  sulfur: 0
-  crystals: 0
-  goldProduction: 0
-  woodProduction: 0
-  oreProduction: 0
-  gemProduction: 0
-  mercuryProduction: 0
-  sulfurProduction: 0
-  crystalProduction: 0
 --- !u!1 &1689741795
 GameObject:
   m_ObjectHideFlags: 0
@@ -27714,16 +27409,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 621023423}
   unitCountDisplay: {fileID: 469802874}
   unitIcon: {fileID: 356806821}
-  slotID: 3
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1702779275
 GameObject:
   m_ObjectHideFlags: 0
@@ -28253,10 +27946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcd8b5b0ca3a934a969cf079106a975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameHandler: {fileID: 1026378176}
-  unitSplitWindow: {fileID: 0}
-  resourceDisplay: {fileID: 0}
-  State: 0
+  worldObjects: {fileID: 1026378176}
+  state: 0
   selectedMapInformation: {fileID: 11400000, guid: 419c31f5e5e4aba4598e3314186e6d10, type: 2}
   selectedMapWorldObjects: {fileID: 11400000, guid: c15732cdcf559b7439c8d96800add8ab, type: 2}
   tmpMapWorldObjects: {fileID: 0}
@@ -28570,8 +28261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 2075753589}
   CityIcon: {fileID: 26677235}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -29041,8 +28730,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1954625964}
   CityIcon: {fileID: 24950963}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -29175,8 +28862,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1419797637}
   CityIcon: {fileID: 440828932}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -29466,16 +29151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 1142723907}
   unitCountDisplay: {fileID: 350237980}
   unitIcon: {fileID: 364229556}
-  slotID: 12
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1835464358
 GameObject:
   m_ObjectHideFlags: 0
@@ -29754,8 +29437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1743069693}
   CityIcon: {fileID: 1166172264}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -30424,16 +30105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 99569668}
   unitCountDisplay: {fileID: 1640222028}
   unitIcon: {fileID: 1748696431}
-  slotID: 1
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &1910567901
 GameObject:
   m_ObjectHideFlags: 0
@@ -30606,8 +30285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 12559378}
   slotFrame: {fileID: 556233621}
   armyIcon: {fileID: 1608805182}
@@ -31537,8 +31214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedArmy: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   movementSlider: {fileID: 1363921950}
   slotFrame: {fileID: 651324476}
   armyIcon: {fileID: 38211148}
@@ -31597,8 +31272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1443089636}
   CityIcon: {fileID: 1065795880}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -32857,7 +32530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementButtons: {fileID: 1076910860}
-  currentPlayer: {fileID: 0}
   citySlotsPosition:
   - {fileID: 1842254990}
   - {fileID: 1148996470}
@@ -32885,10 +32557,6 @@ MonoBehaviour:
   - {fileID: 2096124820}
   - {fileID: 1463124422}
   rotationObject: {fileID: 2089356661}
-  rotation: {x: 0, y: 0, z: 0}
-  rotationSpeed: 5
-  currentPosition: 0
-  manualMovementEnabled: 0
 --- !u!1 &2090123981
 GameObject:
   m_ObjectHideFlags: 0
@@ -33016,8 +32684,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedCity: {fileID: 0}
-  slotSelected: 0
-  slotEmpty: 0
   slotFrame: {fileID: 1388920793}
   CityIcon: {fileID: 53860966}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
@@ -33599,15 +33265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995ea09af3c7742ad02aa7d38e48c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotEmpty: 1
-  isSlotHero: 0
-  unitID: 0
-  movementPoints: 0
-  unitObject: {fileID: 0}
-  unitName: 0
-  howManyUnits: 0
-  heroObject: {fileID: 0}
-  heroTag: 0
 --- !u!1 &2136772225
 GameObject:
   m_ObjectHideFlags: 0
@@ -33750,16 +33407,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1773e28fbaaf02f4da830a45a3cdb65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyInterface: {fileID: 1675402987}
   unitButtonDefault: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   unitButtonHighlight: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
   unitBackgroundDefault: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
+  armyInterface: {fileID: 1675402987}
   unitButton: {fileID: 285012926}
   unitCountDisplay: {fileID: 750177235}
   unitIcon: {fileID: 1880334491}
-  slotID: 8
   isSlotEmpty: 0
-  buttonToSwap: {fileID: 0}
 --- !u!1 &2143299682
 GameObject:
   m_ObjectHideFlags: 0
@@ -34005,4 +33660,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4f9282efea2504db7747bbd529e5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedObject: {fileID: 0}

@@ -27,9 +27,11 @@ public class UIManager : MonoBehaviour
     [Header ("Other UI Elements")]
     [SerializeField] private GameObject backgroundDim;
 
-    private void Awake ()
-    {
+    private void Awake (){
         Instance = this;
+    }
+
+    public void SetupUIManager (){
         TurnManager.Instance.OnNewDay += NewDayUpdate;
         TurnManager.Instance.OnNewTurn += NewTurnUpdate;
     }

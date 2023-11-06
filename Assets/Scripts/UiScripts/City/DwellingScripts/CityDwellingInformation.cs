@@ -10,6 +10,11 @@ public class CityDwellingInformation : MonoBehaviour
     private List<DwellingObject> cityDwellings;
     private List<float> cityDwellingUnitCount;
 
+    public void Initialize (){
+        cityDwellings = new List<DwellingObject>();
+        cityDwellingUnitCount = new List<float>();
+    }
+
     public void ChangeOwningPlayer (Player player) { this.player = player; }
 
     public void AddDailyUnits ()
@@ -27,16 +32,14 @@ public class CityDwellingInformation : MonoBehaviour
 
     public void AddDwelling (CityFraction fraction, int index)
     {
-        DwellingObject tmp = DwellingManager.Instance.GetDwellingObject(fraction, index);
-        cityDwellings[tmp.dwellingIndex - 1] = tmp;
-        cityDwellingUnitCount[tmp.dwellingIndex - 1] = tmp.unitWeeklyGain / 2;
+        cityDwellings.Add(DwellingManager.Instance.GetDwellingObject(fraction, index));
+        cityDwellingUnitCount.Add(cityDwellings[cityDwellings.Count - 1].unitWeeklyGain / 2);
     }
 
     public void AddDwelling (UnitName unitName)
     {
-        DwellingObject tmp = DwellingManager.Instance.GetDwellingObject(unitName);
-        cityDwellings[tmp.dwellingIndex - 1] = tmp;
-        cityDwellingUnitCount[tmp.dwellingIndex - 1] = tmp.unitWeeklyGain / 2;
+        cityDwellings.Add(DwellingManager.Instance.GetDwellingObject(unitName));
+        cityDwellingUnitCount.Add(cityDwellings[cityDwellings.Count - 1].unitWeeklyGain / 2);
     }
 
     public void BuyUnits (int index, int unitCount)

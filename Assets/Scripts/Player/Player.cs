@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class Player : MonoBehaviour
         playerLost = false;
         playerTag = tag;
         playerResources = PlayerManager.Instance.GetStartingResources();
+        isPlayerAi = isAi;
+
+        ownedArmies = new List<Army>();
+        ownedCities = new List<City>();
+        ownedMines = new List<Mine>();
     }
 
     #region Object Manipulation 
@@ -40,38 +46,35 @@ public class Player : MonoBehaviour
         if (obj is Army){
             Army army = obj as Army;
             ownedArmies.Add(army);
-            army.ChangeOwningPlayer(playerTag);
         }else if (obj is City){
             City city = obj as City;
             ownedCities.Add(city);
-            city.ChangeOwningPlayer(playerTag);
         }else if (obj is Mine){
             Mine mine = obj as Mine;
             ownedMines.Add(mine);
-            mine.ChangeOwningPlayer(playerTag);
         }
     }
 
     public void RemoveObject (WorldObject obj){
         if (GameManager.Instance.AreWorldObjectsActive()){
-            if (obj is Army){
-                Army army = obj as Army;
-                int index = ownedArmies.FindIndex(a => a == army);
-                if (index >= 0) ownedArmies.RemoveAt(index); 
+            try {
+                if (obj is Army){
+                    Army army = obj as Army;
+                    int index = ownedArmies.FindIndex(a => a == army);
+                    if (index >= 0) ownedArmies.RemoveAt(index); 
 
-            }else if (obj is City){
-                City city = obj as City;
-                int index = ownedCities.FindIndex(c => c == city);
-                if (index >= 0) ownedCities.RemoveAt(index); 
+                }else if (obj is City){
+                    City city = obj as City;
+                    int index = ownedCities.FindIndex(c => c == city);
+                    if (index >= 0) ownedCities.RemoveAt(index); 
 
-            }else if (obj is Mine){
-                Mine mine = obj as Mine;
-                int index = ownedMines.FindIndex(m => m == mine);
-                if (index >= 0) ownedMines.RemoveAt(index); 
-            }
-            if (waitForObjectToBeDestroyed == null){
-                waitForObjectToBeDestroyed = StartCoroutine(WaitForObjectToBeDestroyed(obj));
-            }
+                }else if (obj is Mine){
+                    Mine mine = obj as Mine;
+                    int index = ownedMines.FindIndex(m => m == mine);
+                    if (index >= 0) ownedMines.RemoveAt(index); 
+                }
+            }catch (NullReferenceException e){}
+            
         }else{
             objectToDestroy = obj;
         }

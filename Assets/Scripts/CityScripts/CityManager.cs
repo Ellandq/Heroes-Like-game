@@ -9,7 +9,7 @@ public class CityManager : MonoBehaviour
     public static CityManager Instance;
 
     [Header("Interactable objects")]
-    public City currentCity;
+    private City currentCity;
     public bool armyCreationStatus;
 
     [Header("City Information")]
@@ -84,6 +84,8 @@ public class CityManager : MonoBehaviour
         
     }
 
+    public City GetCity () { return currentCity; }
+
     private IEnumerator WaitForArmyToBeCreated (){
         while (!armyCreationStatus){
             yield return null;
@@ -91,4 +93,8 @@ public class CityManager : MonoBehaviour
         SceneStateManager.ExitCity();
         waitForArmyToBeCreated = null;
     }
+
+    public List<Army> GetArmyList () { return armiesNearCity; } 
+
+    public List<GridCell> GetAvailableEnteranceCells () { return availableEnteranceCells; }
 }

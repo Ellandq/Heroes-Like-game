@@ -116,6 +116,8 @@ public class City : WorldObject
 
     public CityFraction GetFraction () { return cityFraction; }
 
+    public CityBuildingHandler GetBuildingHandler () { return buildingHandler; }
+
     public UnitsInformation GetUnitsInformation () { return unitsInformation; }
 
     public ResourceIncome GetIncome (){

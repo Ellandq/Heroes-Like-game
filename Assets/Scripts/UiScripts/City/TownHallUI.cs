@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +9,8 @@ using TMPro;
 
 public class TownHallUI : MonoBehaviour
 {
-    private Player owningPlayer;
-    private City currentCity;
-    [SerializeField] BuildingCostDisplay buildingCostDisplay;
+
+    [SerializeField] private BuildingCostDisplay buildingCostDisplay;
     [SerializeField] private List <BuildingInformationObject> buildingInformation;
     
     [Header ("Building Status Sprites")]
@@ -19,169 +19,151 @@ public class TownHallUI : MonoBehaviour
     [SerializeField] Sprite buildingNotReadyToCreate;
     [SerializeField] Sprite buildingNotAvailable;
 
-    [Header ("Hall")]
-    [SerializeField] Button hallButton;
-    [SerializeField] Image hallImage;
-    [SerializeField] TextMeshProUGUI hallName;
-    [SerializeField] Image hallStatusImage;
-    private int hallStatus;
+    [Header ("Building information")]
+    private List<BuildingUI> buildingUIList;
+    private CityBuildingState[] buildingStates;
+    private CityFraction fraction;
 
-    [Header ("Fort")]
-    [SerializeField] Button fortButton;
-    [SerializeField] Image fortImage;
-    [SerializeField] TextMeshProUGUI fortName;
-    [SerializeField] Image fortStatusImage;
-    private int fortStatus;
-
-    [Header ("Magic guild")]
-    [SerializeField] Button magicGuildButton;
-    [SerializeField] Image magicGuildImage;
-    [SerializeField] TextMeshProUGUI magicGuildName;
-    [SerializeField] Image magicGuildStatusImage;
-    private int magicGuildStatus;
-
-    [Header ("Tavern")]
-    [SerializeField] Button tavernButton;
-    [SerializeField] TextMeshProUGUI tavernName;
-    [SerializeField] Image tavernStatusImage;
-    [SerializeField] Image tavernImage;
-
-    [Header ("Equipement")]
-    [SerializeField] Button equipementButton;
-    [SerializeField] TextMeshProUGUI equipementName;
-    [SerializeField] Image equipementStatusImage;
-    [SerializeField] Image equipementImage;
-
-    [Header ("Unit buildings")]
-    [SerializeField] Button T1_1_Button;
-    [SerializeField] TextMeshProUGUI T1_1_Name;
-    [SerializeField] Image T1_1_StatusImage;
-    [SerializeField] Image T1_1_Image;
-
-    [SerializeField] Button T1_2_Button;
-    [SerializeField] TextMeshProUGUI T1_2_Name;
-    [SerializeField] Image T1_2_StatusImage;
-    [SerializeField] Image T1_2_Image;
-
-    [SerializeField] Button T2_1_Button;
-    [SerializeField] TextMeshProUGUI T2_1_Name;
-    [SerializeField] Image T2_1_StatusImage;
-    [SerializeField] Image T2_1_Image;
-
-    [SerializeField] Button T2_2_Button;
-    [SerializeField] TextMeshProUGUI T2_2_Name;
-    [SerializeField] Image T2_2_StatusImage;
-    [SerializeField] Image T2_2_Image;
-
-    [SerializeField] Button T3_1_Button;
-    [SerializeField] TextMeshProUGUI T3_1_Name;
-    [SerializeField] Image T3_1_StatusImage;
-    [SerializeField] Image T3_1_Image;
-
-    [SerializeField] Button T3_2_Button;
-    [SerializeField] TextMeshProUGUI T3_2_Name;
-    [SerializeField] Image T3_2_StatusImage;
-    [SerializeField] Image T3_2_Image;
-
-    [SerializeField] Button T4_1_Button;
-    [SerializeField] TextMeshProUGUI T4_1_Name;
-    [SerializeField] Image T4_1_StatusImage;
-    [SerializeField] Image T4_1_Image;
-
-    [SerializeField] Button T4_2_Button;
-    [SerializeField] TextMeshProUGUI T4_2_Name;
-    [SerializeField] Image T4_2_StatusImage;
-    [SerializeField] Image T4_2_Image;
-
-    [Header ("Additional Magic Buildings")]
-    [SerializeField] Button additionalMagic_1_Button;
-    [SerializeField] TextMeshProUGUI additionalMagic_1_Name;
-    [SerializeField] Image additionalMagic_1_StatusImage;
-    [SerializeField] Image additionalMagic_1_Image;
-
-    [SerializeField] Button additionalMagic_2_Button;
-    [SerializeField] TextMeshProUGUI additionalMagic_2_Name;
-    [SerializeField] Image additionalMagic_2_StatusImage;
-    [SerializeField] Image additionalMagic_2_Image;
-
-    [Header ("Racial Building")]
-    [SerializeField] Button racialBuildingButton;
-    [SerializeField] TextMeshProUGUI racialBuildingName;
-    [SerializeField] Image racialBuildingStatusImage;
-    [SerializeField] Image racialBuildingImage;
-
-    [Header ("Caravan Building")]
-    [SerializeField] Button caravanButton;
-    [SerializeField] TextMeshProUGUI caravanName;
-    [SerializeField] Image caravanStatusImage;
-    [SerializeField] Image caravanImage;
-
-    [Header ("Shipyard Building")]
-    [SerializeField] Button shipyardButton;
-    [SerializeField] TextMeshProUGUI shipyardName;
-    [SerializeField] Image shipyardStatusImage;
-    [SerializeField] Image shipyardImage;
-
-    [Header ("Bonus Buildings Building")]
-    [SerializeField] Button bonusBuilding_1_Button;
-    [SerializeField] TextMeshProUGUI bonusBuilding_1_Name;
-    [SerializeField] Image bonusBuilding_1_StatusImage;
-    [SerializeField] Image bonusBuilding_1_Image;
-
-    [SerializeField] Button bonusBuilding_2_Button;
-    [SerializeField] TextMeshProUGUI bonusBuilding_2_Name;
-    [SerializeField] Image bonusBuilding_2_StatusImage;
-    [SerializeField] Image bonusBuilding_2_Image;
+    private void Start (){
+        buildingUIList = new List<BuildingUI>(20);
+        buildingStates = CityManager.Instance.GetCity().GetBuildingHandler().GetBuildingStates();
+        fraction = CityManager.Instance.GetCity().GetFraction();
+    }
 
     public void ActivateElement ()
     {
-        currentCity = CityManager.Instance.currentCity;
-        owningPlayer = currentCity.ownedByPlayer.GetComponent<Player>();
         RefreshElement();
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void DisableElement ()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    private int HandleBuilding (BuildingID id){
+        int index = (int)id;
+        if (index < 3){
+            HandleHall();
+            return 3;
+        }else if (index >= 5 && index <= 7){
+            HandleWalls();
+            return 3;
+        }else if (index >= 15 && index <= 19){
+            HandleMagic();
+            return 5;
+        }else if (index >= 22 && index <= 29){
+            HandleUnit();
+            return 8;
+        }else{
+            // TODO
+            return 0;
+        }
+    }
+
+    private void HandleHall (){
+        buildingUIList[0].Image = buildingInformation[(int)BuildingID.TownHall].buildingIcon;
+        buildingUIList[0].Name = "Town Hall";
+        buildingUIList[0].Level = (int)BuildingID.VillageHall;
+        if (!buildingStates[(int)BuildingID.TownHall].Equals(CityBuildingState.Blocked)){
+            if (buildingStates[(int)BuildingID.TownHall].Equals(CityBuildingState.Built)){
+                buildingUIList[0].Image = buildingInformation[(int)BuildingID.CityHall].buildingIcon;
+                buildingUIList[0].Name = "City Hall";
+                buildingUIList[0].Level = (int)BuildingID.TownHall;
+                if (!buildingStates[(int)BuildingID.TownHall].Equals(CityBuildingState.Blocked)){
+                    if (buildingStates[(int)BuildingID.TownHall].Equals(CityBuildingState.Built)){
+                    buildingUIList[0].Level = (int)BuildingID.CityHall;
+                    buildingUIList[0].Status = buildingMaxed;
+                    }else{
+                        if (CheckBuildingRequirements((int)BuildingID.CityHall)){
+                            buildingUIList[0].Status = buildingReadyToCreate;
+                            buildingUIList[0].Interactable = true;
+                        }
+                        else buildingUIList[0].Status = buildingNotReadyToCreate;
+                    }
+                }else{
+                    buildingUIList[0].Status = buildingNotAvailable;
+                    buildingUIList[0].Interactable = false;
+                }
+            }else{
+                if (CheckBuildingRequirements((int)BuildingID.TownHall)){
+                    buildingUIList[0].Status = buildingReadyToCreate;
+                    buildingUIList[0].Interactable = true;
+                }
+                else buildingUIList[0].Status = buildingNotReadyToCreate;
+            }
+        }else{
+            buildingUIList[0].Status = buildingNotAvailable;
+            buildingUIList[0].Interactable = false;
+        }
+    }
+
+    private void HandleWalls (){
+        fortImage.sprite = buildingInformation[((int)BuildingID.Fort)].buildingIcon;
+        fortName.text = "Fort";
+        fortStatus = 0;
+        if (!currentCity.cityBuildings[((int)BuildingID.Fort)].Equals(CityBuildingState.Blocked)){
+            if (currentCity.cityBuildings[((int)BuildingID.Fort)].Equals(CityBuildingState.Built)){
+                fortImage.sprite = buildingInformation[((int)BuildingID.Citadel)].buildingIcon;
+                fortName.text = "Citadel";
+                fortStatus = ((int)BuildingID.Fort);
+                if (!currentCity.cityBuildings[((int)BuildingID.Citadel)].Equals(CityBuildingState.Blocked)){
+                    if (currentCity.cityBuildings[((int)BuildingID.Citadel)].Equals(CityBuildingState.Built)){
+                        fortImage.sprite = buildingInformation[((int)BuildingID.Castle)].buildingIcon;
+                        fortName.text = "Castle";
+                        fortStatus = ((int)BuildingID.Citadel);
+                        if (!currentCity.cityBuildings[((int)BuildingID.Castle)].Equals(CityBuildingState.Blocked)){
+                            if (currentCity.cityBuildings[((int)BuildingID.Castle)].Equals(CityBuildingState.Built)){
+                                fortStatus = ((int)BuildingID.Citadel);
+                                fortStatusImage.sprite = buildingMaxed;
+                            }else{
+                                if (CheckBuildingRequirements(((int)BuildingID.Castle))){
+                                    fortStatusImage.sprite = buildingReadyToCreate;
+                                    fortButton.interactable = true;
+                                }
+                                else fortStatusImage.sprite = buildingNotReadyToCreate;
+                            }       
+                        }else{
+                            fortStatusImage.sprite = buildingNotAvailable;
+                            fortButton.interactable = false;
+                        }
+                    
+                    }else{
+                        if (CheckBuildingRequirements(((int)BuildingID.Citadel))){
+                            fortStatusImage.sprite = buildingReadyToCreate;
+                            fortButton.interactable = true;
+                        }
+                        else fortStatusImage.sprite = buildingNotReadyToCreate;
+                    }
+                }else{
+                    fortStatusImage.sprite = buildingNotAvailable;
+                    fortButton.interactable = false;
+                }
+            }else{
+                if (CheckBuildingRequirements(((int)BuildingID.Fort))){
+                    fortStatusImage.sprite = buildingReadyToCreate;
+                    fortButton.interactable = true;
+                }
+                else fortStatusImage.sprite = buildingNotReadyToCreate;
+            }
+        }else{
+            fortStatusImage.sprite = buildingNotAvailable;
+            fortButton.interactable = false;
+        }
+    }
+
+    private void HandleUnit (){
+
+    }
+
+    private void HandleMagic (){
+
     }
 
     private void RefreshElement ()
     {
-        // HALL
-        hallImage.sprite = buildingInformation[((int)BuildingID.TownHall)].buildingIcon;
-        hallName.text = "Town Hall";
-        hallStatus = ((int)BuildingID.VillageHall);
-        if (!currentCity.cityBuildings[((int)BuildingID.TownHall)].Equals(CityBuildingState.Blocked)){
-            if (currentCity.cityBuildings[((int)BuildingID.TownHall)].Equals(CityBuildingState.Built)){
-                hallImage.sprite = buildingInformation[((int)BuildingID.CityHall)].buildingIcon;
-                hallName.text = "City Hall";
-                hallStatus = ((int)BuildingID.TownHall);
-                if (!currentCity.cityBuildings[((int)BuildingID.CityHall)].Equals(CityBuildingState.Blocked)){
-                    if (currentCity.cityBuildings[((int)BuildingID.CityHall)].Equals(CityBuildingState.Built)){
-                    hallStatus = ((int)BuildingID.CityHall);
-                    hallStatusImage.sprite = buildingMaxed;
-                    }else{
-                        if (CheckBuildingRequirements(((int)BuildingID.CityHall))){
-                            hallStatusImage.sprite = buildingReadyToCreate;
-                            hallButton.interactable = true;
-                        }
-                        else hallStatusImage.sprite = buildingNotReadyToCreate;
-                    }
-                }else{
-                    hallStatusImage.sprite = buildingNotAvailable;
-                    hallButton.interactable = false;
-                }
-            }else{
-                if (CheckBuildingRequirements(((int)BuildingID.TownHall))){
-                    hallStatusImage.sprite = buildingReadyToCreate;
-                    hallButton.interactable = true;
-                }
-                else hallStatusImage.sprite = buildingNotReadyToCreate;
-            }
-        }else{
-            hallStatusImage.sprite = buildingNotAvailable;
-            hallButton.interactable = false;
+        for (int i = 0; i <= Enum.GetValues(typeof(BuildingID)).Cast<int>().Max(); i++){
+            i += HandleBuilding((BuildingID)i);
         }
         // FORT
         fortImage.sprite = buildingInformation[((int)BuildingID.Fort)].buildingIcon;

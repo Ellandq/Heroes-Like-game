@@ -11,7 +11,7 @@ using System.Linq;
 public class ArmyInterface: MonoBehaviour
 {
     [Header("UI Referances")]
-    [SerializeField] List <ArmyInterfaceUnitButton> unitButtons;
+    [SerializeField] private List <ArmyInterfaceUnitButton> unitButtons;
 
     [Header ("Intefrace Information")]
     private UnitsInformation uInfo01;

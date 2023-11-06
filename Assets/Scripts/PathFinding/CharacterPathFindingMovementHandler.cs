@@ -34,7 +34,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
             if (Vector3.Distance(_targetPosition, pathVectorList[pathVectorList.Count - 1]) < 5f | Vector3.Distance(previousSelectedPosition, _targetPosition) < 5f) // Checks if the position is close to the previous one
             {
                 isMoving = true;
-                CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this.gameObject);
+                CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(thisArmy);
                 MovementStatus();
             }else{  // Sets a new target position
                 objectToInteractWith = null;

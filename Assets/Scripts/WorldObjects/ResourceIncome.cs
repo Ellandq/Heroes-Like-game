@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class ResourceIncome : MonoBehaviour, IEnumerable<int>
+public class ResourceIncome : IEnumerable<int>
 {
     private int[] resources = new int[7]; // Array to hold resource values
 

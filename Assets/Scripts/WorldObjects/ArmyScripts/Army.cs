@@ -110,12 +110,12 @@ public class Army : WorldObject
 
     public override void ObjectSelected(){
         if (armyHighlight.IsHighlightActive()){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(gameObject);
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this);
             Interact();
         }
         else {
             armyHighlight.EnableHighlight(true);
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(gameObject);
+            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this);
         }
     }
 

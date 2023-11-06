@@ -38,8 +38,8 @@ public class ObjectSelector : MonoBehaviour
     {
         var dictionary = new Dictionary<PlayerTag, WorldObject>();
         
-        foreach (PlayerTag tag in Enum.GetValues(typeof(PlayerTag))){
-            dictionary[tag] = null;
+        foreach (PlayerTag tag in GameManager.Instance.playerTags){
+            dictionary[tag] = PlayerManager.Instance.GetPlayer(tag).GetObjectToSelect();
         }
         
         return dictionary;
@@ -169,6 +169,8 @@ public class ObjectSelector : MonoBehaviour
     private bool IsSelectedObjectCity (){
         return selectedObject != null && selectedObject is City;
     }
+
+    public WorldObject GetObject (PlayerTag tag){ return playerObjectDictionary[tag]; }
 
     public Army GetSelectedArmy (){ return IsSelectedObjectArmy() ? null : selectedObject as Army; }
 

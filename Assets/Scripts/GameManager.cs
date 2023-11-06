@@ -129,7 +129,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        StopCoroutine(gameSetup);
         gameSetup = null;
         PlayerManager.Instance.StartGame();
         CameraManager.Instance.cameraMovement.CameraTeleportToWorldObject();
@@ -292,7 +291,6 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         UpdateGameState(GameState.LoadGame);
-        gameSetup = null;
     }
 
     private IEnumerator LoadWorldAsync()

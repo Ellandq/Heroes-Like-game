@@ -52,7 +52,6 @@ public class WorldObjectManager : MonoBehaviour
 
     private void EndSetup (){
         status = 1f;
-        StopCoroutine(coroutine);
         coroutine = null;
     }
 

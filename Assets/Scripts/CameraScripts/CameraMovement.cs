@@ -136,9 +136,9 @@ public class CameraMovement: MonoBehaviour
     }
 
     // Adds an object for the camera to follow
-    public void CameraAddObjectToFollow (GameObject _objectToMoveTowards)
+    public void CameraAddObjectToFollow (WorldObject objectToMoveTowards)
     {
-        objectToMoveTowards = _objectToMoveTowards;
+        this.objectToMoveTowards = objectToMoveTowards.gameObject;
         cameraFollowingObject = true;
     }
 
@@ -160,8 +160,9 @@ public class CameraMovement: MonoBehaviour
     // Teleports the camera to the currently selected object
     public void CameraTeleportToWorldObject ()
     {
+        if (objectToMoveTowards == null) CameraAddObjectToFollow(ObjectSelector.Instance.GetObject(PlayerManager.Instance.GetCurrentPlayerTag()));
         cameraFollowingObject = false;
-        cameraFollowObject.transform.position = (objectToMoveTowards.transform.position + CalculateCameraOffset());
+        cameraFollowObject.transform.position = objectToMoveTowards.transform.position + CalculateCameraOffset();
         position = cameraFollowObject.transform.position;
         transform.position = cameraFollowObject.transform.position;
     }
@@ -170,9 +171,9 @@ public class CameraMovement: MonoBehaviour
     internal Vector3 CalculateCameraOffset ()
     {
         double angle = transform.localEulerAngles.x;
-        double offsetDistance = System.Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
-        double y = -System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
-        double x = -System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double offsetDistance = Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
+        double y = -Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = -Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y - objectToMoveTowards.transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 
@@ -180,24 +181,24 @@ public class CameraMovement: MonoBehaviour
     internal Vector3 CalculateCameraOffsetIndependent ()
     {
         double angle = transform.localEulerAngles.x;
-        double offsetDistance = System.Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
-        double y = -System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
-        double x = -System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double offsetDistance = Math.Round(10000 * transform.position.y / Math.Tan(angle * Math.PI / 180)) / 10000;
+        double y = -Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = -Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(offsetDistance * x), transform.position.y, Convert.ToSingle(offsetDistance * y));
     }
 
     // Calculates the Vector at which the camera is supposed to move to move forwards
     internal Vector3 CalculateMovementAngle ()
     {
-        double y = System.Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
-        double x = System.Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double y = Math.Round(10000 * Math.Cos(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
+        double x = Math.Round(10000 * Math.Sin(transform.localEulerAngles.y * Math.PI / 180)) / 10000;
         return new Vector3(Convert.ToSingle(y), 0, Convert.ToSingle(x));
     }
 
     // Returns the position around which the camera is supposed to rotate
     internal Vector3 CalculateCenterOfRotation()
     {
-        return (transform.position - CalculateCameraOffsetIndependent());
+        return transform.position - CalculateCameraOffsetIndependent();
     }
 }
 

@@ -45,6 +45,8 @@ public class UnitSplitWindow : MonoBehaviour
             slider.value = uInfo01.GetUnit(id01).GetUnitCount();
         }
 
+        if (slider.value == totalUnitCount) slider.value--;
+
         // Update displayed unit count
         unitCount01.text = Convert.ToString(slider.value);
         unitCount02.text = Convert.ToString(totalUnitCount - slider.value);

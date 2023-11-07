@@ -121,7 +121,6 @@ public class UnitsInformation : IUnit
 
     public virtual void SplitUnits(byte a, byte b, UnitsInformation other = null)
     {
-        Debug.Log(other == null);
         UIManager.Instance.OpenUnitSplitWindow(this, a, b, other);
     }
 

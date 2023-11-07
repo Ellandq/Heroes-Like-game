@@ -21,7 +21,7 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler, IPointerEnte
     [SerializeField] private Image unitIcon;
 
     [Header ("Button Information")]
-    private byte slotID;
+    [SerializeField] private byte slotID;
     public bool isSlotEmpty;
     private bool isMouseOver = false;
 

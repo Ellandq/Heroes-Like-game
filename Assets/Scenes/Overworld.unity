@@ -3564,6 +3564,7 @@ MonoBehaviour:
   unitButton: {fileID: 2106231618}
   unitCountDisplay: {fileID: 305599150}
   unitIcon: {fileID: 1739367665}
+  slotID: 9
   isSlotEmpty: 0
 --- !u!1 &214275577
 GameObject:
@@ -7811,6 +7812,7 @@ MonoBehaviour:
   unitButton: {fileID: 662998413}
   unitCountDisplay: {fileID: 49076046}
   unitIcon: {fileID: 1689741797}
+  slotID: 4
   isSlotEmpty: 0
 --- !u!1 &479003385
 GameObject:
@@ -8112,6 +8114,7 @@ MonoBehaviour:
   unitButton: {fileID: 129897355}
   unitCountDisplay: {fileID: 987801859}
   unitIcon: {fileID: 463483030}
+  slotID: 10
   isSlotEmpty: 0
 --- !u!1 &493441032
 GameObject:
@@ -9314,6 +9317,7 @@ MonoBehaviour:
   unitButton: {fileID: 798388182}
   unitCountDisplay: {fileID: 40712659}
   unitIcon: {fileID: 276241974}
+  slotID: 2
   isSlotEmpty: 0
 --- !u!1 &547006959
 GameObject:
@@ -10622,6 +10626,7 @@ MonoBehaviour:
   unitButton: {fileID: 505963673}
   unitCountDisplay: {fileID: 479003385}
   unitIcon: {fileID: 1022617951}
+  slotID: 5
   isSlotEmpty: 0
 --- !u!1 &613334724
 GameObject:
@@ -11657,6 +11662,7 @@ MonoBehaviour:
   unitButton: {fileID: 2070991475}
   unitCountDisplay: {fileID: 316098945}
   unitIcon: {fileID: 274647012}
+  slotID: 7
   isSlotEmpty: 0
 --- !u!1 &655685130
 GameObject:
@@ -12926,6 +12932,7 @@ MonoBehaviour:
   unitButton: {fileID: 1636432934}
   unitCountDisplay: {fileID: 5883401}
   unitIcon: {fileID: 1527600752}
+  slotID: 13
   isSlotEmpty: 0
 --- !u!1 &728128063
 GameObject:
@@ -13740,6 +13747,7 @@ MonoBehaviour:
   unitButton: {fileID: 1300659787}
   unitCountDisplay: {fileID: 2114942996}
   unitIcon: {fileID: 419473692}
+  slotID: 0
   isSlotEmpty: 0
 --- !u!1 &776132431
 GameObject:
@@ -20124,6 +20132,7 @@ MonoBehaviour:
   unitButton: {fileID: 1514778973}
   unitCountDisplay: {fileID: 565452525}
   unitIcon: {fileID: 1548975974}
+  slotID: 11
   isSlotEmpty: 0
 --- !u!1 &1289116527
 GameObject:
@@ -23537,6 +23546,7 @@ MonoBehaviour:
   unitButton: {fileID: 471755457}
   unitCountDisplay: {fileID: 541601087}
   unitIcon: {fileID: 708487274}
+  slotID: 6
   isSlotEmpty: 0
 --- !u!1 &1520581951
 GameObject:
@@ -27098,6 +27108,7 @@ MonoBehaviour:
   unitButton: {fileID: 621023423}
   unitCountDisplay: {fileID: 469802874}
   unitIcon: {fileID: 356806821}
+  slotID: 3
   isSlotEmpty: 0
 --- !u!1 &1702779275
 GameObject:
@@ -28840,6 +28851,7 @@ MonoBehaviour:
   unitButton: {fileID: 1142723907}
   unitCountDisplay: {fileID: 350237980}
   unitIcon: {fileID: 364229556}
+  slotID: 12
   isSlotEmpty: 0
 --- !u!1 &1835464358
 GameObject:
@@ -29794,6 +29806,7 @@ MonoBehaviour:
   unitButton: {fileID: 99569668}
   unitCountDisplay: {fileID: 1640222028}
   unitIcon: {fileID: 1748696431}
+  slotID: 1
   isSlotEmpty: 0
 --- !u!1 &1910567901
 GameObject:
@@ -33053,6 +33066,7 @@ MonoBehaviour:
   unitButton: {fileID: 285012926}
   unitCountDisplay: {fileID: 750177235}
   unitIcon: {fileID: 1880334491}
+  slotID: 8
   isSlotEmpty: 0
 --- !u!1 &2143299682
 GameObject:

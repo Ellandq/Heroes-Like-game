@@ -6,8 +6,8 @@ public class VisablePathTile : MonoBehaviour
 {
     void OnTriggerEnter (Collider collider)
     {
-        if (collider.gameObject.tag == "Army"){
-            Destroy(this.gameObject);
+        if (collider.gameObject.tag == "WorldObject"){
+            if (collider.GetComponentInParent<WorldObject>() is Army) Destroy(this.gameObject);
         }
     }
 }

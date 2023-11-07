@@ -143,11 +143,10 @@ public class ArmyInterface: MonoBehaviour
             }else{
                 SwapUnits(id01, id02);
             }
-        }else if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-            SplitUnits(id01, id02);
         }else{
-            AddUnits(id01, id02);
+            SwapUnits(id01, id02);
         }
+        RefreshElement();
     }
 
     private UnitSlot GetUnit (byte id){
@@ -157,7 +156,7 @@ public class ArmyInterface: MonoBehaviour
         return uInfo01.GetUnit(id);
     }
 
-    private void SplitUnits (byte id01, byte id02){
+    private void SplitUnits (byte id02, byte id01){
         if (id01 > 6){
             if (id02 > 6){
                 uInfo02.SplitUnits((byte)(id01 - 7), (byte)(id02 - 7));

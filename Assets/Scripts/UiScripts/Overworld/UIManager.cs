@@ -135,6 +135,7 @@ public class UIManager : MonoBehaviour
 
     public void FinalizeUnitSplit (){
         RefreshCurrentArmyDisplay();
+        RefreshArmyInterface();
     }
 
     #endregion

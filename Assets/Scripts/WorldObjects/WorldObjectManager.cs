@@ -292,7 +292,7 @@ public class WorldObjectManager : MonoBehaviour
             gridPosition, mineOrientation, ownedByPlayer, mineType, mineGarrison
         );
         mines[numberOfMines].transform.parent = transform;
-        mines[numberOfMines].gameObject.name = mineType + " Mine : " + (numberOfCities + 1);
+        mines[numberOfMines].gameObject.name = mineType[0] + " Mine : " + (numberOfCities + 1);
 
         GameGrid.Instance.GetCell(gridPosition).isOccupied = true;
         numberOfMines++;

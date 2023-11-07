@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3009383896114411133}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: BuildingPrefab (1 x 1)
-  m_TagString: Building
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 6784229638233947072}
   - component: {fileID: 3223097105172400743}
   - component: {fileID: 7154106986201897908}
-  m_Layer: 13
+  m_Layer: 8
   m_Name: Building Enterance
-  m_TagString: BuildingEnterance
+  m_TagString: Enterance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

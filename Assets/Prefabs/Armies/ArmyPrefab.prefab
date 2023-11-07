@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6261444046112883754}
   m_Layer: 7
   m_Name: ArmyPrefab
-  m_TagString: Army
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 3906793851809117243}
   m_Layer: 7
   m_Name: ArmyObject
-  m_TagString: Army
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

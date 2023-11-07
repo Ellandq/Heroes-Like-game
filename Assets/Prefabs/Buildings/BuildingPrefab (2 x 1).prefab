@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4300614547641875507}
   - component: {fileID: 7417896974670532868}
   - component: {fileID: 7357784093234451186}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Building
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8587048007672249302}
   - component: {fileID: 9036614617174769933}
   - component: {fileID: 7592406225586744010}
-  m_Layer: 13
+  m_Layer: 8
   m_Name: BuildingEnterance
   m_TagString: BuildingEnterance
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1728423930091749011}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: BuildingPrefab (2 x 1)
   m_TagString: Building
   m_Icon: {fileID: 0}

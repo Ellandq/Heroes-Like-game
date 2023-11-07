@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8574756055442298367}
   - component: {fileID: 3126295547012916407}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ResourcePrefab
-  m_TagString: Resource
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4314674210931365368}
   m_Layer: 8
   m_Name: ResourceObject
-  m_TagString: Resource
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

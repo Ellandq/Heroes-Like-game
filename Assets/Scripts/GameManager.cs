@@ -335,8 +335,11 @@ public class GameManager : MonoBehaviour
         }
         status += 0.35f; // Adjust progress
 
+        yield return null;
+
+        Debug.Log("Step 6 progress: 95%");
         ObjectSelector.Instance.SetupObjectSelector();
-        Debug.Log("Step 6 progress: 85%");
+        
         status += .05f;
 
         // Use 'status' to track overall progress and report it as needed

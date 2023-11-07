@@ -1,13 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using TMPro;
-using System.Linq;
-using System.ComponentModel;
 
 public class ArmyDisplayInformation : MonoBehaviour
 {
@@ -15,11 +7,6 @@ public class ArmyDisplayInformation : MonoBehaviour
 
     [Header ("Units information")]
     private UnitsInformation units;
-
-    [Header ("UI Sprites")]
-    [SerializeField] private Sprite defaultBackground;
-    [SerializeField] private Sprite bannerOpen;
-    [SerializeField] private Sprite bannerClosed;
 
     [Header("UI Referances")]
     [SerializeField] private List <UnitPanel> panels;
@@ -30,22 +17,14 @@ public class ArmyDisplayInformation : MonoBehaviour
 
     private void Start (){
         ObjectSelector.Instance.onSelectedObjectChange.AddListener(ChangeSelectedUnits);
-        units = null;
     }
 
     // Changes the selected army
     private void ChangeSelectedUnits (){
-        UnitsInformation units = ObjectSelector.Instance.GetSelectedObjectUnits();
-        if (units!= null){
-            UpdateUnitDisplay();
-        }else{
-            ClearSelection();
+        units = ObjectSelector.Instance.GetSelectedObjectUnits();
+        if (units == null){
+            RemoveButtonHighlights();
         }
-    }
-
-    // Clears the current displayed units
-    private void ClearSelection(){
-        RemoveButtonHighlights();
         UpdateUnitDisplay();
     }
 
@@ -94,6 +73,6 @@ public class ArmyDisplayInformation : MonoBehaviour
     public void RefreshElement ()
     {
         RemoveButtonHighlights();
-        UpdateUnitDisplay();
+        ChangeSelectedUnits();
     }
 }

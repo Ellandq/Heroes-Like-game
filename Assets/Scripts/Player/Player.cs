@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
     private short daysToLoose = 4;
 
     [Header("Player structures and armies: ")]
-    private List<Army> ownedArmies;
-    private List<City> ownedCities;
-    private List<Mine> ownedMines;
+    [SerializeField] private List<Army> ownedArmies;
+    [SerializeField] private List<City> ownedCities;
+    [SerializeField] private List<Mine> ownedMines;
 
     [Header("Player resources")]
     private ResourceIncome playerResources;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
                     int index = ownedMines.FindIndex(m => m == mine);
                     if (index >= 0) ownedMines.RemoveAt(index); 
                 }
-            }catch (NullReferenceException e){}
+            }catch (NullReferenceException e){ Debug.Log(e.Message);}
             
         }else{
             objectToDestroy = obj;

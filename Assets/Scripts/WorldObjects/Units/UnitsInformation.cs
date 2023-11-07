@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitsInformation : MonoBehaviour, IUnit
+public class UnitsInformation : IUnit
 {
     private WorldObject connectedObject;
     protected List<UnitSlot> unitSlots;

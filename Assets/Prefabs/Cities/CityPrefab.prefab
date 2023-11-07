@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5525693057291024128}
   - component: {fileID: 4628193916177066312}
   - component: {fileID: 9218795098165464114}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: CityEnterance
-  m_TagString: CityEnterance
+  m_TagString: Enterance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,9 +339,9 @@ GameObject:
   - component: {fileID: 5545984175075060701}
   - component: {fileID: 5545984175075060675}
   - component: {fileID: 6626736689147598416}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: CityObject
-  m_TagString: City
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -969,9 +969,9 @@ GameObject:
   - component: {fileID: 7799780420752473731}
   - component: {fileID: 1900778989486256422}
   - component: {fileID: 5008445480282598082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CityPrefab
-  m_TagString: City
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

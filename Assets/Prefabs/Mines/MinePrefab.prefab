@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 290817217453707298}
   - component: {fileID: 8188584696208547986}
   - component: {fileID: 2366836946999088170}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: MineObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 3755822996593582019}
   - component: {fileID: 3219582545178692233}
   - component: {fileID: 348397216244698162}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,9 +574,9 @@ GameObject:
   - component: {fileID: 2145024440342436146}
   - component: {fileID: 8522300019273459896}
   - component: {fileID: 6820616315681738057}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MineEnterance
-  m_TagString: MineEnterance
+  m_TagString: Enterance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -907,9 +907,9 @@ GameObject:
   m_Component:
   - component: {fileID: 100203149774942629}
   - component: {fileID: 415436824210009797}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: MinePrefab
-  m_TagString: Mine
+  m_TagString: WorldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

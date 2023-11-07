@@ -12,19 +12,8 @@ public class UnitButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     private IEnumerator checkMouseOverCoroutine;
 
     [Header ("Slot information")]
-    [SerializeField] private Button button;  
     [SerializeField] private byte slotID;
     [SerializeField] public bool isSlotEmpty;
-
-    // Activates a unit highlight
-    public void ActivateHighlight (){
-        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitDisplay/IconFrameHighlight");
-    }
-
-    // Deactivates the highlight
-    public void DeactivateHighlight (){
-        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitDisplay/IconFrame");
-    }
 
     // When a dragged object is dropped on this one, it runs a few checks to determine what it should do
     public void OnDrop (PointerEventData eventData)

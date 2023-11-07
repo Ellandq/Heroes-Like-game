@@ -28,6 +28,7 @@ public class Army : WorldObject
     { 
         Initialize(gridPosition, rotation, ObjectType.Army, ownedByPlayer);
         unitsInformation = new ArmyInformation(armyUnits);
+        ChangeOwningPlayer(ownedByPlayer);
 
         maxMovementPoints = Convert.ToInt32(unitsInformation.GetMovementPoints());
         movementPoints = maxMovementPoints;
@@ -148,6 +149,8 @@ public class Army : WorldObject
         }else{
             flag.SetActive(false);
         }
+        Player player = PlayerManager.Instance.GetPlayer(GetPlayerTag());
+        player.AddObject(this);
         base.ChangeOwningPlayer(playerTag);
     }
 

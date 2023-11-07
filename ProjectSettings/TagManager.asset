@@ -7,17 +7,11 @@ TagManager:
   - Groundobjects
   - Heroes
   - GridCell
-  - City
-  - Army
-  - Building
-  - CityEnterance
   - GameGrid
-  - Mine
-  - MineEnterance
-  - BuildingEnterance
-  - Resource
   - UnitIcons
   - ArmyInterfaceUnitIcons
+  - WorldObject
+  - Enterance
   layers:
   - Default
   - TransparentFX
@@ -26,13 +20,13 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Armies
-  - Resources
-  - Buildings
-  - Cities
-  - Mines
-  - CityEnterance
-  - BuildingEnterance
+  - WorldObject
+  - Enterance
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

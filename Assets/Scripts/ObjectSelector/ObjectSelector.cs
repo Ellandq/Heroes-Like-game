@@ -11,13 +11,8 @@ public class ObjectSelector : MonoBehaviour
     [Header ("Events")]
     public UnityEvent onSelectedObjectChange;
 
-    [Header ("Camera referances: ")]
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private Camera uiCamera;
-
     [Header("Raycast layers: ")]
     [SerializeField] private LayerMask layersToHit;
-    [SerializeField] private LayerMask uiLayers;
     
     [Header("Object selection information")]
     private Dictionary<PlayerTag, WorldObject> playerObjectDictionary;
@@ -28,8 +23,12 @@ public class ObjectSelector : MonoBehaviour
 
     private void Awake () { Instance = this; }
 
+    private void Update () { CheckForObject(); }
+
     public void SetupObjectSelector () {
+
         playerObjectDictionary = InitializePlayerObjectDictionary();
+        SetUpSelectorForNewPlayer();
         TurnManager.Instance.OnNewDay += SetUpSelectorForNewPlayer;
         InputManager.Instance.mouseInput.OnLeftMouseButtonDown += CheckForObject;
     }
@@ -176,5 +175,18 @@ public class ObjectSelector : MonoBehaviour
 
     public City GetSelectedCity (){ return IsSelectedObjectCity() ? null : selectedObject as City; }
 
-    public UnitsInformation GetSelectedObjectUnits () { return GetSelectedArmy() ? (GetSelectedCity() ? null : (selectedObject as City).GetUnitsInformation()) : (selectedObject as Army).GetUnitsInformation(); }
+    public UnitsInformation GetSelectedObjectUnits () { 
+        if (selectedObject is Army)
+        {
+            return (selectedObject as Army).GetUnitsInformation();
+        }
+        else if (selectedObject is City)
+        {
+            return (selectedObject as City).GetUnitsInformation();
+        }
+        else
+        {
+            return null;
+        }   
+    }
 }

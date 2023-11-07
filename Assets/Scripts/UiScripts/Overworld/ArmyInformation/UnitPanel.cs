@@ -7,20 +7,25 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class UnitPanel : MonoBehaviour
+public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private bool isMouseOver = false;
+    private IEnumerator checkMouseOverCoroutine;
+
     [SerializeField] private byte index;
     [SerializeField] private Image unitImage;
     [SerializeField] private Image bannerImage;
     [SerializeField] private Button button;
-    [SerializeField] private UnitButton unitButton;
     [SerializeField] private TMP_Text unitCountDisplay;
 
+    private UnitSlot connectedSlot;
+
     public void UpdateUnitPanel (UnitSlot slot){
+        connectedSlot = slot;
         if (!slot.IsEmpty()){
-            unitButton.isSlotEmpty = false;
             button.interactable = true;
             unitImage.gameObject.SetActive(true);
             if (index == 0){
@@ -36,14 +41,12 @@ public class UnitPanel : MonoBehaviour
                 unitCountDisplay.text = Convert.ToString(slot.GetUnitCount());
             }
         }else{
-            unitButton.isSlotEmpty = true;
             button.interactable = false;
             unitImage.gameObject.SetActive(false);
             if (index != 0){
                 bannerImage.sprite = Resources.Load<Sprite>("UI/UnitDisplay/UnitBannerClosed");
             }
             unitImage.sprite = Resources.Load<Sprite>("UI/UnitDsiplay/UnitBackground");
-            unitButton.isSlotEmpty = true;
             unitCountDisplay.transform.parent.gameObject.SetActive(false);
         }
     }
@@ -54,10 +57,54 @@ public class UnitPanel : MonoBehaviour
     }
 
     public void RemoveHighlight (){
-        unitButton.DeactivateHighlight();
+        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitsDisplay/IconFrame");
     }
 
     public void AddHighlight (){
-        unitButton.ActivateHighlight();
+        button.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/UnitsDisplay/IconFrameHighlight");
     }
+
+    // When a dragged object is dropped on this one, it runs a few checks to determine what it should do
+    public void OnDrop (PointerEventData eventData)
+    {
+        //  Checks if the dropped object is a unitIcon
+        if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "UnitIcons"){
+            // Checks if the dropped object isn't this object
+            if (eventData.pointerDrag != this.gameObject)
+            {
+                UnitPanel buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitPanel>();
+                if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
+                    ArmyDisplayInformation.Instance.SwapUnits(buttonToSwap.GetId(), GetId());
+                }else{
+                    ArmyDisplayInformation.Instance.SplitUnits(buttonToSwap.GetId(), GetId());
+                }
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData){
+        if (!connectedSlot.IsEmpty()){
+            isMouseOver = true;
+            checkMouseOverCoroutine = CheckMouseOver();
+            StartCoroutine(checkMouseOverCoroutine);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData){
+        isMouseOver = false;
+        if (checkMouseOverCoroutine != null)
+        {
+            StopCoroutine(checkMouseOverCoroutine);
+        }
+    }
+
+    private IEnumerator CheckMouseOver()
+    {
+        yield return new WaitForSeconds(1f);
+        if (isMouseOver){
+            Debug.Log("Mouse is still over UI element");
+        }
+    }
+
+    public byte GetId () { return index; }
 }

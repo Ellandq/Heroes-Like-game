@@ -142,12 +142,15 @@ public class ObjectSelector : MonoBehaviour
             obj.ObjectDeselected();
         }
         selectedObject = obj;
+        obj.ObjectSelected();
         onSelectedObjectChange.Invoke();
     }
 
     public void CancelSelection (WorldObject obj){
         if (obj != null && obj == selectedObject){
             HandleSelectionChange(null);
+        }else if (selectedObject != null){
+            selectedObject.ObjectDeselected();
         }
     }
 
@@ -172,9 +175,9 @@ public class ObjectSelector : MonoBehaviour
 
     public WorldObject GetSelectedObject () { return selectedObject; }
 
-    public Army GetSelectedArmy (){ return IsSelectedObjectArmy() ? null : selectedObject as Army; }
+    public Army GetSelectedArmy (){ return IsSelectedObjectArmy() ? selectedObject as Army : null; }
 
-    public City GetSelectedCity (){ return IsSelectedObjectCity() ? null : selectedObject as City; }
+    public City GetSelectedCity (){ return IsSelectedObjectCity() ? selectedObject as City : null; }
 
     public UnitsInformation GetSelectedObjectUnits () { 
         if (selectedObject is Army)

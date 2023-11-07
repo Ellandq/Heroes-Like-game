@@ -86,7 +86,7 @@ public class OwnedArmiesDisplay : MonoBehaviour
     }
 
     // Updates the army display
-    public void UpdateArmyDisplay (bool resetPosition = true)
+    public void UpdateArmyDisplay (bool resetPosition = false)
     {
         Player player = PlayerManager.Instance.GetCurrentPlayer();
         ResetArmyDisplay();

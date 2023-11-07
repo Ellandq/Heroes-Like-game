@@ -42,8 +42,8 @@ public class UIManager : MonoBehaviour
 
     private void NewTurnUpdate (){
         UpdateResourceDisplay();
-        UpdateCurrentArmyDisplay();
-        UpdateCurrentCityDisplay();
+        UpdateCurrentArmyDisplay(true);
+        UpdateCurrentCityDisplay(true);
         RefreshCurrentArmyDisplay();
     }
 
@@ -62,14 +62,14 @@ public class UIManager : MonoBehaviour
 
     #region TownAndArmyDisplay
 
-    public void UpdateCurrentArmyDisplay (){
+    public void UpdateCurrentArmyDisplay (bool resetPosition = false){
         Debug.Log("Current army display updated.");
-        armyDisplay.UpdateArmyDisplay();
+        armyDisplay.UpdateArmyDisplay(resetPosition);
     }
 
-    public void UpdateCurrentCityDisplay (){
+    public void UpdateCurrentCityDisplay (bool resetPosition = false){
         Debug.Log("Current city display updated.");
-        townDisplay.UpdateCityDisplay();
+        townDisplay.UpdateCityDisplay(resetPosition);
     }
 
     #endregion

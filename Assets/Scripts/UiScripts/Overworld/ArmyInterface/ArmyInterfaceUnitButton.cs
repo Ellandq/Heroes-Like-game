@@ -47,7 +47,7 @@ public class ArmyInterfaceUnitButton : MonoBehaviour, IDropHandler, IPointerEnte
     public void OnDrop (PointerEventData eventData)
     {
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "ArmyInterfaceUnitIcons"){
-            if (eventData.pointerDrag != this.gameObject)
+            if (eventData.pointerDrag != gameObject)
             {
                 armyInterface.HandleUnitInteraction(slotID, eventData.pointerDrag.GetComponentInParent<ArmyInterfaceUnitButton>().GetId());
             }

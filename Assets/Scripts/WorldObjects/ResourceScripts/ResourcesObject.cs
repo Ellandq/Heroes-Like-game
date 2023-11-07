@@ -12,14 +12,14 @@ public class ResourcesObject : WorldObject, IObjectInteraction
         resource = new ResourceIncome(resourceCount, resourceType);
     }
 
-    public void Interact<T> (T other)
+    public override void Interact<T> (T other)
     {
         Army interactingArmy = other as Army;
         PlayerManager.Instance.GetPlayer(interactingArmy.GetPlayerTag()).AddResources(resource);
         Destroy(gameObject);
     }
 
-    public void Interact (){
+    public override void Interact (){
         Destroy(gameObject);
     }
 

@@ -42,11 +42,9 @@ public class ArmyInterface: MonoBehaviour
     {
         RemoveButtonHighlights();
         ResetUnitSlots();
-        UpdateUnitDisplay();
     }
 
-    private void ResetUnitSlots()
-    {
+    private void ResetUnitSlots(){
         uInfo01 = null;
         uInfo02 = null;
     }
@@ -145,8 +143,10 @@ public class ArmyInterface: MonoBehaviour
             }else{
                 SwapUnits(id01, id02);
             }
+        }else if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
+            SplitUnits(id01, id02);
         }else{
-            SwapUnits(id01, id02);
+            AddUnits(id01, id02);
         }
     }
 

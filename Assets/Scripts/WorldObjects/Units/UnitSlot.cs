@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Linq;
 
-public class UnitSlot : MonoBehaviour
+public class UnitSlot
 {
     [Header("Slot Information")]
     private bool isEmpty = true;

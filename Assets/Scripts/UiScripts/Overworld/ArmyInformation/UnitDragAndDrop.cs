@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-    [SerializeField] private UnitButton connectedUnitButton;
+    [SerializeField] private UnitPanel connectedUnitButton;
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject selectedUnitObject;
 
@@ -23,10 +23,10 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // When object is being dragged sets the selection object image to the same as this one
     public void OnBeginDrag (PointerEventData eventData)
     {
-        if (!connectedUnitButton.isSlotEmpty){
-            selectedUnitObject.GetComponent<Image>().sprite = this.gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+        if (!connectedUnitButton.IsEmpty()){
+            selectedUnitObject.GetComponent<Image>().sprite = gameObject.transform.GetChild(1).GetComponent<Image>().sprite;
             selectedUnitObject.SetActive(true);
-            rectTransform.position = transform.GetChild(0).GetComponent<RectTransform>().position;
+            rectTransform.position = transform.GetChild(1).GetComponent<RectTransform>().position;
             startingPosition = InputManager.Instance.mouseInput.GetMouseScreenPosition();
             canvasGroup.blocksRaycasts = false;
         }
@@ -35,7 +35,7 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // When the object is being dragged sets the selection object position to the mouse corrected position
     public void OnDrag (PointerEventData eventData)
     {
-        if (!connectedUnitButton.isSlotEmpty){
+        if (!connectedUnitButton.IsEmpty()){
             rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
     }
@@ -43,20 +43,17 @@ public class UnitDragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // When the objects is no longer dragged disables the selection object
     public void OnEndDrag (PointerEventData eventData)
     {
-        if (!connectedUnitButton.isSlotEmpty){
-            selectedUnitObject.SetActive(false);
-            canvasGroup.blocksRaycasts = true;
-            rectTransform.anchoredPosition = startingPosition;
-        }
+        selectedUnitObject.SetActive(false);
+        canvasGroup.blocksRaycasts = true;
+        rectTransform.anchoredPosition = startingPosition;
     }
 
     // When the objects is dropped disables the selection object
     public void OnDrop (PointerEventData eventData)
     {
-        if (!connectedUnitButton.isSlotEmpty){
-            selectedUnitObject.SetActive(false);
-            canvasGroup.blocksRaycasts = true;
-            rectTransform.anchoredPosition = startingPosition;
-        }
+        selectedUnitObject.SetActive(false);
+        canvasGroup.blocksRaycasts = true;
+        rectTransform.anchoredPosition = startingPosition;
+        
     }
 }

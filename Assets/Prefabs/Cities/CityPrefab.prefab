@@ -969,6 +969,7 @@ GameObject:
   - component: {fileID: 7799780420752473731}
   - component: {fileID: 1900778989486256422}
   - component: {fileID: 5008445480282598082}
+  - component: {fileID: 9142686229884854677}
   m_Layer: 7
   m_Name: CityPrefab
   m_TagString: WorldObject
@@ -1030,6 +1031,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3fb13854d3e60b4fa2d0cadc6d430c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cityDwellingInformation: {fileID: 9142686229884854677}
+--- !u!114 &9142686229884854677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068778115147324785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2940c93feb2554c4388548fa08ed1f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7977195255200368121

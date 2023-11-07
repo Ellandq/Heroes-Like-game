@@ -36,10 +36,15 @@ public class UIManager : MonoBehaviour
         TurnManager.Instance.OnNewTurn += NewTurnUpdate;
     }
 
+    public void StartGame (){
+        NewTurnUpdate();
+    }
+
     private void NewTurnUpdate (){
         UpdateResourceDisplay();
         UpdateCurrentArmyDisplay();
         UpdateCurrentCityDisplay();
+        RefreshCurrentArmyDisplay();
     }
 
     private void NewDayUpdate (){
@@ -124,14 +129,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void DisableUnitSplitWindow ()
-    {
+    public void DisableUnitSplitWindow (){
         unitSplitWindow.DisableUnitSplitWindow();
     }
 
-    public void FinalizeUnitSplit ()
-    {
-
+    public void FinalizeUnitSplit (){
+        RefreshCurrentArmyDisplay();
     }
 
     #endregion

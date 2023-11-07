@@ -16,17 +16,15 @@ public class ObjectSelector : MonoBehaviour
     
     [Header("Object selection information")]
     private Dictionary<PlayerTag, WorldObject> playerObjectDictionary;
-    private WorldObject selectedObject;
+    [SerializeField] private WorldObject selectedObject;
     private PlayerTag currentPlayer;
 
     private bool isSelectorActive;
 
     private void Awake () { Instance = this; }
 
-    private void Update () { CheckForObject(); }
-
     public void SetupObjectSelector () {
-
+        isSelectorActive = true;
         playerObjectDictionary = InitializePlayerObjectDictionary();
         SetUpSelectorForNewPlayer();
         TurnManager.Instance.OnNewDay += SetUpSelectorForNewPlayer;
@@ -139,6 +137,7 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void HandleSelectionChange (WorldObject obj){
+        if (obj == null) return;
         if (selectedObject != null){
             obj.ObjectDeselected();
         }
@@ -170,6 +169,8 @@ public class ObjectSelector : MonoBehaviour
     }
 
     public WorldObject GetObject (PlayerTag tag){ return playerObjectDictionary[tag]; }
+
+    public WorldObject GetSelectedObject () { return selectedObject; }
 
     public Army GetSelectedArmy (){ return IsSelectedObjectArmy() ? null : selectedObject as Army; }
 

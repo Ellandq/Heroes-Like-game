@@ -121,6 +121,7 @@ public class UnitsInformation : IUnit
 
     public virtual void SplitUnits(byte a, byte b, UnitsInformation other = null)
     {
+        Debug.Log(other == null);
         UIManager.Instance.OpenUnitSplitWindow(this, a, b, other);
     }
 
@@ -205,6 +206,10 @@ public class UnitsInformation : IUnit
                 }
             }
         }
+        if (connectedObject != null && ObjectSelector.Instance != null && ObjectSelector.Instance.GetSelectedObject() == connectedObject){
+            Debug.Log("?");
+            UIManager.Instance.RefreshCurrentArmyDisplay();
+        }
     }
 
     #endregion
@@ -217,6 +222,7 @@ public class UnitsInformation : IUnit
         {
             unitSlots[i].SetSlotStatus(unitInfo[i * 2], unitInfo[i * 2 + 1]);
         }
+        AdjustUnitPosition();
     }
 
     public virtual void SetSlotStatus(byte index, int count, short id)

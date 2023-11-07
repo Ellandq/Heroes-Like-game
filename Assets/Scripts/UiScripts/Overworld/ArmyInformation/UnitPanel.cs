@@ -9,7 +9,6 @@ using TMPro;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-[System.Serializable]
 public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private bool isMouseOver = false;
@@ -28,8 +27,8 @@ public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (!slot.IsEmpty()){
             button.interactable = true;
             unitImage.gameObject.SetActive(true);
-            if (index == 0){
-                bannerImage.sprite = Resources.Load<Sprite>("UI/UnitDisplay/UnitBannerOpened");
+            if (index != 0){
+                bannerImage.sprite = Resources.Load<Sprite>("UI/UnitsDisplay/UnitBannerOpened");
             }
 
             if (slot.IsHero()){
@@ -44,9 +43,9 @@ public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
             button.interactable = false;
             unitImage.gameObject.SetActive(false);
             if (index != 0){
-                bannerImage.sprite = Resources.Load<Sprite>("UI/UnitDisplay/UnitBannerClosed");
+                bannerImage.sprite = Resources.Load<Sprite>("UI/UnitsDisplay/UnitBannerClosed");
             }
-            unitImage.sprite = Resources.Load<Sprite>("UI/UnitDsiplay/UnitBackground");
+            unitImage.sprite = Resources.Load<Sprite>("UI/UnitsDsiplay/UnitBackground");
             unitCountDisplay.transform.parent.gameObject.SetActive(false);
         }
     }
@@ -70,20 +69,20 @@ public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         //  Checks if the dropped object is a unitIcon
         if (eventData.pointerDrag != null && eventData.pointerDrag.tag == "UnitIcons"){
             // Checks if the dropped object isn't this object
-            if (eventData.pointerDrag != this.gameObject)
+            if (eventData.pointerDrag != gameObject)
             {
                 UnitPanel buttonToSwap = eventData.pointerDrag.GetComponentInParent<UnitPanel>();
                 if (InputManager.Instance.keyboardInput.isLeftShiftPressed){
-                    ArmyDisplayInformation.Instance.SwapUnits(buttonToSwap.GetId(), GetId());
-                }else{
                     ArmyDisplayInformation.Instance.SplitUnits(buttonToSwap.GetId(), GetId());
+                }else{
+                    ArmyDisplayInformation.Instance.SwapUnits(buttonToSwap.GetId(), GetId());
                 }
             }
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData){
-        if (!connectedSlot.IsEmpty()){
+        if (connectedSlot != null && !connectedSlot.IsEmpty()){
             isMouseOver = true;
             checkMouseOverCoroutine = CheckMouseOver();
             StartCoroutine(checkMouseOverCoroutine);
@@ -107,4 +106,8 @@ public class UnitPanel : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     }
 
     public byte GetId () { return index; }
+
+    public bool IsEmpty () { 
+        return connectedSlot.IsEmpty();
+    }
 }

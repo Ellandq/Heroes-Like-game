@@ -7,12 +7,11 @@ public class CityBuildingHandler : MonoBehaviour
 {
     private City city;
     private CityBuildingState[] cityBuildings;
-    private CityDwellingInformation cityDwellingInformation;
+    [SerializeField] private CityDwellingInformation cityDwellingInformation;
     private bool buildingAlreadybuilt;
 
     public void InitializeBuildings (byte[] cityBuildingStatus, City city){
         CityBuildingState[] cityBuildings = new CityBuildingState[34];
-        cityDwellingInformation = new CityDwellingInformation();
         cityDwellingInformation.Initialize();
         this.city = city;
         buildingAlreadybuilt = false;

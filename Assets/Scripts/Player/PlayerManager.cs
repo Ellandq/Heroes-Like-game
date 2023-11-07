@@ -35,7 +35,6 @@ public class PlayerManager : MonoBehaviour
         humanPlayers = GameManager.Instance.humanPlayerTags;
         neutralPlayer.SetUpPlayer(PlayerTag.None, true);
         currentPlayer = allPlayers[0];
-        Debug.Log(currentPlayer);
 
         setUpProgress = 0f;
         coroutine = StartCoroutine(CreatePlayers(GameManager.Instance.numberOfPlayers));

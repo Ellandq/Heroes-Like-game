@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.EnableCamera();
         mapLoaded = true;
         UpdateGameState(GetNewGameState());
+        UIManager.Instance.StartGame();
     }
 
     public void UpdateGameState (GameState newState)

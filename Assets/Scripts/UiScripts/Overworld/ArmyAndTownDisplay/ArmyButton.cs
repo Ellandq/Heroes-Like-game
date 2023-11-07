@@ -43,7 +43,7 @@ public class ArmyButton : MonoBehaviour
 
     // Selects an army if the button is pressed
     public void SelectArmy (){
-        ObjectSelector.Instance.HandleWorldObjects(connectedArmy);
+        ObjectSelector.Instance.HandleWorldObjects(connectedArmy, true);
     }
 
     // Checks if the highlight should be activated

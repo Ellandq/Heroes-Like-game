@@ -74,12 +74,12 @@ public class ObjectSelector : MonoBehaviour
          
     }
 
-    public void HandleWorldObjects (WorldObject obj){
+    public void HandleWorldObjects (WorldObject obj, bool forceSelection = false){
         if (obj is City){
-            HandleCity(obj as City);
+            HandleCity(obj as City, forceSelection);
         }
         else if (obj is Army){
-            HandleArmy(obj as Army);
+            HandleArmy(obj as Army, forceSelection);
         }
         else if (obj is Mine){
             HandleMine(obj as Mine);
@@ -89,19 +89,24 @@ public class ObjectSelector : MonoBehaviour
         }
     }
 
-    private void HandleCity (City city){
+    private void HandleCity (City city, bool forceSelection = false){
         if (selectedObject == null){
+            city.ObjectSelected();
+            HandleSelectionChange(city);
+        }else if (forceSelection){
             city.ObjectSelected();
             HandleSelectionChange(city);
         }
     }
 
-    private void HandleArmy (Army army){
+    private void HandleArmy (Army army, bool forceSelection = false){
         if (IsSelectedObjectArmy()){
             if (selectedObject == army) army.ObjectSelected();
-            else {
+            else if (!forceSelection){
                 if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
                 (selectedObject as Army).Move(army.transform.position);
+            }else{
+                HandleSelectionChange(army);
             }
         }else {
             HandleSelectionChange(army);
@@ -139,7 +144,7 @@ public class ObjectSelector : MonoBehaviour
     private void HandleSelectionChange (WorldObject obj){
         if (obj == null) return;
         if (selectedObject != null){
-            obj.ObjectDeselected();
+            selectedObject.ObjectDeselected();
         }
         selectedObject = obj;
         obj.ObjectSelected();

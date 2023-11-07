@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OwnedArmiesDisplay : MonoBehaviour
+public class OwnedArmiesDisplay : MonoBehaviour, IObjectDisplay
 {
     [SerializeField] private ArmySelectionMovementButtons movementButtons;
 
@@ -15,10 +15,11 @@ public class OwnedArmiesDisplay : MonoBehaviour
     [SerializeField] private RectTransform rotationObject;
     private Quaternion targetRotation;
     private Vector3 rotation;
-    private float rotationSpeed;
+    private float rotationSpeed = 5f;
     private int currentPosition;
-    private bool manualMovementEnabled;
+    private bool manualMovementEnabled = false;
     private bool rotationInProgress = false;
+
 
     private void Update ()
     {
@@ -86,10 +87,10 @@ public class OwnedArmiesDisplay : MonoBehaviour
     }
 
     // Updates the army display
-    public void UpdateArmyDisplay (bool resetPosition = false)
+    public void UpdateDisplay (bool resetPosition = false)
     {
         Player player = PlayerManager.Instance.GetCurrentPlayer();
-        ResetArmyDisplay();
+        ResetDisplay();
         if (resetPosition) ResetDisplayPosition();
         int i = 0;
         foreach (Army army in player.GetOwnedArmies()){
@@ -100,7 +101,7 @@ public class OwnedArmiesDisplay : MonoBehaviour
     }
 
     // Resets the army display
-    private void ResetArmyDisplay ()
+    private void ResetDisplay ()
     {
         for (int i = 0; i < 12; i++){
             armySlots[i].ResetArmyButton();

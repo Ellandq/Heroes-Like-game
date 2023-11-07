@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OwnedTownsDisplay : MonoBehaviour
+public class OwnedTownsDisplay : MonoBehaviour, IObjectDisplay
 {
     [SerializeField] private TownSelectionMovementButtons movementButtons;
 
@@ -15,9 +15,9 @@ public class OwnedTownsDisplay : MonoBehaviour
     [SerializeField] private RectTransform rotationObject;
     private Quaternion targetRotation;
     private Vector3 rotation;
-    private float rotationSpeed;
+    private float rotationSpeed = 5f;
     private int currentPosition;
-    private bool manualMovementEnabled;
+    private bool manualMovementEnabled = false;
 
     // Add a flag variable to track whether the rotation is in progress
     private bool rotationInProgress = false;
@@ -82,10 +82,10 @@ public class OwnedTownsDisplay : MonoBehaviour
     }
 
     // Updates the town display
-    public void UpdateCityDisplay (bool resetPosition = true)
+    public void UpdateDisplay (bool resetPosition = true)
     {
         Player player = PlayerManager.Instance.GetCurrentPlayer();
-        ResetTownDisplay();
+        ResetDisplay();
         if (resetPosition) ResetDisplayPosition();
         int i = 0;
         foreach (City city in player.GetOwnedCities()){
@@ -96,7 +96,7 @@ public class OwnedTownsDisplay : MonoBehaviour
     }
 
     // Resets the town display
-    private void ResetTownDisplay (){
+    private void ResetDisplay (){
         for (int i = 0; i < 12; i++){
             citySlots[i].ResetCityButton();
         }

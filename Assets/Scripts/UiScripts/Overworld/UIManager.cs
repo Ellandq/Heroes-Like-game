@@ -18,8 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ArmyInterface armyInterface;
 
     [Header ("Army and Town Display UI")]
-    [SerializeField] private OwnedTownsDisplay townDisplay;
-    [SerializeField] private OwnedArmiesDisplay armyDisplay;
+    [SerializeField] private OwnedObjectDisplay townDisplay;
+    [SerializeField] private OwnedObjectDisplay armyDisplay;
 
     [Header ("Unit Split Window")]
     [SerializeField] private UnitSplitWindow unitSplitWindow;
@@ -64,12 +64,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCurrentArmyDisplay (bool resetPosition = false){
         Debug.Log("Current army display updated.");
-        armyDisplay.UpdateArmyDisplay(resetPosition);
+        armyDisplay.UpdateDisplay(resetPosition);
     }
 
     public void UpdateCurrentCityDisplay (bool resetPosition = false){
         Debug.Log("Current city display updated.");
-        townDisplay.UpdateCityDisplay(resetPosition);
+        townDisplay.UpdateDisplay(resetPosition);
     }
 
     #endregion

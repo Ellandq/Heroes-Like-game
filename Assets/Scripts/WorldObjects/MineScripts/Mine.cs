@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : WorldObject
+public class Mine : WorldObject, IUnitHandler
 {
     [SerializeField] private GameObject flag;
 
@@ -79,6 +79,10 @@ public class Mine : WorldObject
     public ResourceIncome GetIncome (){
         return new ResourceIncome(mineIncome, mineType);
     }
+
+    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
+
+    public Sprite GetIcon () { return null; }
 
     private bool IsMineEmpty (){
         return unitsInformation.IsArmyEmpty();

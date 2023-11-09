@@ -56,10 +56,14 @@ public class MouseInput : MonoBehaviour
         }
     }
 
-    public Vector3 GetMouseScreenPosition ()
-    {
+    public Vector3 GetMousePosition3D (){
         return screenPosition;
     }
+
+    public Vector2 GetMousePosition2D (){
+        return new Vector2(screenPosition.x, screenPosition.y);
+    }
+
     // Returns the mouse world position
     public Vector3 MouseWorldPosition(LayerMask layersToHit)
     {

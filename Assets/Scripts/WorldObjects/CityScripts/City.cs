@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class City : WorldObject
+public class City : WorldObject, IUnitHandler
 {
     [SerializeField] private GameObject flag;
 
@@ -113,15 +113,15 @@ public class City : WorldObject
 
     #region Getters
 
-    public Sprite GetCitySprite (){
-        return Resources.Load<Sprite>("CityIcons/" + cityFraction.ToString() + "/" + cityFraction.ToString() + "CityIcon_PlaceHolder");
-    }
-
     public CityFraction GetFraction () { return cityFraction; }
 
     public CityBuildingHandler GetBuildingHandler () { return buildingHandler; }
 
     public UnitsInformation GetUnitsInformation () { return unitsInformation; }
+
+    public Sprite GetIcon (){
+        return Resources.Load<Sprite>("CityIcons/" + cityFraction.ToString() + "/" + cityFraction.ToString() + "CityIcon_PlaceHolder");
+    }
 
     public ResourceIncome GetIncome (){
         return buildingHandler.GetCityIncome();

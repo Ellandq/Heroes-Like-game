@@ -10,6 +10,8 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance;
     // Store a referance to all sub camera scripts
+    [Header ("Camera References")]
+    [SerializeField] private Camera uiCamera;
 
     [Header ("Camera script references")]
     [SerializeField] internal CameraMovement cameraMovement;
@@ -21,7 +23,7 @@ public class CameraManager : MonoBehaviour
     internal bool cameraMovementEnabled;
 
     // Creating a static instance of this class
-    private void Start ()
+    private void Awake ()
     {
         Instance = this;
         cameraEnabled = false;
@@ -38,5 +40,9 @@ public class CameraManager : MonoBehaviour
     public void DisableCamera ()
     {
         cameraEnabled = false;
+    }
+
+    public Vector2 GetUiElementPosition (Vector3 position){
+        return RectTransformUtility.WorldToScreenPoint(uiCamera, position);
     }
 }

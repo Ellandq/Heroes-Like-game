@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using System.Linq;
 using UnityEditor.SceneManagement;
 
-public class Army : WorldObject
+public class Army : WorldObject, IUnitHandler
 {
     [Header ("Events")]
     public UnityEvent onMovementPointsChanged;
@@ -96,7 +96,6 @@ public class Army : WorldObject
 
     #region Interactions
 
-    // Army interaction with another army
     public override void Interact<T>(T other)
     {
         Army interactingArmy = other as Army;
@@ -166,9 +165,9 @@ public class Army : WorldObject
 
     public int GetMaxMovementPoints () { return maxMovementPoints; }
 
-    public override PlayerTag GetPlayerTag () { return base.GetPlayerTag(); }
+    public UnitsInformation GetUnitsInformation () { return unitsInformation; }
 
-    public ArmyInformation GetUnitsInformation () { return unitsInformation; }
+    public Sprite GetIcon () { return unitsInformation.GetArmyIcon(); }
     
     #endregion
 

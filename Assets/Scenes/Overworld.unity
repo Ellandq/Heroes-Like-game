@@ -198,6 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3993378}
+  - component: {fileID: 3993380}
   - component: {fileID: 3993379}
   m_Layer: 5
   m_Name: ArmySlot (3)
@@ -238,13 +239,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 3993377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 613334726}
+--- !u!114 &3993380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 3993379}
   slotFrame: {fileID: 214275579}
-  armyIcon: {fileID: 17066102}
+  objectIcon: {fileID: 17066102}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -539,12 +552,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 13773200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 481491565}
-  CityIcon: {fileID: 650131241}
+  objectIcon: {fileID: 650131241}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -1650,6 +1663,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 66379617}
+  - component: {fileID: 66379619}
   - component: {fileID: 66379618}
   m_Layer: 5
   m_Name: ArmySlot (5)
@@ -1690,13 +1704,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 66379616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 579588422}
+--- !u!114 &66379619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66379616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 66379618}
   slotFrame: {fileID: 2144629519}
-  armyIcon: {fileID: 1430133659}
+  objectIcon: {fileID: 1430133659}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -2674,8 +2700,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 583131715}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2877,6 +2903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 164475776}
+  - component: {fileID: 164475778}
   - component: {fileID: 164475777}
   m_Layer: 5
   m_Name: ArmySlot (7)
@@ -2917,13 +2944,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 164475775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 986660120}
+--- !u!114 &164475778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164475775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 164475777}
   slotFrame: {fileID: 2069374204}
-  armyIcon: {fileID: 190792068}
+  objectIcon: {fileID: 190792068}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -3121,8 +3160,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1786117701}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3686,6 +3725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230169824}
+  - component: {fileID: 230169826}
   - component: {fileID: 230169825}
   m_Layer: 5
   m_Name: ArmySlot (4)
@@ -3726,13 +3766,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 230169823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1872604765}
+--- !u!114 &230169826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230169823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 230169825}
   slotFrame: {fileID: 1485497845}
-  armyIcon: {fileID: 878925482}
+  objectIcon: {fileID: 878925482}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -3993,8 +4045,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 728128065}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4662,9 +4714,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 230169825}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 230169826}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5123,9 +5175,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1586672577}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1586672578}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5541,9 +5593,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1930861362}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1930861363}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6250,8 +6302,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2096124820}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7139,6 +7191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 431106875}
+  - component: {fileID: 431106877}
   - component: {fileID: 431106876}
   m_Layer: 5
   m_Name: ArmySlot (1)
@@ -7179,13 +7232,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 431106874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 368393204}
+--- !u!114 &431106877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431106874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 431106876}
   slotFrame: {fileID: 579257310}
-  armyIcon: {fileID: 1351993402}
+  objectIcon: {fileID: 1351993402}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -7382,9 +7447,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1557894282}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1557894283}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8530,9 +8595,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1590300711}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1590300712}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8797,8 +8862,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1999878684}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9402,8 +9467,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1803074397}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9608,9 +9673,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1128607003}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 646710759}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10152,12 +10217,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 583131713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 2090123983}
-  CityIcon: {fileID: 1960942433}
+  objectIcon: {fileID: 1960942433}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -11015,9 +11080,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1128607003}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 646710759}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11148,8 +11213,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1148996471}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11371,11 +11436,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 646710755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63aaf9ba7afbcbc46b6dbf0064ce60ab, type: 3}
+  m_Script: {fileID: 11500000, guid: b7415a46000faeb46a828788d67280ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementButtons: {fileID: 1128607003}
-  armySlotsPosition:
+  buttonHandler: {fileID: 1128607004}
+  objectSlotPositions:
   - {fileID: 1586672576}
   - {fileID: 431106875}
   - {fileID: 1590300710}
@@ -11388,20 +11453,21 @@ MonoBehaviour:
   - {fileID: 1557894281}
   - {fileID: 1930861361}
   - {fileID: 1457263354}
-  armySlots:
-  - {fileID: 1586672577}
-  - {fileID: 431106876}
-  - {fileID: 1590300711}
-  - {fileID: 3993379}
-  - {fileID: 230169825}
-  - {fileID: 66379618}
-  - {fileID: 1983005763}
-  - {fileID: 164475777}
-  - {fileID: 693470035}
-  - {fileID: 1557894282}
-  - {fileID: 1930861362}
-  - {fileID: 1457263355}
+  objectButtons:
+  - {fileID: 1586672578}
+  - {fileID: 431106877}
+  - {fileID: 1590300712}
+  - {fileID: 3993380}
+  - {fileID: 230169826}
+  - {fileID: 66379619}
+  - {fileID: 1983005764}
+  - {fileID: 164475778}
+  - {fileID: 693470036}
+  - {fileID: 1557894283}
+  - {fileID: 1930861363}
+  - {fileID: 1457263356}
   rotationObject: {fileID: 646710756}
+  isArmyDisplay: 1
 --- !u!1 &647981098
 GameObject:
   m_ObjectHideFlags: 0
@@ -11746,9 +11812,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1128607003}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 646710759}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12551,9 +12617,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 2089356664}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12610,6 +12676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693470034}
+  - component: {fileID: 693470036}
   - component: {fileID: 693470035}
   m_Layer: 5
   m_Name: ArmySlot (8)
@@ -12650,13 +12717,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 693470033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1557583176}
+--- !u!114 &693470036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693470033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 693470035}
   slotFrame: {fileID: 528839644}
-  armyIcon: {fileID: 1046097340}
+  objectIcon: {fileID: 1046097340}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -12982,12 +13061,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 728128063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 363280704}
-  CityIcon: {fileID: 2008117685}
+  objectIcon: {fileID: 2008117685}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -14687,8 +14766,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 13773202}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14818,9 +14897,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 2089356664}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15777,6 +15856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71ef9dc204979e4184ff38f7360093d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiCamera: {fileID: 240622534}
   cameraMovement: {fileID: 963194229}
   cameraZoom: {fileID: 963194230}
 --- !u!1 &971264557
@@ -17058,8 +17138,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1842254991}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17454,10 +17534,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1076910858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5304de281af0d104083ff69b5641c73e, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a3edbf7ab760f4995510e4d17066b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  townDisplay: {fileID: 2089356664}
+  objectDisplay: {fileID: 2089356664}
   fastBackwardsButton: {fileID: 683213474}
   backwardsButton: {fileID: 1381976205}
   forwardsButton: {fileID: 1172449632}
@@ -17970,8 +18050,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1613422241}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18175,8 +18255,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1746802021}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18309,7 +18389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1128607002}
-  - component: {fileID: 1128607003}
+  - component: {fileID: 1128607004}
   m_Layer: 5
   m_Name: ArmySelectionMovementButtons
   m_TagString: Untagged
@@ -18340,7 +18420,7 @@ RectTransform:
   m_AnchoredPosition: {x: 180.4, y: 147}
   m_SizeDelta: {x: 128, y: 142}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1128607003
+--- !u!114 &1128607004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18349,10 +18429,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1128607001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac72855b60fd8a741b1adf5d231737fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a3edbf7ab760f4995510e4d17066b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armyDisplay: {fileID: 646710759}
+  objectDisplay: {fileID: 646710759}
   fastBackwardsButton: {fileID: 623176004}
   backwardsButton: {fileID: 559124889}
   forwardsButton: {fileID: 655685132}
@@ -18667,12 +18747,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1148996469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 2029179720}
-  CityIcon: {fileID: 751505073}
+  objectIcon: {fileID: 751505073}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -19133,9 +19213,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 2089356664}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21269,9 +21349,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 431106876}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 431106877}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21401,9 +21481,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 2089356664}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22771,6 +22851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1457263354}
+  - component: {fileID: 1457263356}
   - component: {fileID: 1457263355}
   m_Layer: 5
   m_Name: ArmySlot (11)
@@ -22811,13 +22892,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1457263353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 523064261}
+--- !u!114 &1457263356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457263353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1457263355}
   slotFrame: {fileID: 1232229349}
-  armyIcon: {fileID: 2097304556}
+  objectIcon: {fileID: 2097304556}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -23064,12 +23157,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463124420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1203506429}
-  CityIcon: {fileID: 1108826969}
+  objectIcon: {fileID: 1108826969}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -23230,9 +23323,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 66379618}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 66379619}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23779,7 +23872,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1530059460}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 646710759}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: ChangePinStatus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1530059460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24242,6 +24347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1557894281}
+  - component: {fileID: 1557894283}
   - component: {fileID: 1557894282}
   m_Layer: 5
   m_Name: ArmySlot (9)
@@ -24282,13 +24388,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1557894280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1661019671}
+--- !u!114 &1557894283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557894280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1557894282}
   slotFrame: {fileID: 1665219789}
-  armyIcon: {fileID: 2102588156}
+  objectIcon: {fileID: 2102588156}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -24485,9 +24603,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1128607003}
-        m_TargetAssemblyTypeName: ArmySelectionMovementButtons, Assembly-CSharp
-        m_MethodName: MoveDisplay
+      - m_Target: {fileID: 646710759}
+        m_TargetAssemblyTypeName: OwnedObjectDisplay, Assembly-CSharp
+        m_MethodName: RotateDisplay
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24676,6 +24794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1586672576}
+  - component: {fileID: 1586672578}
   - component: {fileID: 1586672577}
   m_Layer: 5
   m_Name: ArmySlot (0)
@@ -24716,13 +24835,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1586672575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1446627319}
+--- !u!114 &1586672578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586672575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1586672577}
   slotFrame: {fileID: 176258213}
-  armyIcon: {fileID: 729526049}
+  objectIcon: {fileID: 729526049}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -24735,6 +24866,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1590300710}
+  - component: {fileID: 1590300712}
   - component: {fileID: 1590300711}
   m_Layer: 5
   m_Name: ArmySlot (2)
@@ -24775,13 +24907,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1590300709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1666739136}
+--- !u!114 &1590300712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590300709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1590300711}
   slotFrame: {fileID: 1157220492}
-  armyIcon: {fileID: 1974932270}
+  objectIcon: {fileID: 1974932270}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -25177,12 +25321,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613422239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 661458606}
-  CityIcon: {fileID: 361629658}
+  objectIcon: {fileID: 361629658}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -25948,9 +26092,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3993379}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 3993380}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26386,9 +26530,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1457263355}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1457263356}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27950,12 +28094,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1746802019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 2075753589}
-  CityIcon: {fileID: 26677235}
+  objectIcon: {fileID: 26677235}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -28419,12 +28563,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786117699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1954625964}
-  CityIcon: {fileID: 24950963}
+  objectIcon: {fileID: 24950963}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -28551,12 +28695,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1803074395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1419797637}
-  CityIcon: {fileID: 440828932}
+  objectIcon: {fileID: 440828932}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -28642,9 +28786,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693470035}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 693470036}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29127,12 +29271,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1842254989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1743069693}
-  CityIcon: {fileID: 1166172264}
+  objectIcon: {fileID: 1166172264}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -29475,9 +29619,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1983005763}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 1983005764}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29936,6 +30080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1930861361}
+  - component: {fileID: 1930861363}
   - component: {fileID: 1930861362}
   m_Layer: 5
   m_Name: ArmySlot (10)
@@ -29976,13 +30121,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1930861360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 12559378}
+--- !u!114 &1930861363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930861360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1930861362}
   slotFrame: {fileID: 556233621}
-  armyIcon: {fileID: 1608805182}
+  objectIcon: {fileID: 1608805182}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -30865,6 +31022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1983005762}
+  - component: {fileID: 1983005764}
   - component: {fileID: 1983005763}
   m_Layer: 5
   m_Name: ArmySlot (6)
@@ -30905,13 +31063,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1983005761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25c10a7c537a6f4ca96cfbc91a9efeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a46edb2ca796f14daf3ff030f56e05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedArmy: {fileID: 0}
   movementSlider: {fileID: 1363921950}
+--- !u!114 &1983005764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983005761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDisplayHandler: {fileID: 1983005763}
   slotFrame: {fileID: 651324476}
-  armyIcon: {fileID: 38211148}
+  objectIcon: {fileID: 38211148}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -30963,12 +31133,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1999878682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1443089636}
-  CityIcon: {fileID: 1065795880}
+  objectIcon: {fileID: 1065795880}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}
@@ -31090,9 +31260,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 164475777}
-        m_TargetAssemblyTypeName: ArmyButton, Assembly-CSharp
-        m_MethodName: SelectArmy
+      - m_Target: {fileID: 164475778}
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31223,8 +31393,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1463124422}
-        m_TargetAssemblyTypeName: TownButton, Assembly-CSharp
-        m_MethodName: SelectCity
+        m_TargetAssemblyTypeName: ObjectButton, Assembly-CSharp
+        m_MethodName: SelectObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32221,11 +32391,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2089356660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb30d94c60083746942c85d81a9fb5d, type: 3}
+  m_Script: {fileID: 11500000, guid: b7415a46000faeb46a828788d67280ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementButtons: {fileID: 1076910860}
-  citySlotsPosition:
+  buttonHandler: {fileID: 1076910860}
+  objectSlotPositions:
   - {fileID: 1842254990}
   - {fileID: 1148996470}
   - {fileID: 13773201}
@@ -32238,7 +32408,7 @@ MonoBehaviour:
   - {fileID: 1786117700}
   - {fileID: 2096124819}
   - {fileID: 1463124421}
-  citySlots:
+  objectButtons:
   - {fileID: 1842254991}
   - {fileID: 1148996471}
   - {fileID: 13773202}
@@ -32252,6 +32422,7 @@ MonoBehaviour:
   - {fileID: 2096124820}
   - {fileID: 1463124422}
   rotationObject: {fileID: 2089356661}
+  isArmyDisplay: 0
 --- !u!1 &2090123981
 GameObject:
   m_ObjectHideFlags: 0
@@ -32375,12 +32546,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2096124818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e29c78080805048aeed7b6333885fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fc4026e6411cd4fbd3bc48a4347fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedCity: {fileID: 0}
+  movementDisplayHandler: {fileID: 0}
   slotFrame: {fileID: 1388920793}
-  CityIcon: {fileID: 53860966}
+  objectIcon: {fileID: 53860966}
   defaultBackground: {fileID: 21300000, guid: 1c9aa7c8e4602fb4ba41bafbf0c55114, type: 3}
   defaultFrame: {fileID: 21300000, guid: 5a1c49b8f9e61cd4090a0d504babcbd3, type: 3}
   frameHighlighted: {fileID: 21300000, guid: 23c10649efab79a48b9b547289a1f697, type: 3}

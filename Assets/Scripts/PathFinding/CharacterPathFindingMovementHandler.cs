@@ -10,6 +10,7 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     [SerializeField] private VisablePath visablePath;
     [SerializeField] private Army thisArmy;
     [SerializeField] private GameObject objectToInteractWith;
+    private ObjectEnterance enterance;
     private List<Vector3> pathVectorList;
     private List <int> pathCost;
     private Vector3 previousSelectedPosition;
@@ -27,8 +28,8 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     }
 
     // Sets the target position and if the given position is close to the already set position starts moving
-    public void HandleMovement(Vector3 _targetPosition) {
-        
+    public void HandleMovement(Vector3 _targetPosition, ObjectEnterance enterance = null) {
+        this.enterance = enterance;
         if (pathVectorList != null) {
             
             if (Vector3.Distance(_targetPosition, pathVectorList[pathVectorList.Count - 1]) < 5f | Vector3.Distance(previousSelectedPosition, _targetPosition) < 5f) // Checks if the position is close to the previous one
@@ -112,7 +113,12 @@ public class CharacterPathFindingMovementHandler : MonoBehaviour
     public void SetTargetPosition(Vector3 targetPosition)
     {
         currentPathIndex = 0;
-        pathVectorList = GameGrid.Instance.pathfinding.FindPath(GetPosition(), targetPosition);
+        if (enterance == null){
+            pathVectorList = GameGrid.Instance.pathfinding.FindPath(GetPosition(), targetPosition);
+        }else{
+            pathVectorList = GameGrid.Instance.pathfinding.FindPath(GetPosition(), targetPosition, enterance);
+        }
+        
 
         if (pathVectorList != null && pathVectorList.Count > 1){
             pathVectorList.RemoveAt(0);

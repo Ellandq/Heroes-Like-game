@@ -132,6 +132,15 @@ public class GameGrid : MonoBehaviour
         return neighbourList;
     }
 
+    public List<PathNode> GetEmptyNeighbourNodes (Vector2Int gridPosition){
+        List<GridCell> cellList = GetEmptyNeighbourCell(gridPosition);
+        List<PathNode> nodeList = new List<PathNode>();
+        foreach (GridCell cell in cellList){
+            nodeList.Add(cell.GetNode());
+        }
+        return nodeList;
+    }
+
     public void PlaceBuildingOnGrid(Vector2Int position, BuildingType type, float rotation, GameObject building) {
         int width, height;
         Vector2Int startingOffset = new Vector2Int(0, 0);

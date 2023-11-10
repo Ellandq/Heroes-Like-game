@@ -33,7 +33,7 @@ public class City : WorldObject, IUnitHandler
         buildingHandler.InitializeBuildings(cityBuildingStatus, this);
         ChangeOwningPlayer(ownedByPlayer);
         
-        cityEnterance.SetEnteranceCells(GetRotation());
+        cityEnterance.SetEnteranceCells(rotation);
         unitsInformation = new UnitsInformation(cityGarrison);
         
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
-    [SerializeField] PathNode pathNode;
+    [SerializeField] private PathNode pathNode;
     internal int posX;
     internal int posZ;
     private string currentColidingObject;
@@ -45,12 +45,13 @@ public class GridCell : MonoBehaviour
     public void AddOccupyingObject (GameObject other){
         objectInThisGridSpace = other;
         isOccupied = true;
-        if (objectInThisGridSpace.tag == "CityEnterance" | objectInThisGridSpace.tag == "Army" 
-            | objectInThisGridSpace.tag == "MineEnterance" | objectInThisGridSpace.tag == "Resource"){
+        if (objectInThisGridSpace.tag == "Enterance" || objectInThisGridSpace.tag == "Army" || objectInThisGridSpace.tag == "Resource"){
             isObjectInteractable = true;
             pathNode.isWalkable = false;
             pathNode.isOccupyingObjectInteratable = true;
             pathNode.occupyingObject = objectInThisGridSpace;
         }
     }
+
+    public PathNode GetNode (){ return pathNode; }
 }

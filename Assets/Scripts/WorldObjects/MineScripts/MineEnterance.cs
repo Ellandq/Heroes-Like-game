@@ -83,6 +83,7 @@ public class MineEnterance : ObjectEnterance
             Debug.Log("Enterance list of object: " + this.transform.parent.gameObject.name + " is empty.");
             return;
         }
+
         SetEnteranceList(enteranceList);
     }
 }

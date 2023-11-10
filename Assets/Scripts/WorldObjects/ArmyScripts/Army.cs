@@ -128,6 +128,10 @@ public class Army : WorldObject, IUnitHandler
         movementHandle.HandleMovement(pos);
     }
 
+    public void Move (ObjectEnterance enterance){
+        movementHandle.HandleMovement(enterance.transform.position, enterance);
+    }
+
     public void Stop (){
         movementHandle.StopMoving();
     }

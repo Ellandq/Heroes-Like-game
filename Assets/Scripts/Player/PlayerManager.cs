@@ -38,6 +38,9 @@ public class PlayerManager : MonoBehaviour
 
         setUpProgress = 0f;
         coroutine = StartCoroutine(CreatePlayers(GameManager.Instance.numberOfPlayers));
+
+        TurnManager.Instance.OnNewDay += NewDayUpdate;
+        TurnManager.Instance.OnNewDay += NewTurnUpdate;
     }
 
     public void StartGame (){

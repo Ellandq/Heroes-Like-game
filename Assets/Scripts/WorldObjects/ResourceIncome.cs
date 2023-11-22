@@ -52,7 +52,9 @@ public class ResourceIncome : IEnumerable<int>
 
     public int[] GetResources () { return resources; }
 
-    public ResourceIncome() {}
+    public ResourceIncome() {
+        resources = new int[7]{0, 0, 0, 0, 0, 0, 0};
+    }
 
     public ResourceIncome(int value, ResourceType type){
         resources[(int)type] = value;
@@ -153,6 +155,11 @@ public class ResourceIncome : IEnumerable<int>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public override string ToString()
+    {
+        return "( " + base.ToString() + ": " + gold + ", " + wood + ", " + ore + ", " + gems + ", " + mercury + ", " + sulfur + ", " + crystal + " )";
     }
 }
 

@@ -41,17 +41,19 @@ public class TurnManager : MonoBehaviour
     // Starts a new turn
     public void NextTurn ()
     {
+        TurnCounter();
         if (currentPlayerTurn < playerCount - 1)
         {
             currentPlayerTurn++;
         }else{
-            OnNewDay.Invoke();
+            OnNewDay?.Invoke();
             currentPlayerTurn = 0;
         } 
+        OnNewTurn?.Invoke();
     }
 
     // Updates the turn counter
-    public void TurnCounter()
+    private void TurnCounter()
     {
         if (dayCounter != 7){
             dayCounter++;
@@ -64,7 +66,6 @@ public class TurnManager : MonoBehaviour
                 weekCounter = 1;
             }
         }
-        currentPlayerTurn++;
     }
 
     public short GetDay (){ return dayCounter; }

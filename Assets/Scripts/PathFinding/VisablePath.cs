@@ -5,17 +5,27 @@ using UnityEngine;
 
 public class VisablePath : MonoBehaviour
 {
-    [SerializeField] GameObject movementPathDisplayPrefab;
-    [SerializeField] Material walkableTile;
-    [SerializeField] Material lockedTile;
-    [SerializeField] Material blockedTile;
+    public static VisablePath Instance;
 
+    [Header ("Prefabs")]
+    [SerializeField] private GameObject movementPathDisplayPrefab;
+
+    [Header ("Tile Materials")]
+    [SerializeField] private Material walkableTile;
+    [SerializeField] private Material lockedTile;
+    [SerializeField] private Material blockedTile;
+
+    [Header ("Path Objects")]
     private List <GameObject> pathList = new List<GameObject>();
 
+    private void Awake (){
+        Instance = this;
+    }
+
     // Creates a visable path for the player
-    public void CreateVisablePath (List<Vector3> vectorPathList, List <int> _pathCost, Army _selectedArmy)
+    public void CreateVisiblePath (List<Vector3> vectorPathList, List <int> _pathCost, Army selectedArmy)
     {
-        int simulatedMovementPoints = _selectedArmy.GetMovementPoints();
+        int simulatedMovementPoints = selectedArmy.GetMovementPoints();
         for (int i = 0; i < vectorPathList.Count; i++)
         {
             pathList.Add(Instantiate(movementPathDisplayPrefab, vectorPathList[i], Quaternion.identity, transform.parent));
@@ -29,7 +39,7 @@ public class VisablePath : MonoBehaviour
     }
 
     // Destroys the visable path
-    public void DestroyVisablePath()
+    public void DestroyVisiblePath()
     {
         for (int i = 0; i < pathList.Count; i++)
         {

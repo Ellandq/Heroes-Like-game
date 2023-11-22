@@ -26,13 +26,14 @@ public class WorldObject : MonoBehaviour, IObjectInteraction
         this.ownedByPlayer = ownedByPlayer;
     }
 
-    public virtual void UpdateGridPosition (Vector2Int gridPosition){
+    public virtual void SetGridPosition (Vector2Int gridPosition){
         this.gridPosition = gridPosition;
+        Debug.Log("Grid Position set: " + this.gridPosition);
     }
 
     public virtual void UpdateObjectPosition (Vector3 position){
         transform.position = position;
-        UpdateGridPosition(GameGrid.Instance.GetGridPosFromWorld(position));
+        SetGridPosition(GameGrid.Instance.GetGridPosFromWorld(position));
     }
 
     public virtual void UpdateObjectRotation (Vector3 rotation){
@@ -49,7 +50,9 @@ public class WorldObject : MonoBehaviour, IObjectInteraction
 
     // Getters
 
-    public Vector2Int GetGridPosition () { return gridPosition; }
+    public Vector2Int GetGridPosition () { 
+        Debug.Log("Grid Position given: " + gridPosition);
+        return gridPosition; }
 
     public float GetRotation () { return rotation; }
 

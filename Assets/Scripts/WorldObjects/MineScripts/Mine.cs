@@ -32,7 +32,7 @@ public class Mine : WorldObject, IUnitHandler
         unitsInformation = new UnitsInformation(garrisonUnits);
         this.mineType = mineType;
         mineEnterance.SetEnteranceCells(rotation);
-        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.TwoByTwo, GetRotation(), gameObject);
+        GameGrid.Instance.PlaceBuildingOnGrid(gridPosition, BuildingType.ThreeByThree, GetRotation(), gameObject);
         GameGrid.Instance.GetCell(gridPosition).AddOccupyingObject(mineEnterance.gameObject);
     }
 

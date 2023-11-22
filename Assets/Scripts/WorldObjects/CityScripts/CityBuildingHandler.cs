@@ -6,16 +6,16 @@ using UnityEngine;
 public class CityBuildingHandler : MonoBehaviour
 {
     private City city;
-    private CityBuildingState[] cityBuildings;
+    [SerializeField] private CityBuildingState[] cityBuildings;
     [SerializeField] private CityDwellingInformation cityDwellingInformation;
     private bool buildingAlreadybuilt;
 
     public void InitializeBuildings (byte[] cityBuildingStatus, City city){
-        CityBuildingState[] cityBuildings = new CityBuildingState[34];
+        cityBuildings = new CityBuildingState[34];
         cityDwellingInformation.Initialize();
         this.city = city;
         buildingAlreadybuilt = false;
-        
+
         for (int i = 0; i < cityBuildingStatus.Length; i++){
             cityBuildings[i] = (CityBuildingState)cityBuildingStatus[i];
         }

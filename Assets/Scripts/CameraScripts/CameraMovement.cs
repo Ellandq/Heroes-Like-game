@@ -200,5 +200,9 @@ public class CameraMovement: MonoBehaviour
     {
         return transform.position - CalculateCameraOffsetIndependent();
     }
+
+    public bool IsFollowingObject (){ return cameraFollowingObject; }
+
+    public bool IsFollowingObject (WorldObject obj){ return cameraFollowingObject && obj == objectToMoveTowards.GetComponent<WorldObject>(); }
 }
 

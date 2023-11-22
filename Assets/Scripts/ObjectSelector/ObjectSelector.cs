@@ -128,7 +128,6 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void HandleEnterance (ObjectEnterance enterance){
-        Debug.Log(enterance.GetEnteranceList().Count);
         if (IsSelectedObjectArmy()){
             if ((selectedObject as Army).IsMoving()) (selectedObject as Army).Stop();
             (selectedObject as Army).Move(enterance);

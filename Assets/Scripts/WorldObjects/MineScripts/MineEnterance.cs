@@ -17,7 +17,7 @@ public class MineEnterance : ObjectEnterance
 
         if (rotation == 0){
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
@@ -27,7 +27,7 @@ public class MineEnterance : ObjectEnterance
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
@@ -43,7 +43,7 @@ public class MineEnterance : ObjectEnterance
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y + 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
@@ -59,13 +59,13 @@ public class MineEnterance : ObjectEnterance
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x - 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
         }else if (rotation == 270){
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y + 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }
@@ -75,7 +75,7 @@ public class MineEnterance : ObjectEnterance
                 Debug.Log("Enterance tile does not exist. ");
             }
             try{
-                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x, gridPosition.y - 1)));
+                enteranceList.Add(GameGrid.Instance.GetNode(new Vector2Int(gridPosition.x + 1, gridPosition.y - 1)));
             }catch (NullReferenceException){
                 Debug.Log("Enterance tile does not exist. ");
             }

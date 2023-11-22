@@ -110,8 +110,9 @@ public class Army : WorldObject, IUnitHandler
 
     public override void ObjectSelected(){
         if (armyHighlight.IsHighlightActive()){
-            CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this);
-            Interact();
+            if (movementHandle.IsMoving) movementHandle.StopMoving();
+            else if (CameraManager.Instance.cameraMovement.IsFollowingObject(this)) Interact();
+            else CameraManager.Instance.cameraMovement.CameraAddObjectToFollow(this);
         }
         else {
             armyHighlight.EnableHighlight(true);
@@ -137,7 +138,7 @@ public class Army : WorldObject, IUnitHandler
     }
 
     public bool IsMoving (){
-        return movementHandle.isMoving;
+        return movementHandle.IsMoving;
     }
 
     #endregion

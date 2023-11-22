@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
         foreach (Mine mine in ownedMines){
             income += mine.GetIncome();
         }
+        resourceIncome = income;
     }
 
     private void DailyResourceGain()
